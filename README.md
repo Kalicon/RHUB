@@ -1,5 +1,7 @@
 # 💼 RHUB — Suíte de Cálculos de Departamento Pessoal & CLT Open Source
 
+[![Acessar Aplicação](https://img.shields.io/badge/Acessar_Online-kalicon.github.io%2FRHUB-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kalicon.github.io/RHUB/)
+
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![PWA Ready](https://img.shields.io/badge/PWA-Installable_|_Offline-6366f1.svg)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4.svg)
@@ -11,6 +13,7 @@
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-orange.svg)
 
 > **Calculadora e Suíte de Gestão Trabalhista Moderna para a CLT Brasileira.**  
+> 🌐 **App Online:** [https://kalicon.github.io/RHUB/](https://kalicon.github.io/RHUB/)  
 > 100% client-side, instalável como PWA (offline), suporte a Dark Mode, animações GSAP CountUp, exportação em Excel (.xlsx), impressão em formato de documento executivo e zero dependência de servidor ou banco de dados.  
 > Projetada para profissionais de Recursos Humanos, Departamento Pessoal, contadores, peritos e advogados trabalhistas.
 
