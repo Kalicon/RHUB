@@ -1,0 +1,20 @@
+{
+  "name": "RHUB — Calculadora de Departamento Pessoal CLT",
+  "short_name": "RHUB",
+  "description": "Suíte moderna de cálculos trabalhistas CLT: Adicional Noturno, Rescisão, Faltas, Férias & 13º e Salário Líquido. 100% offline.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "any",
+  "lang": "pt-BR",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+    {
+      "src": "assets/img/logo.svg",
+      "sizes": "48x48 72x72 96x96 128x128 192x192 256x256 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

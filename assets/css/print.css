@@ -1,0 +1,60 @@
+/* 
+ * Folha de Estilos para Impressão / Exportação em PDF
+ * RHUB - Calculadora de Departamento Pessoal
+ */
+
+@media print {
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+    }
+
+    /* Ocultar elementos desnecessários na impressão */
+    .navbar,
+    .nav-pills-custom,
+    .btn,
+    .footer-wrapper,
+    .no-print,
+    .alert-info-clt {
+        display: none !important;
+    }
+
+    /* Ajustar cartões para formato de documento */
+    .card-modern {
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+    }
+
+    .result-card-hero {
+        background: #f8fafc !important;
+        color: #000000 !important;
+        border: 2px solid #0f172a !important;
+        box-shadow: none !important;
+    }
+
+    .result-hero-value {
+        color: #0f172a !important;
+    }
+
+    .breakdown-item {
+        border: 1px solid #cbd5e1 !important;
+        background: transparent !important;
+    }
+
+    .breakdown-value {
+        color: #000000 !important;
+    }
+
+    .breakdown-label {
+        color: #475569 !important;
+    }
+
+    .step-formula {
+        background: #f1f5f9 !important;
+        color: #000000 !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+}

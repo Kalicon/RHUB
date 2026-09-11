@@ -1,0 +1,345 @@
+/*
+ * RHUB - Estilos Customizados (Complemento ao Tailwind CSS)
+ * Apenas o que o Tailwind CDN não cobre: fontes, scrollbar, animações e utilitários específicos.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* ===== Scrollbar Customizada ===== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.3);
+    border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.4);
+}
+
+/* ===== Transições de Dark Mode suaves ===== */
+*,
+*::before,
+*::after {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
+}
+
+/* ===== Glow de destaque no card de resultado ===== */
+.result-glow {
+    box-shadow: 0 0 40px -8px rgba(59, 130, 246, 0.15),
+                0 8px 32px -4px rgba(0, 0, 0, 0.06);
+}
+.dark .result-glow {
+    box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.15),
+                0 12px 40px -8px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Gradiente animado do header do card de resultado ===== */
+.hero-gradient {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+}
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* ===== Efeito de pulso suave no valor principal ===== */
+.pulse-subtle {
+    animation: pulseSoft 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+@keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+/* ===== Orbe decorativo (blur radial no card hero) ===== */
+.orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    pointer-events: none;
+    opacity: 0.25;
+}
+.orb-blue {
+    background: #3b82f6;
+    width: 180px;
+    height: 180px;
+    top: -40px;
+    right: -30px;
+}
+.orb-violet {
+    background: #8b5cf6;
+    width: 120px;
+    height: 120px;
+    bottom: -20px;
+    left: -20px;
+}
+
+/* ===== Indicador de aba ativa na sidebar ===== */
+.nav-active-indicator {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(180deg, #3b82f6, #6366f1);
+    border-radius: 0 4px 4px 0;
+}
+
+/* ===== Tooltip CLT customizado ===== */
+.tooltip-clt {
+    position: relative;
+}
+.tooltip-clt::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: 50;
+}
+.dark .tooltip-clt::after {
+    background: #334155;
+}
+.tooltip-clt:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* ===== Drawer de Histórico ===== */
+#historyDrawer {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+#historyOverlay {
+    transition: opacity 0.3s ease;
+}
+
+/* ===== Modais (Dados Corporativos e Comparador) ===== */
+.rhub-modal-backdrop {
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    transition: opacity 0.25s ease;
+}
+.rhub-modal-content {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ===== Badge de PWA Instalável ===== */
+.pwa-pulse {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+    animation: pwaPulseEffect 2s infinite;
+}
+@keyframes pwaPulseEffect {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+/* ===== Toast de Notificação ===== */
+#rhubToast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+#rhubToast.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* ===== ESTILO PARA IMPRESSÃO A4 CORPORATIVO ("JEITO BONITINHO") ===== */
+#printHeader {
+    display: none;
+}
+
+@page {
+    size: A4 portrait;
+    margin: 12mm 15mm 15mm 15mm;
+}
+
+@media print {
+    /* Reset Geral */
+    *, *::before, *::after {
+        color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        transition: none !important;
+    }
+
+    html, body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10pt !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Ocultar elementos estruturais de navegação e botões */
+    #sidebar,
+    #sidebarOverlay,
+    header,
+    footer,
+    button,
+    .no-print,
+    .orb,
+    #rhubToast,
+    .nav-active-indicator,
+    .tooltip-clt::after {
+        display: none !important;
+    }
+
+    /* Exibir Cabeçalho Timbrado de Impressão */
+    #printHeader {
+        display: block !important;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 12px;
+        margin-bottom: 20px;
+    }
+
+    /* Manter apenas o módulo ativo visível */
+    .module-panel.hidden {
+        display: none !important;
+    }
+
+    .module-panel:not(.hidden) {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Ajustar Hero Card para visual executivo clean */
+    .hero-gradient,
+    [style*="linear-gradient"] {
+        background: #f8fafc !important;
+        border: 2px solid #0f172a !important;
+        border-radius: 12px !important;
+        padding: 16px !important;
+        color: #0f172a !important;
+    }
+
+    /* Textos do Hero Card em impressão */
+    .hero-gradient p,
+    [style*="linear-gradient"] p {
+        color: #0f172a !important;
+    }
+
+    .hero-gradient p[class*="text-slate-400"],
+    .hero-gradient p[class*="text-slate-500"],
+    [style*="linear-gradient"] p[class*="text-slate-400"] {
+        color: #475569 !important;
+        font-size: 8pt !important;
+        font-weight: 700 !important;
+    }
+
+    p[id^="out"] {
+        color: #0f172a !important;
+        font-size: 24pt !important;
+        font-weight: 900 !important;
+    }
+
+    /* Stat Cards dentro do Hero */
+    .stat-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        padding: 8px !important;
+    }
+
+    .stat-card p[id^="out"] {
+        font-size: 11pt !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+    }
+
+    /* Grid layout no papel */
+    .grid {
+        display: grid !important;
+    }
+
+    /* Evitar quebras de página inadequadas */
+    .rounded-2xl,
+    .stat-card,
+    #rescVerbasList,
+    #memoriaContainer,
+    #faltMemoriaContainer,
+    #ferMemoriaFerias,
+    #ferMemoria13o,
+    form {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Caixas de formulário e memória */
+    .bg-white,
+    .dark\:bg-slate-900 {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+    }
+
+    /* Inputs transformados em dados de documento legíveis */
+    input, select {
+        background: #f8fafc !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        font-weight: 700 !important;
+        font-size: 9pt !important;
+        padding: 4px 8px !important;
+        border-radius: 6px !important;
+    }
+
+    label {
+        color: #334155 !important;
+        font-size: 8pt !important;
+        font-weight: 600 !important;
+    }
+
+    /* Memória de cálculo com visual corporativo */
+    code {
+        background: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #e2e8f0 !important;
+        padding: 2px 6px !important;
+        font-size: 8pt !important;
+    }
+
+    /* Rodapé de autenticação no final do documento */
+    .print-footer-legal {
+        display: block !important;
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px dashed #cbd5e1;
+        font-size: 7.5pt;
+        color: #64748b;
+        text-align: center;
+    }
+}
+

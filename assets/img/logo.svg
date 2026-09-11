@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="rhubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="12" fill="url(#rhubGrad)" />
+  <path d="M14 15h11c3.866 0 7 3.134 7 7 0 2.92-1.787 5.422-4.324 6.473L33 35h-4.5l-4.5-6h-5v6H14V15zm5 9h6c1.105 0 2-.895 2-2s-.895-2-2-2h-6v4z" fill="#ffffff" />
+</svg>
