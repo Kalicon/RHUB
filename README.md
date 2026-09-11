@@ -1,4 +1,4 @@
-# 💼 RHUB — Suíte de Cálculos de Departamento Pessoal & CLT Open Source
+# RHUB — Suíte de Cálculos de Departamento Pessoal & CLT Open Source
 
 [![Acessar Aplicação](https://img.shields.io/badge/Acessar_Online-kalicon.github.io%2FRHUB-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kalicon.github.io/RHUB/)
 
@@ -14,17 +14,18 @@
 ![GitHub Pages](https://img.shields.io/badge/deploy-GitHub_Pages-brightgreen.svg)
 
 > **Calculadora e Suíte de Gestão Trabalhista Moderna para a CLT Brasileira & Simulador CLT vs. PJ.**  
-> 🌐 **App Online:** [https://kalicon.github.io/RHUB/](https://kalicon.github.io/RHUB/)  
-> 100% client-side, instalável como PWA (offline), suporte a Dark Mode, gráficos visuais dinâmicos com Chart.js, animações GSAP CountUp, exportação em Excel (.xlsx), impressão em formato de documento executivo, compartilhamento por Deep Link, backup/restauração em JSON e suíte de testes unitários com Vitest.  
+> **App Online:** [https://kalicon.github.io/RHUB/](https://kalicon.github.io/RHUB/)  
+> 100% client-side, instalável como PWA (offline), suporte a Dark Mode, gráficos visuais dinâmicos com Chart.js, animações GSAP CountUp, exportação em Excel (.xlsx), impressão em formato de documento executivo, compartilhamento por Deep Link, backup/restauração em JSON, central de desafios comunitários e suíte de testes unitários com Vitest.  
 > Projetada para profissionais de Recursos Humanos, Departamento Pessoal, contadores, diretores financeiros, peritos e advogados trabalhistas.
 
 ---
 
-## ✨ Recursos e Destaques
+## Recursos e Destaques
 
-- 📱 **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
-- 🏢 **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
-- 📊 **6 Módulos de Cálculo Especializados**:
+- **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
+- **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
+- **Central de Desafios de Criação & Sugestões**: Espaço integrado para a comunidade e usuários proporem regras complexas de DP e abrirem Issues oficiais no GitHub diretamente do app.
+- **6 Módulos de Cálculo Especializados**:
   1. **Adicional Noturno & DSR**: Hora noturna ficta (52min30s / fator 1,142857), prorrogação e DSR (Súmula 172 TST).
   2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%) e INSS/IRRF.
   3. **Faltas e Atrasos**: Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal e tabela progressiva de perda de férias (Art. 130 CLT).
@@ -35,21 +36,21 @@
      - Poder de compra real do colaborador (Salário líquido + Provisões mensais + Benefícios).
      - Regime PJ: Simples Nacional (Anexo III 6% ou Anexo V 15,5%), Fator R c/ pró-labore, custos com contabilidade e benefícios próprios.
      - **Break-Even automático**: cálculo exato do faturamento PJ necessário para empatar com o poder de compra CLT.
-- 📈 **Gráficos Visuais Interativos com Chart.js**:
+- **Gráficos Visuais Interativos com Chart.js**:
   - Donut Chart no Holerite (Salário Líquido vs. INSS vs. IRRF vs. Benefícios).
   - Gráfico de Barras no Comparador de Rescisão (Líquido do Empregado vs. Custo da Empresa em 4 modalidades).
   - Gráfico Comparativo CLT vs. PJ (Custo Empresa CLT vs. Poder Compra CLT vs. Líquido PJ vs. Break-Even).
-- 🔗 **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto a colaboradores, gestores ou clientes.
-- 💾 **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico de simulações em arquivo `.json`.
-- 📖 **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
-- 🧪 **Suíte de Testes Automatizados (Vitest)**: 14 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
-- 📥 **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos.
-- 🖨️ **Impressão / PDF Executivo**: Folha de estilo `@media print` que remove a interface web e gera relatórios limpos com cabeçalho da empresa e assinatura.
-- 🕒 **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`, restauráveis com 1 clique.
+- **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto a colaboradores, gestores ou clientes.
+- **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico de simulações em arquivo `.json`.
+- **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
+- **Suíte de Testes Automatizados (Vitest)**: 14 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
+- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos.
+- **Impressão / PDF Executivo**: Folha de estilo `@media print` que remove a interface web e gera relatórios limpos com cabeçalho da empresa e assinatura.
+- **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`, restauráveis com 1 clique.
 
 ---
 
-## 🎨 Stack Tecnológica
+## Stack Tecnológica
 
 | Camada            | Tecnologia                             | Descrição                                         |
 | ----------------- | -------------------------------------- | ------------------------------------------------- |
@@ -65,46 +66,46 @@
 
 ---
 
-## 📁 Estrutura do Repositório
+## Estrutura do Repositório
 
 ```text
 RHUB/
 ├── assets/
 │   ├── css/
-│   │   ├── custom.css          ← Estilos do drawer, gráficos, orbes e temas
-│   │   └── print.css           ← Folha de estilo de impressão executiva e PDF
+│   │   ├── custom.css          <- Estilos do drawer, gráficos, orbes e temas
+│   │   └── print.css           <- Folha de estilo de impressão executiva e PDF
 │   ├── js/
-│   │   ├── app.js              ← Controller SPA, roteador hash, Chart.js e GSAP
+│   │   ├── app.js              <- Controller SPA, roteador hash, Chart.js e GSAP
 │   │   ├── modules/
-│   │   │   ├── noturno.js      ← Adicional Noturno, hora ficta e DSR
-│   │   │   ├── rescisao.js     ← Rescisão CLT e Comparador de 4 Cenários
-│   │   │   ├── faltas.js       ← Faltas, atrasos, DSR e escala Art. 130
-│   │   │   ├── ferias.js       ← Férias, 1/3, abono, dobra e 13º salário
-│   │   │   ├── liquido.js      ← Salário Líquido completo (holerite mensal)
-│   │   │   ├── clt_pj.js       ← Simulador CLT vs PJ e encargos patronais
-│   │   │   └── tabelas.js      ← Tabelas progressivas de INSS e IRRF 2024
+│   │   │   ├── noturno.js      <- Adicional Noturno, hora ficta e DSR
+│   │   │   ├── rescisao.js     <- Rescisão CLT e Comparador de 4 Cenários
+│   │   │   ├── faltas.js       <- Faltas, atrasos, DSR e escala Art. 130
+│   │   │   ├── ferias.js       <- Férias, 1/3, abono, dobra e 13º salário
+│   │   │   ├── liquido.js      <- Salário Líquido completo (holerite mensal)
+│   │   │   ├── clt_pj.js       <- Simulador CLT vs PJ e encargos patronais
+│   │   │   └── tabelas.js      <- Tabelas progressivas de INSS e IRRF 2024
 │   │   └── utils/
-│   │       ├── exporter.js     ← Gerador de Excel (.xlsx) para todos os módulos
-│   │       ├── storage.js      ← LocalStorage, Backup e Restauração JSON
-│   │       ├── formatters.js   ← Formatação BRL (R$), decimais e datas
-│   │       └── validators.js   ← Sanitização e validação de entradas
+│   │       ├── exporter.js     <- Gerador de Excel (.xlsx) para todos os módulos
+│   │       ├── storage.js      <- LocalStorage, Backup e Restauração JSON
+│   │       ├── formatters.js   <- Formatação BRL (R$), decimais e datas
+│   │       └── validators.js   <- Sanitização e validação de entradas
 │   └── img/
-│       ├── logo.svg            ← Logo vetorial do RHUB
-│       ├── icon-192.svg        ← Ícone PWA 192x192
-│       └── icon-512.svg        ← Ícone PWA 512x512
+│       ├── logo.svg            <- Logo vetorial do RHUB
+│       ├── icon-192.svg        <- Ícone PWA 192x192
+│       └── icon-512.svg        <- Ícone PWA 512x512
 ├── tests/
-│   └── clt_modules.test.js     ← Suíte de testes unitários com Vitest
-├── manifest.json               ← Manifesto PWA (instalável)
-├── sw.js                       ← Service Worker com cache-first e offline
-├── index.html                  ← Aplicação Single-Page completa
-├── package.json                ← Configuração de testes Vitest
-├── LICENSE                     ← Licença MIT
-└── README.md                   ← Documentação técnica completa
+│   └── clt_modules.test.js     <- Suíte de testes unitários com Vitest
+├── manifest.json               <- Manifesto PWA (instalável)
+├── sw.js                       <- Service Worker com cache-first e offline
+├── index.html                  <- Aplicação Single-Page completa
+├── package.json                <- Configuração de testes Vitest
+├── LICENSE                     <- Licença MIT
+└── README.md                   <- Documentação técnica completa
 ```
 
 ---
 
-## ⚖️ Fundamentação Legal dos Módulos
+## Fundamentação Legal dos Módulos
 
 | Módulo | Regras Principais | Base Legal |
 |--------|-------------------|------------|
@@ -118,7 +119,7 @@ RHUB/
 
 ---
 
-## 🧪 Executando os Testes Automatizados
+## Executando os Testes Automatizados
 
 A suíte de testes com Vitest valida todas as fórmulas matemáticas e regras da legislação CLT:
 
@@ -132,7 +133,7 @@ npm run test:watch
 
 ---
 
-## 🚀 Como Executar Localmente
+## Como Executar Localmente
 
 Como o projeto utiliza **ES6 Modules nativos**, basta servi-lo via HTTP local:
 
@@ -148,16 +149,16 @@ Acesse no seu navegador: **http://localhost:8086**
 
 ---
 
-## 📱 Instalação como App (PWA)
+## Instalação como App (PWA)
 
 - **No Google Chrome / Edge (Desktop)**: Clique no ícone de instalação na barra de endereços ou no botão **Instalar App** no menu lateral.
 - **No Android (Chrome)**: Toque nos três pontos do navegador e selecione **"Adicionar à tela inicial"** ou **"Instalar aplicativo"**.
 - **No iOS (Safari)**: Toque no botão de compartilhamento e selecione **"Adicionar à Tela de Início"**.
 
-O app funcionará normalmente mesmo sem conexão com a internet!
+O app funcionará normalmente mesmo sem conexão com a internet.
 
 ---
 
-## 📄 Licença
+## Licença
 
 Distribuído sob a licença **MIT**. Livre para uso pessoal, corporativo e modificações.

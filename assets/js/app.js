@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLiquidoModule();
     initCltPjModule();
     initGlossarioModal();
+    initDesafiosModule();
     aplicarParametrosUrl();
 });
 
@@ -82,27 +83,37 @@ function initPWA() {
         const { outcome } = await deferredPrompt.userChoice;
         if (outcome === 'accepted') {
             pwaBtn.classList.add('hidden');
-            showToast('Aplicativo instalado com sucesso!', '📱');
+            showToast('Aplicativo instalado com sucesso!', 'success');
         }
         deferredPrompt = null;
     });
 
     window.addEventListener('appinstalled', () => {
         pwaBtn?.classList.add('hidden');
-        showToast('RHUB pronto para uso offline!', '✓');
+        showToast('RHUB pronto para uso offline!', 'success');
     });
 }
 
 // ═══════════════════════════════════════════════════════════════════════
 //  FEEDBACK VISUAL — TOAST
 // ═══════════════════════════════════════════════════════════════════════
-function showToast(msg, icon = '✓') {
+const TOAST_ICONS = {
+    success: `<svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`,
+    error: `<svg class="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`,
+    info: `<svg class="w-4 h-4 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+    link: `<svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>`,
+    download: `<svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`
+};
+
+function showToast(msg, type = 'success') {
     const toast = document.getElementById('rhubToast');
     const msgEl = document.getElementById('toastMsg');
     const iconEl = document.getElementById('toastIcon');
     if (!toast) return;
     if (msgEl) msgEl.textContent = msg;
-    if (iconEl) iconEl.textContent = icon;
+    if (iconEl) {
+        iconEl.innerHTML = TOAST_ICONS[type] || TOAST_ICONS.success;
+    }
     toast.classList.add('show');
     clearTimeout(toast._timer);
     toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
@@ -289,7 +300,7 @@ function initHistoryDrawer() {
 
     btnExportBackup?.addEventListener('click', () => {
         const ok = exportarBackupJSON();
-        if (ok) showToast('Backup JSON exportado com sucesso!', '💾');
+        if (ok) showToast('Backup JSON exportado com sucesso!', 'download');
     });
 
     inputImportBackup?.addEventListener('change', (e) => {
@@ -300,9 +311,9 @@ function initHistoryDrawer() {
             const res = importarBackupJSON(evt.target?.result);
             if (res.success) {
                 renderHistory();
-                showToast(res.message, '✓');
+                showToast(res.message, 'success');
             } else {
-                showToast(res.message, '✕');
+                showToast(res.message, 'error');
             }
         };
         reader.readAsText(file);
@@ -336,7 +347,7 @@ function restaurarSimulacao(item) {
                 el.dispatchEvent(new Event('change'));
             }
         });
-        showToast(`Simulação de ${item.titulo} restaurada!`, '📋');
+        showToast(`Simulação de ${item.titulo} restaurada!`, 'info');
     }
 }
 
@@ -681,8 +692,8 @@ function initRescisaoModule() {
             if (r.saqueFGTS || r.seguroDesemprego) {
                 const info = document.createElement('div');
                 info.className = 'flex flex-wrap gap-2 mt-4';
-                if (r.saqueFGTS) info.innerHTML += `<span class="px-2.5 py-1 text-[10px] font-bold rounded-full bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-100 dark:border-blue-500/20">✓ Direito ao Saque FGTS</span>`;
-                if (r.seguroDesemprego) info.innerHTML += `<span class="px-2.5 py-1 text-[10px] font-bold rounded-full bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400 border border-violet-100 dark:border-violet-500/20">✓ Seguro-Desemprego</span>`;
+                if (r.saqueFGTS) info.innerHTML += `<span class="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold rounded-full bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-100 dark:border-blue-500/20">Direito ao Saque FGTS</span>`;
+                if (r.seguroDesemprego) info.innerHTML += `<span class="inline-flex items-center gap-1 px-2.5 py-1 text-[10px] font-bold rounded-full bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400 border border-violet-100 dark:border-violet-500/20">Direito a Seguro-Desemprego</span>`;
                 list.appendChild(info);
             }
 
@@ -769,8 +780,8 @@ Saque FGTS: ${currentResult.saqueFGTS ? 'SIM' : 'NÃO'} | Seguro-Desemprego: ${c
                         </div>
 
                         <div class="mt-3 space-y-1 text-[11px] text-slate-500 dark:text-slate-400">
-                            <p>Saque FGTS: <strong class="${c.saqueFGTS ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'}">${c.saqueFGTS ? '✓ Permitido' : '✕ Bloqueado'}</strong></p>
-                            <p>Seguro-Desemp.: <strong class="${c.seguroDesemprego ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500'}">${c.seguroDesemprego ? '✓ Permitido' : '✕ Não tem'}</strong></p>
+                            <p>Saque FGTS: <strong class="${c.saqueFGTS ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'}">${c.saqueFGTS ? 'Permitido' : 'Bloqueado'}</strong></p>
+                            <p>Seguro-Desemp.: <strong class="${c.seguroDesemprego ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'}">${c.seguroDesemprego ? 'Permitido' : 'Indisponível'}</strong></p>
                         </div>
                     </div>
 
@@ -842,8 +853,8 @@ function initFaltasModule() {
         if (box) {
             const imp = r.impactoFerias;
             box.innerHTML = imp.perdeuDireito
-                ? `<span class="font-bold text-red-600 dark:text-red-400">⚠ ${imp.label}</span>`
-                : `<span class="font-bold">📋 Art. 130 CLT:</span> ${imp.label}`;
+                ? `<span class="font-bold text-red-600 dark:text-red-400">${imp.label}</span>`
+                : `<span class="font-bold">Art. 130 CLT:</span> ${imp.label}`;
         }
 
         renderMemoria($('faltMemoriaContainer'), r.memoriaCalculo);
@@ -1351,7 +1362,7 @@ function copiarLinkCompartilhamento(moduloId) {
 
     const shareUrl = `${window.location.origin}${window.location.pathname}#${moduloId}?${params.toString()}`;
     copiarTextoClipboard(shareUrl);
-    showToast('Link da simulação copiado! Pronto para compartilhar.', '🔗');
+    showToast('Link da simulação copiado! Pronto para compartilhar.', 'link');
 }
 
 function aplicarParametrosUrl() {
@@ -1468,9 +1479,9 @@ function initCltPjModule() {
         if ($('cltPjResVereditoSimulado')) {
             const diff = r.pjSimulado.diferencaVsPoderCompraClt;
             if (diff >= 0) {
-                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-emerald-400 font-bold">✓ PJ ganha +${formatCurrency(diff)}/mês (+${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
+                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-emerald-400 font-bold">PJ mais vantajoso: +${formatCurrency(diff)}/mês (+${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
             } else {
-                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-rose-400 font-bold">✕ CLT ganha +${formatCurrency(Math.abs(diff))}/mês (${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
+                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-rose-400 font-bold">CLT mais vantajosa: +${formatCurrency(Math.abs(diff))}/mês (${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
             }
         }
 
@@ -1722,5 +1733,153 @@ function initGlossarioModal() {
     modal?.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
 
     searchInput?.addEventListener('input', e => renderGlossario(e.target.value));
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MODAL: CENTRAL DE DESAFIOS DE CRIAÇÃO & ISSUES GITHUB
+// ═══════════════════════════════════════════════════════════════════════
+function initDesafiosModule() {
+    const modal = document.getElementById('desafiosModal');
+    const btnOpen = document.getElementById('topBtnDesafios');
+    const btnClose = document.getElementById('closeDesafiosModal');
+
+    const tabPropor = document.getElementById('tabBtnProporDesafio');
+    const tabMural = document.getElementById('tabBtnMuralDesafios');
+    const viewPropor = document.getElementById('viewProporDesafio');
+    const viewMural = document.getElementById('viewMuralDesafios');
+
+    const inputTitulo = document.getElementById('desafioTitulo');
+    const selectCategoria = document.getElementById('desafioCategoria');
+    const inputBaseLegal = document.getElementById('desafioBaseLegal');
+    const inputAutor = document.getElementById('desafioAutor');
+    const textareaDescricao = document.getElementById('desafioDescricao');
+
+    const btnAbrirIssue = document.getElementById('btnAbrirIssueGitHub');
+    const btnCopiarTemplate = document.getElementById('btnCopiarTemplateDesafio');
+    const btnSalvarRascunho = document.getElementById('btnSalvarRascunhoDesafio');
+
+    // Alternância de Abas
+    function ativarAba(aba) {
+        if (aba === 'propor') {
+            viewPropor?.classList.remove('hidden');
+            viewMural?.classList.add('hidden');
+            tabPropor?.classList.add('bg-indigo-600', 'text-white');
+            tabPropor?.classList.remove('bg-slate-100', 'text-slate-600', 'dark:bg-slate-800', 'dark:text-slate-400');
+            tabMural?.classList.remove('bg-indigo-600', 'text-white');
+            tabMural?.classList.add('bg-slate-100', 'text-slate-600', 'dark:bg-slate-800', 'dark:text-slate-400');
+        } else {
+            viewPropor?.classList.add('hidden');
+            viewMural?.classList.remove('hidden');
+            tabMural?.classList.add('bg-indigo-600', 'text-white');
+            tabMural?.classList.remove('bg-slate-100', 'text-slate-600', 'dark:bg-slate-800', 'dark:text-slate-400');
+            tabPropor?.classList.remove('bg-indigo-600', 'text-white');
+            tabPropor?.classList.add('bg-slate-100', 'text-slate-600', 'dark:bg-slate-800', 'dark:text-slate-400');
+        }
+    }
+
+    tabPropor?.addEventListener('click', () => ativarAba('propor'));
+    tabMural?.addEventListener('click', () => ativarAba('mural'));
+
+    // Geração do corpo Markdown formatado
+    function gerarCorpoMarkdown() {
+        const titulo = inputTitulo?.value.trim() || 'Nova Proposta de Módulo ou Regra CLT';
+        const categoria = selectCategoria?.value || 'Novo Módulo de Cálculo (CLT)';
+        const baseLegal = inputBaseLegal?.value.trim() || 'Legislação Trabalhista / CLT';
+        const autor = inputAutor?.value.trim() || 'Comunidade RHUB';
+        const descricao = textareaDescricao?.value.trim() || 'Descrição pendente.';
+
+        return {
+            tituloIssue: `[Desafio de Criação]: ${titulo}`,
+            corpoMarkdown: `### Proposta de Novo Desafio / Funcionalidade — RHUB
+
+**Título do Desafio:** ${titulo}  
+**Categoria:** ${categoria}  
+**Base Legal / Artigo CLT:** ${baseLegal}  
+**Autor da Sugestão:** ${autor}  
+
+---
+
+#### Descrição Detalhada e Regras de Negócio:
+${descricao}
+
+---
+*Enviado através da Central de Desafios de Criação do RHUB (https://kalicon.github.io/RHUB/)*`
+        };
+    }
+
+    // Ação: Abrir Issue no GitHub Oficial (Kalicon/RHUB)
+    btnAbrirIssue?.addEventListener('click', () => {
+        const titulo = inputTitulo?.value.trim();
+        const desc = textareaDescricao?.value.trim();
+
+        if (!titulo) {
+            showToast('Por favor, informe um título para o desafio.', 'error');
+            inputTitulo?.focus();
+            return;
+        }
+
+        if (!desc) {
+            showToast('Descreva a regra de cálculo ou caso de uso.', 'error');
+            textareaDescricao?.focus();
+            return;
+        }
+
+        const { tituloIssue, corpoMarkdown } = gerarCorpoMarkdown();
+        const repoUrl = 'https://github.com/Kalicon/RHUB/issues/new';
+        const params = new URLSearchParams({
+            title: tituloIssue,
+            body: corpoMarkdown,
+            labels: 'desafio-criacao,enhancement'
+        });
+
+        const targetUrl = `${repoUrl}?${params.toString()}`;
+        window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        showToast('Redirecionando para abrir Issue oficial no GitHub!', 'link');
+    });
+
+    // Ação: Copiar Template Markdown
+    btnCopiarTemplate?.addEventListener('click', () => {
+        const { corpoMarkdown } = gerarCorpoMarkdown();
+        copiarTextoClipboard(corpoMarkdown);
+        showToast('Modelo copiado para a área de transferência!', 'success');
+    });
+
+    // Ação: Salvar Rascunho Local
+    btnSalvarRascunho?.addEventListener('click', () => {
+        const rascunho = {
+            titulo: inputTitulo?.value || '',
+            categoria: selectCategoria?.value || '',
+            baseLegal: inputBaseLegal?.value || '',
+            autor: inputAutor?.value || '',
+            descricao: textareaDescricao?.value || ''
+        };
+        localStorage.setItem('rhub_desafio_rascunho', JSON.stringify(rascunho));
+        showToast('Rascunho salvo no seu navegador!', 'info');
+    });
+
+    // Carregar rascunho salvo se existir
+    function carregarRascunho() {
+        try {
+            const raw = localStorage.getItem('rhub_desafio_rascunho');
+            if (!raw) return;
+            const r = JSON.parse(raw);
+            if (inputTitulo && r.titulo) inputTitulo.value = r.titulo;
+            if (selectCategoria && r.categoria) selectCategoria.value = r.categoria;
+            if (inputBaseLegal && r.baseLegal) inputBaseLegal.value = r.baseLegal;
+            if (inputAutor && r.autor) inputAutor.value = r.autor;
+            if (textareaDescricao && r.descricao) textareaDescricao.value = r.descricao;
+        } catch (_) {}
+    }
+
+    // Abertura e Fechamento do Modal
+    btnOpen?.addEventListener('click', () => {
+        carregarRascunho();
+        modal?.classList.remove('hidden');
+        ativarAba('propor');
+        inputTitulo?.focus();
+    });
+
+    btnClose?.addEventListener('click', () => modal?.classList.add('hidden'));
+    modal?.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
 }
 
