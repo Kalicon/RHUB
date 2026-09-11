@@ -9,6 +9,7 @@ import { calcularRescisao, MOTIVOS_RESCISAO, compararCenariosRescisao } from './
 import { calcularFaltas } from './modules/faltas.js';
 import { calcularFerias, calcular13o } from './modules/ferias.js';
 import { calcularSalarioLiquido } from './modules/liquido.js';
+import { calcularCustosCltPj } from './modules/clt_pj.js';
 import { formatCurrency, formatNumber, formatHoursMinutes, parseCurrency } from './utils/formatters.js';
 import {
     exportarNoturnoExcel,
@@ -16,6 +17,7 @@ import {
     exportarFaltasExcel,
     exportarFeriasExcel,
     exportarLiquidoExcel,
+    exportarCltPjExcel,
     copiarTextoClipboard
 } from './utils/exporter.js';
 import {
@@ -24,7 +26,9 @@ import {
     getHistoricoCalculos,
     adicionarAoHistorico,
     removerDoHistorico,
-    limparHistorico
+    limparHistorico,
+    exportarBackupJSON,
+    importarBackupJSON
 } from './utils/storage.js';
 
 // Registros globais de handlers por módulo para a Top Bar
@@ -47,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaltasModule();
     initFeriasModule();
     initLiquidoModule();
+    initCltPjModule();
+    initGlossarioModal();
+    aplicarParametrosUrl();
 });
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -277,6 +284,31 @@ function initHistoryDrawer() {
         }
     });
 
+    const btnExportBackup = document.getElementById('btnExportarBackupJson');
+    const inputImportBackup = document.getElementById('inputImportarBackupJson');
+
+    btnExportBackup?.addEventListener('click', () => {
+        const ok = exportarBackupJSON();
+        if (ok) showToast('Backup JSON exportado com sucesso!', '💾');
+    });
+
+    inputImportBackup?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+            const res = importarBackupJSON(evt.target?.result);
+            if (res.success) {
+                renderHistory();
+                showToast(res.message, '✓');
+            } else {
+                showToast(res.message, '✕');
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+    });
+
     renderHistory();
 }
 
@@ -369,6 +401,7 @@ const MODULE_META = {
     faltas:   { title: 'Faltas e Atrasos',     badge: 'Art. 462 CLT' },
     ferias:   { title: 'Férias & 13º Salário', badge: 'Art. 129 CLT' },
     liquido:  { title: 'Salário Líquido',      badge: 'Art. 457 CLT' },
+    'clt-pj': { title: 'CLT vs. PJ & Custos',  badge: 'Estratégico' },
 };
 
 function initSPARouter() {
@@ -378,12 +411,13 @@ function initSPARouter() {
     const topBadge = document.getElementById('topBarBadge');
 
     function navigateTo(panelId) {
-        currentActiveModule = panelId;
+        const cleanPanelId = (panelId || 'noturno').split('?')[0];
+        currentActiveModule = cleanPanelId;
 
         // Hide all panels
         panels.forEach(p => p.classList.add('hidden'));
         // Show target
-        const target = document.getElementById(`panel-${panelId}`);
+        const target = document.getElementById(`panel-${cleanPanelId}`);
         if (target) {
             target.classList.remove('hidden');
             // GSAP entrance
@@ -392,7 +426,7 @@ function initSPARouter() {
 
         // Update sidebar active state
         links.forEach(l => {
-            const isActive = l.dataset.panel === panelId;
+            const isActive = l.dataset.panel === cleanPanelId;
             l.classList.toggle('bg-blue-50', isActive);
             l.classList.toggle('dark:bg-blue-500/10', isActive);
             l.classList.toggle('text-blue-700', isActive);
@@ -405,15 +439,17 @@ function initSPARouter() {
         });
 
         // Update top bar
-        const meta = MODULE_META[panelId] || MODULE_META.noturno;
+        const meta = MODULE_META[cleanPanelId] || MODULE_META.noturno;
         if (topTitle) topTitle.textContent = meta.title;
         if (topBadge) topBadge.textContent = meta.badge;
 
         // Atualizar cabeçalho da impressão
         atualizarHeaderImpressao(meta.title);
 
-        // Update URL hash
-        window.location.hash = panelId;
+        // Update URL hash without wiping query params if present
+        if (!window.location.hash.includes('?') && window.location.hash !== `#${cleanPanelId}`) {
+            window.location.hash = cleanPanelId;
+        }
 
         // Close mobile menu if open
         const sidebar = document.getElementById('sidebar');
@@ -428,13 +464,18 @@ function initSPARouter() {
     links.forEach(l => l.addEventListener('click', () => navigateTo(l.dataset.panel)));
 
     // Handle initial hash or default
-    const initialHash = window.location.hash.replace('#', '') || 'noturno';
+    const initialRaw = window.location.hash.replace('#', '') || 'noturno';
+    const initialHash = initialRaw.split('?')[0];
     navigateTo(MODULE_META[initialHash] ? initialHash : 'noturno');
 
     // Handle browser back/forward
     window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.replace('#', '');
-        if (MODULE_META[hash]) navigateTo(hash);
+        const raw = window.location.hash.replace('#', '');
+        const hash = raw.split('?')[0];
+        if (MODULE_META[hash]) {
+            navigateTo(hash);
+            aplicarParametrosUrl();
+        }
     });
 }
 
@@ -559,6 +600,7 @@ TOTAL GERAL DE PROVENTOS: ${formatCurrency(currentResult.totalGeralProventos)}`;
     modulePrintHandlers.noturno = doPrint;
 
     $('btnExcelNoturno')?.addEventListener('click', exportExcel);
+    $('btnShareNoturno')?.addEventListener('click', () => copiarLinkCompartilhamento('noturno'));
     $('btnCopiarMemoria')?.addEventListener('click', copySummary);
     $('btnImprimir')?.addEventListener('click', doPrint);
 
@@ -738,6 +780,9 @@ Saque FGTS: ${currentResult.saqueFGTS ? 'SIM' : 'NÃO'} | Seguro-Desemprego: ${c
                     </div>`;
                 containerComparador.appendChild(card);
             });
+
+            // Renderiza o gráfico comparativo no modal de rescisão
+            renderChartRescisao(cenarios);
         }
 
         modalComparador?.classList.remove('hidden');
@@ -751,6 +796,7 @@ Saque FGTS: ${currentResult.saqueFGTS ? 'SIM' : 'NÃO'} | Seguro-Desemprego: ${c
     modulePrintHandlers.rescisao = doPrint;
 
     $('btnExcelRescisao')?.addEventListener('click', exportExcel);
+    $('btnShareRescisao')?.addEventListener('click', () => copiarLinkCompartilhamento('rescisao'));
     $('btnCopiarRescisao')?.addEventListener('click', copySummary);
     $('btnImprimirRescisao')?.addEventListener('click', doPrint);
 
@@ -848,6 +894,7 @@ Impacto Férias (Art. 130 CLT): ${currentResult.impactoFerias.label}`;
     modulePrintHandlers.faltas = doPrint;
 
     $('btnExcelFaltas')?.addEventListener('click', exportExcel);
+    $('btnShareFaltas')?.addEventListener('click', () => copiarLinkCompartilhamento('faltas'));
     $('btnCopiarFaltas')?.addEventListener('click', copySummary);
     $('btnImprimirFaltas')?.addEventListener('click', doPrint);
 
@@ -948,6 +995,7 @@ TOTAL LÍQUIDO A RECEBER: ${formatCurrency(currentFeriasResult.liquidoFerias + c
     modulePrintHandlers.ferias = doPrint;
 
     $('btnExcelFerias')?.addEventListener('click', exportExcel);
+    $('btnShareFerias')?.addEventListener('click', () => copiarLinkCompartilhamento('ferias'));
     $('btnCopiarFerias')?.addEventListener('click', copySummary);
     $('btnImprimirFerias')?.addEventListener('click', doPrint);
 
@@ -1052,6 +1100,7 @@ function initLiquidoModule() {
         }
 
         renderMemoria($('liqMemoriaContainer'), r.memoriaCalculo);
+        renderChartLiquido(r.totalBruto, r.inss.valor, r.irrf.valor, r.totalDescontos - r.inss.valor - r.irrf.valor, r.salarioLiquido);
         prev = { liquido: r.salarioLiquido, bruto: r.totalBruto, descontos: r.totalDescontos, fgts: r.fgtsMes };
     }
 
@@ -1105,6 +1154,7 @@ Depósito FGTS (8% - Empresa): ${formatCurrency(currentResult.fgtsMes)}`;
     modulePrintHandlers.liquido = doPrint;
 
     $('btnExcelLiquido')?.addEventListener('click', exportExcel);
+    $('btnShareLiquido')?.addEventListener('click', () => copiarLinkCompartilhamento('liquido'));
     $('btnCopiarLiquido')?.addEventListener('click', copySummary);
     $('btnImprimirLiquido')?.addEventListener('click', doPrint);
 
@@ -1116,3 +1166,561 @@ Depósito FGTS (8% - Empresa): ${formatCurrency(currentResult.fgtsMes)}`;
     });
     calc();
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  GRÁFICOS VISUAIS INTERATIVOS (CHART.JS)
+// ═══════════════════════════════════════════════════════════════════════
+let chartLiquido = null;
+let chartRescisao = null;
+let chartCltPj = null;
+
+function renderChartLiquido(bruto, inss, irrf, outrosDescontos, liquido) {
+    const canvas = document.getElementById('chartLiquidoComposicao');
+    if (!canvas || typeof window.Chart === 'undefined') return;
+
+    if (chartLiquido) chartLiquido.destroy();
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+
+    chartLiquido = new window.Chart(canvas, {
+        type: 'doughnut',
+        data: {
+            labels: ['Salário Líquido', 'INSS', 'IRRF', 'Benefícios/Outros'],
+            datasets: [{
+                data: [liquido, inss, irrf, Math.max(0, outrosDescontos)],
+                backgroundColor: ['#14b8a6', '#f43f5e', '#f59e0b', '#8b5cf6'],
+                borderWidth: 2,
+                borderColor: isDark ? '#0f172a' : '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: textColor, boxWidth: 10, font: { size: 10, family: 'Inter' } }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.label}: ${formatCurrency(ctx.raw)} (${((ctx.raw / (bruto || 1)) * 100).toFixed(1)}%)`
+                    }
+                }
+            },
+            cutout: '68%'
+        }
+    });
+}
+
+function renderChartRescisao(cenarios) {
+    const canvas = document.getElementById('chartRescisaoCenarios');
+    if (!canvas || typeof window.Chart === 'undefined') return;
+
+    if (chartRescisao) chartRescisao.destroy();
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+    const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    chartRescisao = new window.Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: cenarios.map(c => c.tag),
+            datasets: [
+                {
+                    label: 'Líquido do Empregado',
+                    data: cenarios.map(c => c.liquido),
+                    backgroundColor: '#10b981',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Custo Total da Empresa',
+                    data: cenarios.map(c => c.custoEmpresa),
+                    backgroundColor: '#f43f5e',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { color: textColor, font: { size: 11 } } },
+                tooltip: { callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.raw)}` } }
+            },
+            scales: {
+                x: { ticks: { color: textColor, font: { size: 10 } }, grid: { display: false } },
+                y: { ticks: { color: textColor, callback: v => 'R$ ' + (v/1000).toFixed(0) + 'k' }, grid: { color: gridColor } }
+            }
+        }
+    });
+}
+
+function renderChartCltPj(empresaClt, poderCompraClt, liquidoPj, faturamentoPj) {
+    const canvas = document.getElementById('chartCltPjComparativo');
+    if (!canvas || typeof window.Chart === 'undefined') return;
+
+    if (chartCltPj) chartCltPj.destroy();
+
+    const isDark = document.documentElement.classList.contains('dark');
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+    const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+    chartCltPj = new window.Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: ['Desembolso Empresa', 'Rendimento do Profissional'],
+            datasets: [
+                {
+                    label: 'Modelo CLT',
+                    data: [empresaClt, poderCompraClt],
+                    backgroundColor: '#6366f1',
+                    borderRadius: 6
+                },
+                {
+                    label: 'Modelo PJ',
+                    data: [faturamentoPj, liquidoPj],
+                    backgroundColor: '#10b981',
+                    borderRadius: 6
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top', labels: { color: textColor, font: { size: 11 } } },
+                tooltip: { callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatCurrency(ctx.raw)}` } }
+            },
+            scales: {
+                x: { ticks: { color: textColor }, grid: { display: false } },
+                y: { ticks: { color: textColor, callback: v => 'R$ ' + (v/1000).toFixed(0) + 'k' }, grid: { color: gridColor } }
+            }
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  DEEP LINKING (COMPARTILHAMENTO DE SIMULAÇÃO POR LINK)
+// ═══════════════════════════════════════════════════════════════════════
+function copiarLinkCompartilhamento(moduloId) {
+    const $ = id => document.getElementById(id);
+    const params = new URLSearchParams();
+    params.set('mod', moduloId);
+
+    if (moduloId === 'noturno') {
+        params.set('salario', parseCurrency($('inputSalarioBase')?.value || '0'));
+        params.set('horas', $('inputHorasNoturnas')?.value || '0');
+        params.set('divisor', $('selectDivisor')?.value || '220');
+        params.set('adic', $('inputPercentual')?.value || '20');
+    } else if (moduloId === 'rescisao') {
+        params.set('salario', parseCurrency($('rescSalario')?.value || '0'));
+        params.set('motivo', $('rescMotivo')?.value || 'sem_justa_causa');
+        params.set('adm', $('rescDataAdm')?.value || '');
+        params.set('dem', $('rescDataDem')?.value || '');
+        params.set('dias', $('rescDiasTrab')?.value || '30');
+        params.set('fgts', parseCurrency($('rescSaldoFGTS')?.value || '0'));
+        params.set('aviso', $('rescTipoAviso')?.value || 'indenizado');
+    } else if (moduloId === 'faltas') {
+        params.set('salario', parseCurrency($('faltSalario')?.value || '0'));
+        params.set('dias', $('faltDias')?.value || '0');
+        params.set('horas', $('faltHorasAtraso')?.value || '0');
+        params.set('dsr', $('faltDSR')?.value || '0');
+    } else if (moduloId === 'ferias') {
+        params.set('salario', parseCurrency($('ferSalario')?.value || '0'));
+        params.set('dias', $('ferDias')?.value || '30');
+        params.set('abono', $('ferAbono')?.checked ? '1' : '0');
+        params.set('dobro', $('ferDobro')?.checked ? '1' : '0');
+        params.set('meses13', $('fer13Meses')?.value || '12');
+    } else if (moduloId === 'liquido') {
+        params.set('salario', parseCurrency($('liqSalario')?.value || '0'));
+        params.set('he50', $('liqHE50')?.value || '0');
+        params.set('he100', $('liqHE100')?.value || '0');
+        params.set('dep', $('liqDependentes')?.value || '0');
+        params.set('vt', $('liqOptanteVT')?.checked ? '1' : '0');
+        params.set('vr', parseCurrency($('liqVR')?.value || '0'));
+        params.set('saude', parseCurrency($('liqSaude')?.value || '0'));
+    } else if (moduloId === 'clt-pj') {
+        params.set('salario', parseCurrency($('cltPjSalarioBase')?.value || '0'));
+        params.set('regime', $('cltPjRegimeEmpresa')?.value || 'simples');
+        params.set('dep', $('cltPjDependentes')?.value || '0');
+        params.set('proposto', parseCurrency($('cltPjFaturamentoProposto')?.value || '0'));
+        params.set('aliq', $('cltPjAliqSimples')?.value || '6');
+    }
+
+    const shareUrl = `${window.location.origin}${window.location.pathname}#${moduloId}?${params.toString()}`;
+    copiarTextoClipboard(shareUrl);
+    showToast('Link da simulação copiado! Pronto para compartilhar.', '🔗');
+}
+
+function aplicarParametrosUrl() {
+    const $ = id => document.getElementById(id);
+    const rawHash = window.location.hash.replace('#', '');
+    if (!rawHash.includes('?')) return;
+
+    const [panelId, queryStr] = rawHash.split('?');
+    const params = new URLSearchParams(queryStr);
+
+    if (panelId === 'noturno') {
+        if (params.has('salario') && $('inputSalarioBase')) $('inputSalarioBase').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('horas') && $('inputHorasNoturnas')) $('inputHorasNoturnas').value = params.get('horas');
+        if (params.has('divisor') && $('selectDivisor')) $('selectDivisor').value = params.get('divisor');
+        if (params.has('adic') && $('inputPercentual')) $('inputPercentual').value = params.get('adic');
+        $('inputSalarioBase')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'rescisao') {
+        if (params.has('salario') && $('rescSalario')) $('rescSalario').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('motivo') && $('rescMotivo')) $('rescMotivo').value = params.get('motivo');
+        if (params.has('adm') && $('rescDataAdm')) $('rescDataAdm').value = params.get('adm');
+        if (params.has('dem') && $('rescDataDem')) $('rescDataDem').value = params.get('dem');
+        if (params.has('dias') && $('rescDiasTrab')) $('rescDiasTrab').value = params.get('dias');
+        if (params.has('fgts') && $('rescSaldoFGTS')) $('rescSaldoFGTS').value = formatNumber(Number(params.get('fgts')), 2);
+        if (params.has('aviso') && $('rescTipoAviso')) $('rescTipoAviso').value = params.get('aviso');
+        $('rescSalario')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'faltas') {
+        if (params.has('salario') && $('faltSalario')) $('faltSalario').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('dias') && $('faltDias')) $('faltDias').value = params.get('dias');
+        if (params.has('horas') && $('faltHorasAtraso')) $('faltHorasAtraso').value = params.get('horas');
+        if (params.has('dsr') && $('faltDSR')) $('faltDSR').value = params.get('dsr');
+        $('faltSalario')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'ferias') {
+        if (params.has('salario') && $('ferSalario')) $('ferSalario').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('dias') && $('ferDias')) $('ferDias').value = params.get('dias');
+        if (params.has('abono') && $('ferAbono')) $('ferAbono').checked = params.get('abono') === '1';
+        if (params.has('dobro') && $('ferDobro')) $('ferDobro').checked = params.get('dobro') === '1';
+        if (params.has('meses13') && $('fer13Meses')) $('fer13Meses').value = params.get('meses13');
+        $('ferSalario')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'liquido') {
+        if (params.has('salario') && $('liqSalario')) $('liqSalario').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('he50') && $('liqHE50')) $('liqHE50').value = params.get('he50');
+        if (params.has('he100') && $('liqHE100')) $('liqHE100').value = params.get('he100');
+        if (params.has('dep') && $('liqDependentes')) $('liqDependentes').value = params.get('dep');
+        if (params.has('vt') && $('liqOptanteVT')) $('liqOptanteVT').checked = params.get('vt') === '1';
+        if (params.has('vr') && $('liqVR')) $('liqVR').value = formatNumber(Number(params.get('vr')), 2);
+        if (params.has('saude') && $('liqSaude')) $('liqSaude').value = formatNumber(Number(params.get('saude')), 2);
+        $('liqSalario')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'clt-pj') {
+        if (params.has('salario') && $('cltPjSalarioBase')) $('cltPjSalarioBase').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('regime') && $('cltPjRegimeEmpresa')) $('cltPjRegimeEmpresa').value = params.get('regime');
+        if (params.has('dep') && $('cltPjDependentes')) $('cltPjDependentes').value = params.get('dep');
+        if (params.has('proposto') && $('cltPjFaturamentoProposto')) $('cltPjFaturamentoProposto').value = formatNumber(Number(params.get('proposto')), 2);
+        if (params.has('aliq') && $('cltPjAliqSimples')) $('cltPjAliqSimples').value = params.get('aliq');
+        $('cltPjSalarioBase')?.dispatchEvent(new Event('input'));
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 6: SIMULADOR CLT VS. PJ & CUSTOS
+// ═══════════════════════════════════════════════════════════════════════
+function initCltPjModule() {
+    const $ = id => document.getElementById(id);
+    let currentResult = null;
+    let currentParams = null;
+    let prev = { custoEmpresa: 0, poderCompraClt: 0, liquidoPj: 0, breakEven: 0 };
+
+    function getParams() {
+        const salario = parseCurrency($('cltPjSalarioBase')?.value || '6000');
+        const regime = $('cltPjRegimeEmpresa')?.value || 'simples';
+        const dependentes = Math.max(0, parseInt($('cltPjDependentes')?.value, 10) || 0);
+        const rat = Math.max(1, Math.min(3, parseFloat($('cltPjRat')?.value) || 2));
+        const fap = Math.max(0.5, Math.min(2, parseFloat($('cltPjFap')?.value) || 1.0));
+        const vrVa = parseCurrency($('cltPjVrVa')?.value || '0');
+        const saude = parseCurrency($('cltPjSaude')?.value || '0');
+        const proposto = parseCurrency($('cltPjFaturamentoProposto')?.value || '0');
+        const aliqSimples = parseFloat($('cltPjAliqSimples')?.value) || 6;
+        const contador = parseCurrency($('cltPjContador')?.value || '200');
+
+        return {
+            salarioBase: salario,
+            regimeTributario: regime,
+            aliquotaRat: rat,
+            fap: fap,
+            aliquotaTerceiros: 5.8,
+            dependentesIrrf: dependentes,
+            beneficios: {
+                vrVa: vrVa,
+                saude: saude
+            },
+            aliquotaSimplesPj: aliqSimples,
+            custoContadorPj: contador,
+            faturamentoPjInformado: proposto
+        };
+    }
+
+    function calc() {
+        currentParams = getParams();
+        currentResult = calcularCustosCltPj(currentParams);
+        const r = currentResult;
+
+        // Animação GSAP nos cards de KPI
+        animarContador($('cltPjResCustoEmpresa'), prev.custoEmpresa, r.empresaClt.custoTotalMensal);
+        animarContador($('cltPjResPoderCompraClt'), prev.poderCompraClt, r.trabalhadorClt.poderCompraTotalMensal);
+        animarContador($('cltPjResLiquidoPj'), prev.liquidoPj, r.pjSimulado.liquidoRealNoBolso);
+        animarContador($('cltPjResBreakEven'), prev.breakEven, r.pjBreakEven.faturamentoNecessario);
+
+        // Subtítulos informativos
+        if ($('cltPjResMultiplicadorEmpresa')) {
+            $('cltPjResMultiplicadorEmpresa').textContent = `${(r.empresaClt.multiplicadorCusto * 100).toFixed(1)}% do salário base (${r.parametros.regimeTributario === 'simples' ? 'Simples Nacional' : 'Lucro Presumido'})`;
+        }
+        if ($('cltPjResMultiplicadorBreakEven')) {
+            $('cltPjResMultiplicadorBreakEven').textContent = `Mínimo de ${r.pjBreakEven.multiplicadorSalario.toFixed(2)}x o salário CLT`;
+        }
+        if ($('cltPjResVereditoSimulado')) {
+            const diff = r.pjSimulado.diferencaVsPoderCompraClt;
+            if (diff >= 0) {
+                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-emerald-400 font-bold">✓ PJ ganha +${formatCurrency(diff)}/mês (+${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
+            } else {
+                $('cltPjResVereditoSimulado').innerHTML = `<span class="text-rose-400 font-bold">✕ CLT ganha +${formatCurrency(Math.abs(diff))}/mês (${r.pjSimulado.percentualDiferenca.toFixed(1)}%)</span>`;
+            }
+        }
+
+        // Tabela Comparativa
+        const corpo = $('cltPjTabelaCorpo');
+        if (corpo) {
+            corpo.innerHTML = `
+                <tr>
+                    <td class="py-2.5 font-medium text-slate-700 dark:text-slate-300">Desembolso da Empresa</td>
+                    <td class="py-2.5 font-mono text-rose-500 font-bold">${formatCurrency(r.empresaClt.custoTotalMensal)} /mês</td>
+                    <td class="py-2.5 font-mono text-slate-900 dark:text-white font-bold">${formatCurrency(r.pjSimulado.faturamentoBruto)} /mês</td>
+                    <td class="py-2.5 ${r.empresaClt.custoTotalMensal > r.pjSimulado.faturamentoBruto ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}">
+                        ${r.empresaClt.custoTotalMensal > r.pjSimulado.faturamentoBruto ? `PJ economiza empresa em ${formatCurrency(r.empresaClt.custoTotalMensal - r.pjSimulado.faturamentoBruto)}/mês` : `CLT custa menos para a empresa`}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 font-medium text-slate-700 dark:text-slate-300">Salário / Pró-labore em Conta</td>
+                    <td class="py-2.5 font-mono text-slate-900 dark:text-white">${formatCurrency(r.trabalhadorClt.salarioLiquidoEmFolha)}</td>
+                    <td class="py-2.5 font-mono text-slate-900 dark:text-white">${formatCurrency(r.pjSimulado.proLaboreLiquido)}</td>
+                    <td class="py-2.5 text-slate-400">Mensal direto em conta corrente</td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 font-medium text-slate-700 dark:text-slate-300">Tributos / Retenções</td>
+                    <td class="py-2.5 font-mono text-red-500">− ${formatCurrency(r.trabalhadorClt.inss + r.trabalhadorClt.irrf)} (INSS/IR)</td>
+                    <td class="py-2.5 font-mono text-red-500">− ${formatCurrency(r.pjSimulado.dasSimples + r.pjSimulado.inssProLabore + r.pjSimulado.irrfProLabore)} (DAS + IRPF)</td>
+                    <td class="py-2.5 text-slate-400">Carga tributária pessoa física + PJ</td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 font-medium text-slate-700 dark:text-slate-300">Benefícios & FGTS (Patrimônio)</td>
+                    <td class="py-2.5 font-mono text-emerald-500">+ ${formatCurrency(r.trabalhadorClt.fgtsAcumuladoMensal + r.trabalhadorClt.beneficiosRecebidosMensal)}</td>
+                    <td class="py-2.5 font-mono text-slate-400">R$ 0,00 (Particular)</td>
+                    <td class="py-2.5 text-slate-400">FGTS 8% + VR/VA + Saúde</td>
+                </tr>
+                <tr class="bg-indigo-50/50 dark:bg-indigo-950/20 font-bold">
+                    <td class="py-3 text-slate-900 dark:text-white">Renda Líquida Efetiva Total</td>
+                    <td class="py-3 font-mono text-emerald-600 dark:text-emerald-400">${formatCurrency(r.trabalhadorClt.poderCompraTotalMensal)} /mês</td>
+                    <td class="py-3 font-mono text-indigo-600 dark:text-indigo-400">${formatCurrency(r.pjSimulado.liquidoRealNoBolso)} /mês</td>
+                    <td class="py-3 ${r.pjSimulado.isVantajosoPj ? 'text-emerald-500' : 'text-rose-500'}">
+                        ${r.pjSimulado.isVantajosoPj ? `PJ +${formatCurrency(r.pjSimulado.diferencaVsPoderCompraClt)}/mês` : `CLT +${formatCurrency(Math.abs(r.pjSimulado.diferencaVsPoderCompraClt))}/mês`}
+                    </td>
+                </tr>
+            `;
+        }
+
+        // Memória de cálculo
+        renderMemoria($('cltPjMemoriaPassos'), r.memoriaCalculo);
+
+        // Gráfico comparativo
+        renderChartCltPj(r.empresaClt.custoTotalMensal, r.trabalhadorClt.poderCompraTotalMensal, r.pjSimulado.liquidoRealNoBolso, r.pjSimulado.faturamentoBruto);
+
+        prev = {
+            custoEmpresa: r.empresaClt.custoTotalMensal,
+            poderCompraClt: r.trabalhadorClt.poderCompraTotalMensal,
+            liquidoPj: r.pjSimulado.liquidoRealNoBolso,
+            breakEven: r.pjBreakEven.faturamentoNecessario
+        };
+    }
+
+    function exportExcel() {
+        if (!currentResult) calc();
+        exportarCltPjExcel(currentResult);
+        showToast('Comparativo CLT vs. PJ exportado para Excel!');
+        adicionarAoHistorico({
+            modulo: 'clt-pj',
+            titulo: 'CLT vs. PJ & Custos',
+            resumoPrincipal: `Salário ${formatCurrency(currentParams.salarioBase)} vs PJ ${formatCurrency(currentResult.pjSimulado.faturamentoBruto)}`,
+            valorPrincipal: currentResult.pjSimulado.liquidoRealNoBolso,
+            params: {
+                cltPjSalarioBase: currentParams.salarioBase,
+                cltPjRegimeEmpresa: currentParams.regimeTributario,
+                cltPjDependentes: currentParams.dependentesIrrf,
+                cltPjFaturamentoProposto: currentParams.faturamentoPjInformado,
+                cltPjAliqSimples: currentParams.aliquotaSimplesPj
+            }
+        });
+    }
+
+    async function copySummary() {
+        if (!currentResult) calc();
+        const r = currentResult;
+        const texto = `RHUB — Comparativo CLT vs. PJ & Custos
+Salário CLT Base: ${formatCurrency(r.parametros.salarioBase)}
+Custo Mensal Empresa (CLT): ${formatCurrency(r.empresaClt.custoTotalMensal)} (${(r.empresaClt.multiplicadorCusto * 100).toFixed(1)}%)
+Poder de Compra Real CLT: ${formatCurrency(r.trabalhadorClt.poderCompraTotalMensal)} /mês
+Faturamento PJ Simulado: ${formatCurrency(r.pjSimulado.faturamentoBruto)} /mês
+Sobra Real no Bolso PJ: ${formatCurrency(r.pjSimulado.liquidoRealNoBolso)} /mês
+Equivalência Break-Even PJ: ${formatCurrency(r.pjBreakEven.faturamentoNecessario)} /mês (${r.pjBreakEven.multiplicadorSalario.toFixed(2)}x)
+Diagnóstico: ${r.pjSimulado.isVantajosoPj ? `PJ é vantajoso em +${formatCurrency(r.pjSimulado.diferencaVsPoderCompraClt)}/mês` : `CLT é mais vantajoso em +${formatCurrency(Math.abs(r.pjSimulado.diferencaVsPoderCompraClt))}/mês`}`;
+        await copiarTextoClipboard(texto);
+        showToast('Resumo comparativo copiado com sucesso!');
+    }
+
+    function doPrint() {
+        atualizarHeaderImpressao('Simulador CLT vs. PJ & Custo Total do Empregado');
+        window.print();
+    }
+
+    moduleExportHandlers['clt-pj'] = exportExcel;
+    moduleCopyHandlers['clt-pj'] = copySummary;
+    modulePrintHandlers['clt-pj'] = doPrint;
+
+    $('btnCalcularCltPj')?.addEventListener('click', calc);
+    $('btnExcelCltPj')?.addEventListener('click', exportExcel);
+    $('btnShareCltPj')?.addEventListener('click', () => copiarLinkCompartilhamento('clt-pj'));
+    $('btnImprimirCltPj')?.addEventListener('click', doPrint);
+
+    // Regime change toggle
+    $('cltPjRegimeEmpresa')?.addEventListener('change', (e) => {
+        const area = $('cltPjEncargosPresumidoArea');
+        if (area) {
+            area.classList.toggle('hidden', e.target.value === 'simples');
+        }
+        calc();
+    });
+
+    ['cltPjSalarioBase','cltPjDependentes','cltPjRat','cltPjFap','cltPjVrVa','cltPjSaude','cltPjFaturamentoProposto','cltPjAliqSimples','cltPjContador']
+        .forEach(id => {
+            const el = $(id);
+            if (el) {
+                el.addEventListener('input', calc);
+                el.addEventListener('change', calc);
+            }
+        });
+
+    ['cltPjSalarioBase','cltPjVrVa','cltPjSaude','cltPjFaturamentoProposto','cltPjContador'].forEach(id => {
+        $(id)?.addEventListener('blur', e => {
+            const v = parseCurrency(e.target.value);
+            if (v > 0) e.target.value = formatNumber(v, 2);
+        });
+    });
+
+    calc();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MODAL: GUIA & GLOSSÁRIO CLT
+// ═══════════════════════════════════════════════════════════════════════
+function initGlossarioModal() {
+    const modal = document.getElementById('glossarioModal');
+    const btnOpen = document.getElementById('topBtnGlossario');
+    const btnClose = document.getElementById('closeGlossarioModal');
+    const searchInput = document.getElementById('glossarioSearchInput');
+    const container = document.getElementById('glossarioCardsList');
+
+    const ARTIGOS_CLT = [
+        {
+            artigo: 'Art. 58, § 1º da CLT',
+            categoria: 'Ponto & Jornada',
+            titulo: 'Tolerância de Ponto (5 a 10 minutos)',
+            resumo: 'Não serão descontadas nem computadas como jornada extraordinária as variações de horário no registro de ponto não excedentes de 5 minutos, observado o limite máximo de 10 minutos diários.',
+            impacto: 'Evita descontos indevidos por atrasos mínimos e horas extras acidentais na entrada/saída.'
+        },
+        {
+            artigo: 'Art. 73 da CLT',
+            categoria: 'Adicional Noturno',
+            titulo: 'Hora Noturna Ficta e Adicional Mínimo de 20%',
+            resumo: 'O trabalho noturno (22h às 05h no urbano) tem hora computada como de 52 minutos e 30 segundos (fator 1,142857) e remuneração com acréscimo de no mínimo 20% sobre a hora diurna.',
+            impacto: 'Cada 7 horas de relógio trabalhadas no período noturno equivalem a 8 horas pagas na folha.'
+        },
+        {
+            artigo: 'Súmula 172 do TST',
+            categoria: 'DSR / Repouso',
+            titulo: 'Reflexo de Horas Extras e Noturno no DSR',
+            resumo: 'Computam-se no cálculo do repouso remunerado as horas extraordinárias e o adicional noturno habitualmente prestados (Lei nº 605/49).',
+            impacto: 'Fórmula: (Total Adicional ÷ Dias Úteis) × Dias de Repouso (Domingos e Feriados do mês).'
+        },
+        {
+            artigo: 'Art. 130 da CLT',
+            categoria: 'Férias',
+            titulo: 'Tabela Progressiva de Perda de Férias por Faltas',
+            resumo: 'Até 5 faltas no período aquisitivo: 30 dias de férias. De 6 a 14 faltas: 24 dias. De 15 a 23 faltas: 18 dias. De 24 a 32 faltas: 12 dias. Mais de 32 faltas: perda total do direito.',
+            impacto: 'Faltas injustificadas reduzem tanto o descanso quanto a remuneração de férias e 1/3.'
+        },
+        {
+            artigo: 'Art. 143 da CLT',
+            categoria: 'Férias',
+            titulo: 'Abono Pecuniário ("Venda" de Férias)',
+            resumo: 'É facultado ao empregado converter 1/3 do período de férias a que tiver direito em abono pecuniário, no valor da remuneração que lhe seria devida nos dias correspondentes.',
+            impacto: 'Permite converter até 10 dias de férias em dinheiro, recebendo os 10 dias trabalhados mais o abono.'
+        },
+        {
+            artigo: 'Art. 477 da CLT',
+            categoria: 'Rescisão',
+            titulo: 'Prazo Único para Pagamento das Verbas Rescisórias',
+            resumo: 'A entrega ao empregado de documentos comprobatórios e o pagamento dos valores rescisórios devem ser efetuados em até 10 (dez) dias corridos a contar do término do contrato.',
+            impacto: 'O descumprimento gera multa de 1 salário nominal do colaborador a seu favor (Art. 477, § 8º).'
+        },
+        {
+            artigo: 'Art. 484-A da CLT',
+            categoria: 'Rescisão',
+            titulo: 'Rescisão por Acordo Mútuo (Reforma Trabalhista)',
+            resumo: 'O contrato pode ser extinto por acordo: o aviso prévio indenizado e a multa rescisória do FGTS são devidos pela metade (20% de multa). O trabalhador saca até 80% do FGTS, sem direito a seguro-desemprego.',
+            impacto: 'Modalidade legal que substitui o antigo acordo informal de devolução de multa de 40%.'
+        },
+        {
+            artigo: 'Lei nº 12.506/2011',
+            categoria: 'Aviso Prévio',
+            titulo: 'Aviso Prévio Proporcional ao Tempo de Serviço',
+            resumo: 'Ao aviso prévio de 30 dias serão acrescidos 3 dias por ano de serviço prestado na mesma empresa, até o máximo de 60 dias adicionais, perfazendo um total de até 90 dias.',
+            impacto: 'Colaborador com 3 anos de casa tem direito a 39 dias de aviso prévio indenizado.'
+        }
+    ];
+
+    function renderGlossario(filtro = '') {
+        if (!container) return;
+        container.innerHTML = '';
+        const termo = filtro.trim().toLowerCase();
+
+        const filtrados = ARTIGOS_CLT.filter(item => 
+            item.artigo.toLowerCase().includes(termo) ||
+            item.titulo.toLowerCase().includes(termo) ||
+            item.categoria.toLowerCase().includes(termo) ||
+            item.resumo.toLowerCase().includes(termo) ||
+            item.impacto.toLowerCase().includes(termo)
+        );
+
+        if (filtrados.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-8 text-slate-400">
+                    <p class="text-xs">Nenhum artigo encontrado para "<strong>${filtro}</strong>"</p>
+                </div>`;
+            return;
+        }
+
+        filtrados.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5';
+            card.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20">${item.categoria}</span>
+                    <span class="text-xs font-mono font-bold text-slate-900 dark:text-white">${item.artigo}</span>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white">${item.titulo}</h4>
+                <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">${item.resumo}</p>
+                <div class="pt-1.5 border-t border-slate-200/60 dark:border-slate-700/60">
+                    <p class="text-[10px] text-indigo-600 dark:text-indigo-400"><strong>Aplicação no RHUB:</strong> ${item.impacto}</p>
+                </div>`;
+            container.appendChild(card);
+        });
+    }
+
+    btnOpen?.addEventListener('click', () => {
+        modal?.classList.remove('hidden');
+        renderGlossario();
+        searchInput?.focus();
+    });
+
+    btnClose?.addEventListener('click', () => modal?.classList.add('hidden'));
+    modal?.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    searchInput?.addEventListener('input', e => renderGlossario(e.target.value));
+}
+

@@ -339,7 +339,82 @@ export function exportarLiquidoExcel(params, res) {
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// 6. UTILITÁRIO: COPIAR RESUMO PARA ÁREA DE TRANSFERÊNCIA
+// 6. EXPORTAÇÃO EXCEL: SIMULADOR CLT VS. PJ & CUSTOS
+// ─────────────────────────────────────────────────────────────────────
+export function exportarCltPjExcel(resultado) {
+    const linhas = [
+        ['RHUB — SISTEMA DE DEPARTAMENTO PESSOAL & CLT BRASILEIRA'],
+        ['RELATÓRIO COMPARATIVO: CONTRATAÇÃO CLT VS. PRESTAÇÃO DE SERVIÇOS PJ'],
+        [`Data da Apuração: ${getDataHoraAtual()}`],
+        ['Base Legal: CLT, Lei 8.036/90 (FGTS), Lei 8.212/91 e LC 123/2006 (Simples Nacional)'],
+        ['-----------------------------------------------------------------------------------------']
+    ];
+
+    injetarDadosCorporativos(linhas);
+
+    const p = resultado.parametros;
+    const emp = resultado.empresaClt;
+    const trab = resultado.trabalhadorClt;
+    const pj = resultado.pjSimulado;
+    const be = resultado.pjBreakEven;
+
+    linhas.push(
+        ['═══ 1. PARÂMETROS DA SIMULAÇÃO ═══', '', '', ''],
+        ['Salário Base CLT Nominal', formatCurrency(p.salarioBase), 'Regime da Empresa', p.regimeTributario === 'simples' ? 'Simples Nacional (Isento Cota Patronal)' : 'Lucro Presumido / Real'],
+        ['Dependentes IRRF', p.dependentes, 'Benefícios Mensais Empresa', formatCurrency(p.totalBeneficiosEmpresa)],
+        ['Alíquota Simples PJ', `${p.aliquotaSimplesPj}%`, 'Faturamento PJ Simulado', formatCurrency(p.faturamentoPjSimulado)],
+        ['', '', '', ''],
+        ['═══ 2. CUSTO TOTAL DA EMPRESA (CONTRATAÇÃO CLT) ═══', '', '', ''],
+        ['Item de Custo', 'Valor Mensal', '% do Salário Base', 'Detalhamento'],
+        ['Salário Base Contratual', formatCurrency(emp.salarioBase), '100,0%', 'Remuneração nominal em carteira'],
+        ['FGTS Mensal (8%)', formatCurrency(emp.fgtsMensal), '8,0%', 'Depósito mensal obrigatório'],
+        ['Provisão de 13º Salário (1/12)', formatCurrency(emp.provisao13), '8,3%', 'Provisão mensal acumulada'],
+        ['Provisão de Férias e 1/3 (1/12 + 1/36)', formatCurrency(emp.provisaoFerias + emp.provisaoTercoFerias), '11,1%', 'Provisão de descanso remunerado'],
+        ['FGTS s/ Provisões (13º e Férias)', formatCurrency(emp.fgtsSobreProvisoes), '1,6%', 'Incidência de 8% sobre provisões'],
+        ['Encargos Patronais (INSS 20% + RAT + Terceiros)', formatCurrency(emp.totalEncargosPatronais + emp.encargosSobreProvisoes), p.regimeTributario === 'simples' ? '0,0% (Isento)' : '27,8%+', 'Previdência patronal e Sistema S'],
+        ['Benefícios Concedidos (VR/VA, Saúde, etc.)', formatCurrency(emp.beneficiosEmpresa), '-', 'Auxílios e seguros corporativos'],
+        ['CUSTO TOTAL MENSAL EMPRESA', formatCurrency(emp.custoTotalMensal), `${(emp.multiplicadorCusto * 100).toFixed(1)}%`, 'Desembolso total mensal'],
+        ['CUSTO TOTAL ANUALIZADO', formatCurrency(emp.custoTotalAnual), '', '12 meses consolidados'],
+        ['', '', '', ''],
+        ['═══ 3. PODER DE COMPRA REAL DO TRABALHADOR CLT ═══', '', '', ''],
+        ['Direito / Provento', 'Valor Mensal Equivalente', 'Observação', ''],
+        ['Salário Líquido em Folha (Conta Corrente)', formatCurrency(trab.salarioLiquidoEmFolha), 'Após INSS e IRRF 2024', ''],
+        ['13º Salário Líquido Mensalizado', formatCurrency(trab.decimoTerceiroLiquidoMensal), '1/12 do 13º líquido', ''],
+        ['Adicional de Férias Líquido Mensalizado', formatCurrency(trab.adicionalFeriasLiquidoMensal), '1/12 do adicional de férias líquido', ''],
+        ['FGTS Acumulado (Patrimônio)', formatCurrency(trab.fgtsAcumuladoMensal), '8% depositado mensalmente', ''],
+        ['Benefícios Líquidos Recebidos', formatCurrency(trab.beneficiosRecebidosMensal), 'VR, VA, Saúde pagos pela empresa', ''],
+        ['PODER DE COMPRA MENSAL CONSOLIDADO', formatCurrency(trab.poderCompraTotalMensal), 'Totalidade de rendimentos e patrimônio', ''],
+        ['', '', '', ''],
+        ['═══ 4. CENÁRIO PRESTAÇÃO DE SERVIÇOS PJ ═══', '', '', ''],
+        ['Rubrica PJ', 'Valor Simulado', 'Detalhamento Fiscal / Operacional', ''],
+        ['Faturamento Bruto Mensal', formatCurrency(pj.faturamentoBruto), 'Emissão de Nota Fiscal de Serviços', ''],
+        ['DAS Simples Nacional', formatCurrency(pj.dasSimples), `Alíquota aplicada de ${p.aliquotaSimplesPj}%`, ''],
+        ['Pró-Labore Bruto', formatCurrency(pj.proLaboreBruto), 'Definido para conformidade Fator R', ''],
+        ['INSS s/ Pró-Labore (11%)', formatCurrency(pj.inssProLabore), 'Contribuição previdenciária individual', ''],
+        ['IRRF s/ Pró-Labore', formatCurrency(pj.irrfProLabore), 'Retenção na fonte tabela progressiva', ''],
+        ['Distribuição de Lucros Isenta', formatCurrency(pj.distribuicaoLucros), 'Livre de impostos para sócio/titular', ''],
+        ['Custo com Contabilidade PJ', formatCurrency(pj.custoContabilidade), 'Honorários contábeis mensais', ''],
+        ['Benefícios Pagos por Conta Própria', formatCurrency(pj.custoBeneficiosProprios), 'Plano de saúde / alimentação particular', ''],
+        ['SOBRA LÍQUIDA REAL NO BOLSO (PJ)', formatCurrency(pj.liquidoRealNoBolso), 'Renda disponível real do profissional', ''],
+        ['', '', '', ''],
+        ['═══ 5. DIAGNÓSTICO & EQUIVALÊNCIA ═══', '', '', ''],
+        ['Faturamento PJ para Empatar (Break-Even)', formatCurrency(be.faturamentoNecessario), `${be.multiplicadorSalario.toFixed(2)}x o salário base CLT`, ''],
+        ['Diferença Mensal (PJ Simulado vs CLT)', formatCurrency(pj.diferencaVsPoderCompraClt), pj.isVantajosoPj ? 'PJ é mais vantajoso' : 'CLT é mais vantajoso', ''],
+        ['Percentual de Diferença', `${pj.percentualDiferenca.toFixed(1)}%`, '', ''],
+        ['', '', '', ''],
+        ['═══ 6. MEMÓRIA DE CÁLCULO AUDITÁVEL ═══', '', '', ''],
+        ['Passo', 'Título', 'Fórmula', 'Resultado']
+    );
+
+    resultado.memoriaCalculo.forEach(m => {
+        linhas.push([`Passo ${m.passo}: ${m.titulo}`, m.formula, m.detalhe, m.resultado]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_Comparativo_CLT_vs_PJ_${new Date().toISOString().split('T')[0]}`, 'CLT vs PJ');
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 7. UTILITÁRIO: COPIAR RESUMO PARA ÁREA DE TRANSFERÊNCIA
 // ─────────────────────────────────────────────────────────────────────
 export async function copiarTextoClipboard(texto) {
     try {

@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════
  */
 
-const CACHE_NAME = 'rhub-pwa-v1';
+const CACHE_NAME = 'rhub-pwa-v2';
 
 const CORE_ASSETS = [
     './',
@@ -18,6 +18,7 @@ const CORE_ASSETS = [
     './assets/js/modules/faltas.js',
     './assets/js/modules/ferias.js',
     './assets/js/modules/liquido.js',
+    './assets/js/modules/clt_pj.js',
     './assets/js/modules/tabelas.js',
     './assets/js/utils/formatters.js',
     './assets/js/utils/validators.js',
