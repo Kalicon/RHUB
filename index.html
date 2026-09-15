@@ -54,7 +54,20 @@
         </div>
 
         <nav class="flex-1 py-4 px-3 overflow-y-auto">
-            <p class="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-600">Módulos</p>
+            <!-- Grupo: Gestão de Pessoas & Dossiê -->
+            <p class="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-blue-600 dark:text-blue-400">Gestão de Pessoas</p>
+
+            <button data-panel="colaboradores" id="sidebarBtnColaboradores" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-3 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-blue-600/10 dark:bg-blue-600/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-bold text-slate-800 dark:text-slate-100">Colaboradores</span>
+                    <span id="badgeContadorColaboradores" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300">0</span>
+                </div>
+            </button>
+
+            <p class="px-3 mb-2 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 dark:text-slate-600">Cálculos & Simuladores</p>
 
             <button data-panel="noturno" class="sidebar-link active relative w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
                 <div class="nav-active-indicator"></div>
@@ -268,6 +281,160 @@
             </div>
 
             <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 0: GESTÃO & CADASTRO DE COLABORADORES   -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-colaboradores" class="module-panel hidden">
+                <!-- Hero Card -->
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#0b132b 0%,#1c2541 50%,#1e1b4b 100%)">
+                    <div class="orb" style="background:#3b82f6;width:200px;height:200px;top:-40px;right:-30px;filter:blur(70px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="orb" style="background:#6366f1;width:180px;height:180px;bottom:-40px;left:10%;filter:blur(60px);opacity:0.2;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1.5">
+                                    <span class="px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">Dossiê Digital</span>
+                                    <span class="text-xs text-slate-400">Banco Local IndexedDB · 100% LGPD</span>
+                                </div>
+                                <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Gestão Central de Colaboradores</h2>
+                                <p class="text-xs sm:text-sm text-slate-300 max-w-xl">Cadastro completo de funcionários integrado automaticamente à Folha em Lote, emissão de Holerite em PDF, controle de férias e cálculo rescisório.</p>
+                            </div>
+
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button id="btnExportarBackupColaboradores" title="Salvar cópia de segurança em JSON" class="px-3 py-2 rounded-xl text-xs font-semibold bg-white/10 text-white hover:bg-white/20 border border-white/15 transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    <span>Backup JSON</span>
+                                </button>
+                                <button id="btnRestaurarBackupColaboradores" title="Restaurar backup a partir de JSON" class="px-3 py-2 rounded-xl text-xs font-semibold bg-white/10 text-white hover:bg-white/20 border border-white/15 transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12"/></svg>
+                                    <span>Restaurar</span>
+                                </button>
+                                <input type="file" id="inputRestaurarBackupColaboradores" accept=".json" class="hidden" />
+
+                                <button id="btnAbrirNovoColaborador" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/30 transition-all flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                    <span>Novo Colaborador</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stat Cards Consolidados -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="stat-card bg-white/[0.05] backdrop-blur-sm rounded-xl p-3.5 border border-white/[0.08]">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Total Cadastrado</p>
+                                <p id="statTotalColaboradores" class="text-2xl font-black font-mono text-white leading-none">0</p>
+                                <span class="text-[10px] text-slate-400 mt-1 block">colaboradores no banco</span>
+                            </div>
+                            <div class="stat-card bg-white/[0.05] backdrop-blur-sm rounded-xl p-3.5 border border-white/[0.08]">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 mb-1">Colaboradores Ativos</p>
+                                <p id="statColaboradoresAtivos" class="text-2xl font-black font-mono text-emerald-400 leading-none">0</p>
+                                <span class="text-[10px] text-slate-400 mt-1 block">em atividade regular</span>
+                            </div>
+                            <div class="stat-card bg-white/[0.05] backdrop-blur-sm rounded-xl p-3.5 border border-white/[0.08]">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-amber-400 mb-1">Férias & Afastados</p>
+                                <p id="statColaboradoresFeriasAfastados" class="text-2xl font-black font-mono text-amber-400 leading-none">0</p>
+                                <span class="text-[10px] text-slate-400 mt-1 block">licenças ou descanso</span>
+                            </div>
+                            <div class="stat-card bg-white/[0.05] backdrop-blur-sm rounded-xl p-3.5 border border-white/[0.08]">
+                                <p class="text-[10px] font-bold uppercase tracking-wider text-sky-400 mb-1">Massa Salarial Base</p>
+                                <p id="statMassaSalarial" class="text-2xl font-black font-mono text-sky-400 leading-none">R$ 0,00</p>
+                                <span class="text-[10px] text-slate-400 mt-1 block">folha bruta mensal ativa</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra de Busca, Filtros e Alternância de Visualização -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-4 mb-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+                    <div class="flex-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <!-- Campo de Busca -->
+                        <div class="relative flex-1">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                            <input type="text" id="buscaColaborador" placeholder="Buscar por nome, CPF, cargo ou matrícula..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+
+                        <!-- Filtro por Departamento -->
+                        <div class="sm:w-48">
+                            <select id="filtroDepartamentoColaborador" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="todos">Todos os Departamentos</option>
+                                <option value="Recursos Humanos">Recursos Humanos</option>
+                                <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                                <option value="Financeiro">Financeiro</option>
+                                <option value="Operações / Logística">Operações / Logística</option>
+                                <option value="Comercial & Vendas">Comercial & Vendas</option>
+                                <option value="Administrativo">Administrativo</option>
+                            </select>
+                        </div>
+
+                        <!-- Filtro por Status -->
+                        <div class="sm:w-40">
+                            <select id="filtroStatusColaborador" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="todos">Todos os Status</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Em Férias">Em Férias</option>
+                                <option value="Afastado">Afastado</option>
+                                <option value="Desligado">Desligado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Alternador Grid / Tabela -->
+                    <div class="flex items-center gap-1 self-end md:self-auto bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <button id="btnViewGridColaboradores" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm flex items-center gap-1 transition-all">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                            <span class="hidden sm:inline">Cards</span>
+                        </button>
+                        <button id="btnViewTabelaColaboradores" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-all">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+                            <span class="hidden sm:inline">Tabela</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estado Vazio (quando não houver resultados) -->
+                <div id="colaboradoresVazio" class="hidden bg-white dark:bg-slate-900 rounded-2xl p-12 border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500 mx-auto flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white mb-1">Nenhum colaborador encontrado</h3>
+                    <p class="text-xs text-slate-400 max-w-md mx-auto mb-5">Não há colaboradores correspondentes aos filtros aplicados ou cadastrados no momento.</p>
+                    <button id="btnCarregarDemoVazio" class="px-4 py-2 text-xs font-semibold rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/40 dark:text-blue-300 transition-all inline-flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        Carregar Colaboradores Demonstrativos
+                    </button>
+                </div>
+
+                <!-- Visualização em Grid (Cards) -->
+                <div id="colaboradoresGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mb-6">
+                    <!-- Cards inseridos dinamicamente pelo JavaScript -->
+                </div>
+
+                <!-- Visualização em Tabela -->
+                <div id="colaboradoresTabelaContainer" class="hidden bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-6">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-slate-400 font-bold uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-4 py-3">Colaborador</th>
+                                    <th class="px-4 py-3">Cargo / CBO</th>
+                                    <th class="px-4 py-3">Departamento</th>
+                                    <th class="px-4 py-3">Admissão</th>
+                                    <th class="px-4 py-3">Salário Base</th>
+                                    <th class="px-4 py-3 text-center">Status</th>
+                                    <th class="px-4 py-3 text-right">Ações Rápidas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="colaboradoresTabelaCorpo" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <!-- Linhas inseridas dinamicamente pelo JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════ -->
             <!--  PAINEL 1: ADICIONAL NOTURNO                  -->
             <!-- ══════════════════════════════════════════════ -->
             <section id="panel-noturno" class="module-panel">
@@ -369,6 +536,15 @@
                     <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
                         <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800"><h3 class="text-sm font-bold text-slate-900 dark:text-white">Dados da Rescisão</h3></div>
                         <form class="px-6 py-5 space-y-4" onsubmit="event.preventDefault();">
+                            <div class="p-3 rounded-xl bg-rose-50/70 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/40">
+                                <label class="block text-xs font-bold text-rose-700 dark:text-rose-300 mb-1 flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                    Puxar Colaborador do Cadastro
+                                </label>
+                                <select id="rescSelectColaborador" class="w-full px-3 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-rose-200 dark:border-rose-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-rose-500 transition-all cursor-pointer">
+                                    <option value="">-- Selecione para preencher automaticamente --</option>
+                                </select>
+                            </div>
                             <div><label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Salário Base</label><div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="rescSalario" value="3.300,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500/40 focus:border-rose-500 transition-all"></div></div>
                             <div><label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Motivo do Desligamento</label><select id="rescMotivo" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-rose-500/40 cursor-pointer transition-all"><option value="SEM_JUSTA_CAUSA">Dispensa Sem Justa Causa</option><option value="PEDIDO_DEMISSAO">Pedido de Demissão</option><option value="JUSTA_CAUSA">Justa Causa (Art. 482)</option><option value="ACORDO_MUTUO">Acordo Mútuo (Art. 484-A)</option></select></div>
                             <div class="grid grid-cols-2 gap-3">
@@ -1223,6 +1399,10 @@
                                 <p id="outLoteCustoTotal" class="text-4xl sm:text-5xl font-black font-mono text-cyan-400 tracking-tight leading-none">R$ 0,00</p>
                             </div>
                             <div class="flex flex-wrap gap-2">
+                                <button id="btnLotePuxarCadastro" class="px-3 py-2 rounded-xl text-xs font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                                    Puxar do Cadastro
+                                </button>
                                 <button id="btnLoteDemo" class="px-3 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
                                     <svg class="w-3.5 h-3.5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                                     Carregar Demonstração (8 Colab.)
@@ -1782,6 +1962,301 @@
         </div>
     </div>
 
-    <script type="module" src="assets/js/app.js?v=3.2"></script>
+    <!-- ═══ MODAL: CADASTRO & DOSSIÊ DO COLABORADOR (5 ABAS) ═══ -->
+    <div id="modalColaborador" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 rhub-modal-backdrop">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-3xl w-full max-h-[92vh] flex flex-col overflow-hidden rhub-modal-content">
+            
+            <!-- Cabeçalho do Modal -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    </div>
+                    <div>
+                        <h3 id="modalColaboradorTitulo" class="text-base font-bold text-slate-900 dark:text-white">Dossiê Digital do Colaborador</h3>
+                        <p class="text-[11px] text-slate-400">Ficha funcional cadastral, documentos e jornada de trabalho</p>
+                    </div>
+                </div>
+                <button id="closeModalColaborador" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Barra de Abas de Navegação do Formulário -->
+            <div class="px-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 shrink-0 flex items-center gap-1 overflow-x-auto text-xs">
+                <button type="button" class="colab-tab-btn active px-3 py-2.5 font-bold border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 flex items-center gap-1.5 transition-all" data-tab-target="tabColabPessoal">
+                    <span>1. Pessoal</span>
+                </button>
+                <button type="button" class="colab-tab-btn px-3 py-2.5 font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border-b-2 border-transparent transition-all" data-tab-target="tabColabDocs">
+                    <span>2. Documentos</span>
+                </button>
+                <button type="button" class="colab-tab-btn px-3 py-2.5 font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border-b-2 border-transparent transition-all" data-tab-target="tabColabContrato">
+                    <span>3. Contrato & Cargo</span>
+                </button>
+                <button type="button" class="colab-tab-btn px-3 py-2.5 font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border-b-2 border-transparent transition-all" data-tab-target="tabColabBeneficios">
+                    <span>4. Benefícios & Encargos</span>
+                </button>
+                <button type="button" class="colab-tab-btn px-3 py-2.5 font-semibold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white border-b-2 border-transparent transition-all" data-tab-target="tabColabEscala">
+                    <span>5. Jornada & Escala</span>
+                </button>
+            </div>
+
+            <!-- Corpo com Formulário Scrollável -->
+            <form id="formColaborador" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <input type="hidden" id="colabId" value="" />
+
+                <!-- ── ABA 1: DADOS PESSOAIS ─────────────────── -->
+                <div id="tabColabPessoal" class="colab-tab-content space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nome Completo *</label>
+                            <input type="text" id="colabNome" required placeholder="Ex: Alice Ayako Hori" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Matrícula Interna *</label>
+                            <input type="text" id="colabMatricula" required placeholder="Ex: RH-001" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data de Nascimento</label>
+                            <input type="date" id="colabNascimento" value="1990-01-01" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Sexo</label>
+                            <select id="colabSexo" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="Feminino">Feminino</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Estado Civil</label>
+                            <select id="colabEstadoCivil" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="Solteiro(a)">Solteiro(a)</option>
+                                <option value="Casado(a)">Casado(a)</option>
+                                <option value="União Estável">União Estável</option>
+                                <option value="Divorciado(a)">Divorciado(a)</option>
+                                <option value="Viúvo(a)">Viúvo(a)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">E-mail Corporativo / Pessoal</label>
+                            <input type="email" id="colabEmail" placeholder="nome@empresa.com.br" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Telefone / WhatsApp</label>
+                            <input type="text" id="colabTelefone" placeholder="(11) 99999-9999" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Endereço Residencial Completo</label>
+                        <input type="text" id="colabEndereco" placeholder="Rua, número, complemento, bairro, cidade - UF" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                    </div>
+                </div>
+
+                <!-- ── ABA 2: DOCUMENTOS OFICIAIS ───────────── -->
+                <div id="tabColabDocs" class="colab-tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">CPF (Cadastro de Pessoas Físicas) *</label>
+                            <input type="text" id="colabCpf" required placeholder="000.000.000-00" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                            <span id="colabCpfFeedback" class="text-[10px] font-medium mt-1 block text-slate-400">Validação com algoritmo oficial da Receita</span>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">PIS / PASEP / NIT</label>
+                            <input type="text" id="colabPis" placeholder="000.00000.00-0" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">RG (Registro Geral)</label>
+                            <input type="text" id="colabRg" placeholder="00.000.000-0 SSP/SP" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Título de Eleitor</label>
+                            <input type="text" id="colabTituloEleitor" placeholder="12 dígitos" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Carteira de Trabalho (CTPS - Número, Série e UF)</label>
+                        <input type="text" id="colabCtps" placeholder="Ex: 12345 / 0012 SP" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                    </div>
+                </div>
+
+                <!-- ── ABA 3: CONTRATO & CARGO ──────────────── -->
+                <div id="tabColabContrato" class="colab-tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Data de Admissão *</label>
+                            <input type="date" id="colabAdmissao" required value="2024-01-01" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Funcional</label>
+                            <select id="colabStatus" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="Ativo">Ativo</option>
+                                <option value="Em Férias">Em Férias</option>
+                                <option value="Afastado">Afastado</option>
+                                <option value="Desligado">Desligado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Tipo de Contrato</label>
+                            <select id="colabTipoContrato" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="CLT Indeterminado">CLT Indeterminado</option>
+                                <option value="Experiência (45 dias)">Experiência (45 dias)</option>
+                                <option value="Experiência (90 dias)">Experiência (90 dias)</option>
+                                <option value="Estágio">Estágio (Lei 11.788)</option>
+                                <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Departamento / Setor *</label>
+                            <select id="colabDepartamento" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="Recursos Humanos">Recursos Humanos</option>
+                                <option value="Tecnologia da Informação">Tecnologia da Informação</option>
+                                <option value="Financeiro">Financeiro</option>
+                                <option value="Operações / Logística">Operações / Logística</option>
+                                <option value="Comercial & Vendas">Comercial & Vendas</option>
+                                <option value="Administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Cargo / Função *</label>
+                            <input type="text" id="colabCargo" required placeholder="Ex: Analista de Recursos Humanos" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Código CBO Oficial</label>
+                            <input type="text" id="colabCbo" placeholder="Ex: 2524-05" value="4110-10" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Salário Base Mensal (R$) *</label>
+                            <input type="number" id="colabSalarioBase" required step="0.01" min="0" placeholder="Ex: 3500.00" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Divisor de Horas</label>
+                            <select id="colabDivisor" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="220">220h (Jornada 44h sem.)</option>
+                                <option value="200">200h (Jornada 40h sem.)</option>
+                                <option value="180">180h (Jornada 36h sem.)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ABA 4: BENEFÍCIOS & ENCARGOS ─────────── -->
+                <div id="tabColabBeneficios" class="colab-tab-content hidden space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Dependentes p/ Dedução de IRRF</label>
+                            <input type="number" id="colabDependentesIR" min="0" max="20" value="0" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                            <span class="text-[10px] text-slate-400 mt-1 block">R$ 189,59 de dedução legal por dependente</span>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Filhos menores de 14 anos (Salário Família)</label>
+                            <input type="number" id="colabFilhosSalFamilia" min="0" max="20" value="0" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                            <span class="text-[10px] text-slate-400 mt-1 block">R$ 62,04 por filho para salários até R$ 1.819,26</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-bold text-slate-800 dark:text-slate-200">Optante por Vale-Transporte (VT)</p>
+                                <p class="text-[10px] text-slate-400">Desconto limitado a 6% do salário base (Lei 7.418/85)</p>
+                            </div>
+                            <label class="relative inline-flex cursor-pointer">
+                                <input type="checkbox" id="colabOptanteVT" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-slate-300 dark:bg-slate-600 rounded-full peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:shadow-sm after:transition-all peer-checked:after:translate-x-4 transition-colors"></div>
+                            </label>
+                        </div>
+                        <div id="colabDivCustoVT" class="pt-2 border-t border-slate-200 dark:border-slate-700/60 flex items-center justify-between gap-3">
+                            <span class="text-[11px] text-slate-500 dark:text-slate-400">Gasto diário com tarifas de transporte (R$):</span>
+                            <input type="number" id="colabCustoDiarioVT" step="0.10" value="9.60" class="w-28 px-2.5 py-1 text-xs rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-right font-mono text-slate-900 dark:text-white" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Adicional de Insalubridade</label>
+                            <select id="colabInsalubridade" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="0">Não possui insalubridade (0%)</option>
+                                <option value="10">Grau Mínimo (10% sobre SM)</option>
+                                <option value="20">Grau Médio (20% sobre SM)</option>
+                                <option value="40">Grau Máximo (40% sobre SM)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+                            <div>
+                                <p class="text-xs font-bold text-slate-800 dark:text-slate-200">Periculosidade (30%)</p>
+                                <p class="text-[10px] text-slate-400">Art. 193 CLT sobre salário base</p>
+                            </div>
+                            <label class="relative inline-flex cursor-pointer">
+                                <input type="checkbox" id="colabPericulosidade" class="sr-only peer">
+                                <div class="w-9 h-5 bg-slate-300 dark:bg-slate-600 rounded-full peer-checked:bg-rose-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:shadow-sm after:transition-all peer-checked:after:translate-x-4 transition-colors"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ABA 5: JORNADA & ESCALA ──────────────── -->
+                <div id="tabColabEscala" class="colab-tab-content hidden space-y-4">
+                    <div class="p-3.5 rounded-xl bg-blue-50/60 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
+                        <p class="text-xs font-bold text-blue-800 dark:text-blue-300 mb-0.5">Parametrização de Escala & Ponto</p>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400">Defina a jornada padrão para integração com espelho de ponto e cálculo de horas noturnas.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="sm:col-span-3">
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Escala de Trabalho</label>
+                            <select id="colabEscala" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                                <option value="5x2">5x2 — Segunda a Sexta (folgas Sábado e Domingo)</option>
+                                <option value="6x1">6x1 — Comércio / Indústria (1 folga semanal)</option>
+                                <option value="12x36">12x36 — Plantão / Escala de Revezamento (Art. 59-A CLT)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Horário de Entrada</label>
+                            <input type="time" id="colabHorarioEntrada" value="08:00" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-mono" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Intervalo Refeição</label>
+                            <input type="time" id="colabIntervalo" value="01:00" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-mono" />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Horário de Saída</label>
+                            <input type="time" id="colabHorarioSaida" value="17:48" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-mono" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rodapé de Ações do Modal -->
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0">
+                    <button type="button" id="btnCancelarColaborador" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="btnSalvarColaborador" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/25 transition-all flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Salvar Colaborador
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/app.js?v=3.3"></script>
 </body>
 </html>

@@ -13,6 +13,15 @@ import { calcularEquiparacao } from '../assets/js/modules/equiparacao.js';
 import { processarFolhaLote, parsearCsvFolha } from '../assets/js/modules/folha_lote.js';
 import { calcularATS } from '../assets/js/data/cct_config.js';
 import { obterRubrica, listarTodasRubricas } from '../assets/js/data/esocial_rubricas.js';
+import {
+    validarCPF,
+    mascararCPF,
+    mascararPIS,
+    calcularTempoDeCasa,
+    verificarContratoExperiencia,
+    converterParaItemFolha,
+    converterParaItemHolerite
+} from '../assets/js/modules/colaboradores.js';
 
 describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
@@ -524,6 +533,100 @@ describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
             const todas = listarTodasRubricas();
             expect(todas.length).toBeGreaterThanOrEqual(10);
+        });
+    });
+
+    describe('15. Gestão de Colaboradores (Dossiê Digital, Validações & Conversores)', () => {
+        it('deve validar CPF com algoritmo oficial dos dois dígitos verificadores', () => {
+            // CPFs válidos conhecidos
+            expect(validarCPF('52998224725')).toBe(true);
+            expect(validarCPF('529.982.247-25')).toBe(true);
+            expect(validarCPF('12345678909')).toBe(true);
+
+            // CPFs com repetição inválida
+            expect(validarCPF('111.111.111-11')).toBe(false);
+            expect(validarCPF('000.000.000-00')).toBe(false);
+
+            // CPFs com dígito verificador incorreto
+            expect(validarCPF('529.982.247-00')).toBe(false);
+            expect(validarCPF('123.456.789-01')).toBe(false);
+            expect(validarCPF('')).toBe(false);
+            expect(validarCPF('123')).toBe(false);
+        });
+
+        it('deve mascarar corretamente CPF e PIS', () => {
+            expect(mascararCPF('52998224725')).toBe('529.982.247-25');
+            expect(mascararPIS('12345678901')).toBe('123.45678.90-1');
+        });
+
+        it('deve calcular o tempo de casa com precisão em anos, meses e dias', () => {
+            const tempo = calcularTempoDeCasa('2022-01-10', '2024-03-15');
+            expect(tempo.anos).toBe(2);
+            expect(tempo.meses).toBe(2);
+            expect(tempo.dias).toBe(5);
+            expect(tempo.textoFormatado).toContain('2 anos');
+            expect(tempo.textoFormatado).toContain('2 meses');
+            expect(tempo.textoFormatado).toContain('5 dias');
+        });
+
+        it('deve verificar o contrato de experiência e seus marcos de 45 e 90 dias', () => {
+            // Contrato indeterminado
+            const indet = verificarContratoExperiencia('2024-01-01', 'CLT Indeterminado');
+            expect(indet.emExperiencia).toBe(false);
+
+            // Contrato de experiência recente (ex: admitido há 10 dias)
+            const hoje = new Date();
+            const d10 = new Date(hoje.getTime() - 10 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+            const expRecente = verificarContratoExperiencia(d10, 'Experiência (45+45 dias)');
+            expect(expRecente.emExperiencia).toBe(true);
+            expect(expRecente.diasDecorridos).toBe(10);
+            expect(expRecente.diasPara45).toBe(35);
+            expect(expRecente.statusExperiencia).toContain('1º Período');
+        });
+
+        it('deve converter colaborador para item de folha em lote com todos os atributos', () => {
+            const c = {
+                id: 10,
+                matricula: 'RH-010',
+                nome: 'Carlos Silva',
+                cargo: 'Analista Financeiro',
+                departamento: 'Financeiro',
+                salarioBase: 5000,
+                dependentesIR: 2,
+                filhosSalarioFamilia: 1,
+                optanteVT: true,
+                custoDiarioVT: 9.60,
+                adicionalPericulosidade: true,
+                adicionalInsalubridade: '20'
+            };
+
+            const itemFolha = converterParaItemFolha(c);
+            expect(itemFolha.matricula).toBe('RH-010');
+            expect(itemFolha.salarioBase).toBe(5000);
+            expect(itemFolha.periculosidade).toBe(true);
+            expect(itemFolha.insalubridadePerc).toBe(20);
+            expect(itemFolha.dependentes).toBe(2);
+        });
+
+        it('deve converter colaborador para payload do holerite oficial com adicionais calculados', () => {
+            const c = {
+                id: 20,
+                matricula: 'RH-020',
+                nome: 'Mariana Costa',
+                cargo: 'Operadora de Produção',
+                salarioBase: 3000,
+                adicionalPericulosidade: true,
+                adicionalInsalubridade: '20'
+            };
+
+            const itemHolerite = converterParaItemHolerite(c, { razaoSocial: 'Fabrica Brasil S/A' }, 'Agosto / 2026');
+            expect(itemHolerite.colaborador.nome).toBe('Mariana Costa');
+            expect(itemHolerite.referencia).toBe('Agosto / 2026');
+            
+            const proventos = itemHolerite.proventos;
+            expect(proventos.some(p => p.codigo === '1000' && p.valor === 3000)).toBe(true);
+            expect(proventos.some(p => p.codigo === '1091' && p.valor === 900)).toBe(true);
+            expect(proventos.some(p => p.codigo === '1090' && p.valor === 282.40)).toBe(true);
         });
     });
 });

@@ -18,6 +18,26 @@ import { processarFolhaLote, gerarDemonstracaoFolha, parsearCsvFolha, gerarCsvTe
 import { construirHtmlHolerite, construirHtmlTRCT, baixarDocumentoPDF } from './utils/pdf_generator.js?v=3.2';
 import { listarTodasRubricas, renderizarBadgeEsocial, obterRubrica } from './data/esocial_rubricas.js?v=3.2';
 import { obterConfigCCT, salvarConfigCCT, restaurarPadraoCLT } from './data/cct_config.js?v=3.2';
+import {
+    salvarColaborador,
+    obterColaborador,
+    listarColaboradores,
+    removerColaborador,
+    obterMetricasQuadro,
+    carregarSementeSeVazio,
+    exportarBancoJSON,
+    restaurarBancoJSON,
+    COLABORADORES_SEMENTE
+} from './data/db.js?v=3.3';
+import {
+    validarCPF,
+    mascararCPF,
+    mascararPIS,
+    calcularTempoDeCasa,
+    verificarContratoExperiencia,
+    converterParaItemFolha,
+    converterParaItemHolerite
+} from './modules/colaboradores.js?v=3.3';
 import { formatCurrency, formatNumber, formatHoursMinutes, parseCurrency } from './utils/formatters.js';
 import {
     exportarNoturnoExcel,
@@ -60,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHistoryDrawer();
     initSPARouter();
     initTopBarActions();
+    initColaboradoresModule();
     initNoturnoModule();
     initRescisaoModule();
     initFaltasModule();
@@ -429,6 +450,7 @@ function initTopBarActions() {
 //  SPA ROUTER (Sidebar Navigation)
 // ═══════════════════════════════════════════════════════════════════════
 const MODULE_META = {
+    colaboradores:  { title: 'Gestão de Colaboradores',    badge: 'Dossiê Digital' },
     noturno:        { title: 'Adicional Noturno',          badge: 'Art. 73 CLT' },
     rescisao:       { title: 'Rescisão Contratual',        badge: 'Art. 477 CLT' },
     faltas:         { title: 'Faltas e Atrasos',           badge: 'Art. 462 CLT' },
@@ -552,6 +574,542 @@ function renderMemoria(container, passos) {
         container.appendChild(div);
     });
     if (window.gsap) gsap.fromTo(container.children, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 0: GESTÃO & CADASTRO DE COLABORADORES (DOSSIÊ DIGITAL)
+// ═══════════════════════════════════════════════════════════════════════
+function initColaboradoresModule() {
+    const $ = id => document.getElementById(id);
+    let modoVisualizacao = 'grid'; // 'grid' ou 'tabela'
+
+    async function atualizarMetricas() {
+        try {
+            const m = await obterMetricasQuadro();
+            if ($('statTotalColaboradores')) $('statTotalColaboradores').textContent = String(m.total);
+            if ($('statColaboradoresAtivos')) $('statColaboradoresAtivos').textContent = String(m.ativos);
+            if ($('statColaboradoresFeriasAfastados')) $('statColaboradoresFeriasAfastados').textContent = String(m.emFerias + m.afastados);
+            if ($('statMassaSalarial')) $('statMassaSalarial').textContent = formatCurrency(m.massaSalarial);
+            if ($('badgeContadorColaboradores')) $('badgeContadorColaboradores').textContent = String(m.ativos);
+        } catch (e) {
+            console.warn('Erro ao obter métricas de colaboradores:', e);
+        }
+    }
+
+    async function carregarColaboradores() {
+        try {
+            await carregarSementeSeVazio();
+
+            const busca = $('buscaColaborador')?.value || '';
+            const depto = $('filtroDepartamentoColaborador')?.value || 'todos';
+            const status = $('filtroStatusColaborador')?.value || 'todos';
+
+            const lista = await listarColaboradores({
+                busca,
+                departamento: depto,
+                status
+            });
+
+            const vazioEl = $('colaboradoresVazio');
+            const gridEl = $('colaboradoresGrid');
+            const tabContainer = $('colaboradoresTabelaContainer');
+
+            if (lista.length === 0) {
+                if (vazioEl) vazioEl.classList.remove('hidden');
+                if (gridEl) gridEl.innerHTML = '';
+                if (tabContainer) tabContainer.classList.add('hidden');
+            } else {
+                if (vazioEl) vazioEl.classList.add('hidden');
+                if (modoVisualizacao === 'grid') {
+                    if (gridEl) gridEl.classList.remove('hidden');
+                    if (tabContainer) tabContainer.classList.add('hidden');
+                    renderizarGrid(lista);
+                } else {
+                    if (gridEl) gridEl.classList.add('hidden');
+                    if (tabContainer) tabContainer.classList.remove('hidden');
+                    renderizarTabela(lista);
+                }
+            }
+
+            atualizarMetricas();
+            atualizarSelectRescisao();
+        } catch (e) {
+            console.error('Erro ao listar colaboradores:', e);
+        }
+    }
+
+    function renderizarGrid(colaboradores) {
+        const grid = $('colaboradoresGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        colaboradores.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all flex flex-col justify-between';
+
+            let statusBadge = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800';
+            if (c.status === 'Em Férias') statusBadge = 'bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 border-blue-200 dark:border-blue-800';
+            if (c.status === 'Afastado') statusBadge = 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400 border-amber-200 dark:border-amber-800';
+            if (c.status === 'Desligado') statusBadge = 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400 border-rose-200 dark:border-rose-800';
+
+            const iniciais = c.iniciais || c.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+            const bgCor = c.avatarBg || '#3b82f6';
+            const tempoCasa = calcularTempoDeCasa(c.admissao);
+
+            card.innerHTML = `
+                <div>
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-white text-sm shadow-md shrink-0" style="background:${bgCor}">
+                                ${iniciais}
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${c.nome}</h4>
+                                <span class="text-[11px] text-slate-400">${c.cargo || 'Função não def.'}</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full border ${statusBadge}">${c.status}</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 py-3 my-2 border-y border-slate-100 dark:border-slate-800/80 text-xs">
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">Matrícula</span>
+                            <span class="font-mono font-semibold text-slate-700 dark:text-slate-300">${c.matricula || '--'}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">Departamento</span>
+                            <span class="font-medium text-slate-700 dark:text-slate-300 truncate block">${c.departamento || '--'}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">Salário Base</span>
+                            <span class="font-mono font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(c.salarioBase || 0)}</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 block">Tempo de Casa</span>
+                            <span class="text-slate-600 dark:text-slate-400">${tempoCasa.textoFormatado}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex items-center justify-between gap-1.5 mt-2">
+                    <div class="flex items-center gap-1">
+                        <button class="btn-holerite-colab p-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors" title="Gerar Holerite em PDF" data-id="${c.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </button>
+                        <button class="btn-rescisao-colab p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors" title="Simular Rescisão deste colaborador" data-id="${c.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button class="btn-editar-colab px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-id="${c.id}">
+                            Editar
+                        </button>
+                        <button class="btn-excluir-colab p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors" title="Excluir Colaborador" data-id="${c.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        vincularEventosCardsETabela();
+    }
+
+    function renderizarTabela(colaboradores) {
+        const corpo = $('colaboradoresTabelaCorpo');
+        if (!corpo) return;
+        corpo.innerHTML = '';
+
+        colaboradores.forEach(c => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors';
+
+            const bgCor = c.avatarBg || '#3b82f6';
+            const iniciais = c.iniciais || c.nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+
+            let statusBadge = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400';
+            if (c.status === 'Em Férias') statusBadge = 'bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400';
+            if (c.status === 'Afastado') statusBadge = 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-400';
+            if (c.status === 'Desligado') statusBadge = 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400';
+
+            const admFormatada = c.admissao ? c.admissao.split('-').reverse().join('/') : '--';
+
+            tr.innerHTML = `
+                <td class="px-4 py-3">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-xl flex items-center justify-center font-bold text-white text-xs shrink-0" style="background:${bgCor}">
+                            ${iniciais}
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 dark:text-white leading-tight">${c.nome}</p>
+                            <span class="text-[10px] text-slate-400 font-mono">${c.matricula || '--'} &bull; ${c.cpf || '--'}</span>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-4 py-3 text-slate-700 dark:text-slate-300">
+                    <p class="font-medium">${c.cargo || '--'}</p>
+                    <span class="text-[10px] text-slate-400 font-mono">CBO ${c.cbo || '--'}</span>
+                </td>
+                <td class="px-4 py-3 text-slate-600 dark:text-slate-400">${c.departamento || '--'}</td>
+                <td class="px-4 py-3 font-mono text-slate-600 dark:text-slate-400">${admFormatada}</td>
+                <td class="px-4 py-3 font-mono font-bold text-emerald-600 dark:text-emerald-400">${formatCurrency(c.salarioBase || 0)}</td>
+                <td class="px-4 py-3 text-center">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge}">${c.status}</span>
+                </td>
+                <td class="px-4 py-3 text-right">
+                    <div class="inline-flex items-center gap-1">
+                        <button class="btn-holerite-colab p-1 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30" title="Holerite" data-id="${c.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        </button>
+                        <button class="btn-editar-colab px-2 py-1 rounded text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-id="${c.id}">
+                            Editar
+                        </button>
+                        <button class="btn-excluir-colab p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/30" title="Excluir" data-id="${c.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </div>
+                </td>
+            `;
+            corpo.appendChild(tr);
+        });
+
+        vincularEventosCardsETabela();
+    }
+
+    function vincularEventosCardsETabela() {
+        document.querySelectorAll('.btn-editar-colab').forEach(btn => {
+            btn.onclick = async () => {
+                const id = btn.dataset.id;
+                const c = await obterColaborador(id);
+                if (c) abrirModalColaborador(c);
+            };
+        });
+
+        document.querySelectorAll('.btn-holerite-colab').forEach(btn => {
+            btn.onclick = async () => {
+                const id = btn.dataset.id;
+                const c = await obterColaborador(id);
+                if (!c) return;
+
+                const corp = getDadosCorporativos();
+                const payload = converterParaItemHolerite(c, corp);
+
+                const htmlHolerite = construirHtmlHolerite(payload);
+                const modal = $('modalPdfPreview');
+                const container = $('pdfPreviewConteudo');
+                const titulo = $('pdfPreviewTitulo');
+
+                if (titulo) titulo.textContent = `Holerite Oficial — ${c.nome}`;
+                if (container) container.innerHTML = htmlHolerite;
+                if (modal) modal.classList.remove('hidden');
+
+                const btnDownload = $('btnConfirmarDownloadPdf');
+                if (btnDownload) {
+                    btnDownload.onclick = () => {
+                        const elemento = container?.firstElementChild;
+                        if (elemento) {
+                            baixarDocumentoPDF(elemento, `Holerite_${c.matricula || c.nome.replace(/\s+/g, '_')}.pdf`);
+                        }
+                    };
+                }
+            };
+        });
+
+        document.querySelectorAll('.btn-rescisao-colab').forEach(btn => {
+            btn.onclick = async () => {
+                const id = btn.dataset.id;
+                const c = await obterColaborador(id);
+                if (!c) return;
+
+                const rescLink = document.querySelector('.sidebar-link[data-panel="rescisao"]');
+                rescLink?.click();
+
+                const sel = $('rescSelectColaborador');
+                if (sel) {
+                    sel.value = c.id;
+                    sel.dispatchEvent(new Event('change'));
+                }
+            };
+        });
+
+        document.querySelectorAll('.btn-excluir-colab').forEach(btn => {
+            btn.onclick = async () => {
+                const id = btn.dataset.id;
+                if (confirm('Tem certeza de que deseja remover este colaborador do banco de dados?')) {
+                    await removerColaborador(id);
+                    showToast('Colaborador removido com sucesso!', 'info');
+                    carregarColaboradores();
+                }
+            };
+        });
+    }
+
+    function abrirModalColaborador(dados = null) {
+        const modal = $('modalColaborador');
+        const form = $('formColaborador');
+        const titulo = $('modalColaboradorTitulo');
+        if (!modal || !form) return;
+
+        form.reset();
+        ativarAbaColaborador('tabColabPessoal');
+
+        if (dados) {
+            if (titulo) titulo.textContent = `Editando Dossiê — ${dados.nome}`;
+            $('colabId').value = dados.id || '';
+            $('colabNome').value = dados.nome || '';
+            $('colabMatricula').value = dados.matricula || '';
+            $('colabNascimento').value = dados.dataNascimento || '1990-01-01';
+            $('colabSexo').value = dados.sexo || 'Feminino';
+            $('colabEstadoCivil').value = dados.estadoCivil || 'Solteiro(a)';
+            $('colabEmail').value = dados.email || '';
+            $('colabTelefone').value = dados.telefone || '';
+            $('colabEndereco').value = dados.endereco || '';
+
+            $('colabCpf').value = dados.cpf || '';
+            $('colabPis').value = dados.pis || '';
+            $('colabRg').value = dados.rg || '';
+            $('colabCtps').value = dados.ctps || '';
+            $('colabTituloEleitor').value = dados.tituloEleitor || '';
+
+            $('colabAdmissao').value = dados.admissao || '2024-01-01';
+            $('colabStatus').value = dados.status || 'Ativo';
+            $('colabTipoContrato').value = dados.tipoContrato || 'CLT Indeterminado';
+            $('colabDepartamento').value = dados.departamento || 'Recursos Humanos';
+            $('colabCargo').value = dados.cargo || '';
+            $('colabCbo').value = dados.cbo || '4110-10';
+            $('colabSalarioBase').value = dados.salarioBase || '';
+            $('colabDivisor').value = dados.divisorHoras || '220';
+
+            $('colabDependentesIR').value = dados.dependentesIR || 0;
+            $('colabFilhosSalFamilia').value = dados.filhosSalarioFamilia || 0;
+            $('colabOptanteVT').checked = dados.optanteVT ?? true;
+            $('colabCustoDiarioVT').value = dados.custoDiarioVT || 9.60;
+            $('colabInsalubridade').value = dados.adicionalInsalubridade || '0';
+            $('colabPericulosidade').checked = !!dados.adicionalPericulosidade;
+
+            $('colabEscala').value = dados.escala || '5x2';
+            $('colabHorarioEntrada').value = dados.horarioEntrada || '08:00';
+            $('colabIntervalo').value = dados.intervalo || '01:00';
+            $('colabHorarioSaida').value = dados.horarioSaida || '17:48';
+        } else {
+            if (titulo) titulo.textContent = 'Novo Colaborador — Dossiê Digital';
+            $('colabId').value = '';
+            $('colabMatricula').value = `RH-${String(Math.floor(Math.random() * 900) + 100)}`;
+            $('colabAdmissao').value = new Date().toISOString().split('T')[0];
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    function fecharModalColaborador() {
+        const modal = $('modalColaborador');
+        if (modal) modal.classList.add('hidden');
+    }
+
+    function ativarAbaColaborador(alvoId) {
+        document.querySelectorAll('.colab-tab-btn').forEach(btn => {
+            const ehAlvo = btn.dataset.tabTarget === alvoId;
+            btn.classList.toggle('active', ehAlvo);
+            btn.classList.toggle('border-blue-600', ehAlvo);
+            btn.classList.toggle('text-blue-600', ehAlvo);
+            btn.classList.toggle('dark:text-blue-400', ehAlvo);
+            btn.classList.toggle('font-bold', ehAlvo);
+            btn.classList.toggle('text-slate-500', !ehAlvo);
+            btn.classList.toggle('border-transparent', !ehAlvo);
+        });
+
+        document.querySelectorAll('.colab-tab-content').forEach(conteudo => {
+            conteudo.classList.toggle('hidden', conteudo.id !== alvoId);
+        });
+    }
+
+    document.querySelectorAll('.colab-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            ativarAbaColaborador(btn.dataset.tabTarget);
+        });
+    });
+
+    $('colabCpf')?.addEventListener('input', (e) => {
+        e.target.value = mascararCPF(e.target.value);
+        const fb = $('colabCpfFeedback');
+        if (fb) {
+            const valido = validarCPF(e.target.value);
+            if (e.target.value.length === 14) {
+                fb.textContent = valido ? '✓ CPF Válido (algoritmo aprovado)' : '✗ CPF Inválido (dígitos inconsistentes)';
+                fb.className = `text-[10px] font-bold mt-1 block ${valido ? 'text-emerald-500' : 'text-rose-500'}`;
+            } else {
+                fb.textContent = 'Validação com algoritmo oficial da Receita';
+                fb.className = 'text-[10px] font-medium mt-1 block text-slate-400';
+            }
+        }
+    });
+
+    $('colabPis')?.addEventListener('input', (e) => {
+        e.target.value = mascararPIS(e.target.value);
+    });
+
+    $('formColaborador')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const idVal = $('colabId')?.value;
+        const nome = $('colabNome')?.value.trim();
+        const matricula = $('colabMatricula')?.value.trim();
+        const cpf = $('colabCpf')?.value.trim();
+        const cargo = $('colabCargo')?.value.trim();
+        const salarioBase = parseFloat($('colabSalarioBase')?.value) || 0;
+
+        if (!nome || !matricula || !cpf || !cargo || salarioBase <= 0) {
+            showToast('Por favor, preencha os campos obrigatórios (*)', 'error');
+            return;
+        }
+
+        const cores = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#06b6d4'];
+        const avatarBg = cores[Math.floor(Math.random() * cores.length)];
+        const iniciais = nome.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+
+        const colabObj = {
+            nome,
+            matricula,
+            dataNascimento: $('colabNascimento')?.value,
+            sexo: $('colabSexo')?.value,
+            estadoCivil: $('colabEstadoCivil')?.value,
+            email: $('colabEmail')?.value.trim(),
+            telefone: $('colabTelefone')?.value.trim(),
+            endereco: $('colabEndereco')?.value.trim(),
+            cpf,
+            pis: $('colabPis')?.value.trim(),
+            rg: $('colabRg')?.value.trim(),
+            ctps: $('colabCtps')?.value.trim(),
+            tituloEleitor: $('colabTituloEleitor')?.value.trim(),
+            admissao: $('colabAdmissao')?.value,
+            status: $('colabStatus')?.value,
+            tipoContrato: $('colabTipoContrato')?.value,
+            departamento: $('colabDepartamento')?.value,
+            cargo,
+            cbo: $('colabCbo')?.value.trim(),
+            salarioBase,
+            tipoSalario: 'Mensalista',
+            divisorHoras: parseInt($('colabDivisor')?.value, 10) || 220,
+            dependentesIR: parseInt($('colabDependentesIR')?.value, 10) || 0,
+            filhosSalarioFamilia: parseInt($('colabFilhosSalFamilia')?.value, 10) || 0,
+            optanteVT: $('colabOptanteVT')?.checked ?? true,
+            custoDiarioVT: parseFloat($('colabCustoDiarioVT')?.value) || 0,
+            adicionalInsalubridade: $('colabInsalubridade')?.value || '0',
+            adicionalPericulosidade: $('colabPericulosidade')?.checked ?? false,
+            escala: $('colabEscala')?.value || '5x2',
+            horarioEntrada: $('colabHorarioEntrada')?.value || '08:00',
+            intervalo: $('colabIntervalo')?.value || '01:00',
+            horarioSaida: $('colabHorarioSaida')?.value || '17:48',
+            avatarBg,
+            iniciais
+        };
+
+        if (idVal) {
+            colabObj.id = parseInt(idVal, 10);
+        }
+
+        try {
+            await salvarColaborador(colabObj);
+            fecharModalColaborador();
+            showToast(idVal ? 'Colaborador atualizado com sucesso!' : 'Novo colaborador cadastrado!', 'success');
+            carregarColaboradores();
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao salvar colaborador no banco.', 'error');
+        }
+    });
+
+    $('buscaColaborador')?.addEventListener('input', carregarColaboradores);
+    $('filtroDepartamentoColaborador')?.addEventListener('change', carregarColaboradores);
+    $('filtroStatusColaborador')?.addEventListener('change', carregarColaboradores);
+
+    $('btnViewGridColaboradores')?.addEventListener('click', () => {
+        modoVisualizacao = 'grid';
+        $('btnViewGridColaboradores').className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm flex items-center gap-1 transition-all';
+        $('btnViewTabelaColaboradores').className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-all';
+        carregarColaboradores();
+    });
+
+    $('btnViewTabelaColaboradores')?.addEventListener('click', () => {
+        modoVisualizacao = 'tabela';
+        $('btnViewTabelaColaboradores').className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm flex items-center gap-1 transition-all';
+        $('btnViewGridColaboradores').className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1 transition-all';
+        carregarColaboradores();
+    });
+
+    $('btnAbrirNovoColaborador')?.addEventListener('click', () => abrirModalColaborador());
+    $('closeModalColaborador')?.addEventListener('click', fecharModalColaborador);
+    $('btnCancelarColaborador')?.addEventListener('click', fecharModalColaborador);
+
+    $('btnCarregarDemoVazio')?.addEventListener('click', async () => {
+        for (const item of COLABORADORES_SEMENTE) {
+            await salvarColaborador(item);
+        }
+        showToast('5 colaboradores demonstrativos carregados!', 'success');
+        carregarColaboradores();
+    });
+
+    $('btnExportarBackupColaboradores')?.addEventListener('click', async () => {
+        try {
+            const json = await exportarBancoJSON();
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `rhub_backup_colaboradores_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Backup do banco exportado com sucesso!', 'download');
+        } catch (e) {
+            console.error(e);
+            showToast('Erro ao exportar backup.', 'error');
+        }
+    });
+
+    $('btnRestaurarBackupColaboradores')?.addEventListener('click', () => {
+        $('inputRestaurarBackupColaboradores')?.click();
+    });
+
+    $('inputRestaurarBackupColaboradores')?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (evt) => {
+            try {
+                const total = await restaurarBancoJSON(evt.target.result);
+                showToast(`${total} colaboradores restaurados com sucesso!`, 'success');
+                carregarColaboradores();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'Erro ao restaurar backup.', 'error');
+            }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+    });
+
+    carregarColaboradores();
+}
+
+async function atualizarSelectRescisao() {
+    const sel = document.getElementById('rescSelectColaborador');
+    if (!sel) return;
+    try {
+        const colaboradores = await listarColaboradores();
+        const atual = sel.value;
+        sel.innerHTML = '<option value="">-- Selecione para preencher automaticamente --</option>';
+        colaboradores.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.nome} — Matrícula: ${c.matricula || 'S/M'} (${c.cargo || 'Geral'})`;
+            sel.appendChild(opt);
+        });
+        if (atual) sel.value = atual;
+    } catch (e) {
+        console.warn('Erro ao carregar colaboradores para rescisão:', e);
+    }
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -844,6 +1402,25 @@ Saque FGTS: ${currentResult.saqueFGTS ? 'SIM' : 'NÃO'} | Seguro-Desemprego: ${c
     ['rescSalario','rescSaldoFGTS'].forEach(id => {
         $(id)?.addEventListener('blur', e => { const v = parseCurrency(e.target.value); if (v > 0) e.target.value = formatNumber(v, 2); });
     });
+
+    $('rescSelectColaborador')?.addEventListener('change', async (e) => {
+        const id = parseInt(e.target.value, 10);
+        if (!id) return;
+        try {
+            const colab = await obterColaborador(id);
+            if (colab) {
+                if ($('rescSalario')) $('rescSalario').value = formatNumber(colab.salarioBase || 0, 2);
+                if ($('rescDataAdm') && colab.admissao) $('rescDataAdm').value = colab.admissao;
+                if ($('rescDependentes')) $('rescDependentes').value = colab.dependentesIR || 0;
+                calc();
+                showToast(`Dados de ${colab.nome} vinculados à rescisão!`, 'info');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    });
+    atualizarSelectRescisao();
+
     calc();
 }
 
@@ -2811,6 +3388,23 @@ function initFolhaLoteModule() {
         const demo = gerarDemonstracaoFolha();
         processarERenderizar(demo);
         showToast('Demonstração carregada com 8 colaboradores!', 'success');
+    });
+
+    $('btnLotePuxarCadastro')?.addEventListener('click', async () => {
+        try {
+            const cadastrados = await listarColaboradores();
+            const ativos = cadastrados.filter(c => c.status !== 'Desligado');
+            if (ativos.length === 0) {
+                showToast('Nenhum colaborador ativo no cadastro. Cadastre ou use a demonstração.', 'warning');
+                return;
+            }
+            const convertidos = ativos.map(c => converterParaItemFolha(c));
+            processarERenderizar(convertidos);
+            showToast(`${convertidos.length} colaboradores ativos carregados do cadastro!`, 'success');
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao puxar colaboradores do cadastro.', 'error');
+        }
     });
 
     $('btnLoteBaixarModelo')?.addEventListener('click', () => {
