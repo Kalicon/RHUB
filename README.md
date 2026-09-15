@@ -1,164 +1,95 @@
-# RHUB — Suíte de Cálculos de Departamento Pessoal & CLT Open Source
+# RHUB — Suíte de Cálculos Trabalhistas e Simulação CLT vs. PJ
 
-[![Acessar Aplicação](https://img.shields.io/badge/Acessar_Online-kalicon.github.io%2FRHUB-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kalicon.github.io/RHUB/)
-
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
-![Vitest Tests](https://img.shields.io/badge/tests-14%20passed%20(100%25)-brightgreen.svg?logo=vitest)
-![PWA Ready](https://img.shields.io/badge/PWA-Installable_|_Offline-6366f1.svg)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4.svg)
-![Chart.js](https://img.shields.io/badge/Chart.js-4.4_Interactive-FF6384.svg)
-![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02.svg)
-![SheetJS](https://img.shields.io/badge/SheetJS-0.20_Excel-107C41.svg)
-![Vanilla JS](https://img.shields.io/badge/JavaScript-ES6_Modules-F7DF1E.svg)
-![CLT](https://img.shields.io/badge/CLT-Atualizada_2024-green.svg)
-![GitHub Pages](https://img.shields.io/badge/deploy-GitHub_Pages-brightgreen.svg)
-
-> **Calculadora e Suíte de Gestão Trabalhista Moderna para a CLT Brasileira & Simulador CLT vs. PJ.**  
-> **App Online:** [https://kalicon.github.io/RHUB/](https://kalicon.github.io/RHUB/)  
-> 100% client-side, instalável como PWA (offline), suporte a Dark Mode, gráficos visuais dinâmicos com Chart.js, animações GSAP CountUp, exportação em Excel (.xlsx), impressão em formato de documento executivo, compartilhamento por Deep Link, backup/restauração em JSON, central de desafios comunitários e suíte de testes unitários com Vitest.  
-> Projetada para profissionais de Recursos Humanos, Departamento Pessoal, contadores, diretores financeiros, peritos e advogados trabalhistas.
+Aplicação web desenvolvida no contexto de um desafio acadêmico de engenharia de software para automatizar cálculos de Departamento Pessoal e regras da legislação trabalhista brasileira (CLT). A solução opera integralmente no navegador do usuário (client-side), com suporte offline via Progressive Web App (PWA), validação matemática por testes unitários automatizados e exportação estruturada para planilhas Excel.
 
 ---
 
-## Recursos e Destaques
+## Demonstração
 
-- **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
-- **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
-- **Central de Desafios de Criação & Sugestões**: Espaço integrado para a comunidade e usuários proporem regras complexas de DP e abrirem Issues oficiais no GitHub diretamente do app.
-- **6 Módulos de Cálculo Especializados**:
-  1. **Adicional Noturno & DSR**: Hora noturna ficta (52min30s / fator 1,142857), prorrogação e DSR (Súmula 172 TST).
-  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%) e INSS/IRRF.
-  3. **Faltas e Atrasos**: Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal e tabela progressiva de perda de férias (Art. 130 CLT).
-  4. **Férias & 13º Salário**: Período aquisitivo, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra (férias vencidas) e avos de 13º.
-  5. **Salário Líquido (Holerite Mensal)**: Vencimentos (Salário base, Horas Extras 50%/100%, adicional noturno, DSR, insalubridade 10%/20%/40%, periculosidade 30%) e descontos reais (INSS progressivo, IRRF progressivo c/ dependentes, Vale Transporte teto 6%, VR/VA, saúde, pensão).
-  6. **Simulador CLT vs. PJ & Custo Efetivo do Empregado**:
-     - Custo real para a empresa: Simples Nacional vs. Lucro Presumido/Real, encargos patronais (INSS 20%, RAT ajustado pelo FAP, Sistema S/Terceiros), provisões de 13º, férias e FGTS.
-     - Poder de compra real do colaborador (Salário líquido + Provisões mensais + Benefícios).
-     - Regime PJ: Simples Nacional (Anexo III 6% ou Anexo V 15,5%), Fator R c/ pró-labore, custos com contabilidade e benefícios próprios.
-     - **Break-Even automático**: cálculo exato do faturamento PJ necessário para empatar com o poder de compra CLT.
-- **Gráficos Visuais Interativos com Chart.js**:
-  - Donut Chart no Holerite (Salário Líquido vs. INSS vs. IRRF vs. Benefícios).
-  - Gráfico de Barras no Comparador de Rescisão (Líquido do Empregado vs. Custo da Empresa em 4 modalidades).
-  - Gráfico Comparativo CLT vs. PJ (Custo Empresa CLT vs. Poder Compra CLT vs. Líquido PJ vs. Break-Even).
-- **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto a colaboradores, gestores ou clientes.
-- **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico de simulações em arquivo `.json`.
-- **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
-- **Suíte de Testes Automatizados (Vitest)**: 14 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
-- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos.
-- **Impressão / PDF Executivo**: Folha de estilo `@media print` que remove a interface web e gera relatórios limpos com cabeçalho da empresa e assinatura.
-- **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`, restauráveis com 1 clique.
-
----
-
-## Stack Tecnológica
-
-| Camada            | Tecnologia                             | Descrição                                         |
-| ----------------- | -------------------------------------- | ------------------------------------------------- |
-| **Estrutura**     | HTML5 Semântico                        | Acessibilidade WAI-ARIA e SEO estruturado         |
-| **Estilização**   | Tailwind CSS (via CDN Play)            | Design utility-first com Dark Mode por classe     |
-| **Lógica**        | JavaScript Vanilla (ES6 Modules)       | Módulos puros, testáveis, zero backend            |
-| **Gráficos**      | Chart.js 4.4 (via CDN)                 | Visualização interativa de gráficos e dashboards  |
-| **Animações**     | GSAP 3.12 (via CDN)                    | Efeito CountUp nos valores monetários             |
-| **Planilhas**     | SheetJS / xlsx 0.20 (via CDN)          | Criação de arquivos `.xlsx` no navegador          |
-| **Testes**        | Vitest 2.1                             | Testes unitários com asserções legais trabalhistas|
-| **Offline / PWA** | Service Worker & Web App Manifest      | Cache-first para navegação offline completa       |
-| **Deploy**        | GitHub Pages                           | Hospedagem estática contínua e gratuita           |
-
----
-
-## Estrutura do Repositório
+- **Aplicação Online:** [kalicon.github.io/RHUB](https://kalicon.github.io/RHUB/)
+- **Visualização da Interface:**
 
 ```text
-RHUB/
-├── assets/
-│   ├── css/
-│   │   ├── custom.css          <- Estilos do drawer, gráficos, orbes e temas
-│   │   └── print.css           <- Folha de estilo de impressão executiva e PDF
-│   ├── js/
-│   │   ├── app.js              <- Controller SPA, roteador hash, Chart.js e GSAP
-│   │   ├── modules/
-│   │   │   ├── noturno.js      <- Adicional Noturno, hora ficta e DSR
-│   │   │   ├── rescisao.js     <- Rescisão CLT e Comparador de 4 Cenários
-│   │   │   ├── faltas.js       <- Faltas, atrasos, DSR e escala Art. 130
-│   │   │   ├── ferias.js       <- Férias, 1/3, abono, dobra e 13º salário
-│   │   │   ├── liquido.js      <- Salário Líquido completo (holerite mensal)
-│   │   │   ├── clt_pj.js       <- Simulador CLT vs PJ e encargos patronais
-│   │   │   └── tabelas.js      <- Tabelas progressivas de INSS e IRRF 2024
-│   │   └── utils/
-│   │       ├── exporter.js     <- Gerador de Excel (.xlsx) para todos os módulos
-│   │       ├── storage.js      <- LocalStorage, Backup e Restauração JSON
-│   │       ├── formatters.js   <- Formatação BRL (R$), decimais e datas
-│   │       └── validators.js   <- Sanitização e validação de entradas
-│   └── img/
-│       ├── logo.svg            <- Logo vetorial do RHUB
-│       ├── icon-192.svg        <- Ícone PWA 192x192
-│       └── icon-512.svg        <- Ícone PWA 512x512
-├── tests/
-│   └── clt_modules.test.js     <- Suíte de testes unitários com Vitest
-├── manifest.json               <- Manifesto PWA (instalável)
-├── sw.js                       <- Service Worker com cache-first e offline
-├── index.html                  <- Aplicação Single-Page completa
-├── package.json                <- Configuração de testes Vitest
-├── LICENSE                     <- Licença MIT
-└── README.md                   <- Documentação técnica completa
+[Demonstração visual da interface do RHUB, cálculo de holerite e simulador CLT vs. PJ]
 ```
 
 ---
 
-## Fundamentação Legal dos Módulos
+## Módulos e Regras Implementadas
 
-| Módulo | Regras Principais | Base Legal |
-|--------|-------------------|------------|
-| **Adicional Noturno** | Horário 22h às 05h, hora ficta reduzida (52min30s / fator 1,142857), adicional mín. 20%, DSR s/ noturno | Art. 73 da CLT, Lei 605/49, Súmulas 60 e 172 do TST |
-| **Rescisão Contratual** | Sem justa causa, pedido de demissão, justa causa, acordo mútuo (Art. 484-A), aviso prévio proporcional (Lei 12.506/11), saque e multa FGTS | Art. 477, 482 e 484-A da CLT, Lei 12.506/2011, Lei 8.036/90 |
-| **Faltas e Atrasos** | Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal, escala progressiva de perda de férias | Art. 130 e 462 da CLT, Lei 605/49, Súmula 366 do TST |
-| **Férias & 13º Salário** | Férias proporcionais e vencidas, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra por atraso e avos de 13º | Art. 129 a 145 da CLT, Art. 7º, XVII da CF/88, Lei 4.090/62 |
-| **Salário Líquido (Holerite)** | Composição de proventos (HE 50%/100%, insalubridade, periculosidade, DSR), desconto de VT teto 6%, previdência e IRRF | Portaria Interministerial MPS/MF nº 2/2024, MP 1.206/2024, Lei 7.418/85 |
-| **CLT vs. PJ & Custos** | Encargos patronais (INSS 20%, RAT x FAP, Terceiros 5.8%), provisões e FGTS; Simples Nacional PJ (Anexos III e V, Fator R 28%) e Break-Even | Lei 8.212/91, LC 123/2006, Art. 7º da CF/88 |
-| **Tabelas Previdenciárias e Fiscais** | INSS por faixas progressivas (7,5%, 9%, 12%, 14%), dedução por dependente (R$ 189,59) e faixas do IRRF 2024 | Tabela Oficial da Receita Federal e Ministério da Previdência Social |
+1. **Salário Líquido (Holerite Mensal):** Aplicação das faixas progressivas vigentes de INSS e IRRF, dedução por dependentes, cálculo de horas extras (50% e 100%), adicional noturno com DSR, insalubridade, periculosidade e descontos legais (VT, VR, pensão).
+2. **Rescisão de Contrato CLT:** Comparativo simultâneo de quatro modalidades rescisórias (dispensa sem justa causa, pedido de demissão, demissão por acordo mútuo e justa causa), com cálculo de aviso prévio proporcional (Lei 12.506), férias proporcionais e vencidas com 1/3, 13º proporcional e multas rescisórias do FGTS.
+3. **Simulador CLT vs. PJ:** Análise de custo efetivo do empregado para a empresa (Simples Nacional vs. Lucro Presumido/Real, encargos patronais, provisões de 13º e férias), determinação do poder de compra real e cálculo do ponto de equilíbrio (*break-even*) de faturamento PJ.
+4. **Férias e 13º Salário:** Períodos aquisitivos e concessivos, terço constitucional, abono pecuniário (venda de 10 dias), dobra de férias vencidas e projeção de primeira e segunda parcelas de décimo terceiro.
+5. **Adicional Noturno e DSR:** Conversão de hora ficta noturna (fator 52min30s / 1,142857), prorrogação de jornada noturna e reflexos no Descanso Semanal Remunerado (Súmula 172 do TST).
+6. **Faltas e Atrasos:** Desconto de dias proporcionais, horas não trabalhadas, perda do DSR da semana e aplicação da tabela progressiva de perda do direito de férias (Artigo 130 da CLT).
 
 ---
 
-## Executando os Testes Automatizados
+## Tecnologias Utilizadas
 
-A suíte de testes com Vitest valida todas as fórmulas matemáticas e regras da legislação CLT:
+- **Linguagem:** JavaScript Vanilla (ES6 Modules)
+- **Interface e Estilos:** Tailwind CSS
+- **Testes Unitários:** Vitest
+- **Visualização de Dados:** Chart.js
+- **Geração de Documentos:** SheetJS (exportação de arquivos .xlsx)
+- **Animações Numéricas:** GSAP (CountUp em transições de valores)
+- **Suporte Offline:** Service Worker e Web App Manifest (PWA)
+- **Hospedagem:** GitHub Pages
 
-```bash
-# Executar todos os testes unitários uma vez:
-npm test
+---
 
-# Executar em modo watch (desenvolvimento contínuo):
-npm run test:watch
-```
+## Decisões de Arquitetura
+
+### 1. Execução 100% Client-Side e Privacidade de Dados
+Por lidar com simulações financeiras e dados salariais, a arquitetura foi desenhada para processamento exclusivo no navegador do cliente. Nenhuma informação de salário, documento ou empresa transita por servidores externos ou é persistida em nuvem, garantindo conformidade com privacidade de dados desde a concepção (*privacy by design*).
+
+### 2. Módulos ES6 Puros sem Overhead de Bundling
+Para a aplicação final, optou-se por utilizar o sistema nativo de módulos do ECMAScript (ES6 Modules). Essa decisão elimina dependências de empacotadores pesados em tempo de execução, permitindo carregamento rápido de assets e manutenção direta de cada módulo de cálculo isolado.
+
+### 3. Validação Rigorosa via Testes Automatizados (Vitest)
+Cálculos trabalhistas e fiscais exigem precisão absoluta em arredondamentos e ordem de operações. Foi desenvolvida uma suíte de testes unitários com Vitest que cobre cenários reais e extremos das tabelas progressivas e artigos da legislação, assegurando integridade a cada alteração de código.
+
+### 4. Resiliência Offline (Progressive Web App)
+A aplicação conta com Service Worker configurado em estratégia *Cache-First* para ativos estáticos. Isso permite que profissionais e estudantes utilizem todos os módulos de cálculo mesmo em ambientes sem conectividade com a internet, com comportamento idêntico a um aplicativo nativo.
+
+### 5. Relatórios Técnicos e Exportação
+Além da visualização em tela com gráficos analíticos, o sistema implementa folha de estilo dedicada para impressão técnica (`@media print`), removendo menus e adaptando o conteúdo para impressão ou geração de PDF limpo com espaço para assinaturas, além de download dos dados consolidados em planilha Excel via SheetJS.
 
 ---
 
 ## Como Executar Localmente
 
-Como o projeto utiliza **ES6 Modules nativos**, basta servi-lo via HTTP local:
+### Pré-requisitos
+- Node.js (versão 18 ou superior) instalado para execução dos testes.
 
+### Passo a Passo
+
+1. Clone o repositório:
 ```bash
-# Opção 1: Python 3
-python -m http.server 8086
-
-# Opção 2: Node.js
-npx serve .
+git clone https://github.com/Kalicon/RHUB.git
+cd RHUB
 ```
 
-Acesse no seu navegador: **http://localhost:8086**
+2. Instale as dependências de teste:
+```bash
+npm install
+```
 
----
+3. Execute a suíte de testes unitários:
+```bash
+npm test
+```
 
-## Instalação como App (PWA)
-
-- **No Google Chrome / Edge (Desktop)**: Clique no ícone de instalação na barra de endereços ou no botão **Instalar App** no menu lateral.
-- **No Android (Chrome)**: Toque nos três pontos do navegador e selecione **"Adicionar à tela inicial"** ou **"Instalar aplicativo"**.
-- **No iOS (Safari)**: Toque no botão de compartilhamento e selecione **"Adicionar à Tela de Início"**.
-
-O app funcionará normalmente mesmo sem conexão com a internet.
+4. Para rodar a aplicação web localmente:
+Você pode abrir o arquivo `index.html` diretamente em um navegador moderno ou iniciar um servidor estático simples:
+```bash
+npx serve .
+```
+Acesse a aplicação no navegador em `http://localhost:3000`.
 
 ---
 
 ## Licença
 
-Distribuído sob a licença **MIT**. Livre para uso pessoal, corporativo e modificações.
+Este projeto está sob a licença MIT.
