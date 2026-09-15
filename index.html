@@ -97,7 +97,46 @@
                 </div>
                 <div class="flex-1 flex items-center justify-between">
                     <span class="text-sm font-semibold">CLT vs. PJ & Custos</span>
-                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400">Novo</span>
+                </div>
+            </button>
+
+            <button data-panel="banco-horas" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-violet-500/10 dark:bg-violet-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-semibold">Banco de Horas</span>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 dark:bg-violet-950/60 dark:text-violet-400">v2.1</span>
+                </div>
+            </button>
+
+            <button data-panel="plr" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-fuchsia-500/10 dark:bg-fuchsia-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-fuchsia-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-semibold">PLR (Lucros & Res.)</span>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-fuchsia-100 text-fuchsia-700 dark:bg-fuchsia-950/60 dark:text-fuchsia-400">v2.1</span>
+                </div>
+            </button>
+
+            <button data-panel="teletrabalho" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-sky-500/10 dark:bg-sky-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-semibold">Teletrabalho / Remoto</span>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 dark:bg-sky-950/60 dark:text-sky-400">v2.1</span>
+                </div>
+            </button>
+
+            <button data-panel="equiparacao" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-orange-500/10 dark:bg-orange-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-semibold">Equiparação Salarial</span>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-400">v2.1</span>
                 </div>
             </button>
         </nav>
@@ -748,6 +787,355 @@
                 </div>
             </section>
 
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 7: BANCO DE HORAS & COMPENSAÇÃO       -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-banco-horas" class="module-panel hidden">
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#1e1136 0%,#1e293b 50%,#0f172a 100%)">
+                    <div class="orb" style="background:#8b5cf6;width:160px;height:160px;top:-30px;right:-20px;filter:blur(60px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <p class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400">Total Geral da Apuração</p>
+                                    <span id="outBancoTipoBadge" class="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-violet-500/20 text-violet-300">Crédito a Receber</span>
+                                </div>
+                                <p id="outBancoTotalGeral" class="text-3xl sm:text-4xl font-black font-mono text-violet-400 tracking-tight leading-none">R$ 0,00</p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <p class="text-[10px] uppercase font-bold text-slate-400">Prazo Legal de Compensação</p>
+                                <p id="outBancoPrazo" class="text-xs font-semibold text-slate-300">6 meses (Acordo Individual)</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Hora Normal</p><p id="outBancoValorHora" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Hora c/ Adicional</p><p id="outBancoValorExtra" class="text-base font-bold font-mono text-violet-300">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Total Horas</p><p id="outBancoTotalHoras" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Reflexo DSR</p><p id="outBancoValorDsr" class="text-base font-bold font-mono text-emerald-400">R$ 0,00</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800"><h3 class="text-sm font-bold text-slate-900 dark:text-white">Parâmetros do Banco de Horas (Art. 59 CLT)</h3></div>
+                        <form class="px-6 py-5 space-y-4" onsubmit="event.preventDefault();">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Salário Base Mensal</label>
+                                <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="bancoSalario" value="3.300,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 focus:border-violet-500 transition-all"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Saldo de Horas</label>
+                                    <input type="number" id="bancoSaldoHoras" value="16" min="0" step="0.5" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Natureza do Saldo</label>
+                                    <select id="bancoTipoSaldo" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 cursor-pointer transition-all">
+                                        <option value="credito" selected>Crédito (Horas Extras a Pagar)</option>
+                                        <option value="debito">Débito (Horas em Falta a Descontar)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Adicional Hora Extra</label>
+                                    <select id="bancoAdicional" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 cursor-pointer transition-all">
+                                        <option value="50" selected>50% (Mínimo CLT)</option>
+                                        <option value="60">60% (CCT)</option>
+                                        <option value="75">75% (CCT)</option>
+                                        <option value="100">100% (Domingos/Feriados)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Divisor Mensal</label>
+                                    <select id="bancoDivisor" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 cursor-pointer transition-all">
+                                        <option value="220" selected>220h (44h semanais)</option>
+                                        <option value="200">200h (40h semanais)</option>
+                                        <option value="180">180h (36h semanais)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Tipo de Pactuação</label>
+                                    <select id="bancoTipoAcordo" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40 cursor-pointer transition-all">
+                                        <option value="individual" selected>Acordo Individual Escrito (6 meses)</option>
+                                        <option value="coletivo">Acordo / Convenção Coletiva (1 ano)</option>
+                                    </select>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div><label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Dias Úteis</label><input type="number" id="bancoDiasUteis" value="25" min="1" max="31" class="w-full px-2 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40"></div>
+                                    <div><label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">DSR/Fer.</label><input type="number" id="bancoDomingosFeriados" value="5" min="0" max="10" class="w-full px-2 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-violet-500/40"></div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-violet-50 dark:bg-violet-500/[0.07] border border-violet-200 dark:border-violet-500/20 text-xs text-violet-800 dark:text-violet-300 leading-relaxed">
+                                <strong>Art. 59, § 2º CLT:</strong> O limite máximo diário de prorrogação é de 2 horas. Na rescisão sem compensação, as horas são quitadas como extras sobre o valor da data da rescisão.
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Memória de Cálculo Auditável</h3>
+                            <div class="flex gap-1.5">
+                                <button id="btnShareBanco" title="Compartilhar Link" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
+                                <button id="btnExcelBanco" title="Exportar para Excel" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
+                                <button id="btnCopiarBanco" title="Copiar Resumo" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
+                                <button id="btnImprimirBanco" title="Imprimir" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>Imprimir</button>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5"><div id="bancoMemoriaContainer"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 8: PARTICIPAÇÃO NOS LUCROS (PLR)      -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-plr" class="module-panel hidden">
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#2e0827 0%,#1e293b 50%,#0f172a 100%)">
+                    <div class="orb" style="background:#d946ef;width:160px;height:160px;top:-30px;right:-20px;filter:blur(60px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <p class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-1">Valor Líquido da PLR (no Bolso)</p>
+                                <p id="outPlrLiquido" class="text-3xl sm:text-4xl font-black font-mono text-fuchsia-400 tracking-tight leading-none">R$ 0,00</p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <p class="text-[10px] uppercase font-bold text-slate-400">Tributação Exclusiva na Fonte</p>
+                                <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-500/20 text-emerald-300">0% INSS · 0% FGTS</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Total Bruto</p><p id="outPlrBruto" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">IRRF Retido Fonte</p><p id="outPlrIrrf" class="text-base font-bold font-mono text-rose-400">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Alíquota Efetiva</p><p id="outPlrAliquotaEfetiva" class="text-base font-bold font-mono text-fuchsia-300">0,00%</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Economia Empresa</p><p id="outPlrEconomiaEmpresa" class="text-base font-bold font-mono text-emerald-400">R$ 0,00</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800"><h3 class="text-sm font-bold text-slate-900 dark:text-white">Dados da PLR (Lei 10.101/2000)</h3></div>
+                        <form class="px-6 py-5 space-y-4" onsubmit="event.preventDefault();">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Valor Bruto Global da PLR Acordada</label>
+                                <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="plrValorBruto" value="12.000,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40 focus:border-fuchsia-500 transition-all"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">1ª Parcela já Paga no Ano</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="plrAntecipacao" value="0,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40 transition-all"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">IRRF já Retido na 1ª Parcela</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="plrIrrfAnterior" value="0,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-500/40 transition-all"></div>
+                                </div>
+                            </div>
+                            <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                                <p><strong>Faixa Aplicada:</strong> <span id="outPlrFaixaDescricao" class="font-semibold text-fuchsia-600 dark:text-fuchsia-400">Isento até R$ 7.640,80</span></p>
+                                <p><strong>Líquido a Pagar Nesta Parcela:</strong> <span id="outPlrLiquidoParcela" class="font-bold text-slate-900 dark:text-white font-mono">R$ 0,00</span></p>
+                            </div>
+                            <div class="p-3 rounded-xl bg-fuchsia-50 dark:bg-fuchsia-500/[0.07] border border-fuchsia-200 dark:border-fuchsia-500/20 text-xs text-fuchsia-800 dark:text-fuchsia-300 leading-relaxed">
+                                <strong>Tributação Exclusiva:</strong> A PLR não integra a base do imposto na declaração de ajuste anual, não gera restituição de IR e não sofre incidência de encargos sociais (INSS/FGTS).
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Memória de Cálculo & Economia</h3>
+                            <div class="flex gap-1.5">
+                                <button id="btnSharePlr" title="Compartilhar Link" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
+                                <button id="btnExcelPlr" title="Exportar para Excel" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
+                                <button id="btnCopiarPlr" title="Copiar Resumo" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
+                                <button id="btnImprimirPlr" title="Imprimir" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>Imprimir</button>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5"><div id="plrMemoriaContainer"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 9: TELETRABALHO & AJUDA DE CUSTO      -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-teletrabalho" class="module-panel hidden">
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#04223d 0%,#1e293b 50%,#0f172a 100%)">
+                    <div class="orb" style="background:#0284c7;width:160px;height:160px;top:-30px;right:-20px;filter:blur(60px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <p class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-1">Ajuda de Custo Mensal Recomendada</p>
+                                <p id="outTeleAjudaCusto" class="text-3xl sm:text-4xl font-black font-mono text-sky-400 tracking-tight leading-none">R$ 0,00</p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <p class="text-[10px] uppercase font-bold text-slate-400">Natureza Jurídica Indenizatória</p>
+                                <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-sky-500/20 text-sky-300">Art. 75-D CLT · Sem Reflexos</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Rateio Internet</p><p id="outTeleInternet" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Consumo Energia</p><p id="outTeleEnergia" class="text-base font-bold font-mono text-sky-300">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">VT Economizado</p><p id="outTeleVtEconomizado" class="text-base font-bold font-mono text-emerald-400">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Saldo Empresa</p><p id="outTeleSaldoEmpresa" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800"><h3 class="text-sm font-bold text-slate-900 dark:text-white">Parâmetros de Despesas & Home Office</h3></div>
+                        <form class="px-6 py-5 space-y-4" onsubmit="event.preventDefault();">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Fatura Mensal Internet</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="teleFaturaInternet" value="130,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">% Uso Profissional</label>
+                                    <input type="number" id="telePercInternet" value="50" min="10" max="100" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Dias Home Office</label>
+                                    <input type="number" id="teleDiasHomeOffice" value="22" min="1" max="31" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Horas/Dia</label>
+                                    <input type="number" id="teleHorasDia" value="8" min="1" max="12" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Potência (Watts)</label>
+                                    <input type="number" id="telePotenciaW" value="250" min="50" max="1000" step="50" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Tarifa Energia (R$/kWh)</label>
+                                    <input type="number" id="teleTarifaKwh" value="0.85" min="0.10" max="2.00" step="0.05" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Auxílio Equipamento / BYOD</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="teleAuxilioEquip" value="50,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Custo Diário de VT Presencial (Ida + Volta)</label>
+                                <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="teleValorVTDiario" value="11,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/40 transition-all"></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Memória de Cálculo & Balanço de VT</h3>
+                            <div class="flex gap-1.5">
+                                <button id="btnShareTele" title="Compartilhar Link" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
+                                <button id="btnExcelTele" title="Exportar para Excel" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
+                                <button id="btnCopiarTele" title="Copiar Resumo" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
+                                <button id="btnImprimirTele" title="Imprimir" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>Imprimir</button>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5"><div id="teleMemoriaContainer"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 10: EQUIPARAÇÃO SALARIAL & PASSIVO    -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-equiparacao" class="module-panel hidden">
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#2e1a05 0%,#1e293b 50%,#0f172a 100%)">
+                    <div class="orb" style="background:#ea580c;width:160px;height:160px;top:-30px;right:-20px;filter:blur(60px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                            <div>
+                                <p class="text-[11px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-1">Passivo Trabalhista Total Estimado</p>
+                                <p id="outEquipPassivoTotal" class="text-3xl sm:text-4xl font-black font-mono text-orange-400 tracking-tight leading-none">R$ 0,00</p>
+                            </div>
+                            <div class="text-left sm:text-right">
+                                <p class="text-[10px] uppercase font-bold text-slate-400">Prescrição Quinquenal (CF/88)</p>
+                                <span id="outEquipPeriodoBadge" class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-orange-500/20 text-orange-300">24 meses apurados</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Diferença Mensal</p><p id="outEquipDiferencaMensal" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Diferença Nominal</p><p id="outEquipDiferencaNominal" class="text-base font-bold font-mono text-orange-300">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">Reflexos 13º/Férias</p><p id="outEquipReflexos" class="text-base font-bold font-mono text-white">R$ 0,00</p></div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]"><p class="text-[10px] font-semibold uppercase text-slate-500 mb-1">FGTS + Multa</p><p id="outEquipFgtsTotal" class="text-base font-bold font-mono text-amber-400">R$ 0,00</p></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800"><h3 class="text-sm font-bold text-slate-900 dark:text-white">Dados da Comparação Salarial (Art. 461 CLT)</h3></div>
+                        <form class="px-6 py-5 space-y-4" onsubmit="event.preventDefault();">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Salário do Colaborador (Menor)</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="equipSalarioReclamante" value="3.500,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/40 transition-all"></div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Salário do Paradigma (Maior)</label>
+                                    <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400">R$</span><input type="text" id="equipSalarioParadigma" value="5.500,00" class="w-full pl-9 pr-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/40 transition-all"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Meses no Período Imprescrito (Máx. 60 meses)</label>
+                                <input type="number" id="equipMeses" value="24" min="1" max="60" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/40 transition-all">
+                            </div>
+
+                            <div class="space-y-2.5 pt-1">
+                                <p class="text-xs font-bold text-slate-700 dark:text-slate-300">Reflexos & Encargos do Passivo</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 cursor-pointer">
+                                        <input type="checkbox" id="equipCheck13" checked class="rounded text-orange-600 focus:ring-orange-500">
+                                        <span class="text-xs font-medium text-slate-700 dark:text-slate-300">13º Salário</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 cursor-pointer">
+                                        <input type="checkbox" id="equipCheckFerias" checked class="rounded text-orange-600 focus:ring-orange-500">
+                                        <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Férias + 1/3</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 cursor-pointer">
+                                        <input type="checkbox" id="equipCheckFGTS" checked class="rounded text-orange-600 focus:ring-orange-500">
+                                        <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Depósitos FGTS (8%)</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 cursor-pointer">
+                                        <input type="checkbox" id="equipCheckMultaFGTS" class="rounded text-orange-600 focus:ring-orange-500">
+                                        <span class="text-xs font-medium text-slate-700 dark:text-slate-300">Multa FGTS (40%)</span>
+                                    </label>
+                                </div>
+                                <label class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 cursor-pointer">
+                                    <input type="checkbox" id="equipCheckDiscriminacao" class="rounded text-rose-600 focus:ring-rose-500">
+                                    <div>
+                                        <span class="text-xs font-bold text-rose-700 dark:text-rose-400">Penalidade Lei 14.611/2023 (Discriminação de Gênero)</span>
+                                        <p class="text-[10px] text-rose-600/80 dark:text-rose-400/80">Aplica multa de 10x o novo salário devido ao colaborador (Art. 461, § 6º CLT)</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Memória de Cálculo & Passivo</h3>
+                            <div class="flex gap-1.5">
+                                <button id="btnShareEquip" title="Compartilhar Link" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
+                                <button id="btnExcelEquip" title="Exportar para Excel" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
+                                <button id="btnCopiarEquip" title="Copiar Resumo" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
+                                <button id="btnImprimirEquip" title="Imprimir" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>Imprimir</button>
+                            </div>
+                        </div>
+                        <div class="px-6 py-5"><div id="equipMemoriaContainer"></div></div>
+                    </div>
+                </div>
+            </section>
+
 
         </main>
 
@@ -996,42 +1384,42 @@
             <div id="viewMuralDesafios" class="hidden flex-1 overflow-y-auto space-y-3 pr-1">
                 <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-600 dark:text-amber-400">Em Análise</span>
-                        <span class="text-[10px] text-slate-400">Desafio #01</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Implementado na v2.1</span>
+                        <span class="text-[10px] text-slate-400">Módulo 08</span>
                     </div>
                     <h4 class="text-xs font-bold text-slate-900 dark:text-white">Participação nos Lucros e Resultados (PLR)</h4>
                     <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Tributação exclusiva na fonte conforme Lei 10.101/2000, faixas progressivas especiais e isenção de encargos sociais (INSS e FGTS).</p>
-                    <div class="mt-2 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Base: Lei 10.101/2000 e Tabela IRRF PLR</div>
+                    <div class="mt-2 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Ativo no menu lateral · Lei 10.101/2000 e Tabela IRRF PLR</div>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400">No Roadmap</span>
-                        <span class="text-[10px] text-slate-400">Desafio #02</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Implementado na v2.1</span>
+                        <span class="text-[10px] text-slate-400">Módulo 07</span>
                     </div>
                     <h4 class="text-xs font-bold text-slate-900 dark:text-white">Banco de Horas & Compensação de Jornada</h4>
                     <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Gestão de saldo positivo/negativo de horas, limite diário de 2 horas e apuração para quitação semestral ou anual com adicional de 50%.</p>
-                    <div class="mt-2 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Base: Art. 59, §§ 2º e 5º da CLT</div>
+                    <div class="mt-2 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Ativo no menu lateral · Art. 59, §§ 2º e 5º da CLT</div>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-600 dark:text-purple-400">Planejado</span>
-                        <span class="text-[10px] text-slate-400">Desafio #03</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Implementado na v2.1</span>
+                        <span class="text-[10px] text-slate-400">Módulo 09</span>
                     </div>
                     <h4 class="text-xs font-bold text-slate-900 dark:text-white">Teletrabalho / Home Office & Ajuda de Custo</h4>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Simulador de ajuda de custo mensal para despesas de energia/internet, sem natureza salarial, com emissão de recibo específico.</p>
-                    <div class="mt-2 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Base: Art. 75-A a 75-E da CLT</div>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Simulador de ajuda de custo mensal para despesas de energia/internet, sem natureza salarial, com emissão de recibo e comparativo com VT.</p>
+                    <div class="mt-2 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Ativo no menu lateral · Art. 75-A a 75-E da CLT</div>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60">
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Aberto p/ Ideias</span>
-                        <span class="text-[10px] text-slate-400">Desafio #04</span>
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Implementado na v2.1</span>
+                        <span class="text-[10px] text-slate-400">Módulo 10</span>
                     </div>
-                    <h4 class="text-xs font-bold text-slate-900 dark:text-white">Equiparação Salarial & Diferenças</h4>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cálculo de passivo por desvio ou equiparação entre colaborador e paradigma com reflexos em 13º, férias e FGTS.</p>
-                    <div class="mt-2 text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Base: Art. 461 da CLT</div>
+                    <h4 class="text-xs font-bold text-slate-900 dark:text-white">Equiparação Salarial & Passivo Trabalhista</h4>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cálculo de passivo por desvio ou equiparação entre colaborador e paradigma com reflexos em 13º, férias, FGTS e multa da Lei 14.611/2023.</p>
+                    <div class="mt-2 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Ativo no menu lateral · Art. 461 da CLT e Lei 14.611/2023</div>
                 </div>
             </div>
         </div>

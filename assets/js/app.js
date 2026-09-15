@@ -10,6 +10,10 @@ import { calcularFaltas } from './modules/faltas.js';
 import { calcularFerias, calcular13o } from './modules/ferias.js';
 import { calcularSalarioLiquido } from './modules/liquido.js';
 import { calcularCustosCltPj } from './modules/clt_pj.js';
+import { calcularBancoHoras } from './modules/banco_horas.js';
+import { calcularPLR } from './modules/plr.js';
+import { calcularTeletrabalho } from './modules/teletrabalho.js';
+import { calcularEquiparacao } from './modules/equiparacao.js';
 import { formatCurrency, formatNumber, formatHoursMinutes, parseCurrency } from './utils/formatters.js';
 import {
     exportarNoturnoExcel,
@@ -18,6 +22,10 @@ import {
     exportarFeriasExcel,
     exportarLiquidoExcel,
     exportarCltPjExcel,
+    exportarBancoHorasExcel,
+    exportarPlrExcel,
+    exportarTeletrabalhoExcel,
+    exportarEquiparacaoExcel,
     copiarTextoClipboard
 } from './utils/exporter.js';
 import {
@@ -52,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initFeriasModule();
     initLiquidoModule();
     initCltPjModule();
+    initBancoHorasModule();
+    initPlrModule();
+    initTeletrabalhoModule();
+    initEquiparacaoModule();
     initGlossarioModal();
     initDesafiosModule();
     aplicarParametrosUrl();
@@ -407,12 +419,16 @@ function initTopBarActions() {
 //  SPA ROUTER (Sidebar Navigation)
 // ═══════════════════════════════════════════════════════════════════════
 const MODULE_META = {
-    noturno:  { title: 'Adicional Noturno',    badge: 'Art. 73 CLT' },
-    rescisao: { title: 'Rescisão Contratual',  badge: 'Art. 477 CLT' },
-    faltas:   { title: 'Faltas e Atrasos',     badge: 'Art. 462 CLT' },
-    ferias:   { title: 'Férias & 13º Salário', badge: 'Art. 129 CLT' },
-    liquido:  { title: 'Salário Líquido',      badge: 'Art. 457 CLT' },
-    'clt-pj': { title: 'CLT vs. PJ & Custos',  badge: 'Estratégico' },
+    noturno:        { title: 'Adicional Noturno',          badge: 'Art. 73 CLT' },
+    rescisao:       { title: 'Rescisão Contratual',        badge: 'Art. 477 CLT' },
+    faltas:         { title: 'Faltas e Atrasos',           badge: 'Art. 462 CLT' },
+    ferias:         { title: 'Férias & 13º Salário',       badge: 'Art. 129 CLT' },
+    liquido:        { title: 'Salário Líquido',            badge: 'Art. 457 CLT' },
+    'clt-pj':       { title: 'CLT vs. PJ & Custos',        badge: 'Estratégico' },
+    'banco-horas':  { title: 'Banco de Horas',             badge: 'Art. 59 CLT' },
+    plr:            { title: 'PLR (Lucros & Resultados)',  badge: 'Lei 10.101/00' },
+    teletrabalho:   { title: 'Teletrabalho & Home Office', badge: 'Art. 75-A CLT' },
+    equiparacao:    { title: 'Equiparação Salarial',       badge: 'Art. 461 CLT' },
 };
 
 function initSPARouter() {
@@ -1417,6 +1433,26 @@ function aplicarParametrosUrl() {
         if (params.has('proposto') && $('cltPjFaturamentoProposto')) $('cltPjFaturamentoProposto').value = formatNumber(Number(params.get('proposto')), 2);
         if (params.has('aliq') && $('cltPjAliqSimples')) $('cltPjAliqSimples').value = params.get('aliq');
         $('cltPjSalarioBase')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'banco-horas') {
+        if (params.has('salario') && $('bancoSalario')) $('bancoSalario').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('horas') && $('bancoSaldoHoras')) $('bancoSaldoHoras').value = params.get('horas');
+        if (params.has('tipo') && $('bancoTipoSaldo')) $('bancoTipoSaldo').value = params.get('tipo');
+        if (params.has('adic') && $('bancoAdicional')) $('bancoAdicional').value = params.get('adic');
+        $('bancoSalario')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'plr') {
+        if (params.has('bruto') && $('plrValorBruto')) $('plrValorBruto').value = formatNumber(Number(params.get('bruto')), 2);
+        if (params.has('ant') && $('plrAntecipacao')) $('plrAntecipacao').value = formatNumber(Number(params.get('ant')), 2);
+        $('plrValorBruto')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'teletrabalho') {
+        if (params.has('net') && $('teleFaturaInternet')) $('teleFaturaInternet').value = formatNumber(Number(params.get('net')), 2);
+        if (params.has('dias') && $('teleDiasHomeOffice')) $('teleDiasHomeOffice').value = params.get('dias');
+        if (params.has('vt') && $('teleValorVTDiario')) $('teleValorVTDiario').value = formatNumber(Number(params.get('vt')), 2);
+        $('teleFaturaInternet')?.dispatchEvent(new Event('input'));
+    } else if (panelId === 'equiparacao') {
+        if (params.has('salario') && $('equipSalarioReclamante')) $('equipSalarioReclamante').value = formatNumber(Number(params.get('salario')), 2);
+        if (params.has('paradigma') && $('equipSalarioParadigma')) $('equipSalarioParadigma').value = formatNumber(Number(params.get('paradigma')), 2);
+        if (params.has('meses') && $('equipMeses')) $('equipMeses').value = params.get('meses');
+        $('equipSalarioReclamante')?.dispatchEvent(new Event('input'));
     }
 }
 
@@ -1611,6 +1647,450 @@ Diagnóstico: ${r.pjSimulado.isVantajosoPj ? `PJ é vantajoso em +${formatCurren
             const v = parseCurrency(e.target.value);
             if (v > 0) e.target.value = formatNumber(v, 2);
         });
+    });
+
+    calc();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 7: BANCO DE HORAS & COMPENSAÇÃO (Art. 59 CLT)
+// ═══════════════════════════════════════════════════════════════════════
+function initBancoHorasModule() {
+    const $ = id => document.getElementById(id);
+    let prev = { totalGeral: 0, valorHora: 0, valorExtra: 0, totalHoras: 0, dsr: 0 };
+    let currentParams = {};
+    let currentResult = null;
+
+    function calc() {
+        currentParams = {
+            salarioBase: parseCurrency($('bancoSalario')?.value),
+            divisorMensal: Number($('bancoDivisor')?.value) || 220,
+            saldoHoras: Number($('bancoSaldoHoras')?.value) || 0,
+            tipoSaldo: $('bancoTipoSaldo')?.value || 'credito',
+            percentualAdicional: Number($('bancoAdicional')?.value) || 50,
+            tipoAcordo: $('bancoTipoAcordo')?.value || 'individual',
+            diasUteis: Number($('bancoDiasUteis')?.value) || 25,
+            domingosFeriados: Number($('bancoDomingosFeriados')?.value) || 5
+        };
+
+        const r = calcularBancoHoras(currentParams);
+        currentResult = r;
+
+        animarContador($('outBancoTotalGeral'), prev.totalGeral, r.totalGeral);
+        animarContador($('outBancoValorHora'), prev.valorHora, r.valorHoraNormal);
+        animarContador($('outBancoValorExtra'), prev.valorExtra, r.valorHoraExtra);
+        animarContador($('outBancoTotalHoras'), prev.totalHoras, r.totalHoras);
+        animarContador($('outBancoValorDsr'), prev.dsr, r.valorDsr);
+
+        const badge = $('outBancoTipoBadge');
+        if (badge) {
+            badge.textContent = r.isCredito ? 'Crédito a Receber' : 'Débito a Descontar';
+            badge.className = r.isCredito
+                ? 'text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-violet-500/20 text-violet-300'
+                : 'text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-rose-500/20 text-rose-300';
+        }
+
+        const outPrazo = $('outBancoPrazo');
+        if (outPrazo) {
+            outPrazo.textContent = r.prazoMaximoCompensacao;
+        }
+
+        renderMemoria($('bancoMemoriaContainer'), r.memoriaCalculo);
+        prev = { totalGeral: r.totalGeral, valorHora: r.valorHoraNormal, valorExtra: r.valorHoraExtra, totalHoras: r.totalHoras, dsr: r.valorDsr };
+    }
+
+    function exportExcel() {
+        if (!currentResult) calc();
+        exportarBancoHorasExcel(currentResult);
+        showToast('Planilha de Banco de Horas exportada para Excel!');
+        adicionarAoHistorico({
+            modulo: 'banco-horas',
+            titulo: 'Banco de Horas',
+            resumoPrincipal: `${currentParams.saldoHoras}h (${currentParams.tipoSaldo === 'credito' ? 'Crédito' : 'Débito'}) | ${formatCurrency(currentResult.totalGeral)}`,
+            valorPrincipal: currentResult.totalGeral,
+            params: {
+                bancoSalario: currentParams.salarioBase,
+                bancoDivisor: currentParams.divisorMensal,
+                bancoSaldoHoras: currentParams.saldoHoras,
+                bancoTipoSaldo: currentParams.tipoSaldo,
+                bancoAdicional: currentParams.percentualAdicional,
+                bancoTipoAcordo: currentParams.tipoAcordo,
+                bancoDiasUteis: currentParams.diasUteis,
+                bancoDomingosFeriados: currentParams.domingosFeriados
+            }
+        });
+    }
+
+    async function copySummary() {
+        if (!currentResult) calc();
+        const texto = `RHUB — Apuração de Banco de Horas (Art. 59 CLT)
+Salário Base: ${formatCurrency(currentParams.salarioBase)} | Divisor: ${currentParams.divisorMensal}h
+Saldo: ${currentParams.saldoHoras}h (${currentParams.tipoSaldo === 'credito' ? 'Crédito' : 'Débito'}) | Adicional: ${currentParams.percentualAdicional}%
+Valor da Hora Normal: ${formatCurrency(currentResult.valorHoraNormal)}
+${currentResult.isCredito ? `Valor Hora Extra: ${formatCurrency(currentResult.valorHoraExtra)}
+Subtotal Horas: ${formatCurrency(currentResult.totalHoras)}
+Reflexo DSR (Súmula 172 TST): ${formatCurrency(currentResult.valorDsr)}
+TOTAL A RECEBER: ${formatCurrency(currentResult.totalGeral)}` : `TOTAL A DESCONTAR: ${formatCurrency(currentResult.totalGeral)}`}
+Prazo Legal de Compensação: ${currentResult.prazoMaximoCompensacao}`;
+        await copiarTextoClipboard(texto);
+        showToast('Resumo de Banco de Horas copiado!');
+    }
+
+    function doPrint() {
+        atualizarHeaderImpressao('Banco de Horas & Compensação (Art. 59 CLT)');
+        window.print();
+    }
+
+    moduleExportHandlers['banco-horas'] = exportExcel;
+    moduleCopyHandlers['banco-horas'] = copySummary;
+    modulePrintHandlers['banco-horas'] = doPrint;
+
+    $('btnExcelBanco')?.addEventListener('click', exportExcel);
+    $('btnCopiarBanco')?.addEventListener('click', copySummary);
+    $('btnImprimirBanco')?.addEventListener('click', doPrint);
+    $('btnShareBanco')?.addEventListener('click', () => {
+        if (!currentResult) calc();
+        gerarLinkCompartilhamento('banco-horas', {
+            salario: currentParams.salarioBase,
+            horas: currentParams.saldoHoras,
+            tipo: currentParams.tipoSaldo,
+            adic: currentParams.percentualAdicional
+        });
+    });
+
+    ['bancoSalario', 'bancoSaldoHoras', 'bancoDiasUteis', 'bancoDomingosFeriados'].forEach(id => {
+        $(id)?.addEventListener('input', calc);
+    });
+    ['bancoDivisor', 'bancoTipoSaldo', 'bancoAdicional', 'bancoTipoAcordo'].forEach(id => {
+        $(id)?.addEventListener('change', calc);
+    });
+    $('bancoSalario')?.addEventListener('blur', e => {
+        const v = parseCurrency(e.target.value);
+        if (v > 0) e.target.value = formatNumber(v, 2);
+    });
+
+    calc();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 8: PARTICIPAÇÃO NOS LUCROS E RESULTADOS (PLR)
+// ═══════════════════════════════════════════════════════════════════════
+function initPlrModule() {
+    const $ = id => document.getElementById(id);
+    let prev = { liquido: 0, bruto: 0, irrf: 0, economia: 0 };
+    let currentParams = {};
+    let currentResult = null;
+
+    function calc() {
+        currentParams = {
+            valorBrutoPLR: parseCurrency($('plrValorBruto')?.value),
+            antecipacaoPaga: parseCurrency($('plrAntecipacao')?.value),
+            irrfJaRetido: parseCurrency($('plrIrrfAnterior')?.value)
+        };
+
+        const r = calcularPLR(currentParams);
+        currentResult = r;
+
+        animarContador($('outPlrLiquido'), prev.liquido, r.liquidoTotal);
+        animarContador($('outPlrBruto'), prev.bruto, r.valorBrutoPLR);
+        animarContador($('outPlrIrrf'), prev.irrf, r.irrfTotalDevido);
+        animarContador($('outPlrEconomiaEmpresa'), prev.economia, r.economiaTotalEmpresa);
+
+        if ($('outPlrAliquotaEfetiva')) $('outPlrAliquotaEfetiva').textContent = `${r.aliquotaEfetiva.toFixed(2)}%`;
+        if ($('outPlrFaixaDescricao')) $('outPlrFaixaDescricao').textContent = `${r.faixaIRRF} (Alíquota ${r.aliquotaNominal}%)`;
+        if ($('outPlrLiquidoParcela')) $('outPlrLiquidoParcela').textContent = formatCurrency(r.liquidoParcela);
+
+        renderMemoria($('plrMemoriaContainer'), r.memoriaCalculo);
+        prev = { liquido: r.liquidoTotal, bruto: r.valorBrutoPLR, irrf: r.irrfTotalDevido, economia: r.economiaTotalEmpresa };
+    }
+
+    function exportExcel() {
+        if (!currentResult) calc();
+        exportarPlrExcel(currentResult);
+        showToast('Demonstrativo de PLR exportado para Excel!');
+        adicionarAoHistorico({
+            modulo: 'plr',
+            titulo: 'PLR (Lucros e Resultados)',
+            resumoPrincipal: `PLR Bruta ${formatCurrency(currentParams.valorBrutoPLR)} | Líquido ${formatCurrency(currentResult.liquidoTotal)}`,
+            valorPrincipal: currentResult.liquidoTotal,
+            params: {
+                plrValorBruto: currentParams.valorBrutoPLR,
+                plrAntecipacao: currentParams.antecipacaoPaga,
+                plrIrrfAnterior: currentParams.irrfJaRetido
+            }
+        });
+    }
+
+    async function copySummary() {
+        if (!currentResult) calc();
+        const texto = `RHUB — Demonstrativo de PLR (Lei 10.101/2000)
+Valor Bruto Global: ${formatCurrency(currentResult.valorBrutoPLR)}
+IRRF Retido na Fonte (Exclusivo): ${formatCurrency(currentResult.irrfTotalDevido)} (Alíquota Efetiva: ${currentResult.aliquotaEfetiva.toFixed(2)}%)
+VALOR LÍQUIDO NO BOLSO: ${formatCurrency(currentResult.liquidoTotal)}
+Isenção Legal: R$ 0,00 de INSS e R$ 0,00 de FGTS
+Economia Tributária Total para a Empresa: ${formatCurrency(currentResult.economiaTotalEmpresa)}`;
+        await copiarTextoClipboard(texto);
+        showToast('Resumo da PLR copiado!');
+    }
+
+    function doPrint() {
+        atualizarHeaderImpressao('Participação nos Lucros e Resultados — PLR (Lei 10.101/00)');
+        window.print();
+    }
+
+    moduleExportHandlers['plr'] = exportExcel;
+    moduleCopyHandlers['plr'] = copySummary;
+    modulePrintHandlers['plr'] = doPrint;
+
+    $('btnExcelPlr')?.addEventListener('click', exportExcel);
+    $('btnCopiarPlr')?.addEventListener('click', copySummary);
+    $('btnImprimirPlr')?.addEventListener('click', doPrint);
+    $('btnSharePlr')?.addEventListener('click', () => {
+        if (!currentResult) calc();
+        gerarLinkCompartilhamento('plr', {
+            bruto: currentParams.valorBrutoPLR,
+            ant: currentParams.antecipacaoPaga
+        });
+    });
+
+    ['plrValorBruto', 'plrAntecipacao', 'plrIrrfAnterior'].forEach(id => {
+        const el = $(id);
+        if (el) {
+            el.addEventListener('input', calc);
+            el.addEventListener('blur', e => {
+                const v = parseCurrency(e.target.value);
+                if (v >= 0) e.target.value = formatNumber(v, 2);
+            });
+        }
+    });
+
+    calc();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 9: TELETRABALHO & AJUDA DE CUSTO (Art. 75-A CLT)
+// ═══════════════════════════════════════════════════════════════════════
+function initTeletrabalhoModule() {
+    const $ = id => document.getElementById(id);
+    let prev = { ajudaCusto: 0, internet: 0, energia: 0, vt: 0, saldo: 0 };
+    let currentParams = {};
+    let currentResult = null;
+
+    function calc() {
+        currentParams = {
+            faturaInternet: parseCurrency($('teleFaturaInternet')?.value),
+            percentualInternet: Number($('telePercInternet')?.value) || 50,
+            diasHomeOffice: Number($('teleDiasHomeOffice')?.value) || 22,
+            horasTrabalhoDia: Number($('teleHorasDia')?.value) || 8,
+            potenciaEquipamentosWatts: Number($('telePotenciaW')?.value) || 250,
+            tarifaEnergiaKwh: Number($('teleTarifaKwh')?.value) || 0.85,
+            auxilioErgonomiaEquip: parseCurrency($('teleAuxilioEquip')?.value),
+            valorVTDiario: parseCurrency($('teleValorVTDiario')?.value)
+        };
+
+        const r = calcularTeletrabalho(currentParams);
+        currentResult = r;
+
+        animarContador($('outTeleAjudaCusto'), prev.ajudaCusto, r.totalAjudaCusto);
+        animarContador($('outTeleInternet'), prev.internet, r.parcelaInternet);
+        animarContador($('outTeleEnergia'), prev.energia, r.parcelaEnergia);
+        animarContador($('outTeleVtEconomizado'), prev.vt, r.vtEconomizado);
+        animarContador($('outTeleSaldoEmpresa'), prev.saldo, r.saldoEmpresa);
+
+        renderMemoria($('teleMemoriaContainer'), r.memoriaCalculo);
+        prev = { ajudaCusto: r.totalAjudaCusto, internet: r.parcelaInternet, energia: r.parcelaEnergia, vt: r.vtEconomizado, saldo: r.saldoEmpresa };
+    }
+
+    function exportExcel() {
+        if (!currentResult) calc();
+        exportarTeletrabalhoExcel(currentResult);
+        showToast('Demonstrativo de Teletrabalho exportado para Excel!');
+        adicionarAoHistorico({
+            modulo: 'teletrabalho',
+            titulo: 'Teletrabalho / Home Office',
+            resumoPrincipal: `${currentParams.diasHomeOffice} dias remotos | Ajuda de Custo ${formatCurrency(currentResult.totalAjudaCusto)}`,
+            valorPrincipal: currentResult.totalAjudaCusto,
+            params: {
+                teleFaturaInternet: currentParams.faturaInternet,
+                telePercInternet: currentParams.percentualInternet,
+                teleDiasHomeOffice: currentParams.diasHomeOffice,
+                teleHorasDia: currentParams.horasTrabalhoDia,
+                telePotenciaW: currentParams.potenciaEquipamentosWatts,
+                teleTarifaKwh: currentParams.tarifaEnergiaKwh,
+                teleAuxilioEquip: currentParams.auxilioErgonomiaEquip,
+                teleValorVTDiario: currentParams.valorVTDiario
+            }
+        });
+    }
+
+    async function copySummary() {
+        if (!currentResult) calc();
+        const texto = `RHUB — Reembolso / Ajuda de Custo de Teletrabalho (Art. 75-D CLT)
+Dias em Home Office: ${currentParams.diasHomeOffice} dias/mês
+Parcela Internet (${currentParams.percentualInternet}% de uso): ${formatCurrency(currentResult.parcelaInternet)}
+Parcela Energia Elétrica (${currentResult.consumoKwhMes.toFixed(2)} kWh): ${formatCurrency(currentResult.parcelaEnergia)}
+Auxílio Equipamento / Ergonomia: ${formatCurrency(currentResult.parcelaEquipamentos)}
+TOTAL AJUDA DE CUSTO: ${formatCurrency(currentResult.totalAjudaCusto)} (Isento de INSS/FGTS/IRRF)
+VT Presencial Economizado: ${formatCurrency(currentResult.vtEconomizado)} | Saldo Empresa: ${formatCurrency(currentResult.saldoEmpresa)}`;
+        await copiarTextoClipboard(texto);
+        showToast('Resumo de Teletrabalho copiado!');
+    }
+
+    function doPrint() {
+        atualizarHeaderImpressao('Teletrabalho / Home Office & Ajuda de Custo (Art. 75-A a 75-E CLT)');
+        window.print();
+    }
+
+    moduleExportHandlers['teletrabalho'] = exportExcel;
+    moduleCopyHandlers['teletrabalho'] = copySummary;
+    modulePrintHandlers['teletrabalho'] = doPrint;
+
+    $('btnExcelTele')?.addEventListener('click', exportExcel);
+    $('btnCopiarTele')?.addEventListener('click', copySummary);
+    $('btnImprimirTele')?.addEventListener('click', doPrint);
+    $('btnShareTele')?.addEventListener('click', () => {
+        if (!currentResult) calc();
+        gerarLinkCompartilhamento('teletrabalho', {
+            net: currentParams.faturaInternet,
+            dias: currentParams.diasHomeOffice,
+            vt: currentParams.valorVTDiario
+        });
+    });
+
+    ['teleFaturaInternet', 'teleAuxilioEquip', 'teleValorVTDiario'].forEach(id => {
+        const el = $(id);
+        if (el) {
+            el.addEventListener('input', calc);
+            el.addEventListener('blur', e => {
+                const v = parseCurrency(e.target.value);
+                if (v >= 0) e.target.value = formatNumber(v, 2);
+            });
+        }
+    });
+
+    ['telePercInternet', 'teleDiasHomeOffice', 'teleHorasDia', 'telePotenciaW', 'teleTarifaKwh'].forEach(id => {
+        const el = $(id);
+        if (el) {
+            el.addEventListener('input', calc);
+            el.addEventListener('change', calc);
+        }
+    });
+
+    calc();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO 10: EQUIPARAÇÃO SALARIAL & PASSIVO (Art. 461 CLT)
+// ═══════════════════════════════════════════════════════════════════════
+function initEquiparacaoModule() {
+    const $ = id => document.getElementById(id);
+    let prev = { passivo: 0, difMensal: 0, difNominal: 0, reflexos: 0, fgts: 0 };
+    let currentParams = {};
+    let currentResult = null;
+
+    function calc() {
+        currentParams = {
+            salarioReclamante: parseCurrency($('equipSalarioReclamante')?.value),
+            salarioParadigma: parseCurrency($('equipSalarioParadigma')?.value),
+            mesesPeriodo: Number($('equipMeses')?.value) || 24,
+            incluir13o: $('equipCheck13')?.checked ?? true,
+            incluirFeriasTerco: $('equipCheckFerias')?.checked ?? true,
+            incluirFGTS: $('equipCheckFGTS')?.checked ?? true,
+            incluirMultaFGTS: $('equipCheckMultaFGTS')?.checked ?? false,
+            discriminacaoGenero: $('equipCheckDiscriminacao')?.checked ?? false
+        };
+
+        const r = calcularEquiparacao(currentParams);
+        currentResult = r;
+
+        animarContador($('outEquipPassivoTotal'), prev.passivo, r.passivoTotal);
+        animarContador($('outEquipDiferencaMensal'), prev.difMensal, r.diferencaMensal);
+        animarContador($('outEquipDiferencaNominal'), prev.difNominal, r.totalDiferencaNominal);
+        animarContador($('outEquipReflexos'), prev.reflexos, r.reflexo13o + r.reflexoFeriasTerco);
+        animarContador($('outEquipFgtsTotal'), prev.fgts, r.valorFGTS + r.valorMultaFGTS);
+
+        const badge = $('outEquipPeriodoBadge');
+        if (badge) {
+            badge.textContent = `${r.mesesPeriodo} meses apurados`;
+        }
+
+        renderMemoria($('equipMemoriaContainer'), r.memoriaCalculo);
+        prev = { passivo: r.passivoTotal, difMensal: r.diferencaMensal, difNominal: r.totalDiferencaNominal, reflexos: r.reflexo13o + r.reflexoFeriasTerco, fgts: r.valorFGTS + r.valorMultaFGTS };
+    }
+
+    function exportExcel() {
+        if (!currentResult) calc();
+        exportarEquiparacaoExcel(currentResult);
+        showToast('Demonstrativo de Equiparação Salarial exportado para Excel!');
+        adicionarAoHistorico({
+            modulo: 'equiparacao',
+            titulo: 'Equiparação Salarial',
+            resumoPrincipal: `Dif. Mensal ${formatCurrency(currentResult.diferencaMensal)} | Passivo ${formatCurrency(currentResult.passivoTotal)}`,
+            valorPrincipal: currentResult.passivoTotal,
+            params: {
+                equipSalarioReclamante: currentParams.salarioReclamante,
+                equipSalarioParadigma: currentParams.salarioParadigma,
+                equipMeses: currentParams.mesesPeriodo,
+                equipCheck13: currentParams.incluir13o,
+                equipCheckFerias: currentParams.incluirFeriasTerco,
+                equipCheckFGTS: currentParams.incluirFGTS,
+                equipCheckMultaFGTS: currentParams.incluirMultaFGTS,
+                equipCheckDiscriminacao: currentParams.discriminacaoGenero
+            }
+        });
+    }
+
+    async function copySummary() {
+        if (!currentResult) calc();
+        const texto = `RHUB — Apuração de Equiparação Salarial & Passivo (Art. 461 CLT)
+Salário Reclamante: ${formatCurrency(currentResult.salarioReclamante)} | Paradigma: ${formatCurrency(currentResult.salarioParadigma)}
+Diferença Salarial Mensal: ${formatCurrency(currentResult.diferencaMensal)} (${currentResult.mesesPeriodo} meses apurados)
+Diferenças Salariais Nominais: ${formatCurrency(currentResult.totalDiferencaNominal)}
+Reflexo em 13º Salário: ${formatCurrency(currentResult.reflexo13o)}
+Reflexo em Férias + 1/3 Constitucional: ${formatCurrency(currentResult.reflexoFeriasTerco)}
+Reflexos em Depósito FGTS (8%): ${formatCurrency(currentResult.valorFGTS)}
+Multa Rescisória de 40% s/ FGTS: ${formatCurrency(currentResult.valorMultaFGTS)}
+${currentResult.multaDiscriminacao > 0 ? `Multa Lei 14.611/2023 (10x novo salário): ${formatCurrency(currentResult.multaDiscriminacao)}\n` : ''}TOTAL PASSIVO TRABALHISTA ESTIMADO: ${formatCurrency(currentResult.passivoTotal)}`;
+        await copiarTextoClipboard(texto);
+        showToast('Resumo de Equiparação Salarial copiado!');
+    }
+
+    function doPrint() {
+        atualizarHeaderImpressao('Equiparação Salarial & Passivo Trabalhista (Art. 461 CLT)');
+        window.print();
+    }
+
+    moduleExportHandlers['equiparacao'] = exportExcel;
+    moduleCopyHandlers['equiparacao'] = copySummary;
+    modulePrintHandlers['equiparacao'] = doPrint;
+
+    $('btnExcelEquip')?.addEventListener('click', exportExcel);
+    $('btnCopiarEquip')?.addEventListener('click', copySummary);
+    $('btnImprimirEquip')?.addEventListener('click', doPrint);
+    $('btnShareEquip')?.addEventListener('click', () => {
+        if (!currentResult) calc();
+        gerarLinkCompartilhamento('equiparacao', {
+            salario: currentParams.salarioReclamante,
+            paradigma: currentParams.salarioParadigma,
+            meses: currentParams.mesesPeriodo
+        });
+    });
+
+    ['equipSalarioReclamante', 'equipSalarioParadigma'].forEach(id => {
+        const el = $(id);
+        if (el) {
+            el.addEventListener('input', calc);
+            el.addEventListener('blur', e => {
+                const v = parseCurrency(e.target.value);
+                if (v >= 0) e.target.value = formatNumber(v, 2);
+            });
+        }
+    });
+
+    $('equipMeses')?.addEventListener('input', calc);
+
+    ['equipCheck13', 'equipCheckFerias', 'equipCheckFGTS', 'equipCheckMultaFGTS', 'equipCheckDiscriminacao'].forEach(id => {
+        $(id)?.addEventListener('change', calc);
     });
 
     calc();

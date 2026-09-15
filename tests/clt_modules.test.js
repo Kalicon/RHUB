@@ -6,6 +6,10 @@ import { calcularFerias, calcular13o } from '../assets/js/modules/ferias.js';
 import { calcularSalarioLiquido } from '../assets/js/modules/liquido.js';
 import { calcularCustosCltPj } from '../assets/js/modules/clt_pj.js';
 import { calcularINSS, calcularIRRF } from '../assets/js/modules/tabelas.js';
+import { calcularBancoHoras } from '../assets/js/modules/banco_horas.js';
+import { calcularPLR, calcularIRRF_PLR } from '../assets/js/modules/plr.js';
+import { calcularTeletrabalho } from '../assets/js/modules/teletrabalho.js';
+import { calcularEquiparacao } from '../assets/js/modules/equiparacao.js';
 
 describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
@@ -246,4 +250,123 @@ describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
             expect(res.empresaClt.custoTotalMensal).toBeLessThan(4000 * 1.6);
         });
     });
+
+    describe('7. Módulo Banco de Horas & Compensação (Art. 59 CLT & Súmula 172 TST)', () => {
+        it('deve calcular quitação de saldo credor com adicional de 50% e reflexo no DSR', () => {
+            const res = calcularBancoHoras({
+                salarioBase: 4400,
+                divisorMensal: 220,
+                saldoHoras: 20,
+                tipoSaldo: 'credito',
+                percentualAdicional: 50,
+                diasUteis: 25,
+                domingosFeriados: 5
+            });
+
+            expect(res.valorHoraNormal).toBe(20); // 4400 / 220
+            expect(res.valorHoraExtra).toBe(30);  // 20 * 1.5
+            expect(res.totalHoras).toBe(600);     // 20h * 30
+            expect(res.valorDsr).toBeCloseTo((600 / 25) * 5, 2); // 120
+            expect(res.totalGeral).toBeCloseTo(720, 2);
+            expect(res.memoriaCalculo.length).toBe(5);
+        });
+
+        it('deve calcular desconto de horas a débito pelo valor da hora simples sem adicional', () => {
+            const res = calcularBancoHoras({
+                salarioBase: 3300,
+                divisorMensal: 220,
+                saldoHoras: 10,
+                tipoSaldo: 'debito'
+            });
+
+            expect(res.valorHoraNormal).toBe(15);
+            expect(res.totalHoras).toBe(150); // 10h * 15
+            expect(res.valorDsr).toBe(0);     // Sem DSR no débito
+            expect(res.totalGeral).toBe(150);
+        });
+    });
+
+    describe('8. Módulo PLR — Participação nos Lucros (Lei 10.101/2000)', () => {
+        it('deve isentar IRRF na faixa até R$ 7.640,80 e comprovar isenção de INSS e FGTS', () => {
+            const res = calcularPLR({
+                valorBrutoPLR: 7000
+            });
+
+            expect(res.irrfTotalDevido).toBe(0);
+            expect(res.liquidoTotal).toBe(7000);
+            expect(res.fgtsEconomizado).toBe(7000 * 0.08); // R$ 560 que a empresa não paga de FGTS
+            expect(res.inssPatronalEconomizado).toBe(7000 * 0.20); // R$ 1.400 que a empresa não paga de INSS patronal
+        });
+
+        it('deve aplicar a tabela progressiva exclusiva da Receita Federal para faixas superiores', () => {
+            const res = calcularPLR({
+                valorBrutoPLR: 15000 // Faixa de 22.5% c/ dedução de 2304.76
+            });
+
+            const irrfEsperado = (15000 * 0.225) - 2304.76;
+            expect(res.irrfTotalDevido).toBeCloseTo(irrfEsperado, 2);
+            expect(res.liquidoTotal).toBeCloseTo(15000 - irrfEsperado, 2);
+            expect(res.aliquotaNominal).toBe(22.5);
+        });
+    });
+
+    describe('9. Módulo Teletrabalho & Ajuda de Custo (Art. 75-A a 75-E CLT)', () => {
+        it('deve apurar rateio de internet e consumo de energia com isenção de encargos trabalhistas', () => {
+            const res = calcularTeletrabalho({
+                faturaInternet: 120,
+                percentualInternet: 50,
+                potenciaEquipamentosWatts: 250,
+                horasTrabalhoDia: 8,
+                tarifaEnergiaKwh: 0.80,
+                diasHomeOffice: 22,
+                auxilioErgonomiaEquip: 50,
+                valorVTDiario: 12
+            });
+
+            expect(res.parcelaInternet).toBe(60); // 120 * 50% * 1.0
+            // Consumo: 0.25 kW * 8h * 22 dias = 44 kWh * 0.80 = R$ 35,20
+            expect(res.parcelaEnergia).toBeCloseTo(35.20, 2);
+            expect(res.totalAjudaCusto).toBeCloseTo(60 + 35.20 + 50, 2); // R$ 145,20
+            expect(res.vtEconomizado).toBe(12 * 22); // R$ 264,00
+            expect(res.saldoEmpresa).toBeGreaterThan(0); // Empresa economizou com relação ao VT
+            expect(res.empresaEconomizou).toBe(true);
+        });
+    });
+
+    describe('10. Módulo Equiparação Salarial (Art. 461 CLT & Lei 14.611/2023)', () => {
+        it('deve calcular a diferença mensal, reflexos em 13º, férias + 1/3 e FGTS 8%', () => {
+            const res = calcularEquiparacao({
+                salarioReclamante: 3000,
+                salarioParadigma: 5000,
+                mesesPeriodo: 12,
+                incluir13o: true,
+                incluirFeriasTerco: true,
+                incluirFGTS: true,
+                incluirMultaFGTS: false,
+                discriminacaoGenero: false
+            });
+
+            expect(res.diferencaMensal).toBe(2000);
+            expect(res.totalDiferencaNominal).toBe(24000); // 2000 * 12
+            expect(res.reflexo13o).toBe(2000); // 1/12 * 12 = 1 salário
+            expect(res.reflexoFeriasTerco).toBeCloseTo(2000 * (4 / 3), 2); // 2666.67
+            const subtotal = 24000 + 2000 + (2000 * (4 / 3));
+            expect(res.subtotalRemuneratorio).toBeCloseTo(subtotal, 2);
+            expect(res.valorFGTS).toBeCloseTo(subtotal * 0.08, 2);
+            expect(res.passivoTotal).toBeCloseTo(subtotal + (subtotal * 0.08), 2);
+        });
+
+        it('deve aplicar a multa de 10x o novo salário na discriminação de gênero (Lei 14.611/2023)', () => {
+            const res = calcularEquiparacao({
+                salarioReclamante: 4000,
+                salarioParadigma: 6000,
+                mesesPeriodo: 6,
+                discriminacaoGenero: true
+            });
+
+            expect(res.multaDiscriminacao).toBe(60000); // 10 * 6000
+            expect(res.passivoTotal).toBeGreaterThan(60000);
+        });
+    });
 });
+

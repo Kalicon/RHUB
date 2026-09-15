@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════
  */
 
-const CACHE_NAME = 'rhub-pwa-v2';
+const CACHE_NAME = 'rhub-pwa-v2.1';
 
 const CORE_ASSETS = [
     './',
@@ -12,6 +12,8 @@ const CORE_ASSETS = [
     './manifest.json',
     './assets/css/custom.css',
     './assets/img/logo.svg',
+    './assets/img/icon-192.svg',
+    './assets/img/icon-512.svg',
     './assets/js/app.js',
     './assets/js/modules/noturno.js',
     './assets/js/modules/rescisao.js',
@@ -20,6 +22,10 @@ const CORE_ASSETS = [
     './assets/js/modules/liquido.js',
     './assets/js/modules/clt_pj.js',
     './assets/js/modules/tabelas.js',
+    './assets/js/modules/banco_horas.js',
+    './assets/js/modules/plr.js',
+    './assets/js/modules/teletrabalho.js',
+    './assets/js/modules/equiparacao.js',
     './assets/js/utils/formatters.js',
     './assets/js/utils/validators.js',
     './assets/js/utils/exporter.js',

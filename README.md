@@ -3,7 +3,7 @@
 [![Acessar Aplicação](https://img.shields.io/badge/Acessar_Online-kalicon.github.io%2FRHUB-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kalicon.github.io/RHUB/)
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
-![Vitest Tests](https://img.shields.io/badge/tests-14%20passed%20(100%25)-brightgreen.svg?logo=vitest)
+![Vitest Tests](https://img.shields.io/badge/tests-21%20passed%20(100%25)-brightgreen.svg?logo=vitest)
 ![PWA Ready](https://img.shields.io/badge/PWA-Installable_|_Offline-6366f1.svg)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4.svg)
 ![Chart.js](https://img.shields.io/badge/Chart.js-4.4_Interactive-FF6384.svg)
@@ -25,9 +25,9 @@
 - **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
 - **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
 - **Central de Desafios de Criação & Sugestões**: Espaço integrado para a comunidade e usuários proporem regras complexas de DP e abrirem Issues oficiais no GitHub diretamente do app.
-- **6 Módulos de Cálculo Especializados**:
+- **10 Módulos de Cálculo Especializados**:
   1. **Adicional Noturno & DSR**: Hora noturna ficta (52min30s / fator 1,142857), prorrogação e DSR (Súmula 172 TST).
-  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%) e INSS/IRRF.
+  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%), saque, seguro-desemprego e comparador de 4 cenários simultâneos.
   3. **Faltas e Atrasos**: Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal e tabela progressiva de perda de férias (Art. 130 CLT).
   4. **Férias & 13º Salário**: Período aquisitivo, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra (férias vencidas) e avos de 13º.
   5. **Salário Líquido (Holerite Mensal)**: Vencimentos (Salário base, Horas Extras 50%/100%, adicional noturno, DSR, insalubridade 10%/20%/40%, periculosidade 30%) e descontos reais (INSS progressivo, IRRF progressivo c/ dependentes, Vale Transporte teto 6%, VR/VA, saúde, pensão).
@@ -36,6 +36,22 @@
      - Poder de compra real do colaborador (Salário líquido + Provisões mensais + Benefícios).
      - Regime PJ: Simples Nacional (Anexo III 6% ou Anexo V 15,5%), Fator R c/ pró-labore, custos com contabilidade e benefícios próprios.
      - **Break-Even automático**: cálculo exato do faturamento PJ necessário para empatar com o poder de compra CLT.
+  7. **Banco de Horas & Compensação de Jornada (Art. 59 CLT)**:
+     - Acordo individual escrito (6 meses) vs Acordo coletivo (1 ano).
+     - Quitação de saldo credor com adicional de hora extra (50% a 100%) e reflexo no DSR (Súmula 172 TST).
+     - Desconto de saldo devedor pelo valor da hora simples.
+  8. **Participação nos Lucros e Resultados — PLR (Lei 10.101/2000)**:
+     - Aplicação da tabela oficial exclusiva e progressiva de IRRF PLR da Receita Federal.
+     - Isenção total de encargos sociais (0% INSS empregado, 0% INSS patronal e 0% FGTS).
+     - Cálculo de antecipações (1ª parcela vs quitação final) e demonstrativo de economia empresarial.
+  9. **Teletrabalho / Home Office & Ajuda de Custo (Art. 75-A a 75-E CLT)**:
+     - Rateio de fatura de internet residencial e apuração de consumo elétrico (Watts x horas x kWh).
+     - Auxílio ergonomia/equipamentos e comparativo de saldo com Vale-Transporte presencial.
+     - Natureza jurídica indenizatória (sem incidência de INSS, FGTS ou IRRF).
+  10. **Equiparação Salarial & Passivo Trabalhista (Art. 461 CLT)**:
+      - Diferença salarial mensal e nominal entre colaborador e paradigma.
+      - Reflexos legais em 13º salário, férias + 1/3, depósitos de FGTS (8%) e multa rescisória (40%).
+      - Penalidade por discriminação de gênero (Lei 14.611/2023 — 10 vezes o novo salário).
 - **Gráficos Visuais Interativos com Chart.js**:
   - Donut Chart no Holerite (Salário Líquido vs. INSS vs. IRRF vs. Benefícios).
   - Gráfico de Barras no Comparador de Rescisão (Líquido do Empregado vs. Custo da Empresa em 4 modalidades).
@@ -43,9 +59,9 @@
 - **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto a colaboradores, gestores ou clientes.
 - **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico de simulações em arquivo `.json`.
 - **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
-- **Suíte de Testes Automatizados (Vitest)**: 14 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
-- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos.
-- **Impressão / PDF Executivo**: Folha de estilo `@media print` que remove a interface web e gera relatórios limpos com cabeçalho da empresa e assinatura.
+- **Suíte de Testes Automatizados (Vitest)**: 21 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
+- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos para todos os 10 módulos.
+- **Impressão / PDF Executivo**: Folha de estilo `@media print` otimizada no `custom.css` com cabeçalho da empresa e assinatura.
 - **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`, restauráveis com 1 clique.
 
 ---
@@ -72,8 +88,7 @@
 RHUB/
 ├── assets/
 │   ├── css/
-│   │   ├── custom.css          <- Estilos do drawer, gráficos, orbes e temas
-│   │   └── print.css           <- Folha de estilo de impressão executiva e PDF
+│   │   └── custom.css          <- Estilos do drawer, gráficos, orbes, temas e impressão
 │   ├── js/
 │   │   ├── app.js              <- Controller SPA, roteador hash, Chart.js e GSAP
 │   │   ├── modules/
@@ -83,9 +98,13 @@ RHUB/
 │   │   │   ├── ferias.js       <- Férias, 1/3, abono, dobra e 13º salário
 │   │   │   ├── liquido.js      <- Salário Líquido completo (holerite mensal)
 │   │   │   ├── clt_pj.js       <- Simulador CLT vs PJ e encargos patronais
-│   │   │   └── tabelas.js      <- Tabelas progressivas de INSS e IRRF 2024
+│   │   │   ├── tabelas.js      <- Tabelas progressivas de INSS e IRRF 2024
+│   │   │   ├── banco_horas.js  <- Banco de Horas, compensação e DSR
+│   │   │   ├── plr.js          <- PLR, tabela exclusiva IRRF e isenções
+│   │   │   ├── teletrabalho.js <- Teletrabalho, ajuda de custo e comparativo VT
+│   │   │   └── equiparacao.js  <- Equiparação salarial, passivo e Lei 14.611/23
 │   │   └── utils/
-│   │       ├── exporter.js     <- Gerador de Excel (.xlsx) para todos os módulos
+│   │       ├── exporter.js     <- Gerador de Excel (.xlsx) para todos os 10 módulos
 │   │       ├── storage.js      <- LocalStorage, Backup e Restauração JSON
 │   │       ├── formatters.js   <- Formatação BRL (R$), decimais e datas
 │   │       └── validators.js   <- Sanitização e validação de entradas
@@ -94,10 +113,10 @@ RHUB/
 │       ├── icon-192.svg        <- Ícone PWA 192x192
 │       └── icon-512.svg        <- Ícone PWA 512x512
 ├── tests/
-│   └── clt_modules.test.js     <- Suíte de testes unitários com Vitest
+│   └── clt_modules.test.js     <- Suíte de 21 testes unitários com Vitest
 ├── manifest.json               <- Manifesto PWA (instalável)
-├── sw.js                       <- Service Worker com cache-first e offline
-├── index.html                  <- Aplicação Single-Page completa
+├── sw.js                       <- Service Worker com cache-first e offline v2.1
+├── index.html                  <- Aplicação Single-Page completa (10 módulos)
 ├── package.json                <- Configuração de testes Vitest
 ├── LICENSE                     <- Licença MIT
 └── README.md                   <- Documentação técnica completa
@@ -115,6 +134,10 @@ RHUB/
 | **Férias & 13º Salário** | Férias proporcionais e vencidas, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra por atraso e avos de 13º | Art. 129 a 145 da CLT, Art. 7º, XVII da CF/88, Lei 4.090/62 |
 | **Salário Líquido (Holerite)** | Composição de proventos (HE 50%/100%, insalubridade, periculosidade, DSR), desconto de VT teto 6%, previdência e IRRF | Portaria Interministerial MPS/MF nº 2/2024, MP 1.206/2024, Lei 7.418/85 |
 | **CLT vs. PJ & Custos** | Encargos patronais (INSS 20%, RAT x FAP, Terceiros 5.8%), provisões e FGTS; Simples Nacional PJ (Anexos III e V, Fator R 28%) e Break-Even | Lei 8.212/91, LC 123/2006, Art. 7º da CF/88 |
+| **Banco de Horas** | Compensação semestral (acordo individual) ou anual (CCT), quitação de saldo com adicional mínimo de 50% e DSR | Art. 59, §§ 2º e 5º da CLT, Súmula 172 do TST |
+| **Participação nos Lucros (PLR)** | Tributação exclusiva na fonte por tabela progressiva anual, isenção total de INSS e FGTS | Lei 10.101/2000, Lei 12.832/2013, Art. 7º, XI da CF/88 |
+| **Teletrabalho & Home Office** | Ajuda de custo para energia/internet, ergonomia, isenção de reflexos salariais e comparativo com Vale-Transporte | Art. 75-A a 75-E da CLT, Lei 14.442/2022 |
+| **Equiparação Salarial** | Diferença salarial para mesma função/empregador/localidade, reflexos em 13º, férias, FGTS e multa da Lei 14.611/2023 | Art. 461 da CLT, Súmula 6 do TST, Lei 14.611/2023 |
 | **Tabelas Previdenciárias e Fiscais** | INSS por faixas progressivas (7,5%, 9%, 12%, 14%), dedução por dependente (R$ 189,59) e faixas do IRRF 2024 | Tabela Oficial da Receita Federal e Ministério da Previdência Social |
 
 ---

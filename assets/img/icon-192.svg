@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="rhubGrad192" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="50%" stop-color="#4f46e5" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.25" />
+    </filter>
+  </defs>
+  <rect width="192" height="192" rx="44" fill="url(#rhubGrad192)" filter="url(#shadow)" />
+  <g transform="scale(4) translate(0, 0)">
+    <path d="M14 15h11c3.866 0 7 3.134 7 7 0 2.92-1.787 5.422-4.324 6.473L33 35h-4.5l-4.5-6h-5v6H14V15zm5 9h6c1.105 0 2-.895 2-2s-.895-2-2-2h-6v4z" fill="#ffffff" />
+  </g>
+</svg>

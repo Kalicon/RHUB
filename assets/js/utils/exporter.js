@@ -414,7 +414,179 @@ export function exportarCltPjExcel(resultado) {
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// 7. UTILITÁRIO: COPIAR RESUMO PARA ÁREA DE TRANSFERÊNCIA
+// 7. EXPORTAÇÃO EXCEL: BANCO DE HORAS & COMPENSAÇÃO (Art. 59 CLT)
+// ─────────────────────────────────────────────────────────────────────
+export function exportarBancoHorasExcel(resultado) {
+    const linhas = [
+        ['RHUB — DEMONSTRATIVO DE QUITAÇÃO DE BANCO DE HORAS', '', '', ''],
+        ['Base Legal: Art. 59, §§ 2º, 3º e 5º da CLT & Súmula 172 do TST', '', '', ''],
+        ['Data e Hora da Apuração:', getDataHoraAtual(), '', ''],
+        ['', '', '', '']
+    ];
+
+    injetarDadosCorporativos(linhas);
+
+    linhas.push(
+        ['═══ 1. PARÂMETROS INFORMADOS ═══', '', '', ''],
+        ['Salário Base Mensal', formatCurrency(resultado.salarioBase), '', ''],
+        ['Divisor Mensal Contratual', `${resultado.divisorMensal}h`, '', ''],
+        ['Saldo de Horas no Banco', `${resultado.saldoHoras}h`, '', ''],
+        ['Tipo de Saldo', resultado.isCredito ? 'Crédito (Horas Extras a Pagar)' : 'Débito (Horas Não Trabalhadas a Descontar)', '', ''],
+        ['Tipo de Acordo', resultado.tipoAcordo === 'individual' ? 'Acordo Individual (Prazo 6 meses)' : 'Acordo Coletivo (Prazo 1 ano)', '', ''],
+        ['Adicional de Hora Extra', `${resultado.percentualAdicional}%`, '', ''],
+        ['Dias Úteis no Mês', resultado.diasUteis, '', ''],
+        ['Domingos e Feriados (DSR)', resultado.domingosFeriados, '', ''],
+        ['', '', '', ''],
+        ['═══ 2. APURAÇÃO FINANCEIRA ═══', '', '', ''],
+        ['Valor da Hora Normal', formatCurrency(resultado.valorHoraNormal), '', ''],
+        ['Valor da Hora com Adicional', formatCurrency(resultado.valorHoraExtra), '', ''],
+        ['Total do Saldo de Horas', formatCurrency(resultado.totalHoras), '', ''],
+        ['Reflexo no DSR (Súmula 172 TST)', formatCurrency(resultado.valorDsr), '', ''],
+        ['TOTAL GERAL DA APURAÇÃO', formatCurrency(resultado.totalGeral), resultado.isCredito ? 'A Pagar ao Colaborador' : 'A Descontar em Folha/Rescisão', ''],
+        ['', '', '', ''],
+        ['═══ 3. MEMÓRIA DE CÁLCULO AUDITÁVEL ═══', '', '', ''],
+        ['Passo', 'Título', 'Fórmula', 'Resultado']
+    );
+
+    resultado.memoriaCalculo.forEach(m => {
+        linhas.push([`Passo ${m.passo}: ${m.titulo}`, m.formula, m.descricao, formatCurrency(m.resultado)]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_Banco_Horas_${new Date().toISOString().split('T')[0]}`, 'Banco de Horas');
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 8. EXPORTAÇÃO EXCEL: PARTICIPAÇÃO NOS LUCROS E RESULTADOS (PLR)
+// ─────────────────────────────────────────────────────────────────────
+export function exportarPlrExcel(resultado) {
+    const linhas = [
+        ['RHUB — DEMONSTRATIVO DE PARTICIPAÇÃO NOS LUCROS E RESULTADOS (PLR)', '', '', ''],
+        ['Base Legal: Lei 10.101/2000, Lei 12.832/2013 & Tabela IRRF PLR da Receita Federal', '', '', ''],
+        ['Data e Hora da Apuração:', getDataHoraAtual(), '', ''],
+        ['', '', '', '']
+    ];
+
+    injetarDadosCorporativos(linhas);
+
+    linhas.push(
+        ['═══ 1. VALORES INFORMADOS & ANTECIPAÇÃO ═══', '', '', ''],
+        ['Valor Bruto Total da PLR', formatCurrency(resultado.valorBrutoPLR), '', ''],
+        ['Antecipação Paga Anteriormente (1ª Parcela)', formatCurrency(resultado.antecipacaoPaga), '', ''],
+        ['Saldo Bruto a Pagar nesta Parcela', formatCurrency(resultado.saldoBrutoPagar), '', ''],
+        ['', '', '', ''],
+        ['═══ 2. TRIBUTAÇÃO EXCLUSIVA NA FONTE (IRRF PLR) ═══', '', '', ''],
+        ['Faixa Aplicada da Tabela Oficial', resultado.faixaIRRF, '', ''],
+        ['Alíquota Nominal da Faixa', `${resultado.aliquotaNominal}%`, '', ''],
+        ['Dedução da Faixa', formatCurrency(resultado.deducaoIRRF), '', ''],
+        ['Alíquota Efetiva Real', `${resultado.aliquotaEfetiva.toFixed(2)}%`, '', ''],
+        ['IRRF Total Retido na Fonte', formatCurrency(resultado.irrfTotalDevido), '', ''],
+        ['IRRF a Reter Nesta Parcela', formatCurrency(resultado.irrfAReter), '', ''],
+        ['VALOR LÍQUIDO A RECEBER PELO COLABORADOR', formatCurrency(resultado.liquidoTotal), 'Isento de INSS e FGTS', ''],
+        ['', '', '', ''],
+        ['═══ 3. ECONOMIA TRIBUTÁRIA CORPORATIVA (ISENÇÕES LEGAIS) ═══', '', '', ''],
+        ['FGTS Não Incidente (8%)', formatCurrency(resultado.fgtsEconomizado), 'Economia da Empresa', ''],
+        ['INSS Patronal Não Incidente (20%)', formatCurrency(resultado.inssPatronalEconomizado), 'Economia da Empresa', ''],
+        ['ECONOMIA TOTAL EM ENCARGOS TRABALHISTAS', formatCurrency(resultado.economiaTotalEmpresa), 'Vantagem da PLR vs Salário/Bônus', ''],
+        ['', '', '', ''],
+        ['═══ 4. MEMÓRIA DE CÁLCULO AUDITÁVEL ═══', '', '', ''],
+        ['Passo', 'Título', 'Fórmula', 'Resultado']
+    );
+
+    resultado.memoriaCalculo.forEach(m => {
+        linhas.push([`Passo ${m.passo}: ${m.titulo}`, m.formula, m.descricao, typeof m.resultado === 'number' ? formatCurrency(m.resultado) : m.resultado]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_PLR_${new Date().toISOString().split('T')[0]}`, 'PLR');
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 9. EXPORTAÇÃO EXCEL: TELETRABALHO & AJUDA DE CUSTO (CLT)
+// ─────────────────────────────────────────────────────────────────────
+export function exportarTeletrabalhoExcel(resultado) {
+    const linhas = [
+        ['RHUB — DEMONSTRATIVO DE AJUDA DE CUSTO PARA TELETRABALHO', '', '', ''],
+        ['Base Legal: Art. 75-A a 75-E da CLT (Lei 13.467/2017 e Lei 14.442/2022)', '', '', ''],
+        ['Data e Hora da Apuração:', getDataHoraAtual(), '', ''],
+        ['', '', '', '']
+    ];
+
+    injetarDadosCorporativos(linhas);
+
+    linhas.push(
+        ['═══ 1. PARÂMETROS DE HOME OFFICE ═══', '', '', ''],
+        ['Fatura Mensal de Internet Residencial', formatCurrency(resultado.faturaInternet), '', ''],
+        ['Percentual Alocado ao Trabalho', `${resultado.percentualInternet}%`, '', ''],
+        ['Potência dos Equipamentos (PC/Monitor)', `${resultado.potenciaEquipamentosWatts} W`, '', ''],
+        ['Horas de Trabalho por Dia', `${resultado.horasTrabalhoDia}h`, '', ''],
+        ['Tarifa de Energia Elétrica', `R$ ${resultado.tarifaEnergiaKwh.toFixed(2)} / kWh`, '', ''],
+        ['Dias em Home Office no Mês', `${resultado.diasHomeOffice} dias`, '', ''],
+        ['Auxílio Desgaste de Equipamentos / Ergonomia', formatCurrency(resultado.parcelaEquipamentos), '', ''],
+        ['', '', '', ''],
+        ['═══ 2. COMPOSIÇÃO DA AJUDA DE CUSTO SUGERIDA ═══', '', '', ''],
+        ['Parcela de Internet Proporcional', formatCurrency(resultado.parcelaInternet), 'Sem natureza salarial', ''],
+        ['Parcela de Energia Elétrica (Consumo)', formatCurrency(resultado.parcelaEnergia), `${resultado.consumoKwhMes.toFixed(2)} kWh consumidos`, ''],
+        ['Auxílio Infraestrutura / Equipamentos', formatCurrency(resultado.parcelaEquipamentos), 'Art. 75-D CLT', ''],
+        ['TOTAL DA AJUDA DE CUSTO MENSAL', formatCurrency(resultado.totalAjudaCusto), 'Isento de INSS, FGTS e IRRF', ''],
+        ['', '', '', ''],
+        ['═══ 3. BALANÇO COM VALE-TRANSPORTE PRESENCIAL ═══', '', '', ''],
+        ['Tarifa Diária de Vale-Transporte', formatCurrency(resultado.valorVTDiario), '', ''],
+        ['Total de VT Economizado no Mês', formatCurrency(resultado.vtEconomizado), '', ''],
+        ['Saldo Líquido para a Empresa', formatCurrency(resultado.saldoEmpresa), resultado.empresaEconomizou ? 'Economia Positiva para a Empresa' : 'Custo Superior ao VT', ''],
+        ['', '', '', ''],
+        ['═══ 4. MEMÓRIA DE CÁLCULO AUDITÁVEL ═══', '', '', ''],
+        ['Passo', 'Título', 'Fórmula', 'Resultado']
+    );
+
+    resultado.memoriaCalculo.forEach(m => {
+        linhas.push([`Passo ${m.passo}: ${m.titulo}`, m.formula, m.descricao, typeof m.resultado === 'number' ? formatCurrency(m.resultado) : m.resultado]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_Teletrabalho_${new Date().toISOString().split('T')[0]}`, 'Teletrabalho');
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 10. EXPORTAÇÃO EXCEL: EQUIPARAÇÃO SALARIAL & PASSIVO (Art. 461 CLT)
+// ─────────────────────────────────────────────────────────────────────
+export function exportarEquiparacaoExcel(resultado) {
+    const linhas = [
+        ['RHUB — DEMONSTRATIVO DE EQUIPARAÇÃO SALARIAL & PASSIVO TRABALHISTA', '', '', ''],
+        ['Base Legal: Art. 461 CLT, Súmula 6 TST e Lei 14.611/2023 (Igualdade Salarial)', '', '', ''],
+        ['Data e Hora da Apuração:', getDataHoraAtual(), '', ''],
+        ['', '', '', '']
+    ];
+
+    injetarDadosCorporativos(linhas);
+
+    linhas.push(
+        ['═══ 1. PARÂMETROS COMPARATIVOS ═══', '', '', ''],
+        ['Salário Atual do Colaborador (Reclamante)', formatCurrency(resultado.salarioReclamante), '', ''],
+        ['Salário do Paradigma (Equiparando)', formatCurrency(resultado.salarioParadigma), '', ''],
+        ['Diferença Salarial Mensal', formatCurrency(resultado.diferencaMensal), '', ''],
+        ['Período Apurado (Meses Imprescritos)', `${resultado.mesesPeriodo} meses`, '', ''],
+        ['', '', '', ''],
+        ['═══ 2. DISCRIMINAÇÃO DO PASSIVO & REFLEXOS LEGAIS ═══', '', '', ''],
+        ['Total Nominal das Diferenças Salariais', formatCurrency(resultado.totalDiferencaNominal), '', ''],
+        ['Reflexos em 13º Salário', formatCurrency(resultado.reflexo13o), '', ''],
+        ['Reflexos em Férias + 1/3 Constitucional', formatCurrency(resultado.reflexoFeriasTerco), '', ''],
+        ['Subtotal Remuneratório', formatCurrency(resultado.subtotalRemuneratorio), '', ''],
+        ['Reflexos em Depósitos de FGTS (8%)', formatCurrency(resultado.valorFGTS), '', ''],
+        ['Multa Rescisória de 40% s/ FGTS', formatCurrency(resultado.valorMultaFGTS), '', ''],
+        ['Multa por Discriminação (Lei 14.611/2023)', formatCurrency(resultado.multaDiscriminacao), resultado.multaDiscriminacao > 0 ? 'Aplicada (10x novo salário)' : 'Não aplicável', ''],
+        ['PASSIVO TRABALHISTA TOTAL ESTIMADO', formatCurrency(resultado.passivoTotal), '', ''],
+        ['', '', '', ''],
+        ['═══ 3. MEMÓRIA DE CÁLCULO AUDITÁVEL ═══', '', '', ''],
+        ['Passo', 'Título', 'Fórmula', 'Resultado']
+    );
+
+    resultado.memoriaCalculo.forEach(m => {
+        linhas.push([`Passo ${m.passo}: ${m.titulo}`, m.formula, m.descricao, typeof m.resultado === 'number' ? formatCurrency(m.resultado) : m.resultado]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_Equiparacao_Salarial_${new Date().toISOString().split('T')[0]}`, 'Equiparação Salarial');
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// 11. UTILITÁRIO: COPIAR RESUMO PARA ÁREA DE TRANSFERÊNCIA
 // ─────────────────────────────────────────────────────────────────────
 export async function copiarTextoClipboard(texto) {
     try {
@@ -437,3 +609,4 @@ export async function copiarTextoClipboard(texto) {
         return false;
     }
 }
+
