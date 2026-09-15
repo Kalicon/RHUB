@@ -1,0 +1,99 @@
+25/09/2019 17:48:00 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:48:00 Enviando dados de login...
+25/09/2019 17:48:07 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:48:13 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:48:13 Enviando dados de login...
+25/09/2019 17:48:18 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:49:37 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:49:37 Enviando dados de login...
+25/09/2019 17:49:42 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:49:49 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:49:49 Enviando dados de login...
+25/09/2019 17:49:54 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:51:41 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:51:41 Enviando dados de login...
+25/09/2019 17:51:46 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:52:08 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:52:08 Enviando dados de login...
+25/09/2019 17:52:13 ERRO HTTP: O tempo limite da operação foi atingido
+   em System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   em System.Net.HttpWebRequest.GetRequestStream()
+   em Controlid.RestJSON.SendJson(String cIP, Object objSend, Type tpResult, String session)
+25/09/2019 17:54:06 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:54:06 Enviando dados de login...
+25/09/2019 17:54:08 LastResult: {"session":"/1VLXYFkuyp/J2Uo2f8rEkjp"}
+25/09/2019 17:54:08 ConnectResult
+25/09/2019 17:54:08 END PARSE
+25/09/2019 17:54:08 OK
+25/09/2019 17:54:08 END
+25/09/2019 17:54:08 URL: https://177.16.217.180:3000/set_system_date_time.fcgi
+25/09/2019 17:54:08 Enviando: {"session":"\/1VLXYFkuyp\/J2Uo2f8rEkjp","day":25,"hour":17,"minute":54,"month":9,"second":8,"year":2019}
+25/09/2019 17:54:08 LastResult: {}
+25/09/2019 17:54:08 StatusResult
+25/09/2019 17:54:08 END PARSE
+25/09/2019 17:54:08 OK
+25/09/2019 17:54:08 END
+25/09/2019 17:57:21 URL: https://177.16.217.180:3000/logout.fcgi
+25/09/2019 17:57:21 Enviando: {"session":"\/1VLXYFkuyp\/J2Uo2f8rEkjp"}
+25/09/2019 17:57:23 LastResult: {}
+25/09/2019 17:57:23 String
+25/09/2019 17:57:23 END PARSE
+25/09/2019 17:57:23 String
+25/09/2019 17:57:23 END
+25/09/2019 17:57:23 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:57:23 Enviando dados de login...
+25/09/2019 17:57:23 LastResult: {"session":"9yegD5V9Ij2m1mF2K3qOPA2G"}
+25/09/2019 17:57:23 ConnectResult
+25/09/2019 17:57:23 END PARSE
+25/09/2019 17:57:23 OK
+25/09/2019 17:57:23 END
+25/09/2019 17:57:23 URL: https://177.16.217.180:3000/set_system_date_time.fcgi
+25/09/2019 17:57:23 Enviando: {"session":"9yegD5V9Ij2m1mF2K3qOPA2G","day":25,"hour":17,"minute":57,"month":9,"second":23,"year":2019}
+25/09/2019 17:57:24 LastResult: {}
+25/09/2019 17:57:24 StatusResult
+25/09/2019 17:57:24 END PARSE
+25/09/2019 17:57:24 OK
+25/09/2019 17:57:24 END
+25/09/2019 17:57:29 URL: https://177.16.217.180:3000/logout.fcgi
+25/09/2019 17:57:29 Enviando: {"session":"9yegD5V9Ij2m1mF2K3qOPA2G"}
+25/09/2019 17:57:30 LastResult: {}
+25/09/2019 17:57:30 String
+25/09/2019 17:57:30 END PARSE
+25/09/2019 17:57:30 String
+25/09/2019 17:57:30 END
+25/09/2019 17:57:30 URL: https://177.16.217.180:3000/login.fcgi
+25/09/2019 17:57:30 Enviando dados de login...
+25/09/2019 17:57:30 LastResult: {"session":"uB3sTIEWAnQ/dhNWzB5yXsfj"}
+25/09/2019 17:57:30 ConnectResult
+25/09/2019 17:57:30 END PARSE
+25/09/2019 17:57:30 OK
+25/09/2019 17:57:30 END
+25/09/2019 17:57:30 URL: https://177.16.217.180:3000/get_about.fcgi
+25/09/2019 17:57:30 Enviando: {"session": "uB3sTIEWAnQ/dhNWzB5yXsfj"}
+25/09/2019 17:57:30 LastResult: {"mac":"FC:52:CE:81:E3:25","nSerie":"00014003750066354","versionFW":1048,"versionMRP":1560}
+25/09/2019 17:57:30 AboutResult
+25/09/2019 17:57:30 END PARSE
+25/09/2019 17:57:30 OK
+25/09/2019 17:57:30 END
+25/09/2019 17:57:31 URL: https://177.16.217.180:3000/get_system_information.fcgi
+25/09/2019 17:57:31 Enviando: {"session": "uB3sTIEWAnQ/dhNWzB5yXsfj"}
+25/09/2019 17:57:31 LastResult: {"user_count":22,"template_count":0,"uptime":3704,"ticks":464,"cuts":3242,"coil_paper":0,"total_paper":1833,"paper_ok":true,"low_paper":null,"memory":16,"used_mrp":0,"last_nsr":3342}
+25/09/2019 17:57:31 InfoResult
+25/09/2019 17:57:31 END PARSE
+25/09/2019 17:57:31 OK
+25/09/2019 17:57:31 END

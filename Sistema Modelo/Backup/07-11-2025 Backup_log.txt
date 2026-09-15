@@ -1,0 +1,455 @@
+22:43:05:Iniciando Servico de Backup
+22:43:05:User ID=sa;Password=dbb020531;Data Source=192.168.1.90;Initial Catalog=dbMendes
+22:44:05:iniciando conexão com Banco! 
+22:44:05:Consultando parametros de configuração do banco de dados! 
+22:45:05:verificando se a Programacao de Backup....! 
+22:45:05:Encontrado com Sucesso
+22:45:05:Hora do Backup: 23:00
+22:45:05:verificando se Backup ja foi Realizado....! 
+22:45:05:Preparando para Realizar o Backup! : 07/11/2025
+22:45:05:Aguardando Tempo para o Backup
+22:46:05:verificando se a Programacao de Backup....! 
+22:46:05:Encontrado com Sucesso
+22:46:05:Hora do Backup: 23:00
+22:46:05:verificando se Backup ja foi Realizado....! 
+22:46:05:Preparando para Realizar o Backup! : 07/11/2025
+22:46:05:Aguardando Tempo para o Backup
+22:47:05:verificando se a Programacao de Backup....! 
+22:47:05:Encontrado com Sucesso
+22:47:05:Hora do Backup: 23:00
+22:47:05:verificando se Backup ja foi Realizado....! 
+22:47:05:Preparando para Realizar o Backup! : 07/11/2025
+22:47:05:Aguardando Tempo para o Backup
+22:48:05:verificando se a Programacao de Backup....! 
+22:48:05:Encontrado com Sucesso
+22:48:05:Hora do Backup: 23:00
+22:48:05:verificando se Backup ja foi Realizado....! 
+22:48:05:Preparando para Realizar o Backup! : 07/11/2025
+22:48:05:Aguardando Tempo para o Backup
+22:49:05:verificando se a Programacao de Backup....! 
+22:49:05:Encontrado com Sucesso
+22:49:05:Hora do Backup: 23:00
+22:49:05:verificando se Backup ja foi Realizado....! 
+22:49:05:Preparando para Realizar o Backup! : 07/11/2025
+22:49:05:Aguardando Tempo para o Backup
+22:50:05:verificando se a Programacao de Backup....! 
+22:50:05:Encontrado com Sucesso
+22:50:05:Hora do Backup: 23:00
+22:50:05:verificando se Backup ja foi Realizado....! 
+22:50:05:Preparando para Realizar o Backup! : 07/11/2025
+22:50:05:Aguardando Tempo para o Backup
+22:51:05:verificando se a Programacao de Backup....! 
+22:51:05:Encontrado com Sucesso
+22:51:05:Hora do Backup: 23:00
+22:51:05:verificando se Backup ja foi Realizado....! 
+22:51:05:Preparando para Realizar o Backup! : 07/11/2025
+22:51:05:Aguardando Tempo para o Backup
+22:52:05:verificando se a Programacao de Backup....! 
+22:52:05:Encontrado com Sucesso
+22:52:05:Hora do Backup: 23:00
+22:52:05:verificando se Backup ja foi Realizado....! 
+22:52:05:Preparando para Realizar o Backup! : 07/11/2025
+22:52:05:Aguardando Tempo para o Backup
+22:53:05:verificando se a Programacao de Backup....! 
+22:53:05:Encontrado com Sucesso
+22:53:05:Hora do Backup: 23:00
+22:53:05:verificando se Backup ja foi Realizado....! 
+22:53:05:Preparando para Realizar o Backup! : 07/11/2025
+22:53:05:Aguardando Tempo para o Backup
+22:54:05:verificando se a Programacao de Backup....! 
+22:54:05:Encontrado com Sucesso
+22:54:05:Hora do Backup: 23:00
+22:54:05:verificando se Backup ja foi Realizado....! 
+22:54:05:Preparando para Realizar o Backup! : 07/11/2025
+22:54:05:Aguardando Tempo para o Backup
+22:55:05:verificando se a Programacao de Backup....! 
+22:55:05:Encontrado com Sucesso
+22:55:05:Hora do Backup: 23:00
+22:55:05:verificando se Backup ja foi Realizado....! 
+22:55:05:Preparando para Realizar o Backup! : 07/11/2025
+22:55:05:Aguardando Tempo para o Backup
+22:56:05:verificando se a Programacao de Backup....! 
+22:56:05:Encontrado com Sucesso
+22:56:05:Hora do Backup: 23:00
+22:56:05:verificando se Backup ja foi Realizado....! 
+22:56:05:Preparando para Realizar o Backup! : 07/11/2025
+22:56:05:Aguardando Tempo para o Backup
+22:57:05:verificando se a Programacao de Backup....! 
+22:57:05:Encontrado com Sucesso
+22:57:05:Hora do Backup: 23:00
+22:57:05:verificando se Backup ja foi Realizado....! 
+22:57:05:Preparando para Realizar o Backup! : 07/11/2025
+22:57:05:Aguardando Tempo para o Backup
+22:58:05:verificando se a Programacao de Backup....! 
+22:58:05:Encontrado com Sucesso
+22:58:05:Hora do Backup: 23:00
+22:58:05:verificando se Backup ja foi Realizado....! 
+22:58:05:Preparando para Realizar o Backup! : 07/11/2025
+22:58:05:Aguardando Tempo para o Backup
+22:59:05:verificando se a Programacao de Backup....! 
+22:59:05:Encontrado com Sucesso
+22:59:05:Hora do Backup: 23:00
+22:59:05:verificando se Backup ja foi Realizado....! 
+22:59:05:Preparando para Realizar o Backup! : 07/11/2025
+22:59:05:Aguardando Tempo para o Backup
+23:00:05:verificando se a Programacao de Backup....! 
+23:00:05:Encontrado com Sucesso
+23:00:05:Hora do Backup: 23:00
+23:00:05:verificando se Backup ja foi Realizado....! 
+23:00:05:Preparando para Realizar o Backup! : 07/11/2025
+23:00:05:Realizando o Backup dos Dados : 071120252300
+23:00:44:Backup: 071120252300.bak Realizado com SUCESSO!
+23:01:44:verificando se a Programacao de Backup....! 
+23:01:44:Encontrado com Sucesso
+23:01:44:Hora do Backup: 23:00
+23:01:44:verificando se Backup ja foi Realizado....! 
+23:01:44:O Backup do dia ja foi Realizado! 
+23:01:44:Aguardando Tempo para o Backup
+23:02:44:verificando se a Programacao de Backup....! 
+23:02:44:Encontrado com Sucesso
+23:02:44:Hora do Backup: 23:00
+23:02:44:verificando se Backup ja foi Realizado....! 
+23:02:44:O Backup do dia ja foi Realizado! 
+23:02:44:Aguardando Tempo para o Backup
+23:03:44:verificando se a Programacao de Backup....! 
+23:03:44:Encontrado com Sucesso
+23:03:44:Hora do Backup: 23:00
+23:03:44:verificando se Backup ja foi Realizado....! 
+23:03:44:O Backup do dia ja foi Realizado! 
+23:03:44:Aguardando Tempo para o Backup
+23:04:44:verificando se a Programacao de Backup....! 
+23:04:44:Encontrado com Sucesso
+23:04:44:Hora do Backup: 23:00
+23:04:44:verificando se Backup ja foi Realizado....! 
+23:04:44:O Backup do dia ja foi Realizado! 
+23:04:44:Aguardando Tempo para o Backup
+23:05:44:verificando se a Programacao de Backup....! 
+23:05:44:Encontrado com Sucesso
+23:05:44:Hora do Backup: 23:00
+23:05:44:verificando se Backup ja foi Realizado....! 
+23:05:44:O Backup do dia ja foi Realizado! 
+23:05:44:Aguardando Tempo para o Backup
+23:06:44:verificando se a Programacao de Backup....! 
+23:06:44:Encontrado com Sucesso
+23:06:44:Hora do Backup: 23:00
+23:06:44:verificando se Backup ja foi Realizado....! 
+23:06:44:O Backup do dia ja foi Realizado! 
+23:06:44:Aguardando Tempo para o Backup
+23:07:44:verificando se a Programacao de Backup....! 
+23:07:44:Encontrado com Sucesso
+23:07:44:Hora do Backup: 23:00
+23:07:44:verificando se Backup ja foi Realizado....! 
+23:07:44:O Backup do dia ja foi Realizado! 
+23:07:44:Aguardando Tempo para o Backup
+23:08:44:verificando se a Programacao de Backup....! 
+23:08:44:Encontrado com Sucesso
+23:08:44:Hora do Backup: 23:00
+23:08:44:verificando se Backup ja foi Realizado....! 
+23:08:44:O Backup do dia ja foi Realizado! 
+23:08:44:Aguardando Tempo para o Backup
+23:09:44:verificando se a Programacao de Backup....! 
+23:09:44:Encontrado com Sucesso
+23:09:44:Hora do Backup: 23:00
+23:09:44:verificando se Backup ja foi Realizado....! 
+23:09:44:O Backup do dia ja foi Realizado! 
+23:09:44:Aguardando Tempo para o Backup
+23:10:44:verificando se a Programacao de Backup....! 
+23:10:44:Encontrado com Sucesso
+23:10:44:Hora do Backup: 23:00
+23:10:44:verificando se Backup ja foi Realizado....! 
+23:10:44:O Backup do dia ja foi Realizado! 
+23:10:44:Aguardando Tempo para o Backup
+23:11:44:verificando se a Programacao de Backup....! 
+23:11:44:Encontrado com Sucesso
+23:11:44:Hora do Backup: 23:00
+23:11:44:verificando se Backup ja foi Realizado....! 
+23:11:44:O Backup do dia ja foi Realizado! 
+23:11:44:Aguardando Tempo para o Backup
+23:12:44:verificando se a Programacao de Backup....! 
+23:12:44:Encontrado com Sucesso
+23:12:44:Hora do Backup: 23:00
+23:12:44:verificando se Backup ja foi Realizado....! 
+23:12:44:O Backup do dia ja foi Realizado! 
+23:12:44:Aguardando Tempo para o Backup
+23:13:44:verificando se a Programacao de Backup....! 
+23:13:44:Encontrado com Sucesso
+23:13:44:Hora do Backup: 23:00
+23:13:44:verificando se Backup ja foi Realizado....! 
+23:13:44:O Backup do dia ja foi Realizado! 
+23:13:44:Aguardando Tempo para o Backup
+23:14:44:verificando se a Programacao de Backup....! 
+23:14:44:Encontrado com Sucesso
+23:14:44:Hora do Backup: 23:00
+23:14:44:verificando se Backup ja foi Realizado....! 
+23:14:44:O Backup do dia ja foi Realizado! 
+23:14:44:Aguardando Tempo para o Backup
+23:15:44:verificando se a Programacao de Backup....! 
+23:15:44:Encontrado com Sucesso
+23:15:44:Hora do Backup: 23:00
+23:15:44:verificando se Backup ja foi Realizado....! 
+23:15:44:O Backup do dia ja foi Realizado! 
+23:15:44:Aguardando Tempo para o Backup
+23:16:44:verificando se a Programacao de Backup....! 
+23:16:44:Encontrado com Sucesso
+23:16:44:Hora do Backup: 23:00
+23:16:44:verificando se Backup ja foi Realizado....! 
+23:16:45:O Backup do dia ja foi Realizado! 
+23:16:45:Aguardando Tempo para o Backup
+23:17:44:verificando se a Programacao de Backup....! 
+23:17:44:Encontrado com Sucesso
+23:17:44:Hora do Backup: 23:00
+23:17:44:verificando se Backup ja foi Realizado....! 
+23:17:44:O Backup do dia ja foi Realizado! 
+23:17:44:Aguardando Tempo para o Backup
+23:18:44:verificando se a Programacao de Backup....! 
+23:18:44:Encontrado com Sucesso
+23:18:44:Hora do Backup: 23:00
+23:18:44:verificando se Backup ja foi Realizado....! 
+23:18:44:O Backup do dia ja foi Realizado! 
+23:18:44:Aguardando Tempo para o Backup
+23:19:44:verificando se a Programacao de Backup....! 
+23:19:44:Encontrado com Sucesso
+23:19:44:Hora do Backup: 23:00
+23:19:44:verificando se Backup ja foi Realizado....! 
+23:19:44:O Backup do dia ja foi Realizado! 
+23:19:44:Aguardando Tempo para o Backup
+23:20:44:verificando se a Programacao de Backup....! 
+23:20:44:Encontrado com Sucesso
+23:20:44:Hora do Backup: 23:00
+23:20:44:verificando se Backup ja foi Realizado....! 
+23:20:44:O Backup do dia ja foi Realizado! 
+23:20:44:Aguardando Tempo para o Backup
+23:21:44:verificando se a Programacao de Backup....! 
+23:21:44:Encontrado com Sucesso
+23:21:44:Hora do Backup: 23:00
+23:21:44:verificando se Backup ja foi Realizado....! 
+23:21:44:O Backup do dia ja foi Realizado! 
+23:21:44:Aguardando Tempo para o Backup
+23:22:44:verificando se a Programacao de Backup....! 
+23:22:44:Encontrado com Sucesso
+23:22:44:Hora do Backup: 23:00
+23:22:44:verificando se Backup ja foi Realizado....! 
+23:22:44:O Backup do dia ja foi Realizado! 
+23:22:44:Aguardando Tempo para o Backup
+23:23:44:verificando se a Programacao de Backup....! 
+23:23:44:Encontrado com Sucesso
+23:23:44:Hora do Backup: 23:00
+23:23:44:verificando se Backup ja foi Realizado....! 
+23:23:44:O Backup do dia ja foi Realizado! 
+23:23:44:Aguardando Tempo para o Backup
+23:24:44:verificando se a Programacao de Backup....! 
+23:24:44:Encontrado com Sucesso
+23:24:44:Hora do Backup: 23:00
+23:24:44:verificando se Backup ja foi Realizado....! 
+23:24:44:O Backup do dia ja foi Realizado! 
+23:24:44:Aguardando Tempo para o Backup
+23:25:44:verificando se a Programacao de Backup....! 
+23:25:44:Encontrado com Sucesso
+23:25:44:Hora do Backup: 23:00
+23:25:44:verificando se Backup ja foi Realizado....! 
+23:25:44:O Backup do dia ja foi Realizado! 
+23:25:44:Aguardando Tempo para o Backup
+23:26:44:verificando se a Programacao de Backup....! 
+23:26:44:Encontrado com Sucesso
+23:26:44:Hora do Backup: 23:00
+23:26:44:verificando se Backup ja foi Realizado....! 
+23:26:44:O Backup do dia ja foi Realizado! 
+23:26:44:Aguardando Tempo para o Backup
+23:27:44:verificando se a Programacao de Backup....! 
+23:27:44:Encontrado com Sucesso
+23:27:44:Hora do Backup: 23:00
+23:27:44:verificando se Backup ja foi Realizado....! 
+23:27:44:O Backup do dia ja foi Realizado! 
+23:27:44:Aguardando Tempo para o Backup
+23:28:44:verificando se a Programacao de Backup....! 
+23:28:44:Encontrado com Sucesso
+23:28:44:Hora do Backup: 23:00
+23:28:44:verificando se Backup ja foi Realizado....! 
+23:28:44:O Backup do dia ja foi Realizado! 
+23:28:44:Aguardando Tempo para o Backup
+23:29:44:verificando se a Programacao de Backup....! 
+23:29:44:Encontrado com Sucesso
+23:29:44:Hora do Backup: 23:00
+23:29:44:verificando se Backup ja foi Realizado....! 
+23:29:44:O Backup do dia ja foi Realizado! 
+23:29:44:Aguardando Tempo para o Backup
+23:30:44:verificando se a Programacao de Backup....! 
+23:30:44:Encontrado com Sucesso
+23:30:44:Hora do Backup: 23:00
+23:30:44:verificando se Backup ja foi Realizado....! 
+23:30:44:O Backup do dia ja foi Realizado! 
+23:30:45:Aguardando Tempo para o Backup
+23:31:44:verificando se a Programacao de Backup....! 
+23:31:44:Encontrado com Sucesso
+23:31:44:Hora do Backup: 23:00
+23:31:44:verificando se Backup ja foi Realizado....! 
+23:31:44:O Backup do dia ja foi Realizado! 
+23:31:44:Aguardando Tempo para o Backup
+23:32:44:verificando se a Programacao de Backup....! 
+23:32:44:Encontrado com Sucesso
+23:32:44:Hora do Backup: 23:00
+23:32:44:verificando se Backup ja foi Realizado....! 
+23:32:44:O Backup do dia ja foi Realizado! 
+23:32:44:Aguardando Tempo para o Backup
+23:33:44:verificando se a Programacao de Backup....! 
+23:33:44:Encontrado com Sucesso
+23:33:44:Hora do Backup: 23:00
+23:33:44:verificando se Backup ja foi Realizado....! 
+23:33:44:O Backup do dia ja foi Realizado! 
+23:33:44:Aguardando Tempo para o Backup
+23:34:44:verificando se a Programacao de Backup....! 
+23:34:44:Encontrado com Sucesso
+23:34:44:Hora do Backup: 23:00
+23:34:44:verificando se Backup ja foi Realizado....! 
+23:34:44:O Backup do dia ja foi Realizado! 
+23:34:44:Aguardando Tempo para o Backup
+23:35:44:verificando se a Programacao de Backup....! 
+23:35:44:Encontrado com Sucesso
+23:35:44:Hora do Backup: 23:00
+23:35:44:verificando se Backup ja foi Realizado....! 
+23:35:44:O Backup do dia ja foi Realizado! 
+23:35:44:Aguardando Tempo para o Backup
+23:36:44:verificando se a Programacao de Backup....! 
+23:36:44:Encontrado com Sucesso
+23:36:44:Hora do Backup: 23:00
+23:36:44:verificando se Backup ja foi Realizado....! 
+23:36:44:O Backup do dia ja foi Realizado! 
+23:36:45:Aguardando Tempo para o Backup
+23:37:44:verificando se a Programacao de Backup....! 
+23:37:44:Encontrado com Sucesso
+23:37:44:Hora do Backup: 23:00
+23:37:44:verificando se Backup ja foi Realizado....! 
+23:37:44:O Backup do dia ja foi Realizado! 
+23:37:44:Aguardando Tempo para o Backup
+23:38:44:verificando se a Programacao de Backup....! 
+23:38:44:Encontrado com Sucesso
+23:38:44:Hora do Backup: 23:00
+23:38:44:verificando se Backup ja foi Realizado....! 
+23:38:44:O Backup do dia ja foi Realizado! 
+23:38:44:Aguardando Tempo para o Backup
+23:39:44:verificando se a Programacao de Backup....! 
+23:39:44:Encontrado com Sucesso
+23:39:44:Hora do Backup: 23:00
+23:39:44:verificando se Backup ja foi Realizado....! 
+23:39:44:O Backup do dia ja foi Realizado! 
+23:39:45:Aguardando Tempo para o Backup
+23:40:44:verificando se a Programacao de Backup....! 
+23:40:44:Encontrado com Sucesso
+23:40:44:Hora do Backup: 23:00
+23:40:44:verificando se Backup ja foi Realizado....! 
+23:40:44:O Backup do dia ja foi Realizado! 
+23:40:44:Aguardando Tempo para o Backup
+23:41:44:verificando se a Programacao de Backup....! 
+23:41:44:Encontrado com Sucesso
+23:41:44:Hora do Backup: 23:00
+23:41:44:verificando se Backup ja foi Realizado....! 
+23:41:44:O Backup do dia ja foi Realizado! 
+23:41:44:Aguardando Tempo para o Backup
+23:42:44:verificando se a Programacao de Backup....! 
+23:42:44:Encontrado com Sucesso
+23:42:44:Hora do Backup: 23:00
+23:42:44:verificando se Backup ja foi Realizado....! 
+23:42:44:O Backup do dia ja foi Realizado! 
+23:42:44:Aguardando Tempo para o Backup
+23:43:44:verificando se a Programacao de Backup....! 
+23:43:44:Encontrado com Sucesso
+23:43:44:Hora do Backup: 23:00
+23:43:44:verificando se Backup ja foi Realizado....! 
+23:43:44:O Backup do dia ja foi Realizado! 
+23:43:44:Aguardando Tempo para o Backup
+23:44:44:verificando se a Programacao de Backup....! 
+23:44:44:Encontrado com Sucesso
+23:44:44:Hora do Backup: 23:00
+23:44:44:verificando se Backup ja foi Realizado....! 
+23:44:44:O Backup do dia ja foi Realizado! 
+23:44:44:Aguardando Tempo para o Backup
+23:45:44:verificando se a Programacao de Backup....! 
+23:45:44:Encontrado com Sucesso
+23:45:44:Hora do Backup: 23:00
+23:45:44:verificando se Backup ja foi Realizado....! 
+23:45:44:O Backup do dia ja foi Realizado! 
+23:45:44:Aguardando Tempo para o Backup
+23:46:44:verificando se a Programacao de Backup....! 
+23:46:44:Encontrado com Sucesso
+23:46:44:Hora do Backup: 23:00
+23:46:44:verificando se Backup ja foi Realizado....! 
+23:46:44:O Backup do dia ja foi Realizado! 
+23:46:44:Aguardando Tempo para o Backup
+23:47:44:verificando se a Programacao de Backup....! 
+23:47:44:Encontrado com Sucesso
+23:47:44:Hora do Backup: 23:00
+23:47:44:verificando se Backup ja foi Realizado....! 
+23:47:44:O Backup do dia ja foi Realizado! 
+23:47:44:Aguardando Tempo para o Backup
+23:48:44:verificando se a Programacao de Backup....! 
+23:48:44:Encontrado com Sucesso
+23:48:44:Hora do Backup: 23:00
+23:48:44:verificando se Backup ja foi Realizado....! 
+23:48:44:O Backup do dia ja foi Realizado! 
+23:48:44:Aguardando Tempo para o Backup
+23:49:44:verificando se a Programacao de Backup....! 
+23:49:44:Encontrado com Sucesso
+23:49:44:Hora do Backup: 23:00
+23:49:44:verificando se Backup ja foi Realizado....! 
+23:49:44:O Backup do dia ja foi Realizado! 
+23:49:44:Aguardando Tempo para o Backup
+23:50:44:verificando se a Programacao de Backup....! 
+23:50:44:Encontrado com Sucesso
+23:50:44:Hora do Backup: 23:00
+23:50:44:verificando se Backup ja foi Realizado....! 
+23:50:44:O Backup do dia ja foi Realizado! 
+23:50:44:Aguardando Tempo para o Backup
+23:51:44:verificando se a Programacao de Backup....! 
+23:51:44:Encontrado com Sucesso
+23:51:44:Hora do Backup: 23:00
+23:51:44:verificando se Backup ja foi Realizado....! 
+23:51:44:O Backup do dia ja foi Realizado! 
+23:51:44:Aguardando Tempo para o Backup
+23:52:44:verificando se a Programacao de Backup....! 
+23:52:44:Encontrado com Sucesso
+23:52:44:Hora do Backup: 23:00
+23:52:44:verificando se Backup ja foi Realizado....! 
+23:52:44:O Backup do dia ja foi Realizado! 
+23:52:44:Aguardando Tempo para o Backup
+23:53:44:verificando se a Programacao de Backup....! 
+23:53:44:Encontrado com Sucesso
+23:53:44:Hora do Backup: 23:00
+23:53:44:verificando se Backup ja foi Realizado....! 
+23:53:44:O Backup do dia ja foi Realizado! 
+23:53:44:Aguardando Tempo para o Backup
+23:54:44:verificando se a Programacao de Backup....! 
+23:54:44:Encontrado com Sucesso
+23:54:44:Hora do Backup: 23:00
+23:54:44:verificando se Backup ja foi Realizado....! 
+23:54:44:O Backup do dia ja foi Realizado! 
+23:54:44:Aguardando Tempo para o Backup
+23:55:44:verificando se a Programacao de Backup....! 
+23:55:44:Encontrado com Sucesso
+23:55:44:Hora do Backup: 23:00
+23:55:44:verificando se Backup ja foi Realizado....! 
+23:55:44:O Backup do dia ja foi Realizado! 
+23:55:44:Aguardando Tempo para o Backup
+23:56:44:verificando se a Programacao de Backup....! 
+23:56:44:Encontrado com Sucesso
+23:56:44:Hora do Backup: 23:00
+23:56:44:verificando se Backup ja foi Realizado....! 
+23:56:44:O Backup do dia ja foi Realizado! 
+23:56:44:Aguardando Tempo para o Backup
+23:57:44:verificando se a Programacao de Backup....! 
+23:57:44:Encontrado com Sucesso
+23:57:44:Hora do Backup: 23:00
+23:57:44:verificando se Backup ja foi Realizado....! 
+23:57:44:O Backup do dia ja foi Realizado! 
+23:57:44:Aguardando Tempo para o Backup
+23:58:44:verificando se a Programacao de Backup....! 
+23:58:44:Encontrado com Sucesso
+23:58:44:Hora do Backup: 23:00
+23:58:44:verificando se Backup ja foi Realizado....! 
+23:58:44:O Backup do dia ja foi Realizado! 
+23:58:44:Aguardando Tempo para o Backup
+23:59:44:verificando se a Programacao de Backup....! 
+23:59:44:Encontrado com Sucesso
+23:59:44:Hora do Backup: 23:00
+23:59:44:verificando se Backup ja foi Realizado....! 
+23:59:44:O Backup do dia ja foi Realizado! 
+23:59:45:Aguardando Tempo para o Backup

@@ -7,17 +7,17 @@
 import { calcularAdicionalNoturno, FATOR_HORA_FICTA } from './modules/noturno.js';
 import { calcularRescisao, MOTIVOS_RESCISAO, compararCenariosRescisao } from './modules/rescisao.js';
 import { calcularFaltas } from './modules/faltas.js';
-import { calcularFerias, calcular13o, validarFracionamentoFerias } from './modules/ferias.js';
+import { calcularFerias, calcular13o, validarFracionamentoFerias } from './modules/ferias.js?v=3.2';
 import { calcularSalarioLiquido } from './modules/liquido.js';
 import { calcularCustosCltPj } from './modules/clt_pj.js';
 import { calcularBancoHoras } from './modules/banco_horas.js';
 import { calcularPLR } from './modules/plr.js';
 import { calcularTeletrabalho } from './modules/teletrabalho.js';
 import { calcularEquiparacao } from './modules/equiparacao.js';
-import { processarFolhaLote, gerarDemonstracaoFolha, parsearCsvFolha, gerarCsvTemplate } from './modules/folha_lote.js';
-import { construirHtmlHolerite, construirHtmlTRCT, baixarDocumentoPDF } from './utils/pdf_generator.js';
-import { listarTodasRubricas, renderizarBadgeEsocial, obterRubrica } from './data/esocial_rubricas.js';
-import { obterConfigCCT, salvarConfigCCT, restaurarPadraoCLT } from './data/cct_config.js';
+import { processarFolhaLote, gerarDemonstracaoFolha, parsearCsvFolha, gerarCsvTemplate } from './modules/folha_lote.js?v=3.2';
+import { construirHtmlHolerite, construirHtmlTRCT, baixarDocumentoPDF } from './utils/pdf_generator.js?v=3.2';
+import { listarTodasRubricas, renderizarBadgeEsocial, obterRubrica } from './data/esocial_rubricas.js?v=3.2';
+import { obterConfigCCT, salvarConfigCCT, restaurarPadraoCLT } from './data/cct_config.js?v=3.2';
 import { formatCurrency, formatNumber, formatHoursMinutes, parseCurrency } from './utils/formatters.js';
 import {
     exportarNoturnoExcel,

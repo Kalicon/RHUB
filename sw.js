@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════
  */
 
-const CACHE_NAME = 'rhub-pwa-v3.0';
+const CACHE_NAME = 'rhub-pwa-v3.1';
 
 const CORE_ASSETS = [
     './',
@@ -58,9 +58,32 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Interceptação de requisições: Cache-First com fallback de rede e runtime caching
+// Interceptação de requisições: Network-First para scripts e documentos locais, Cache-First para CDNs e assets estáticos
 self.addEventListener('fetch', event => {
     if (event.request.method !== 'GET') return;
+
+    const url = event.request.url;
+    const isLocalDynamic = url.includes('/assets/js/') || url.endsWith('.js') || url.includes('index.html') || url.endsWith('/');
+
+    if (isLocalDynamic) {
+        event.respondWith(
+            fetch(event.request).then(response => {
+                if (response && response.status === 200) {
+                    const responseClone = response.clone();
+                    caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseClone));
+                }
+                return response;
+            }).catch(() => {
+                return caches.match(event.request).then(cached => {
+                    if (cached) return cached;
+                    if (event.request.headers.get('accept')?.includes('text/html')) {
+                        return caches.match('./index.html');
+                    }
+                });
+            })
+        );
+        return;
+    }
 
     event.respondWith(
         caches.match(event.request).then(cached => {
@@ -71,8 +94,7 @@ self.addEventListener('fetch', event => {
                     return response;
                 }
 
-                // Armazenar em cache também fontes externas e scripts CDN (Tailwind, GSAP, SheetJS)
-                const url = event.request.url;
+                // Armazenar em cache também fontes externas e scripts CDN
                 if (
                     url.startsWith('http') &&
                     (url.includes('cdn.tailwindcss.com') ||
@@ -88,11 +110,6 @@ self.addEventListener('fetch', event => {
                 }
 
                 return response;
-            }).catch(() => {
-                // Se offline e requisição de página HTML, retornar index.html do cache
-                if (event.request.headers.get('accept')?.includes('text/html')) {
-                    return caches.match('./index.html');
-                }
             });
         })
     );

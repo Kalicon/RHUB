@@ -49,3 +49,19 @@ export function formatHoursMinutes(decimalHours) {
     if (minutes === 60) return `${hours + 1}h 00min`;
     return `${hours}h ${String(minutes).padStart(2, '0')}min`;
 }
+
+/**
+ * Aliases e utilitários em português
+ */
+export const formatarMoeda = formatCurrency;
+
+export function formatarData(dateStr) {
+    if (!dateStr) return '';
+    if (typeof dateStr !== 'string') return String(dateStr);
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
+}
+

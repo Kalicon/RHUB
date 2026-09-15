@@ -1,0 +1,2878 @@
+00:00:59:iniciando conexão com Banco! 
+00:00:59:: Error Falha de logon do usuário 'hmlmb'.
+00:01:59:iniciando conexão com Banco! 
+00:01:59:: Error Falha de logon do usuário 'hmlmb'.
+00:02:59:iniciando conexão com Banco! 
+00:02:59:: Error Falha de logon do usuário 'hmlmb'.
+00:03:59:iniciando conexão com Banco! 
+00:03:59:: Error Falha de logon do usuário 'hmlmb'.
+00:04:59:iniciando conexão com Banco! 
+00:04:59:: Error Falha de logon do usuário 'hmlmb'.
+00:05:59:iniciando conexão com Banco! 
+00:05:59:: Error Falha de logon do usuário 'hmlmb'.
+00:06:59:iniciando conexão com Banco! 
+00:06:59:: Error Falha de logon do usuário 'hmlmb'.
+00:07:59:iniciando conexão com Banco! 
+00:07:59:: Error Falha de logon do usuário 'hmlmb'.
+00:08:59:iniciando conexão com Banco! 
+00:08:59:: Error Falha de logon do usuário 'hmlmb'.
+00:09:59:iniciando conexão com Banco! 
+00:09:59:: Error Falha de logon do usuário 'hmlmb'.
+00:10:59:iniciando conexão com Banco! 
+00:10:59:: Error Falha de logon do usuário 'hmlmb'.
+00:11:59:iniciando conexão com Banco! 
+00:11:59:: Error Falha de logon do usuário 'hmlmb'.
+00:12:59:iniciando conexão com Banco! 
+00:12:59:: Error Falha de logon do usuário 'hmlmb'.
+00:13:59:iniciando conexão com Banco! 
+00:13:59:: Error Falha de logon do usuário 'hmlmb'.
+00:14:59:iniciando conexão com Banco! 
+00:14:59:: Error Falha de logon do usuário 'hmlmb'.
+00:15:59:iniciando conexão com Banco! 
+00:15:59:: Error Falha de logon do usuário 'hmlmb'.
+00:16:59:iniciando conexão com Banco! 
+00:16:59:: Error Falha de logon do usuário 'hmlmb'.
+00:17:59:iniciando conexão com Banco! 
+00:17:59:: Error Falha de logon do usuário 'hmlmb'.
+00:18:59:iniciando conexão com Banco! 
+00:18:59:: Error Falha de logon do usuário 'hmlmb'.
+00:19:59:iniciando conexão com Banco! 
+00:19:59:: Error Falha de logon do usuário 'hmlmb'.
+00:20:59:iniciando conexão com Banco! 
+00:20:59:: Error Falha de logon do usuário 'hmlmb'.
+00:21:59:iniciando conexão com Banco! 
+00:21:59:: Error Falha de logon do usuário 'hmlmb'.
+00:22:59:iniciando conexão com Banco! 
+00:22:59:: Error Falha de logon do usuário 'hmlmb'.
+00:23:59:iniciando conexão com Banco! 
+00:23:59:: Error Falha de logon do usuário 'hmlmb'.
+00:24:59:iniciando conexão com Banco! 
+00:24:59:: Error Falha de logon do usuário 'hmlmb'.
+00:25:59:iniciando conexão com Banco! 
+00:25:59:: Error Falha de logon do usuário 'hmlmb'.
+00:26:59:iniciando conexão com Banco! 
+00:26:59:: Error Falha de logon do usuário 'hmlmb'.
+00:27:59:iniciando conexão com Banco! 
+00:27:59:: Error Falha de logon do usuário 'hmlmb'.
+00:28:59:iniciando conexão com Banco! 
+00:28:59:: Error Falha de logon do usuário 'hmlmb'.
+00:29:59:iniciando conexão com Banco! 
+00:29:59:: Error Falha de logon do usuário 'hmlmb'.
+00:30:59:iniciando conexão com Banco! 
+00:30:59:: Error Falha de logon do usuário 'hmlmb'.
+00:31:59:iniciando conexão com Banco! 
+00:31:59:: Error Falha de logon do usuário 'hmlmb'.
+00:32:59:iniciando conexão com Banco! 
+00:32:59:: Error Falha de logon do usuário 'hmlmb'.
+00:33:59:iniciando conexão com Banco! 
+00:33:59:: Error Falha de logon do usuário 'hmlmb'.
+00:34:59:iniciando conexão com Banco! 
+00:34:59:: Error Falha de logon do usuário 'hmlmb'.
+00:35:59:iniciando conexão com Banco! 
+00:35:59:: Error Falha de logon do usuário 'hmlmb'.
+00:36:59:iniciando conexão com Banco! 
+00:36:59:: Error Falha de logon do usuário 'hmlmb'.
+00:37:59:iniciando conexão com Banco! 
+00:37:59:: Error Falha de logon do usuário 'hmlmb'.
+00:38:59:iniciando conexão com Banco! 
+00:38:59:: Error Falha de logon do usuário 'hmlmb'.
+00:39:59:iniciando conexão com Banco! 
+00:39:59:: Error Falha de logon do usuário 'hmlmb'.
+00:40:59:iniciando conexão com Banco! 
+00:40:59:: Error Falha de logon do usuário 'hmlmb'.
+00:41:59:iniciando conexão com Banco! 
+00:41:59:: Error Falha de logon do usuário 'hmlmb'.
+00:42:59:iniciando conexão com Banco! 
+00:42:59:: Error Falha de logon do usuário 'hmlmb'.
+00:43:59:iniciando conexão com Banco! 
+00:43:59:: Error Falha de logon do usuário 'hmlmb'.
+00:44:59:iniciando conexão com Banco! 
+00:44:59:: Error Falha de logon do usuário 'hmlmb'.
+00:45:59:iniciando conexão com Banco! 
+00:45:59:: Error Falha de logon do usuário 'hmlmb'.
+00:46:59:iniciando conexão com Banco! 
+00:46:59:: Error Falha de logon do usuário 'hmlmb'.
+00:47:59:iniciando conexão com Banco! 
+00:47:59:: Error Falha de logon do usuário 'hmlmb'.
+00:48:59:iniciando conexão com Banco! 
+00:48:59:: Error Falha de logon do usuário 'hmlmb'.
+00:49:59:iniciando conexão com Banco! 
+00:49:59:: Error Falha de logon do usuário 'hmlmb'.
+00:50:59:iniciando conexão com Banco! 
+00:50:59:: Error Falha de logon do usuário 'hmlmb'.
+00:51:59:iniciando conexão com Banco! 
+00:51:59:: Error Falha de logon do usuário 'hmlmb'.
+00:52:59:iniciando conexão com Banco! 
+00:52:59:: Error Falha de logon do usuário 'hmlmb'.
+00:53:59:iniciando conexão com Banco! 
+00:53:59:: Error Falha de logon do usuário 'hmlmb'.
+00:54:59:iniciando conexão com Banco! 
+00:54:59:: Error Falha de logon do usuário 'hmlmb'.
+00:55:59:iniciando conexão com Banco! 
+00:55:59:: Error Falha de logon do usuário 'hmlmb'.
+00:56:59:iniciando conexão com Banco! 
+00:56:59:: Error Falha de logon do usuário 'hmlmb'.
+00:57:59:iniciando conexão com Banco! 
+00:57:59:: Error Falha de logon do usuário 'hmlmb'.
+00:58:59:iniciando conexão com Banco! 
+00:58:59:: Error Falha de logon do usuário 'hmlmb'.
+00:59:59:iniciando conexão com Banco! 
+00:59:59:: Error Falha de logon do usuário 'hmlmb'.
+01:00:59:iniciando conexão com Banco! 
+01:00:59:: Error Falha de logon do usuário 'hmlmb'.
+01:01:59:iniciando conexão com Banco! 
+01:01:59:: Error Falha de logon do usuário 'hmlmb'.
+01:02:59:iniciando conexão com Banco! 
+01:02:59:: Error Falha de logon do usuário 'hmlmb'.
+01:03:59:iniciando conexão com Banco! 
+01:03:59:: Error Falha de logon do usuário 'hmlmb'.
+01:04:59:iniciando conexão com Banco! 
+01:04:59:: Error Falha de logon do usuário 'hmlmb'.
+01:05:59:iniciando conexão com Banco! 
+01:05:59:: Error Falha de logon do usuário 'hmlmb'.
+01:06:59:iniciando conexão com Banco! 
+01:06:59:: Error Falha de logon do usuário 'hmlmb'.
+01:07:59:iniciando conexão com Banco! 
+01:07:59:: Error Falha de logon do usuário 'hmlmb'.
+01:08:59:iniciando conexão com Banco! 
+01:08:59:: Error Falha de logon do usuário 'hmlmb'.
+01:09:59:iniciando conexão com Banco! 
+01:09:59:: Error Falha de logon do usuário 'hmlmb'.
+01:10:59:iniciando conexão com Banco! 
+01:10:59:: Error Falha de logon do usuário 'hmlmb'.
+01:11:59:iniciando conexão com Banco! 
+01:11:59:: Error Falha de logon do usuário 'hmlmb'.
+01:12:59:iniciando conexão com Banco! 
+01:12:59:: Error Falha de logon do usuário 'hmlmb'.
+01:13:59:iniciando conexão com Banco! 
+01:13:59:: Error Falha de logon do usuário 'hmlmb'.
+01:14:59:iniciando conexão com Banco! 
+01:14:59:: Error Falha de logon do usuário 'hmlmb'.
+01:15:59:iniciando conexão com Banco! 
+01:15:59:: Error Falha de logon do usuário 'hmlmb'.
+01:16:59:iniciando conexão com Banco! 
+01:16:59:: Error Falha de logon do usuário 'hmlmb'.
+01:17:59:iniciando conexão com Banco! 
+01:17:59:: Error Falha de logon do usuário 'hmlmb'.
+01:18:59:iniciando conexão com Banco! 
+01:18:59:: Error Falha de logon do usuário 'hmlmb'.
+01:19:59:iniciando conexão com Banco! 
+01:19:59:: Error Falha de logon do usuário 'hmlmb'.
+01:20:59:iniciando conexão com Banco! 
+01:20:59:: Error Falha de logon do usuário 'hmlmb'.
+01:21:59:iniciando conexão com Banco! 
+01:21:59:: Error Falha de logon do usuário 'hmlmb'.
+01:22:59:iniciando conexão com Banco! 
+01:22:59:: Error Falha de logon do usuário 'hmlmb'.
+01:23:59:iniciando conexão com Banco! 
+01:23:59:: Error Falha de logon do usuário 'hmlmb'.
+01:24:59:iniciando conexão com Banco! 
+01:24:59:: Error Falha de logon do usuário 'hmlmb'.
+01:25:59:iniciando conexão com Banco! 
+01:25:59:: Error Falha de logon do usuário 'hmlmb'.
+01:26:59:iniciando conexão com Banco! 
+01:26:59:: Error Falha de logon do usuário 'hmlmb'.
+01:27:59:iniciando conexão com Banco! 
+01:27:59:: Error Falha de logon do usuário 'hmlmb'.
+01:28:59:iniciando conexão com Banco! 
+01:28:59:: Error Falha de logon do usuário 'hmlmb'.
+01:29:59:iniciando conexão com Banco! 
+01:29:59:: Error Falha de logon do usuário 'hmlmb'.
+01:30:59:iniciando conexão com Banco! 
+01:30:59:: Error Falha de logon do usuário 'hmlmb'.
+01:31:59:iniciando conexão com Banco! 
+01:31:59:: Error Falha de logon do usuário 'hmlmb'.
+01:32:59:iniciando conexão com Banco! 
+01:32:59:: Error Falha de logon do usuário 'hmlmb'.
+01:33:59:iniciando conexão com Banco! 
+01:33:59:: Error Falha de logon do usuário 'hmlmb'.
+01:34:59:iniciando conexão com Banco! 
+01:34:59:: Error Falha de logon do usuário 'hmlmb'.
+01:35:59:iniciando conexão com Banco! 
+01:35:59:: Error Falha de logon do usuário 'hmlmb'.
+01:36:59:iniciando conexão com Banco! 
+01:36:59:: Error Falha de logon do usuário 'hmlmb'.
+01:37:59:iniciando conexão com Banco! 
+01:37:59:: Error Falha de logon do usuário 'hmlmb'.
+01:38:59:iniciando conexão com Banco! 
+01:38:59:: Error Falha de logon do usuário 'hmlmb'.
+01:39:59:iniciando conexão com Banco! 
+01:39:59:: Error Falha de logon do usuário 'hmlmb'.
+01:40:59:iniciando conexão com Banco! 
+01:40:59:: Error Falha de logon do usuário 'hmlmb'.
+01:41:59:iniciando conexão com Banco! 
+01:41:59:: Error Falha de logon do usuário 'hmlmb'.
+01:42:59:iniciando conexão com Banco! 
+01:42:59:: Error Falha de logon do usuário 'hmlmb'.
+01:43:59:iniciando conexão com Banco! 
+01:43:59:: Error Falha de logon do usuário 'hmlmb'.
+01:44:59:iniciando conexão com Banco! 
+01:44:59:: Error Falha de logon do usuário 'hmlmb'.
+01:45:59:iniciando conexão com Banco! 
+01:45:59:: Error Falha de logon do usuário 'hmlmb'.
+01:46:59:iniciando conexão com Banco! 
+01:46:59:: Error Falha de logon do usuário 'hmlmb'.
+01:47:59:iniciando conexão com Banco! 
+01:47:59:: Error Falha de logon do usuário 'hmlmb'.
+01:48:59:iniciando conexão com Banco! 
+01:48:59:: Error Falha de logon do usuário 'hmlmb'.
+01:49:59:iniciando conexão com Banco! 
+01:49:59:: Error Falha de logon do usuário 'hmlmb'.
+01:50:59:iniciando conexão com Banco! 
+01:50:59:: Error Falha de logon do usuário 'hmlmb'.
+01:51:59:iniciando conexão com Banco! 
+01:51:59:: Error Falha de logon do usuário 'hmlmb'.
+01:52:59:iniciando conexão com Banco! 
+01:52:59:: Error Falha de logon do usuário 'hmlmb'.
+01:53:59:iniciando conexão com Banco! 
+01:53:59:: Error Falha de logon do usuário 'hmlmb'.
+01:54:59:iniciando conexão com Banco! 
+01:54:59:: Error Falha de logon do usuário 'hmlmb'.
+01:55:59:iniciando conexão com Banco! 
+01:55:59:: Error Falha de logon do usuário 'hmlmb'.
+01:56:59:iniciando conexão com Banco! 
+01:56:59:: Error Falha de logon do usuário 'hmlmb'.
+01:57:59:iniciando conexão com Banco! 
+01:57:59:: Error Falha de logon do usuário 'hmlmb'.
+01:58:59:iniciando conexão com Banco! 
+01:59:00:: Error Falha de logon do usuário 'hmlmb'.
+01:59:59:iniciando conexão com Banco! 
+01:59:59:: Error Falha de logon do usuário 'hmlmb'.
+02:00:59:iniciando conexão com Banco! 
+02:00:59:: Error Falha de logon do usuário 'hmlmb'.
+02:01:59:iniciando conexão com Banco! 
+02:01:59:: Error Falha de logon do usuário 'hmlmb'.
+02:02:59:iniciando conexão com Banco! 
+02:02:59:: Error Falha de logon do usuário 'hmlmb'.
+02:03:59:iniciando conexão com Banco! 
+02:03:59:: Error Falha de logon do usuário 'hmlmb'.
+02:04:59:iniciando conexão com Banco! 
+02:04:59:: Error Falha de logon do usuário 'hmlmb'.
+02:05:59:iniciando conexão com Banco! 
+02:05:59:: Error Falha de logon do usuário 'hmlmb'.
+02:06:59:iniciando conexão com Banco! 
+02:06:59:: Error Falha de logon do usuário 'hmlmb'.
+02:07:59:iniciando conexão com Banco! 
+02:07:59:: Error Falha de logon do usuário 'hmlmb'.
+02:08:59:iniciando conexão com Banco! 
+02:08:59:: Error Falha de logon do usuário 'hmlmb'.
+02:09:59:iniciando conexão com Banco! 
+02:09:59:: Error Falha de logon do usuário 'hmlmb'.
+02:10:59:iniciando conexão com Banco! 
+02:10:59:: Error Falha de logon do usuário 'hmlmb'.
+02:11:59:iniciando conexão com Banco! 
+02:11:59:: Error Falha de logon do usuário 'hmlmb'.
+02:12:59:iniciando conexão com Banco! 
+02:12:59:: Error Falha de logon do usuário 'hmlmb'.
+02:13:59:iniciando conexão com Banco! 
+02:13:59:: Error Falha de logon do usuário 'hmlmb'.
+02:14:59:iniciando conexão com Banco! 
+02:14:59:: Error Falha de logon do usuário 'hmlmb'.
+02:15:59:iniciando conexão com Banco! 
+02:15:59:: Error Falha de logon do usuário 'hmlmb'.
+02:16:59:iniciando conexão com Banco! 
+02:16:59:: Error Falha de logon do usuário 'hmlmb'.
+02:17:59:iniciando conexão com Banco! 
+02:17:59:: Error Falha de logon do usuário 'hmlmb'.
+02:18:59:iniciando conexão com Banco! 
+02:18:59:: Error Falha de logon do usuário 'hmlmb'.
+02:19:59:iniciando conexão com Banco! 
+02:19:59:: Error Falha de logon do usuário 'hmlmb'.
+02:20:59:iniciando conexão com Banco! 
+02:20:59:: Error Falha de logon do usuário 'hmlmb'.
+02:21:59:iniciando conexão com Banco! 
+02:21:59:: Error Falha de logon do usuário 'hmlmb'.
+02:22:59:iniciando conexão com Banco! 
+02:22:59:: Error Falha de logon do usuário 'hmlmb'.
+02:23:59:iniciando conexão com Banco! 
+02:23:59:: Error Falha de logon do usuário 'hmlmb'.
+02:24:59:iniciando conexão com Banco! 
+02:24:59:: Error Falha de logon do usuário 'hmlmb'.
+02:25:59:iniciando conexão com Banco! 
+02:25:59:: Error Falha de logon do usuário 'hmlmb'.
+02:26:59:iniciando conexão com Banco! 
+02:26:59:: Error Falha de logon do usuário 'hmlmb'.
+02:27:59:iniciando conexão com Banco! 
+02:27:59:: Error Falha de logon do usuário 'hmlmb'.
+02:28:59:iniciando conexão com Banco! 
+02:28:59:: Error Falha de logon do usuário 'hmlmb'.
+02:29:59:iniciando conexão com Banco! 
+02:29:59:: Error Falha de logon do usuário 'hmlmb'.
+02:30:59:iniciando conexão com Banco! 
+02:30:59:: Error Falha de logon do usuário 'hmlmb'.
+02:31:59:iniciando conexão com Banco! 
+02:31:59:: Error Falha de logon do usuário 'hmlmb'.
+02:32:59:iniciando conexão com Banco! 
+02:32:59:: Error Falha de logon do usuário 'hmlmb'.
+02:33:59:iniciando conexão com Banco! 
+02:33:59:: Error Falha de logon do usuário 'hmlmb'.
+02:34:59:iniciando conexão com Banco! 
+02:34:59:: Error Falha de logon do usuário 'hmlmb'.
+02:35:59:iniciando conexão com Banco! 
+02:35:59:: Error Falha de logon do usuário 'hmlmb'.
+02:36:59:iniciando conexão com Banco! 
+02:36:59:: Error Falha de logon do usuário 'hmlmb'.
+02:37:59:iniciando conexão com Banco! 
+02:37:59:: Error Falha de logon do usuário 'hmlmb'.
+02:38:59:iniciando conexão com Banco! 
+02:38:59:: Error Falha de logon do usuário 'hmlmb'.
+02:39:59:iniciando conexão com Banco! 
+02:39:59:: Error Falha de logon do usuário 'hmlmb'.
+02:40:59:iniciando conexão com Banco! 
+02:40:59:: Error Falha de logon do usuário 'hmlmb'.
+02:42:00:iniciando conexão com Banco! 
+02:42:02:: Error Falha de logon do usuário 'hmlmb'.
+02:42:59:iniciando conexão com Banco! 
+02:42:59:: Error Falha de logon do usuário 'hmlmb'.
+02:43:59:iniciando conexão com Banco! 
+02:43:59:: Error Falha de logon do usuário 'hmlmb'.
+02:44:59:iniciando conexão com Banco! 
+02:44:59:: Error Falha de logon do usuário 'hmlmb'.
+02:45:59:iniciando conexão com Banco! 
+02:45:59:: Error Falha de logon do usuário 'hmlmb'.
+02:46:59:iniciando conexão com Banco! 
+02:46:59:: Error Falha de logon do usuário 'hmlmb'.
+02:47:59:iniciando conexão com Banco! 
+02:47:59:: Error Falha de logon do usuário 'hmlmb'.
+02:48:59:iniciando conexão com Banco! 
+02:48:59:: Error Falha de logon do usuário 'hmlmb'.
+02:49:59:iniciando conexão com Banco! 
+02:49:59:: Error Falha de logon do usuário 'hmlmb'.
+02:51:00:iniciando conexão com Banco! 
+02:51:02:: Error Falha de logon do usuário 'hmlmb'.
+02:51:59:iniciando conexão com Banco! 
+02:51:59:: Error Falha de logon do usuário 'hmlmb'.
+02:53:00:iniciando conexão com Banco! 
+02:53:01:: Error Falha de logon do usuário 'hmlmb'.
+02:53:59:iniciando conexão com Banco! 
+02:53:59:: Error Falha de logon do usuário 'hmlmb'.
+02:54:59:iniciando conexão com Banco! 
+02:54:59:: Error Falha de logon do usuário 'hmlmb'.
+02:55:59:iniciando conexão com Banco! 
+02:55:59:: Error Falha de logon do usuário 'hmlmb'.
+02:56:59:iniciando conexão com Banco! 
+02:56:59:: Error Falha de logon do usuário 'hmlmb'.
+02:57:59:iniciando conexão com Banco! 
+02:58:00:: Error Falha de logon do usuário 'hmlmb'.
+02:58:59:iniciando conexão com Banco! 
+02:58:59:: Error Falha de logon do usuário 'hmlmb'.
+02:59:59:iniciando conexão com Banco! 
+03:00:00:: Error Falha de logon do usuário 'hmlmb'.
+03:00:59:iniciando conexão com Banco! 
+03:00:59:: Error Falha de logon do usuário 'hmlmb'.
+03:01:59:iniciando conexão com Banco! 
+03:01:59:: Error Falha de logon do usuário 'hmlmb'.
+03:02:59:iniciando conexão com Banco! 
+03:03:00:: Error Falha de logon do usuário 'hmlmb'.
+03:03:59:iniciando conexão com Banco! 
+03:03:59:: Error Falha de logon do usuário 'hmlmb'.
+03:04:59:iniciando conexão com Banco! 
+03:04:59:: Error Falha de logon do usuário 'hmlmb'.
+03:05:59:iniciando conexão com Banco! 
+03:06:00:: Error Falha de logon do usuário 'hmlmb'.
+03:06:59:iniciando conexão com Banco! 
+03:07:00:: Error Falha de logon do usuário 'hmlmb'.
+03:07:59:iniciando conexão com Banco! 
+03:07:59:: Error Falha de logon do usuário 'hmlmb'.
+03:08:59:iniciando conexão com Banco! 
+03:08:59:: Error Falha de logon do usuário 'hmlmb'.
+03:09:59:iniciando conexão com Banco! 
+03:10:00:: Error Falha de logon do usuário 'hmlmb'.
+03:11:00:iniciando conexão com Banco! 
+03:11:00:: Error Falha de logon do usuário 'hmlmb'.
+03:12:00:iniciando conexão com Banco! 
+03:12:00:: Error Falha de logon do usuário 'hmlmb'.
+03:13:00:iniciando conexão com Banco! 
+03:13:00:: Error Falha de logon do usuário 'hmlmb'.
+03:14:00:iniciando conexão com Banco! 
+03:14:00:: Error Falha de logon do usuário 'hmlmb'.
+03:15:00:iniciando conexão com Banco! 
+03:15:00:: Error Falha de logon do usuário 'hmlmb'.
+03:16:00:iniciando conexão com Banco! 
+03:16:00:: Error Falha de logon do usuário 'hmlmb'.
+03:17:00:iniciando conexão com Banco! 
+03:17:00:: Error Falha de logon do usuário 'hmlmb'.
+03:18:00:iniciando conexão com Banco! 
+03:18:00:: Error Falha de logon do usuário 'hmlmb'.
+03:19:00:iniciando conexão com Banco! 
+03:19:00:: Error Falha de logon do usuário 'hmlmb'.
+03:20:00:iniciando conexão com Banco! 
+03:20:00:: Error Falha de logon do usuário 'hmlmb'.
+03:21:00:iniciando conexão com Banco! 
+03:21:00:: Error Falha de logon do usuário 'hmlmb'.
+03:22:00:iniciando conexão com Banco! 
+03:22:00:: Error Falha de logon do usuário 'hmlmb'.
+03:23:00:iniciando conexão com Banco! 
+03:23:00:: Error Falha de logon do usuário 'hmlmb'.
+03:24:00:iniciando conexão com Banco! 
+03:24:00:: Error Falha de logon do usuário 'hmlmb'.
+03:25:00:iniciando conexão com Banco! 
+03:25:00:: Error Falha de logon do usuário 'hmlmb'.
+03:26:00:iniciando conexão com Banco! 
+03:26:00:: Error Falha de logon do usuário 'hmlmb'.
+03:27:00:iniciando conexão com Banco! 
+03:27:00:: Error Falha de logon do usuário 'hmlmb'.
+03:28:00:iniciando conexão com Banco! 
+03:28:00:: Error Falha de logon do usuário 'hmlmb'.
+03:29:00:iniciando conexão com Banco! 
+03:29:00:: Error Falha de logon do usuário 'hmlmb'.
+03:30:00:iniciando conexão com Banco! 
+03:30:00:: Error Falha de logon do usuário 'hmlmb'.
+03:31:00:iniciando conexão com Banco! 
+03:31:00:: Error Falha de logon do usuário 'hmlmb'.
+03:32:00:iniciando conexão com Banco! 
+03:32:00:: Error Falha de logon do usuário 'hmlmb'.
+03:33:00:iniciando conexão com Banco! 
+03:33:00:: Error Falha de logon do usuário 'hmlmb'.
+03:34:00:iniciando conexão com Banco! 
+03:34:00:: Error Falha de logon do usuário 'hmlmb'.
+03:35:00:iniciando conexão com Banco! 
+03:35:00:: Error Falha de logon do usuário 'hmlmb'.
+03:36:00:iniciando conexão com Banco! 
+03:36:00:: Error Falha de logon do usuário 'hmlmb'.
+03:37:00:iniciando conexão com Banco! 
+03:37:00:: Error Falha de logon do usuário 'hmlmb'.
+03:38:00:iniciando conexão com Banco! 
+03:38:00:: Error Falha de logon do usuário 'hmlmb'.
+03:39:00:iniciando conexão com Banco! 
+03:39:00:: Error Falha de logon do usuário 'hmlmb'.
+03:40:00:iniciando conexão com Banco! 
+03:40:00:: Error Falha de logon do usuário 'hmlmb'.
+03:41:00:iniciando conexão com Banco! 
+03:41:00:: Error Falha de logon do usuário 'hmlmb'.
+03:42:00:iniciando conexão com Banco! 
+03:42:00:: Error Falha de logon do usuário 'hmlmb'.
+03:43:00:iniciando conexão com Banco! 
+03:43:00:: Error Falha de logon do usuário 'hmlmb'.
+03:44:00:iniciando conexão com Banco! 
+03:44:00:: Error Falha de logon do usuário 'hmlmb'.
+03:45:00:iniciando conexão com Banco! 
+03:45:00:: Error Falha de logon do usuário 'hmlmb'.
+03:46:00:iniciando conexão com Banco! 
+03:46:00:: Error Falha de logon do usuário 'hmlmb'.
+03:47:00:iniciando conexão com Banco! 
+03:47:00:: Error Falha de logon do usuário 'hmlmb'.
+03:48:00:iniciando conexão com Banco! 
+03:48:00:: Error Falha de logon do usuário 'hmlmb'.
+03:49:00:iniciando conexão com Banco! 
+03:49:00:: Error Falha de logon do usuário 'hmlmb'.
+03:50:00:iniciando conexão com Banco! 
+03:50:00:: Error Falha de logon do usuário 'hmlmb'.
+03:51:00:iniciando conexão com Banco! 
+03:51:00:: Error Falha de logon do usuário 'hmlmb'.
+03:52:00:iniciando conexão com Banco! 
+03:52:00:: Error Falha de logon do usuário 'hmlmb'.
+03:53:00:iniciando conexão com Banco! 
+03:53:00:: Error Falha de logon do usuário 'hmlmb'.
+03:54:00:iniciando conexão com Banco! 
+03:54:00:: Error Falha de logon do usuário 'hmlmb'.
+03:55:00:iniciando conexão com Banco! 
+03:55:00:: Error Falha de logon do usuário 'hmlmb'.
+03:56:00:iniciando conexão com Banco! 
+03:56:00:: Error Falha de logon do usuário 'hmlmb'.
+03:57:00:iniciando conexão com Banco! 
+03:57:01:: Error Falha de logon do usuário 'hmlmb'.
+03:58:00:iniciando conexão com Banco! 
+03:58:00:: Error Falha de logon do usuário 'hmlmb'.
+03:59:00:iniciando conexão com Banco! 
+03:59:00:: Error Falha de logon do usuário 'hmlmb'.
+04:00:00:iniciando conexão com Banco! 
+04:00:00:: Error Falha de logon do usuário 'hmlmb'.
+04:01:00:iniciando conexão com Banco! 
+04:01:00:: Error Falha de logon do usuário 'hmlmb'.
+04:02:00:iniciando conexão com Banco! 
+04:02:00:: Error Falha de logon do usuário 'hmlmb'.
+04:03:00:iniciando conexão com Banco! 
+04:03:00:: Error Falha de logon do usuário 'hmlmb'.
+04:04:00:iniciando conexão com Banco! 
+04:04:00:: Error Falha de logon do usuário 'hmlmb'.
+04:05:00:iniciando conexão com Banco! 
+04:05:00:: Error Falha de logon do usuário 'hmlmb'.
+04:06:00:iniciando conexão com Banco! 
+04:06:00:: Error Falha de logon do usuário 'hmlmb'.
+04:07:00:iniciando conexão com Banco! 
+04:07:00:: Error Falha de logon do usuário 'hmlmb'.
+04:08:00:iniciando conexão com Banco! 
+04:08:00:: Error Falha de logon do usuário 'hmlmb'.
+04:09:00:iniciando conexão com Banco! 
+04:09:00:: Error Falha de logon do usuário 'hmlmb'.
+04:10:00:iniciando conexão com Banco! 
+04:10:00:: Error Falha de logon do usuário 'hmlmb'.
+04:11:00:iniciando conexão com Banco! 
+04:11:00:: Error Falha de logon do usuário 'hmlmb'.
+04:12:00:iniciando conexão com Banco! 
+04:12:00:: Error Falha de logon do usuário 'hmlmb'.
+04:13:00:iniciando conexão com Banco! 
+04:13:00:: Error Falha de logon do usuário 'hmlmb'.
+04:14:00:iniciando conexão com Banco! 
+04:14:00:: Error Falha de logon do usuário 'hmlmb'.
+04:15:00:iniciando conexão com Banco! 
+04:15:00:: Error Falha de logon do usuário 'hmlmb'.
+04:16:00:iniciando conexão com Banco! 
+04:16:00:: Error Falha de logon do usuário 'hmlmb'.
+04:17:00:iniciando conexão com Banco! 
+04:17:00:: Error Falha de logon do usuário 'hmlmb'.
+04:18:00:iniciando conexão com Banco! 
+04:18:00:: Error Falha de logon do usuário 'hmlmb'.
+04:19:00:iniciando conexão com Banco! 
+04:19:00:: Error Falha de logon do usuário 'hmlmb'.
+04:20:00:iniciando conexão com Banco! 
+04:20:00:: Error Falha de logon do usuário 'hmlmb'.
+04:21:00:iniciando conexão com Banco! 
+04:21:00:: Error Falha de logon do usuário 'hmlmb'.
+04:22:00:iniciando conexão com Banco! 
+04:22:00:: Error Falha de logon do usuário 'hmlmb'.
+04:23:00:iniciando conexão com Banco! 
+04:23:00:: Error Falha de logon do usuário 'hmlmb'.
+04:24:00:iniciando conexão com Banco! 
+04:24:00:: Error Falha de logon do usuário 'hmlmb'.
+04:25:00:iniciando conexão com Banco! 
+04:25:00:: Error Falha de logon do usuário 'hmlmb'.
+04:26:00:iniciando conexão com Banco! 
+04:26:00:: Error Falha de logon do usuário 'hmlmb'.
+04:27:00:iniciando conexão com Banco! 
+04:27:00:: Error Falha de logon do usuário 'hmlmb'.
+04:28:00:iniciando conexão com Banco! 
+04:28:00:: Error Falha de logon do usuário 'hmlmb'.
+04:29:00:iniciando conexão com Banco! 
+04:29:00:: Error Falha de logon do usuário 'hmlmb'.
+04:30:00:iniciando conexão com Banco! 
+04:30:00:: Error Falha de logon do usuário 'hmlmb'.
+04:31:00:iniciando conexão com Banco! 
+04:31:00:: Error Falha de logon do usuário 'hmlmb'.
+04:32:00:iniciando conexão com Banco! 
+04:32:00:: Error Falha de logon do usuário 'hmlmb'.
+04:33:00:iniciando conexão com Banco! 
+04:33:00:: Error Falha de logon do usuário 'hmlmb'.
+04:34:00:iniciando conexão com Banco! 
+04:34:00:: Error Falha de logon do usuário 'hmlmb'.
+04:35:00:iniciando conexão com Banco! 
+04:35:00:: Error Falha de logon do usuário 'hmlmb'.
+04:36:00:iniciando conexão com Banco! 
+04:36:00:: Error Falha de logon do usuário 'hmlmb'.
+04:37:00:iniciando conexão com Banco! 
+04:37:00:: Error Falha de logon do usuário 'hmlmb'.
+04:38:00:iniciando conexão com Banco! 
+04:38:00:: Error Falha de logon do usuário 'hmlmb'.
+04:39:00:iniciando conexão com Banco! 
+04:39:00:: Error Falha de logon do usuário 'hmlmb'.
+04:40:00:iniciando conexão com Banco! 
+04:40:00:: Error Falha de logon do usuário 'hmlmb'.
+04:41:00:iniciando conexão com Banco! 
+04:41:00:: Error Falha de logon do usuário 'hmlmb'.
+04:42:00:iniciando conexão com Banco! 
+04:42:00:: Error Falha de logon do usuário 'hmlmb'.
+04:43:00:iniciando conexão com Banco! 
+04:43:00:: Error Falha de logon do usuário 'hmlmb'.
+04:44:00:iniciando conexão com Banco! 
+04:44:00:: Error Falha de logon do usuário 'hmlmb'.
+04:45:00:iniciando conexão com Banco! 
+04:45:00:: Error Falha de logon do usuário 'hmlmb'.
+04:46:00:iniciando conexão com Banco! 
+04:46:00:: Error Falha de logon do usuário 'hmlmb'.
+04:47:00:iniciando conexão com Banco! 
+04:47:00:: Error Falha de logon do usuário 'hmlmb'.
+04:48:00:iniciando conexão com Banco! 
+04:48:00:: Error Falha de logon do usuário 'hmlmb'.
+04:49:00:iniciando conexão com Banco! 
+04:49:00:: Error Falha de logon do usuário 'hmlmb'.
+04:50:00:iniciando conexão com Banco! 
+04:50:00:: Error Falha de logon do usuário 'hmlmb'.
+04:51:00:iniciando conexão com Banco! 
+04:51:00:: Error Falha de logon do usuário 'hmlmb'.
+04:52:00:iniciando conexão com Banco! 
+04:52:00:: Error Falha de logon do usuário 'hmlmb'.
+04:53:00:iniciando conexão com Banco! 
+04:53:00:: Error Falha de logon do usuário 'hmlmb'.
+04:54:00:iniciando conexão com Banco! 
+04:54:00:: Error Falha de logon do usuário 'hmlmb'.
+04:55:00:iniciando conexão com Banco! 
+04:55:00:: Error Falha de logon do usuário 'hmlmb'.
+04:56:00:iniciando conexão com Banco! 
+04:56:00:: Error Falha de logon do usuário 'hmlmb'.
+04:57:00:iniciando conexão com Banco! 
+04:57:00:: Error Falha de logon do usuário 'hmlmb'.
+04:58:00:iniciando conexão com Banco! 
+04:58:00:: Error Falha de logon do usuário 'hmlmb'.
+04:59:00:iniciando conexão com Banco! 
+04:59:00:: Error Falha de logon do usuário 'hmlmb'.
+05:00:00:iniciando conexão com Banco! 
+05:00:00:: Error Falha de logon do usuário 'hmlmb'.
+05:01:00:iniciando conexão com Banco! 
+05:01:00:: Error Falha de logon do usuário 'hmlmb'.
+05:02:00:iniciando conexão com Banco! 
+05:02:00:: Error Falha de logon do usuário 'hmlmb'.
+05:03:00:iniciando conexão com Banco! 
+05:03:00:: Error Falha de logon do usuário 'hmlmb'.
+05:04:00:iniciando conexão com Banco! 
+05:04:00:: Error Falha de logon do usuário 'hmlmb'.
+05:05:00:iniciando conexão com Banco! 
+05:05:00:: Error Falha de logon do usuário 'hmlmb'.
+05:06:00:iniciando conexão com Banco! 
+05:06:00:: Error Falha de logon do usuário 'hmlmb'.
+05:07:00:iniciando conexão com Banco! 
+05:07:00:: Error Falha de logon do usuário 'hmlmb'.
+05:08:00:iniciando conexão com Banco! 
+05:08:00:: Error Falha de logon do usuário 'hmlmb'.
+05:09:00:iniciando conexão com Banco! 
+05:09:00:: Error Falha de logon do usuário 'hmlmb'.
+05:10:00:iniciando conexão com Banco! 
+05:10:00:: Error Falha de logon do usuário 'hmlmb'.
+05:11:00:iniciando conexão com Banco! 
+05:11:00:: Error Falha de logon do usuário 'hmlmb'.
+05:12:00:iniciando conexão com Banco! 
+05:12:00:: Error Falha de logon do usuário 'hmlmb'.
+05:13:00:iniciando conexão com Banco! 
+05:13:00:: Error Falha de logon do usuário 'hmlmb'.
+05:14:00:iniciando conexão com Banco! 
+05:14:00:: Error Falha de logon do usuário 'hmlmb'.
+05:15:00:iniciando conexão com Banco! 
+05:15:00:: Error Falha de logon do usuário 'hmlmb'.
+05:16:00:iniciando conexão com Banco! 
+05:16:00:: Error Falha de logon do usuário 'hmlmb'.
+05:17:00:iniciando conexão com Banco! 
+05:17:00:: Error Falha de logon do usuário 'hmlmb'.
+05:18:00:iniciando conexão com Banco! 
+05:18:00:: Error Falha de logon do usuário 'hmlmb'.
+05:19:00:iniciando conexão com Banco! 
+05:19:00:: Error Falha de logon do usuário 'hmlmb'.
+05:20:00:iniciando conexão com Banco! 
+05:20:00:: Error Falha de logon do usuário 'hmlmb'.
+05:21:00:iniciando conexão com Banco! 
+05:21:00:: Error Falha de logon do usuário 'hmlmb'.
+05:22:00:iniciando conexão com Banco! 
+05:22:00:: Error Falha de logon do usuário 'hmlmb'.
+05:23:00:iniciando conexão com Banco! 
+05:23:00:: Error Falha de logon do usuário 'hmlmb'.
+05:24:00:iniciando conexão com Banco! 
+05:24:00:: Error Falha de logon do usuário 'hmlmb'.
+05:25:00:iniciando conexão com Banco! 
+05:25:00:: Error Falha de logon do usuário 'hmlmb'.
+05:26:00:iniciando conexão com Banco! 
+05:26:00:: Error Falha de logon do usuário 'hmlmb'.
+05:27:00:iniciando conexão com Banco! 
+05:27:00:: Error Falha de logon do usuário 'hmlmb'.
+05:28:00:iniciando conexão com Banco! 
+05:28:00:: Error Falha de logon do usuário 'hmlmb'.
+05:29:00:iniciando conexão com Banco! 
+05:29:00:: Error Falha de logon do usuário 'hmlmb'.
+05:30:00:iniciando conexão com Banco! 
+05:30:00:: Error Falha de logon do usuário 'hmlmb'.
+05:31:00:iniciando conexão com Banco! 
+05:31:00:: Error Falha de logon do usuário 'hmlmb'.
+05:32:00:iniciando conexão com Banco! 
+05:32:00:: Error Falha de logon do usuário 'hmlmb'.
+05:33:00:iniciando conexão com Banco! 
+05:33:00:: Error Falha de logon do usuário 'hmlmb'.
+05:34:00:iniciando conexão com Banco! 
+05:34:00:: Error Falha de logon do usuário 'hmlmb'.
+05:35:00:iniciando conexão com Banco! 
+05:35:00:: Error Falha de logon do usuário 'hmlmb'.
+05:36:00:iniciando conexão com Banco! 
+05:36:00:: Error Falha de logon do usuário 'hmlmb'.
+05:37:00:iniciando conexão com Banco! 
+05:37:00:: Error Falha de logon do usuário 'hmlmb'.
+05:38:00:iniciando conexão com Banco! 
+05:38:00:: Error Falha de logon do usuário 'hmlmb'.
+05:39:00:iniciando conexão com Banco! 
+05:39:00:: Error Falha de logon do usuário 'hmlmb'.
+05:40:00:iniciando conexão com Banco! 
+05:40:00:: Error Falha de logon do usuário 'hmlmb'.
+05:41:00:iniciando conexão com Banco! 
+05:41:00:: Error Falha de logon do usuário 'hmlmb'.
+05:42:00:iniciando conexão com Banco! 
+05:42:00:: Error Falha de logon do usuário 'hmlmb'.
+05:43:00:iniciando conexão com Banco! 
+05:43:00:: Error Falha de logon do usuário 'hmlmb'.
+05:44:00:iniciando conexão com Banco! 
+05:44:00:: Error Falha de logon do usuário 'hmlmb'.
+05:45:00:iniciando conexão com Banco! 
+05:45:00:: Error Falha de logon do usuário 'hmlmb'.
+05:46:00:iniciando conexão com Banco! 
+05:46:00:: Error Falha de logon do usuário 'hmlmb'.
+05:47:00:iniciando conexão com Banco! 
+05:47:00:: Error Falha de logon do usuário 'hmlmb'.
+05:48:00:iniciando conexão com Banco! 
+05:48:00:: Error Falha de logon do usuário 'hmlmb'.
+05:49:00:iniciando conexão com Banco! 
+05:49:00:: Error Falha de logon do usuário 'hmlmb'.
+05:50:00:iniciando conexão com Banco! 
+05:50:00:: Error Falha de logon do usuário 'hmlmb'.
+05:51:00:iniciando conexão com Banco! 
+05:51:00:: Error Falha de logon do usuário 'hmlmb'.
+05:52:00:iniciando conexão com Banco! 
+05:52:00:: Error Falha de logon do usuário 'hmlmb'.
+05:53:00:iniciando conexão com Banco! 
+05:53:00:: Error Falha de logon do usuário 'hmlmb'.
+05:54:00:iniciando conexão com Banco! 
+05:54:01:: Error Falha de logon do usuário 'hmlmb'.
+05:55:01:iniciando conexão com Banco! 
+05:55:01:: Error Falha de logon do usuário 'hmlmb'.
+05:56:01:iniciando conexão com Banco! 
+05:56:01:: Error Falha de logon do usuário 'hmlmb'.
+05:57:01:iniciando conexão com Banco! 
+05:57:01:: Error Falha de logon do usuário 'hmlmb'.
+05:58:01:iniciando conexão com Banco! 
+05:58:01:: Error Falha de logon do usuário 'hmlmb'.
+05:59:01:iniciando conexão com Banco! 
+05:59:01:: Error Falha de logon do usuário 'hmlmb'.
+06:00:01:iniciando conexão com Banco! 
+06:00:01:: Error Falha de logon do usuário 'hmlmb'.
+06:01:01:iniciando conexão com Banco! 
+06:01:01:: Error Falha de logon do usuário 'hmlmb'.
+06:02:01:iniciando conexão com Banco! 
+06:02:01:: Error Falha de logon do usuário 'hmlmb'.
+06:03:01:iniciando conexão com Banco! 
+06:03:01:: Error Falha de logon do usuário 'hmlmb'.
+06:04:01:iniciando conexão com Banco! 
+06:04:01:: Error Falha de logon do usuário 'hmlmb'.
+06:05:01:iniciando conexão com Banco! 
+06:05:01:: Error Falha de logon do usuário 'hmlmb'.
+06:06:01:iniciando conexão com Banco! 
+06:06:01:: Error Falha de logon do usuário 'hmlmb'.
+06:07:01:iniciando conexão com Banco! 
+06:07:01:: Error Falha de logon do usuário 'hmlmb'.
+06:08:01:iniciando conexão com Banco! 
+06:08:01:: Error Falha de logon do usuário 'hmlmb'.
+06:09:01:iniciando conexão com Banco! 
+06:09:01:: Error Falha de logon do usuário 'hmlmb'.
+06:10:01:iniciando conexão com Banco! 
+06:10:01:: Error Falha de logon do usuário 'hmlmb'.
+06:11:01:iniciando conexão com Banco! 
+06:11:01:: Error Falha de logon do usuário 'hmlmb'.
+06:12:01:iniciando conexão com Banco! 
+06:12:01:: Error Falha de logon do usuário 'hmlmb'.
+06:13:01:iniciando conexão com Banco! 
+06:13:01:: Error Falha de logon do usuário 'hmlmb'.
+06:14:01:iniciando conexão com Banco! 
+06:14:01:: Error Falha de logon do usuário 'hmlmb'.
+06:15:01:iniciando conexão com Banco! 
+06:15:01:: Error Falha de logon do usuário 'hmlmb'.
+06:16:01:iniciando conexão com Banco! 
+06:16:01:: Error Falha de logon do usuário 'hmlmb'.
+06:17:01:iniciando conexão com Banco! 
+06:17:01:: Error Falha de logon do usuário 'hmlmb'.
+06:18:01:iniciando conexão com Banco! 
+06:18:01:: Error Falha de logon do usuário 'hmlmb'.
+06:19:01:iniciando conexão com Banco! 
+06:19:01:: Error Falha de logon do usuário 'hmlmb'.
+06:20:01:iniciando conexão com Banco! 
+06:20:01:: Error Falha de logon do usuário 'hmlmb'.
+06:21:01:iniciando conexão com Banco! 
+06:21:01:: Error Falha de logon do usuário 'hmlmb'.
+06:22:01:iniciando conexão com Banco! 
+06:22:01:: Error Falha de logon do usuário 'hmlmb'.
+06:23:01:iniciando conexão com Banco! 
+06:23:01:: Error Falha de logon do usuário 'hmlmb'.
+06:24:01:iniciando conexão com Banco! 
+06:24:01:: Error Falha de logon do usuário 'hmlmb'.
+06:25:01:iniciando conexão com Banco! 
+06:25:01:: Error Falha de logon do usuário 'hmlmb'.
+06:26:01:iniciando conexão com Banco! 
+06:26:01:: Error Falha de logon do usuário 'hmlmb'.
+06:27:01:iniciando conexão com Banco! 
+06:27:01:: Error Falha de logon do usuário 'hmlmb'.
+06:28:01:iniciando conexão com Banco! 
+06:28:01:: Error Falha de logon do usuário 'hmlmb'.
+06:29:01:iniciando conexão com Banco! 
+06:29:01:: Error Falha de logon do usuário 'hmlmb'.
+06:30:01:iniciando conexão com Banco! 
+06:30:01:: Error Falha de logon do usuário 'hmlmb'.
+06:31:01:iniciando conexão com Banco! 
+06:31:01:: Error Falha de logon do usuário 'hmlmb'.
+06:32:01:iniciando conexão com Banco! 
+06:32:01:: Error Falha de logon do usuário 'hmlmb'.
+06:33:01:iniciando conexão com Banco! 
+06:33:01:: Error Falha de logon do usuário 'hmlmb'.
+06:34:01:iniciando conexão com Banco! 
+06:34:01:: Error Falha de logon do usuário 'hmlmb'.
+06:35:01:iniciando conexão com Banco! 
+06:35:01:: Error Falha de logon do usuário 'hmlmb'.
+06:36:01:iniciando conexão com Banco! 
+06:36:01:: Error Falha de logon do usuário 'hmlmb'.
+06:37:01:iniciando conexão com Banco! 
+06:37:01:: Error Falha de logon do usuário 'hmlmb'.
+06:38:01:iniciando conexão com Banco! 
+06:38:01:: Error Falha de logon do usuário 'hmlmb'.
+06:39:01:iniciando conexão com Banco! 
+06:39:01:: Error Falha de logon do usuário 'hmlmb'.
+06:40:01:iniciando conexão com Banco! 
+06:40:01:: Error Falha de logon do usuário 'hmlmb'.
+06:41:01:iniciando conexão com Banco! 
+06:41:01:: Error Falha de logon do usuário 'hmlmb'.
+06:42:01:iniciando conexão com Banco! 
+06:42:01:: Error Falha de logon do usuário 'hmlmb'.
+06:43:01:iniciando conexão com Banco! 
+06:43:01:: Error Falha de logon do usuário 'hmlmb'.
+06:44:01:iniciando conexão com Banco! 
+06:44:01:: Error Falha de logon do usuário 'hmlmb'.
+06:45:01:iniciando conexão com Banco! 
+06:45:01:: Error Falha de logon do usuário 'hmlmb'.
+06:46:01:iniciando conexão com Banco! 
+06:46:01:: Error Falha de logon do usuário 'hmlmb'.
+06:47:01:iniciando conexão com Banco! 
+06:47:01:: Error Falha de logon do usuário 'hmlmb'.
+06:48:01:iniciando conexão com Banco! 
+06:48:01:: Error Falha de logon do usuário 'hmlmb'.
+06:49:01:iniciando conexão com Banco! 
+06:49:01:: Error Falha de logon do usuário 'hmlmb'.
+06:50:01:iniciando conexão com Banco! 
+06:50:01:: Error Falha de logon do usuário 'hmlmb'.
+06:51:01:iniciando conexão com Banco! 
+06:51:01:: Error Falha de logon do usuário 'hmlmb'.
+06:52:01:iniciando conexão com Banco! 
+06:52:01:: Error Falha de logon do usuário 'hmlmb'.
+06:53:01:iniciando conexão com Banco! 
+06:53:01:: Error Falha de logon do usuário 'hmlmb'.
+06:54:01:iniciando conexão com Banco! 
+06:54:01:: Error Falha de logon do usuário 'hmlmb'.
+06:55:01:iniciando conexão com Banco! 
+06:55:01:: Error Falha de logon do usuário 'hmlmb'.
+06:56:01:iniciando conexão com Banco! 
+06:56:01:: Error Falha de logon do usuário 'hmlmb'.
+06:57:01:iniciando conexão com Banco! 
+06:57:01:: Error Falha de logon do usuário 'hmlmb'.
+06:58:01:iniciando conexão com Banco! 
+06:58:01:: Error Falha de logon do usuário 'hmlmb'.
+06:59:01:iniciando conexão com Banco! 
+06:59:01:: Error Falha de logon do usuário 'hmlmb'.
+07:00:01:iniciando conexão com Banco! 
+07:00:01:: Error Falha de logon do usuário 'hmlmb'.
+07:01:01:iniciando conexão com Banco! 
+07:01:01:: Error Falha de logon do usuário 'hmlmb'.
+07:02:01:iniciando conexão com Banco! 
+07:02:01:: Error Falha de logon do usuário 'hmlmb'.
+07:03:01:iniciando conexão com Banco! 
+07:03:01:: Error Falha de logon do usuário 'hmlmb'.
+07:04:01:iniciando conexão com Banco! 
+07:04:01:: Error Falha de logon do usuário 'hmlmb'.
+07:05:01:iniciando conexão com Banco! 
+07:05:01:: Error Falha de logon do usuário 'hmlmb'.
+07:06:01:iniciando conexão com Banco! 
+07:06:01:: Error Falha de logon do usuário 'hmlmb'.
+07:07:01:iniciando conexão com Banco! 
+07:07:01:: Error Falha de logon do usuário 'hmlmb'.
+07:08:01:iniciando conexão com Banco! 
+07:08:01:: Error Falha de logon do usuário 'hmlmb'.
+07:09:01:iniciando conexão com Banco! 
+07:09:01:: Error Falha de logon do usuário 'hmlmb'.
+07:10:01:iniciando conexão com Banco! 
+07:10:01:: Error Falha de logon do usuário 'hmlmb'.
+07:11:01:iniciando conexão com Banco! 
+07:11:01:: Error Falha de logon do usuário 'hmlmb'.
+07:12:01:iniciando conexão com Banco! 
+07:12:01:: Error Falha de logon do usuário 'hmlmb'.
+07:13:01:iniciando conexão com Banco! 
+07:13:01:: Error Falha de logon do usuário 'hmlmb'.
+07:14:01:iniciando conexão com Banco! 
+07:14:01:: Error Falha de logon do usuário 'hmlmb'.
+07:15:01:iniciando conexão com Banco! 
+07:15:01:: Error Falha de logon do usuário 'hmlmb'.
+07:16:01:iniciando conexão com Banco! 
+07:16:01:: Error Falha de logon do usuário 'hmlmb'.
+07:17:01:iniciando conexão com Banco! 
+07:17:01:: Error Falha de logon do usuário 'hmlmb'.
+07:18:01:iniciando conexão com Banco! 
+07:18:01:: Error Falha de logon do usuário 'hmlmb'.
+07:19:01:iniciando conexão com Banco! 
+07:19:01:: Error Falha de logon do usuário 'hmlmb'.
+07:20:01:iniciando conexão com Banco! 
+07:20:01:: Error Falha de logon do usuário 'hmlmb'.
+07:21:01:iniciando conexão com Banco! 
+07:21:01:: Error Falha de logon do usuário 'hmlmb'.
+07:22:01:iniciando conexão com Banco! 
+07:22:01:: Error Falha de logon do usuário 'hmlmb'.
+07:23:01:iniciando conexão com Banco! 
+07:23:01:: Error Falha de logon do usuário 'hmlmb'.
+07:24:01:iniciando conexão com Banco! 
+07:24:01:: Error Falha de logon do usuário 'hmlmb'.
+07:25:01:iniciando conexão com Banco! 
+07:25:01:: Error Falha de logon do usuário 'hmlmb'.
+07:26:01:iniciando conexão com Banco! 
+07:26:01:: Error Falha de logon do usuário 'hmlmb'.
+07:27:01:iniciando conexão com Banco! 
+07:27:01:: Error Falha de logon do usuário 'hmlmb'.
+07:28:01:iniciando conexão com Banco! 
+07:28:01:: Error Falha de logon do usuário 'hmlmb'.
+07:29:01:iniciando conexão com Banco! 
+07:29:01:: Error Falha de logon do usuário 'hmlmb'.
+07:30:01:iniciando conexão com Banco! 
+07:30:01:: Error Falha de logon do usuário 'hmlmb'.
+07:31:01:iniciando conexão com Banco! 
+07:31:01:: Error Falha de logon do usuário 'hmlmb'.
+07:32:01:iniciando conexão com Banco! 
+07:32:01:: Error Falha de logon do usuário 'hmlmb'.
+07:33:01:iniciando conexão com Banco! 
+07:33:01:: Error Falha de logon do usuário 'hmlmb'.
+07:34:01:iniciando conexão com Banco! 
+07:34:01:: Error Falha de logon do usuário 'hmlmb'.
+07:35:01:iniciando conexão com Banco! 
+07:35:01:: Error Falha de logon do usuário 'hmlmb'.
+07:36:01:iniciando conexão com Banco! 
+07:36:01:: Error Falha de logon do usuário 'hmlmb'.
+07:37:01:iniciando conexão com Banco! 
+07:37:01:: Error Falha de logon do usuário 'hmlmb'.
+07:38:01:iniciando conexão com Banco! 
+07:38:01:: Error Falha de logon do usuário 'hmlmb'.
+07:39:01:iniciando conexão com Banco! 
+07:39:01:: Error Falha de logon do usuário 'hmlmb'.
+07:40:01:iniciando conexão com Banco! 
+07:40:01:: Error Falha de logon do usuário 'hmlmb'.
+07:41:01:iniciando conexão com Banco! 
+07:41:01:: Error Falha de logon do usuário 'hmlmb'.
+07:42:01:iniciando conexão com Banco! 
+07:42:01:: Error Falha de logon do usuário 'hmlmb'.
+07:43:01:iniciando conexão com Banco! 
+07:43:01:: Error Falha de logon do usuário 'hmlmb'.
+07:44:01:iniciando conexão com Banco! 
+07:44:01:: Error Falha de logon do usuário 'hmlmb'.
+07:45:01:iniciando conexão com Banco! 
+07:45:01:: Error Falha de logon do usuário 'hmlmb'.
+07:46:01:iniciando conexão com Banco! 
+07:46:01:: Error Falha de logon do usuário 'hmlmb'.
+07:47:01:iniciando conexão com Banco! 
+07:47:01:: Error Falha de logon do usuário 'hmlmb'.
+07:48:01:iniciando conexão com Banco! 
+07:48:01:: Error Falha de logon do usuário 'hmlmb'.
+07:49:01:iniciando conexão com Banco! 
+07:49:01:: Error Falha de logon do usuário 'hmlmb'.
+07:50:01:iniciando conexão com Banco! 
+07:50:01:: Error Falha de logon do usuário 'hmlmb'.
+07:51:01:iniciando conexão com Banco! 
+07:51:01:: Error Falha de logon do usuário 'hmlmb'.
+07:52:01:iniciando conexão com Banco! 
+07:52:01:: Error Falha de logon do usuário 'hmlmb'.
+07:53:01:iniciando conexão com Banco! 
+07:53:01:: Error Falha de logon do usuário 'hmlmb'.
+07:54:01:iniciando conexão com Banco! 
+07:54:01:: Error Falha de logon do usuário 'hmlmb'.
+07:55:01:iniciando conexão com Banco! 
+07:55:01:: Error Falha de logon do usuário 'hmlmb'.
+07:56:01:iniciando conexão com Banco! 
+07:56:01:: Error Falha de logon do usuário 'hmlmb'.
+07:57:01:iniciando conexão com Banco! 
+07:57:01:: Error Falha de logon do usuário 'hmlmb'.
+07:58:01:iniciando conexão com Banco! 
+07:58:01:: Error Falha de logon do usuário 'hmlmb'.
+07:59:01:iniciando conexão com Banco! 
+07:59:01:: Error Falha de logon do usuário 'hmlmb'.
+08:00:01:iniciando conexão com Banco! 
+08:00:01:: Error Falha de logon do usuário 'hmlmb'.
+08:01:01:iniciando conexão com Banco! 
+08:01:01:: Error Falha de logon do usuário 'hmlmb'.
+08:02:01:iniciando conexão com Banco! 
+08:02:01:: Error Falha de logon do usuário 'hmlmb'.
+08:03:01:iniciando conexão com Banco! 
+08:03:01:: Error Falha de logon do usuário 'hmlmb'.
+08:04:01:iniciando conexão com Banco! 
+08:04:01:: Error Falha de logon do usuário 'hmlmb'.
+08:05:01:iniciando conexão com Banco! 
+08:05:01:: Error Falha de logon do usuário 'hmlmb'.
+08:06:01:iniciando conexão com Banco! 
+08:06:01:: Error Falha de logon do usuário 'hmlmb'.
+08:07:01:iniciando conexão com Banco! 
+08:07:01:: Error Falha de logon do usuário 'hmlmb'.
+08:08:01:iniciando conexão com Banco! 
+08:08:01:: Error Falha de logon do usuário 'hmlmb'.
+08:09:01:iniciando conexão com Banco! 
+08:09:01:: Error Falha de logon do usuário 'hmlmb'.
+08:10:01:iniciando conexão com Banco! 
+08:10:01:: Error Falha de logon do usuário 'hmlmb'.
+08:11:01:iniciando conexão com Banco! 
+08:11:01:: Error Falha de logon do usuário 'hmlmb'.
+08:12:01:iniciando conexão com Banco! 
+08:12:01:: Error Falha de logon do usuário 'hmlmb'.
+08:13:01:iniciando conexão com Banco! 
+08:13:01:: Error Falha de logon do usuário 'hmlmb'.
+08:14:01:iniciando conexão com Banco! 
+08:14:01:: Error Falha de logon do usuário 'hmlmb'.
+08:15:01:iniciando conexão com Banco! 
+08:15:01:: Error Falha de logon do usuário 'hmlmb'.
+08:16:01:iniciando conexão com Banco! 
+08:16:01:: Error Falha de logon do usuário 'hmlmb'.
+08:17:01:iniciando conexão com Banco! 
+08:17:01:: Error Falha de logon do usuário 'hmlmb'.
+08:18:01:iniciando conexão com Banco! 
+08:18:01:: Error Falha de logon do usuário 'hmlmb'.
+08:19:01:iniciando conexão com Banco! 
+08:19:01:: Error Falha de logon do usuário 'hmlmb'.
+08:20:01:iniciando conexão com Banco! 
+08:20:01:: Error Falha de logon do usuário 'hmlmb'.
+08:21:01:iniciando conexão com Banco! 
+08:21:01:: Error Falha de logon do usuário 'hmlmb'.
+08:22:01:iniciando conexão com Banco! 
+08:22:01:: Error Falha de logon do usuário 'hmlmb'.
+08:23:01:iniciando conexão com Banco! 
+08:23:01:: Error Falha de logon do usuário 'hmlmb'.
+08:24:01:iniciando conexão com Banco! 
+08:24:01:: Error Falha de logon do usuário 'hmlmb'.
+08:25:01:iniciando conexão com Banco! 
+08:25:01:: Error Falha de logon do usuário 'hmlmb'.
+08:26:01:iniciando conexão com Banco! 
+08:26:01:: Error Falha de logon do usuário 'hmlmb'.
+08:27:01:iniciando conexão com Banco! 
+08:27:01:: Error Falha de logon do usuário 'hmlmb'.
+08:28:01:iniciando conexão com Banco! 
+08:28:01:: Error Falha de logon do usuário 'hmlmb'.
+08:29:01:iniciando conexão com Banco! 
+08:29:01:: Error Falha de logon do usuário 'hmlmb'.
+08:30:01:iniciando conexão com Banco! 
+08:30:01:: Error Falha de logon do usuário 'hmlmb'.
+08:31:01:iniciando conexão com Banco! 
+08:31:01:: Error Falha de logon do usuário 'hmlmb'.
+08:32:01:iniciando conexão com Banco! 
+08:32:01:: Error Falha de logon do usuário 'hmlmb'.
+08:33:01:iniciando conexão com Banco! 
+08:33:01:: Error Falha de logon do usuário 'hmlmb'.
+08:34:01:iniciando conexão com Banco! 
+08:34:01:: Error Falha de logon do usuário 'hmlmb'.
+08:35:01:iniciando conexão com Banco! 
+08:35:01:: Error Falha de logon do usuário 'hmlmb'.
+08:36:01:iniciando conexão com Banco! 
+08:36:01:: Error Falha de logon do usuário 'hmlmb'.
+08:37:01:iniciando conexão com Banco! 
+08:37:01:: Error Falha de logon do usuário 'hmlmb'.
+08:38:01:iniciando conexão com Banco! 
+08:38:01:: Error Falha de logon do usuário 'hmlmb'.
+08:39:01:iniciando conexão com Banco! 
+08:39:01:: Error Falha de logon do usuário 'hmlmb'.
+08:40:01:iniciando conexão com Banco! 
+08:40:01:: Error Falha de logon do usuário 'hmlmb'.
+08:41:01:iniciando conexão com Banco! 
+08:41:01:: Error Falha de logon do usuário 'hmlmb'.
+08:42:01:iniciando conexão com Banco! 
+08:42:01:: Error Falha de logon do usuário 'hmlmb'.
+08:43:01:iniciando conexão com Banco! 
+08:43:01:: Error Falha de logon do usuário 'hmlmb'.
+08:44:01:iniciando conexão com Banco! 
+08:44:01:: Error Falha de logon do usuário 'hmlmb'.
+08:45:01:iniciando conexão com Banco! 
+08:45:01:: Error Falha de logon do usuário 'hmlmb'.
+08:46:01:iniciando conexão com Banco! 
+08:46:01:: Error Falha de logon do usuário 'hmlmb'.
+08:47:01:iniciando conexão com Banco! 
+08:47:01:: Error Falha de logon do usuário 'hmlmb'.
+08:48:01:iniciando conexão com Banco! 
+08:48:01:: Error Falha de logon do usuário 'hmlmb'.
+08:49:01:iniciando conexão com Banco! 
+08:49:01:: Error Falha de logon do usuário 'hmlmb'.
+08:50:01:iniciando conexão com Banco! 
+08:50:01:: Error Falha de logon do usuário 'hmlmb'.
+08:51:01:iniciando conexão com Banco! 
+08:51:01:: Error Falha de logon do usuário 'hmlmb'.
+08:52:01:iniciando conexão com Banco! 
+08:52:01:: Error Falha de logon do usuário 'hmlmb'.
+08:53:01:iniciando conexão com Banco! 
+08:53:01:: Error Falha de logon do usuário 'hmlmb'.
+08:54:01:iniciando conexão com Banco! 
+08:54:01:: Error Falha de logon do usuário 'hmlmb'.
+08:55:01:iniciando conexão com Banco! 
+08:55:01:: Error Falha de logon do usuário 'hmlmb'.
+08:56:01:iniciando conexão com Banco! 
+08:56:01:: Error Falha de logon do usuário 'hmlmb'.
+08:57:01:iniciando conexão com Banco! 
+08:57:01:: Error Falha de logon do usuário 'hmlmb'.
+08:58:01:iniciando conexão com Banco! 
+08:58:01:: Error Falha de logon do usuário 'hmlmb'.
+08:59:01:iniciando conexão com Banco! 
+08:59:01:: Error Falha de logon do usuário 'hmlmb'.
+09:00:01:iniciando conexão com Banco! 
+09:00:01:: Error Falha de logon do usuário 'hmlmb'.
+09:01:01:iniciando conexão com Banco! 
+09:01:01:: Error Falha de logon do usuário 'hmlmb'.
+09:02:01:iniciando conexão com Banco! 
+09:02:01:: Error Falha de logon do usuário 'hmlmb'.
+09:03:01:iniciando conexão com Banco! 
+09:03:01:: Error Falha de logon do usuário 'hmlmb'.
+09:04:01:iniciando conexão com Banco! 
+09:04:01:: Error Falha de logon do usuário 'hmlmb'.
+09:05:01:iniciando conexão com Banco! 
+09:05:01:: Error Falha de logon do usuário 'hmlmb'.
+09:06:01:iniciando conexão com Banco! 
+09:06:01:: Error Falha de logon do usuário 'hmlmb'.
+09:07:01:iniciando conexão com Banco! 
+09:07:01:: Error Falha de logon do usuário 'hmlmb'.
+09:08:01:iniciando conexão com Banco! 
+09:08:01:: Error Falha de logon do usuário 'hmlmb'.
+09:09:01:iniciando conexão com Banco! 
+09:09:01:: Error Falha de logon do usuário 'hmlmb'.
+09:10:01:iniciando conexão com Banco! 
+09:10:01:: Error Falha de logon do usuário 'hmlmb'.
+09:11:01:iniciando conexão com Banco! 
+09:11:01:: Error Falha de logon do usuário 'hmlmb'.
+09:12:01:iniciando conexão com Banco! 
+09:12:01:: Error Falha de logon do usuário 'hmlmb'.
+09:13:01:iniciando conexão com Banco! 
+09:13:01:: Error Falha de logon do usuário 'hmlmb'.
+09:14:01:iniciando conexão com Banco! 
+09:14:01:: Error Falha de logon do usuário 'hmlmb'.
+09:15:01:iniciando conexão com Banco! 
+09:15:01:: Error Falha de logon do usuário 'hmlmb'.
+09:16:01:iniciando conexão com Banco! 
+09:16:01:: Error Falha de logon do usuário 'hmlmb'.
+09:17:01:iniciando conexão com Banco! 
+09:17:01:: Error Falha de logon do usuário 'hmlmb'.
+09:18:01:iniciando conexão com Banco! 
+09:18:01:: Error Falha de logon do usuário 'hmlmb'.
+09:19:01:iniciando conexão com Banco! 
+09:19:01:: Error Falha de logon do usuário 'hmlmb'.
+09:20:01:iniciando conexão com Banco! 
+09:20:01:: Error Falha de logon do usuário 'hmlmb'.
+09:21:01:iniciando conexão com Banco! 
+09:21:01:: Error Falha de logon do usuário 'hmlmb'.
+09:22:01:iniciando conexão com Banco! 
+09:22:01:: Error Falha de logon do usuário 'hmlmb'.
+09:23:01:iniciando conexão com Banco! 
+09:23:01:: Error Falha de logon do usuário 'hmlmb'.
+09:24:01:iniciando conexão com Banco! 
+09:24:01:: Error Falha de logon do usuário 'hmlmb'.
+09:25:01:iniciando conexão com Banco! 
+09:25:01:: Error Falha de logon do usuário 'hmlmb'.
+09:26:01:iniciando conexão com Banco! 
+09:26:01:: Error Falha de logon do usuário 'hmlmb'.
+09:27:01:iniciando conexão com Banco! 
+09:27:01:: Error Falha de logon do usuário 'hmlmb'.
+09:28:01:iniciando conexão com Banco! 
+09:28:01:: Error Falha de logon do usuário 'hmlmb'.
+09:29:01:iniciando conexão com Banco! 
+09:29:01:: Error Falha de logon do usuário 'hmlmb'.
+09:30:01:iniciando conexão com Banco! 
+09:30:01:: Error Falha de logon do usuário 'hmlmb'.
+09:31:01:iniciando conexão com Banco! 
+09:31:01:: Error Falha de logon do usuário 'hmlmb'.
+09:32:01:iniciando conexão com Banco! 
+09:32:01:: Error Falha de logon do usuário 'hmlmb'.
+09:33:01:iniciando conexão com Banco! 
+09:33:01:: Error Falha de logon do usuário 'hmlmb'.
+09:34:01:iniciando conexão com Banco! 
+09:34:01:: Error Falha de logon do usuário 'hmlmb'.
+09:35:01:iniciando conexão com Banco! 
+09:35:01:: Error Falha de logon do usuário 'hmlmb'.
+09:36:01:iniciando conexão com Banco! 
+09:36:01:: Error Falha de logon do usuário 'hmlmb'.
+09:37:01:iniciando conexão com Banco! 
+09:37:01:: Error Falha de logon do usuário 'hmlmb'.
+09:38:01:iniciando conexão com Banco! 
+09:38:01:: Error Falha de logon do usuário 'hmlmb'.
+09:39:01:iniciando conexão com Banco! 
+09:39:01:: Error Falha de logon do usuário 'hmlmb'.
+09:40:01:iniciando conexão com Banco! 
+09:40:01:: Error Falha de logon do usuário 'hmlmb'.
+09:41:01:iniciando conexão com Banco! 
+09:41:01:: Error Falha de logon do usuário 'hmlmb'.
+09:42:01:iniciando conexão com Banco! 
+09:42:01:: Error Falha de logon do usuário 'hmlmb'.
+09:43:01:iniciando conexão com Banco! 
+09:43:02:: Error Falha de logon do usuário 'hmlmb'.
+09:44:02:iniciando conexão com Banco! 
+09:44:02:: Error Falha de logon do usuário 'hmlmb'.
+09:45:02:iniciando conexão com Banco! 
+09:45:02:: Error Falha de logon do usuário 'hmlmb'.
+09:46:01:iniciando conexão com Banco! 
+09:46:02:: Error Falha de logon do usuário 'hmlmb'.
+09:47:01:iniciando conexão com Banco! 
+09:47:02:: Error Falha de logon do usuário 'hmlmb'.
+09:48:01:iniciando conexão com Banco! 
+09:48:02:: Error Falha de logon do usuário 'hmlmb'.
+09:49:02:iniciando conexão com Banco! 
+09:49:02:: Error Falha de logon do usuário 'hmlmb'.
+09:50:02:iniciando conexão com Banco! 
+09:50:02:: Error Falha de logon do usuário 'hmlmb'.
+09:51:02:iniciando conexão com Banco! 
+09:51:02:: Error Falha de logon do usuário 'hmlmb'.
+09:52:02:iniciando conexão com Banco! 
+09:52:02:: Error Falha de logon do usuário 'hmlmb'.
+09:53:02:iniciando conexão com Banco! 
+09:53:02:: Error Falha de logon do usuário 'hmlmb'.
+09:54:02:iniciando conexão com Banco! 
+09:54:02:: Error Falha de logon do usuário 'hmlmb'.
+09:55:02:iniciando conexão com Banco! 
+09:55:02:: Error Falha de logon do usuário 'hmlmb'.
+09:56:02:iniciando conexão com Banco! 
+09:56:02:: Error Falha de logon do usuário 'hmlmb'.
+09:57:02:iniciando conexão com Banco! 
+09:57:02:: Error Falha de logon do usuário 'hmlmb'.
+09:58:02:iniciando conexão com Banco! 
+09:58:02:: Error Falha de logon do usuário 'hmlmb'.
+09:59:02:iniciando conexão com Banco! 
+09:59:02:: Error Falha de logon do usuário 'hmlmb'.
+10:00:02:iniciando conexão com Banco! 
+10:00:02:: Error Falha de logon do usuário 'hmlmb'.
+10:01:02:iniciando conexão com Banco! 
+10:01:02:: Error Falha de logon do usuário 'hmlmb'.
+10:02:02:iniciando conexão com Banco! 
+10:02:02:: Error Falha de logon do usuário 'hmlmb'.
+10:03:02:iniciando conexão com Banco! 
+10:03:02:: Error Falha de logon do usuário 'hmlmb'.
+10:04:02:iniciando conexão com Banco! 
+10:04:02:: Error Falha de logon do usuário 'hmlmb'.
+10:05:02:iniciando conexão com Banco! 
+10:05:02:: Error Falha de logon do usuário 'hmlmb'.
+10:06:02:iniciando conexão com Banco! 
+10:06:02:: Error Falha de logon do usuário 'hmlmb'.
+10:07:02:iniciando conexão com Banco! 
+10:07:02:: Error Falha de logon do usuário 'hmlmb'.
+10:08:02:iniciando conexão com Banco! 
+10:08:02:: Error Falha de logon do usuário 'hmlmb'.
+10:09:02:iniciando conexão com Banco! 
+10:09:02:: Error Falha de logon do usuário 'hmlmb'.
+10:10:02:iniciando conexão com Banco! 
+10:10:02:: Error Falha de logon do usuário 'hmlmb'.
+10:11:02:iniciando conexão com Banco! 
+10:11:02:: Error Falha de logon do usuário 'hmlmb'.
+10:12:02:iniciando conexão com Banco! 
+10:12:02:: Error Falha de logon do usuário 'hmlmb'.
+10:13:02:iniciando conexão com Banco! 
+10:13:02:: Error Falha de logon do usuário 'hmlmb'.
+10:14:02:iniciando conexão com Banco! 
+10:14:02:: Error Falha de logon do usuário 'hmlmb'.
+10:15:02:iniciando conexão com Banco! 
+10:15:02:: Error Falha de logon do usuário 'hmlmb'.
+10:16:02:iniciando conexão com Banco! 
+10:16:02:: Error Falha de logon do usuário 'hmlmb'.
+10:17:02:iniciando conexão com Banco! 
+10:17:02:: Error Falha de logon do usuário 'hmlmb'.
+10:18:02:iniciando conexão com Banco! 
+10:18:02:: Error Falha de logon do usuário 'hmlmb'.
+10:19:02:iniciando conexão com Banco! 
+10:19:02:: Error Falha de logon do usuário 'hmlmb'.
+10:20:02:iniciando conexão com Banco! 
+10:20:02:: Error Falha de logon do usuário 'hmlmb'.
+10:21:02:iniciando conexão com Banco! 
+10:21:02:: Error Falha de logon do usuário 'hmlmb'.
+10:22:02:iniciando conexão com Banco! 
+10:22:02:: Error Falha de logon do usuário 'hmlmb'.
+10:23:02:iniciando conexão com Banco! 
+10:23:02:: Error Falha de logon do usuário 'hmlmb'.
+10:24:02:iniciando conexão com Banco! 
+10:24:02:: Error Falha de logon do usuário 'hmlmb'.
+10:25:02:iniciando conexão com Banco! 
+10:25:02:: Error Falha de logon do usuário 'hmlmb'.
+10:26:02:iniciando conexão com Banco! 
+10:26:02:: Error Falha de logon do usuário 'hmlmb'.
+10:27:02:iniciando conexão com Banco! 
+10:27:02:: Error Falha de logon do usuário 'hmlmb'.
+10:28:02:iniciando conexão com Banco! 
+10:28:02:: Error Falha de logon do usuário 'hmlmb'.
+10:29:02:iniciando conexão com Banco! 
+10:29:02:: Error Falha de logon do usuário 'hmlmb'.
+10:30:02:iniciando conexão com Banco! 
+10:30:02:: Error Falha de logon do usuário 'hmlmb'.
+10:31:02:iniciando conexão com Banco! 
+10:31:02:: Error Falha de logon do usuário 'hmlmb'.
+10:32:02:iniciando conexão com Banco! 
+10:32:02:: Error Falha de logon do usuário 'hmlmb'.
+10:33:02:iniciando conexão com Banco! 
+10:33:02:: Error Falha de logon do usuário 'hmlmb'.
+10:34:02:iniciando conexão com Banco! 
+10:34:02:: Error Falha de logon do usuário 'hmlmb'.
+10:35:02:iniciando conexão com Banco! 
+10:35:02:: Error Falha de logon do usuário 'hmlmb'.
+10:36:02:iniciando conexão com Banco! 
+10:36:02:: Error Falha de logon do usuário 'hmlmb'.
+10:37:02:iniciando conexão com Banco! 
+10:37:02:: Error Falha de logon do usuário 'hmlmb'.
+10:38:02:iniciando conexão com Banco! 
+10:38:02:: Error Falha de logon do usuário 'hmlmb'.
+10:39:02:iniciando conexão com Banco! 
+10:39:02:: Error Falha de logon do usuário 'hmlmb'.
+10:40:02:iniciando conexão com Banco! 
+10:40:02:: Error Falha de logon do usuário 'hmlmb'.
+10:41:02:iniciando conexão com Banco! 
+10:41:02:: Error Falha de logon do usuário 'hmlmb'.
+10:42:02:iniciando conexão com Banco! 
+10:42:02:: Error Falha de logon do usuário 'hmlmb'.
+10:43:02:iniciando conexão com Banco! 
+10:43:02:: Error Falha de logon do usuário 'hmlmb'.
+10:44:02:iniciando conexão com Banco! 
+10:44:02:: Error Falha de logon do usuário 'hmlmb'.
+10:45:02:iniciando conexão com Banco! 
+10:45:02:: Error Falha de logon do usuário 'hmlmb'.
+10:46:02:iniciando conexão com Banco! 
+10:46:02:: Error Falha de logon do usuário 'hmlmb'.
+10:47:02:iniciando conexão com Banco! 
+10:47:02:: Error Falha de logon do usuário 'hmlmb'.
+10:48:02:iniciando conexão com Banco! 
+10:48:02:: Error Falha de logon do usuário 'hmlmb'.
+10:49:02:iniciando conexão com Banco! 
+10:49:02:: Error Falha de logon do usuário 'hmlmb'.
+10:50:02:iniciando conexão com Banco! 
+10:50:02:: Error Falha de logon do usuário 'hmlmb'.
+10:51:02:iniciando conexão com Banco! 
+10:51:02:: Error Falha de logon do usuário 'hmlmb'.
+10:52:02:iniciando conexão com Banco! 
+10:52:02:: Error Falha de logon do usuário 'hmlmb'.
+10:53:02:iniciando conexão com Banco! 
+10:53:02:: Error Falha de logon do usuário 'hmlmb'.
+10:54:02:iniciando conexão com Banco! 
+10:54:02:: Error Falha de logon do usuário 'hmlmb'.
+10:55:02:iniciando conexão com Banco! 
+10:55:02:: Error Falha de logon do usuário 'hmlmb'.
+10:56:02:iniciando conexão com Banco! 
+10:56:02:: Error Falha de logon do usuário 'hmlmb'.
+10:57:02:iniciando conexão com Banco! 
+10:57:02:: Error Falha de logon do usuário 'hmlmb'.
+10:58:02:iniciando conexão com Banco! 
+10:58:02:: Error Falha de logon do usuário 'hmlmb'.
+10:59:02:iniciando conexão com Banco! 
+10:59:02:: Error Falha de logon do usuário 'hmlmb'.
+11:00:02:iniciando conexão com Banco! 
+11:00:02:: Error Falha de logon do usuário 'hmlmb'.
+11:01:02:iniciando conexão com Banco! 
+11:01:02:: Error Falha de logon do usuário 'hmlmb'.
+11:02:02:iniciando conexão com Banco! 
+11:02:02:: Error Falha de logon do usuário 'hmlmb'.
+11:03:02:iniciando conexão com Banco! 
+11:03:02:: Error Falha de logon do usuário 'hmlmb'.
+11:04:02:iniciando conexão com Banco! 
+11:04:02:: Error Falha de logon do usuário 'hmlmb'.
+11:05:02:iniciando conexão com Banco! 
+11:05:02:: Error Falha de logon do usuário 'hmlmb'.
+11:06:02:iniciando conexão com Banco! 
+11:06:02:: Error Falha de logon do usuário 'hmlmb'.
+11:07:02:iniciando conexão com Banco! 
+11:07:02:: Error Falha de logon do usuário 'hmlmb'.
+11:08:02:iniciando conexão com Banco! 
+11:08:02:: Error Falha de logon do usuário 'hmlmb'.
+11:09:02:iniciando conexão com Banco! 
+11:09:02:: Error Falha de logon do usuário 'hmlmb'.
+11:10:02:iniciando conexão com Banco! 
+11:10:02:: Error Falha de logon do usuário 'hmlmb'.
+11:11:02:iniciando conexão com Banco! 
+11:11:02:: Error Falha de logon do usuário 'hmlmb'.
+11:12:02:iniciando conexão com Banco! 
+11:12:02:: Error Falha de logon do usuário 'hmlmb'.
+11:13:02:iniciando conexão com Banco! 
+11:13:02:: Error Falha de logon do usuário 'hmlmb'.
+11:14:02:iniciando conexão com Banco! 
+11:14:02:: Error Falha de logon do usuário 'hmlmb'.
+11:15:02:iniciando conexão com Banco! 
+11:15:02:: Error Falha de logon do usuário 'hmlmb'.
+11:16:02:iniciando conexão com Banco! 
+11:16:02:: Error Falha de logon do usuário 'hmlmb'.
+11:17:02:iniciando conexão com Banco! 
+11:17:02:: Error Falha de logon do usuário 'hmlmb'.
+11:18:02:iniciando conexão com Banco! 
+11:18:02:: Error Falha de logon do usuário 'hmlmb'.
+11:19:02:iniciando conexão com Banco! 
+11:19:02:: Error Falha de logon do usuário 'hmlmb'.
+11:20:02:iniciando conexão com Banco! 
+11:20:02:: Error Falha de logon do usuário 'hmlmb'.
+11:21:02:iniciando conexão com Banco! 
+11:21:02:: Error Falha de logon do usuário 'hmlmb'.
+11:22:02:iniciando conexão com Banco! 
+11:22:02:: Error Falha de logon do usuário 'hmlmb'.
+11:23:02:iniciando conexão com Banco! 
+11:23:02:: Error Falha de logon do usuário 'hmlmb'.
+11:24:02:iniciando conexão com Banco! 
+11:24:02:: Error Falha de logon do usuário 'hmlmb'.
+11:25:02:iniciando conexão com Banco! 
+11:25:02:: Error Falha de logon do usuário 'hmlmb'.
+11:26:02:iniciando conexão com Banco! 
+11:26:02:: Error Falha de logon do usuário 'hmlmb'.
+11:27:02:iniciando conexão com Banco! 
+11:27:02:: Error Falha de logon do usuário 'hmlmb'.
+11:28:02:iniciando conexão com Banco! 
+11:28:02:: Error Falha de logon do usuário 'hmlmb'.
+11:29:02:iniciando conexão com Banco! 
+11:29:02:: Error Falha de logon do usuário 'hmlmb'.
+11:30:02:iniciando conexão com Banco! 
+11:30:02:: Error Falha de logon do usuário 'hmlmb'.
+11:31:02:iniciando conexão com Banco! 
+11:31:02:: Error Falha de logon do usuário 'hmlmb'.
+11:32:02:iniciando conexão com Banco! 
+11:32:02:: Error Falha de logon do usuário 'hmlmb'.
+11:33:02:iniciando conexão com Banco! 
+11:33:02:: Error Falha de logon do usuário 'hmlmb'.
+11:34:02:iniciando conexão com Banco! 
+11:34:02:: Error Falha de logon do usuário 'hmlmb'.
+11:35:02:iniciando conexão com Banco! 
+11:35:02:: Error Falha de logon do usuário 'hmlmb'.
+11:36:02:iniciando conexão com Banco! 
+11:36:02:: Error Falha de logon do usuário 'hmlmb'.
+11:37:02:iniciando conexão com Banco! 
+11:37:02:: Error Falha de logon do usuário 'hmlmb'.
+11:38:02:iniciando conexão com Banco! 
+11:38:02:: Error Falha de logon do usuário 'hmlmb'.
+11:39:02:iniciando conexão com Banco! 
+11:39:02:: Error Falha de logon do usuário 'hmlmb'.
+11:40:02:iniciando conexão com Banco! 
+11:40:02:: Error Falha de logon do usuário 'hmlmb'.
+11:41:02:iniciando conexão com Banco! 
+11:41:02:: Error Falha de logon do usuário 'hmlmb'.
+11:42:02:iniciando conexão com Banco! 
+11:42:02:: Error Falha de logon do usuário 'hmlmb'.
+11:43:02:iniciando conexão com Banco! 
+11:43:02:: Error Falha de logon do usuário 'hmlmb'.
+11:44:02:iniciando conexão com Banco! 
+11:44:02:: Error Falha de logon do usuário 'hmlmb'.
+11:45:02:iniciando conexão com Banco! 
+11:45:02:: Error Falha de logon do usuário 'hmlmb'.
+11:46:02:iniciando conexão com Banco! 
+11:46:02:: Error Falha de logon do usuário 'hmlmb'.
+11:47:02:iniciando conexão com Banco! 
+11:47:02:: Error Falha de logon do usuário 'hmlmb'.
+11:48:02:iniciando conexão com Banco! 
+11:48:02:: Error Falha de logon do usuário 'hmlmb'.
+11:49:02:iniciando conexão com Banco! 
+11:49:02:: Error Falha de logon do usuário 'hmlmb'.
+11:50:02:iniciando conexão com Banco! 
+11:50:02:: Error Falha de logon do usuário 'hmlmb'.
+11:51:02:iniciando conexão com Banco! 
+11:51:02:: Error Falha de logon do usuário 'hmlmb'.
+11:52:02:iniciando conexão com Banco! 
+11:52:02:: Error Falha de logon do usuário 'hmlmb'.
+11:53:02:iniciando conexão com Banco! 
+11:53:02:: Error Falha de logon do usuário 'hmlmb'.
+11:54:02:iniciando conexão com Banco! 
+11:54:02:: Error Falha de logon do usuário 'hmlmb'.
+11:55:02:iniciando conexão com Banco! 
+11:55:02:: Error Falha de logon do usuário 'hmlmb'.
+11:56:02:iniciando conexão com Banco! 
+11:56:02:: Error Falha de logon do usuário 'hmlmb'.
+11:57:02:iniciando conexão com Banco! 
+11:57:02:: Error Falha de logon do usuário 'hmlmb'.
+11:58:02:iniciando conexão com Banco! 
+11:58:02:: Error Falha de logon do usuário 'hmlmb'.
+11:59:02:iniciando conexão com Banco! 
+11:59:02:: Error Falha de logon do usuário 'hmlmb'.
+12:00:02:iniciando conexão com Banco! 
+12:00:02:: Error Falha de logon do usuário 'hmlmb'.
+12:01:02:iniciando conexão com Banco! 
+12:01:02:: Error Falha de logon do usuário 'hmlmb'.
+12:02:02:iniciando conexão com Banco! 
+12:02:02:: Error Falha de logon do usuário 'hmlmb'.
+12:03:02:iniciando conexão com Banco! 
+12:03:02:: Error Falha de logon do usuário 'hmlmb'.
+12:04:02:iniciando conexão com Banco! 
+12:04:02:: Error Falha de logon do usuário 'hmlmb'.
+12:05:02:iniciando conexão com Banco! 
+12:05:02:: Error Falha de logon do usuário 'hmlmb'.
+12:06:02:iniciando conexão com Banco! 
+12:06:02:: Error Falha de logon do usuário 'hmlmb'.
+12:07:02:iniciando conexão com Banco! 
+12:07:02:: Error Falha de logon do usuário 'hmlmb'.
+12:08:02:iniciando conexão com Banco! 
+12:08:02:: Error Falha de logon do usuário 'hmlmb'.
+12:09:02:iniciando conexão com Banco! 
+12:09:02:: Error Falha de logon do usuário 'hmlmb'.
+12:10:02:iniciando conexão com Banco! 
+12:10:02:: Error Falha de logon do usuário 'hmlmb'.
+12:11:02:iniciando conexão com Banco! 
+12:11:02:: Error Falha de logon do usuário 'hmlmb'.
+12:12:02:iniciando conexão com Banco! 
+12:12:02:: Error Falha de logon do usuário 'hmlmb'.
+12:13:02:iniciando conexão com Banco! 
+12:13:02:: Error Falha de logon do usuário 'hmlmb'.
+12:14:02:iniciando conexão com Banco! 
+12:14:02:: Error Falha de logon do usuário 'hmlmb'.
+12:15:02:iniciando conexão com Banco! 
+12:15:02:: Error Falha de logon do usuário 'hmlmb'.
+12:16:02:iniciando conexão com Banco! 
+12:16:02:: Error Falha de logon do usuário 'hmlmb'.
+12:17:02:iniciando conexão com Banco! 
+12:17:02:: Error Falha de logon do usuário 'hmlmb'.
+12:18:02:iniciando conexão com Banco! 
+12:18:02:: Error Falha de logon do usuário 'hmlmb'.
+12:19:02:iniciando conexão com Banco! 
+12:19:02:: Error Falha de logon do usuário 'hmlmb'.
+12:20:02:iniciando conexão com Banco! 
+12:20:02:: Error Falha de logon do usuário 'hmlmb'.
+12:21:02:iniciando conexão com Banco! 
+12:21:02:: Error Falha de logon do usuário 'hmlmb'.
+12:22:02:iniciando conexão com Banco! 
+12:22:02:: Error Falha de logon do usuário 'hmlmb'.
+12:23:02:iniciando conexão com Banco! 
+12:23:02:: Error Falha de logon do usuário 'hmlmb'.
+12:24:02:iniciando conexão com Banco! 
+12:24:02:: Error Falha de logon do usuário 'hmlmb'.
+12:25:02:iniciando conexão com Banco! 
+12:25:02:: Error Falha de logon do usuário 'hmlmb'.
+12:26:02:iniciando conexão com Banco! 
+12:26:02:: Error Falha de logon do usuário 'hmlmb'.
+12:27:02:iniciando conexão com Banco! 
+12:27:02:: Error Falha de logon do usuário 'hmlmb'.
+12:28:02:iniciando conexão com Banco! 
+12:28:02:: Error Falha de logon do usuário 'hmlmb'.
+12:29:02:iniciando conexão com Banco! 
+12:29:02:: Error Falha de logon do usuário 'hmlmb'.
+12:30:02:iniciando conexão com Banco! 
+12:30:02:: Error Falha de logon do usuário 'hmlmb'.
+12:31:02:iniciando conexão com Banco! 
+12:31:02:: Error Falha de logon do usuário 'hmlmb'.
+12:32:02:iniciando conexão com Banco! 
+12:32:02:: Error Falha de logon do usuário 'hmlmb'.
+12:33:02:iniciando conexão com Banco! 
+12:33:02:: Error Falha de logon do usuário 'hmlmb'.
+12:34:02:iniciando conexão com Banco! 
+12:34:02:: Error Falha de logon do usuário 'hmlmb'.
+12:35:02:iniciando conexão com Banco! 
+12:35:02:: Error Falha de logon do usuário 'hmlmb'.
+12:36:02:iniciando conexão com Banco! 
+12:36:02:: Error Falha de logon do usuário 'hmlmb'.
+12:37:02:iniciando conexão com Banco! 
+12:37:02:: Error Falha de logon do usuário 'hmlmb'.
+12:38:02:iniciando conexão com Banco! 
+12:38:02:: Error Falha de logon do usuário 'hmlmb'.
+12:39:02:iniciando conexão com Banco! 
+12:39:02:: Error Falha de logon do usuário 'hmlmb'.
+12:40:02:iniciando conexão com Banco! 
+12:40:02:: Error Falha de logon do usuário 'hmlmb'.
+12:41:02:iniciando conexão com Banco! 
+12:41:02:: Error Falha de logon do usuário 'hmlmb'.
+12:42:02:iniciando conexão com Banco! 
+12:42:02:: Error Falha de logon do usuário 'hmlmb'.
+12:43:02:iniciando conexão com Banco! 
+12:43:02:: Error Falha de logon do usuário 'hmlmb'.
+12:44:02:iniciando conexão com Banco! 
+12:44:02:: Error Falha de logon do usuário 'hmlmb'.
+12:45:02:iniciando conexão com Banco! 
+12:45:02:: Error Falha de logon do usuário 'hmlmb'.
+12:46:02:iniciando conexão com Banco! 
+12:46:02:: Error Falha de logon do usuário 'hmlmb'.
+12:47:02:iniciando conexão com Banco! 
+12:47:02:: Error Falha de logon do usuário 'hmlmb'.
+12:48:02:iniciando conexão com Banco! 
+12:48:02:: Error Falha de logon do usuário 'hmlmb'.
+12:49:02:iniciando conexão com Banco! 
+12:49:02:: Error Falha de logon do usuário 'hmlmb'.
+12:50:02:iniciando conexão com Banco! 
+12:50:02:: Error Falha de logon do usuário 'hmlmb'.
+12:51:02:iniciando conexão com Banco! 
+12:51:02:: Error Falha de logon do usuário 'hmlmb'.
+12:52:02:iniciando conexão com Banco! 
+12:52:02:: Error Falha de logon do usuário 'hmlmb'.
+12:53:02:iniciando conexão com Banco! 
+12:53:02:: Error Falha de logon do usuário 'hmlmb'.
+12:54:02:iniciando conexão com Banco! 
+12:54:02:: Error Falha de logon do usuário 'hmlmb'.
+12:55:02:iniciando conexão com Banco! 
+12:55:02:: Error Falha de logon do usuário 'hmlmb'.
+12:56:02:iniciando conexão com Banco! 
+12:56:02:: Error Falha de logon do usuário 'hmlmb'.
+12:57:02:iniciando conexão com Banco! 
+12:57:02:: Error Falha de logon do usuário 'hmlmb'.
+12:58:02:iniciando conexão com Banco! 
+12:58:02:: Error Falha de logon do usuário 'hmlmb'.
+12:59:02:iniciando conexão com Banco! 
+12:59:02:: Error Falha de logon do usuário 'hmlmb'.
+13:00:02:iniciando conexão com Banco! 
+13:00:02:: Error Falha de logon do usuário 'hmlmb'.
+13:01:02:iniciando conexão com Banco! 
+13:01:02:: Error Falha de logon do usuário 'hmlmb'.
+13:02:02:iniciando conexão com Banco! 
+13:02:02:: Error Falha de logon do usuário 'hmlmb'.
+13:03:02:iniciando conexão com Banco! 
+13:03:02:: Error Falha de logon do usuário 'hmlmb'.
+13:04:02:iniciando conexão com Banco! 
+13:04:02:: Error Falha de logon do usuário 'hmlmb'.
+13:05:02:iniciando conexão com Banco! 
+13:05:02:: Error Falha de logon do usuário 'hmlmb'.
+13:06:02:iniciando conexão com Banco! 
+13:06:02:: Error Falha de logon do usuário 'hmlmb'.
+13:07:02:iniciando conexão com Banco! 
+13:07:02:: Error Falha de logon do usuário 'hmlmb'.
+13:08:02:iniciando conexão com Banco! 
+13:08:02:: Error Falha de logon do usuário 'hmlmb'.
+13:09:02:iniciando conexão com Banco! 
+13:09:02:: Error Falha de logon do usuário 'hmlmb'.
+13:10:02:iniciando conexão com Banco! 
+13:10:03:: Error Falha de logon do usuário 'hmlmb'.
+13:11:02:iniciando conexão com Banco! 
+13:11:03:: Error Falha de logon do usuário 'hmlmb'.
+13:12:03:iniciando conexão com Banco! 
+13:12:03:: Error Falha de logon do usuário 'hmlmb'.
+13:13:03:iniciando conexão com Banco! 
+13:13:03:: Error Falha de logon do usuário 'hmlmb'.
+13:14:03:iniciando conexão com Banco! 
+13:14:03:: Error Falha de logon do usuário 'hmlmb'.
+13:15:03:iniciando conexão com Banco! 
+13:15:03:: Error Falha de logon do usuário 'hmlmb'.
+13:16:03:iniciando conexão com Banco! 
+13:16:03:: Error Falha de logon do usuário 'hmlmb'.
+13:17:03:iniciando conexão com Banco! 
+13:17:03:: Error Falha de logon do usuário 'hmlmb'.
+13:18:03:iniciando conexão com Banco! 
+13:18:03:: Error Falha de logon do usuário 'hmlmb'.
+13:19:03:iniciando conexão com Banco! 
+13:19:03:: Error Falha de logon do usuário 'hmlmb'.
+13:20:03:iniciando conexão com Banco! 
+13:20:03:: Error Falha de logon do usuário 'hmlmb'.
+13:21:03:iniciando conexão com Banco! 
+13:21:03:: Error Falha de logon do usuário 'hmlmb'.
+13:22:03:iniciando conexão com Banco! 
+13:22:03:: Error Falha de logon do usuário 'hmlmb'.
+13:23:03:iniciando conexão com Banco! 
+13:23:03:: Error Falha de logon do usuário 'hmlmb'.
+13:24:03:iniciando conexão com Banco! 
+13:24:03:: Error Falha de logon do usuário 'hmlmb'.
+13:25:03:iniciando conexão com Banco! 
+13:25:03:: Error Falha de logon do usuário 'hmlmb'.
+13:26:03:iniciando conexão com Banco! 
+13:26:03:: Error Falha de logon do usuário 'hmlmb'.
+13:27:03:iniciando conexão com Banco! 
+13:27:03:: Error Falha de logon do usuário 'hmlmb'.
+13:28:03:iniciando conexão com Banco! 
+13:28:03:: Error Falha de logon do usuário 'hmlmb'.
+13:29:03:iniciando conexão com Banco! 
+13:29:03:: Error Falha de logon do usuário 'hmlmb'.
+13:30:03:iniciando conexão com Banco! 
+13:30:03:: Error Falha de logon do usuário 'hmlmb'.
+13:31:03:iniciando conexão com Banco! 
+13:31:03:: Error Falha de logon do usuário 'hmlmb'.
+13:32:03:iniciando conexão com Banco! 
+13:32:03:: Error Falha de logon do usuário 'hmlmb'.
+13:33:03:iniciando conexão com Banco! 
+13:33:03:: Error Falha de logon do usuário 'hmlmb'.
+13:34:03:iniciando conexão com Banco! 
+13:34:03:: Error Falha de logon do usuário 'hmlmb'.
+13:35:03:iniciando conexão com Banco! 
+13:35:03:: Error Falha de logon do usuário 'hmlmb'.
+13:36:03:iniciando conexão com Banco! 
+13:36:03:: Error Falha de logon do usuário 'hmlmb'.
+13:37:03:iniciando conexão com Banco! 
+13:37:03:: Error Falha de logon do usuário 'hmlmb'.
+13:38:03:iniciando conexão com Banco! 
+13:38:03:: Error Falha de logon do usuário 'hmlmb'.
+13:39:03:iniciando conexão com Banco! 
+13:39:03:: Error Falha de logon do usuário 'hmlmb'.
+13:40:03:iniciando conexão com Banco! 
+13:40:03:: Error Falha de logon do usuário 'hmlmb'.
+13:41:03:iniciando conexão com Banco! 
+13:41:03:: Error Falha de logon do usuário 'hmlmb'.
+13:42:03:iniciando conexão com Banco! 
+13:42:03:: Error Falha de logon do usuário 'hmlmb'.
+13:43:03:iniciando conexão com Banco! 
+13:43:03:: Error Falha de logon do usuário 'hmlmb'.
+13:44:03:iniciando conexão com Banco! 
+13:44:03:: Error Falha de logon do usuário 'hmlmb'.
+13:45:03:iniciando conexão com Banco! 
+13:45:03:: Error Falha de logon do usuário 'hmlmb'.
+13:46:03:iniciando conexão com Banco! 
+13:46:03:: Error Falha de logon do usuário 'hmlmb'.
+13:47:03:iniciando conexão com Banco! 
+13:47:03:: Error Falha de logon do usuário 'hmlmb'.
+13:48:03:iniciando conexão com Banco! 
+13:48:03:: Error Falha de logon do usuário 'hmlmb'.
+13:49:03:iniciando conexão com Banco! 
+13:49:03:: Error Falha de logon do usuário 'hmlmb'.
+13:50:03:iniciando conexão com Banco! 
+13:50:03:: Error Falha de logon do usuário 'hmlmb'.
+13:51:03:iniciando conexão com Banco! 
+13:51:03:: Error Falha de logon do usuário 'hmlmb'.
+13:52:03:iniciando conexão com Banco! 
+13:52:03:: Error Falha de logon do usuário 'hmlmb'.
+13:53:03:iniciando conexão com Banco! 
+13:53:03:: Error Falha de logon do usuário 'hmlmb'.
+13:54:03:iniciando conexão com Banco! 
+13:54:03:: Error Falha de logon do usuário 'hmlmb'.
+13:55:03:iniciando conexão com Banco! 
+13:55:03:: Error Falha de logon do usuário 'hmlmb'.
+13:56:03:iniciando conexão com Banco! 
+13:56:03:: Error Falha de logon do usuário 'hmlmb'.
+13:57:03:iniciando conexão com Banco! 
+13:57:03:: Error Falha de logon do usuário 'hmlmb'.
+13:58:03:iniciando conexão com Banco! 
+13:58:03:: Error Falha de logon do usuário 'hmlmb'.
+13:59:03:iniciando conexão com Banco! 
+13:59:03:: Error Falha de logon do usuário 'hmlmb'.
+14:00:03:iniciando conexão com Banco! 
+14:00:03:: Error Falha de logon do usuário 'hmlmb'.
+14:01:03:iniciando conexão com Banco! 
+14:01:03:: Error Falha de logon do usuário 'hmlmb'.
+14:02:03:iniciando conexão com Banco! 
+14:02:03:: Error Falha de logon do usuário 'hmlmb'.
+14:03:03:iniciando conexão com Banco! 
+14:03:03:: Error Falha de logon do usuário 'hmlmb'.
+14:04:03:iniciando conexão com Banco! 
+14:04:03:: Error Falha de logon do usuário 'hmlmb'.
+14:05:03:iniciando conexão com Banco! 
+14:05:03:: Error Falha de logon do usuário 'hmlmb'.
+14:06:03:iniciando conexão com Banco! 
+14:06:03:: Error Falha de logon do usuário 'hmlmb'.
+14:07:03:iniciando conexão com Banco! 
+14:07:03:: Error Falha de logon do usuário 'hmlmb'.
+14:08:03:iniciando conexão com Banco! 
+14:08:03:: Error Falha de logon do usuário 'hmlmb'.
+14:09:03:iniciando conexão com Banco! 
+14:09:03:: Error Falha de logon do usuário 'hmlmb'.
+14:10:03:iniciando conexão com Banco! 
+14:10:03:: Error Falha de logon do usuário 'hmlmb'.
+14:11:03:iniciando conexão com Banco! 
+14:11:03:: Error Falha de logon do usuário 'hmlmb'.
+14:12:03:iniciando conexão com Banco! 
+14:12:03:: Error Falha de logon do usuário 'hmlmb'.
+14:13:03:iniciando conexão com Banco! 
+14:13:03:: Error Falha de logon do usuário 'hmlmb'.
+14:14:03:iniciando conexão com Banco! 
+14:14:03:: Error Falha de logon do usuário 'hmlmb'.
+14:15:03:iniciando conexão com Banco! 
+14:15:03:: Error Falha de logon do usuário 'hmlmb'.
+14:16:03:iniciando conexão com Banco! 
+14:16:03:: Error Falha de logon do usuário 'hmlmb'.
+14:17:03:iniciando conexão com Banco! 
+14:17:03:: Error Falha de logon do usuário 'hmlmb'.
+14:18:03:iniciando conexão com Banco! 
+14:18:03:: Error Falha de logon do usuário 'hmlmb'.
+14:19:03:iniciando conexão com Banco! 
+14:19:03:: Error Falha de logon do usuário 'hmlmb'.
+14:20:03:iniciando conexão com Banco! 
+14:20:03:: Error Falha de logon do usuário 'hmlmb'.
+14:21:03:iniciando conexão com Banco! 
+14:21:03:: Error Falha de logon do usuário 'hmlmb'.
+14:22:03:iniciando conexão com Banco! 
+14:22:03:: Error Falha de logon do usuário 'hmlmb'.
+14:23:03:iniciando conexão com Banco! 
+14:23:03:: Error Falha de logon do usuário 'hmlmb'.
+14:24:03:iniciando conexão com Banco! 
+14:24:03:: Error Falha de logon do usuário 'hmlmb'.
+14:25:03:iniciando conexão com Banco! 
+14:25:03:: Error Falha de logon do usuário 'hmlmb'.
+14:26:03:iniciando conexão com Banco! 
+14:26:03:: Error Falha de logon do usuário 'hmlmb'.
+14:27:03:iniciando conexão com Banco! 
+14:27:03:: Error Falha de logon do usuário 'hmlmb'.
+14:28:03:iniciando conexão com Banco! 
+14:28:03:: Error Falha de logon do usuário 'hmlmb'.
+14:29:03:iniciando conexão com Banco! 
+14:29:03:: Error Falha de logon do usuário 'hmlmb'.
+14:30:03:iniciando conexão com Banco! 
+14:30:03:: Error Falha de logon do usuário 'hmlmb'.
+14:31:03:iniciando conexão com Banco! 
+14:31:03:: Error Falha de logon do usuário 'hmlmb'.
+14:32:03:iniciando conexão com Banco! 
+14:32:03:: Error Falha de logon do usuário 'hmlmb'.
+14:33:03:iniciando conexão com Banco! 
+14:33:03:: Error Falha de logon do usuário 'hmlmb'.
+14:34:03:iniciando conexão com Banco! 
+14:34:03:: Error Falha de logon do usuário 'hmlmb'.
+14:35:03:iniciando conexão com Banco! 
+14:35:03:: Error Falha de logon do usuário 'hmlmb'.
+14:36:03:iniciando conexão com Banco! 
+14:36:03:: Error Falha de logon do usuário 'hmlmb'.
+14:37:03:iniciando conexão com Banco! 
+14:37:03:: Error Falha de logon do usuário 'hmlmb'.
+14:38:03:iniciando conexão com Banco! 
+14:38:03:: Error Falha de logon do usuário 'hmlmb'.
+14:39:03:iniciando conexão com Banco! 
+14:39:03:: Error Falha de logon do usuário 'hmlmb'.
+14:40:03:iniciando conexão com Banco! 
+14:40:03:: Error Falha de logon do usuário 'hmlmb'.
+14:41:03:iniciando conexão com Banco! 
+14:41:03:: Error Falha de logon do usuário 'hmlmb'.
+14:42:03:iniciando conexão com Banco! 
+14:42:03:: Error Falha de logon do usuário 'hmlmb'.
+14:43:03:iniciando conexão com Banco! 
+14:43:03:: Error Falha de logon do usuário 'hmlmb'.
+14:44:03:iniciando conexão com Banco! 
+14:44:03:: Error Falha de logon do usuário 'hmlmb'.
+14:45:03:iniciando conexão com Banco! 
+14:45:03:: Error Falha de logon do usuário 'hmlmb'.
+14:46:03:iniciando conexão com Banco! 
+14:46:03:: Error Falha de logon do usuário 'hmlmb'.
+14:47:03:iniciando conexão com Banco! 
+14:47:03:: Error Falha de logon do usuário 'hmlmb'.
+14:48:03:iniciando conexão com Banco! 
+14:48:03:: Error Falha de logon do usuário 'hmlmb'.
+14:49:03:iniciando conexão com Banco! 
+14:49:03:: Error Falha de logon do usuário 'hmlmb'.
+14:50:03:iniciando conexão com Banco! 
+14:50:03:: Error Falha de logon do usuário 'hmlmb'.
+14:51:03:iniciando conexão com Banco! 
+14:51:03:: Error Falha de logon do usuário 'hmlmb'.
+14:52:03:iniciando conexão com Banco! 
+14:52:03:: Error Falha de logon do usuário 'hmlmb'.
+14:53:03:iniciando conexão com Banco! 
+14:53:03:: Error Falha de logon do usuário 'hmlmb'.
+14:54:03:iniciando conexão com Banco! 
+14:54:03:: Error Falha de logon do usuário 'hmlmb'.
+14:55:03:iniciando conexão com Banco! 
+14:55:03:: Error Falha de logon do usuário 'hmlmb'.
+14:56:03:iniciando conexão com Banco! 
+14:56:03:: Error Falha de logon do usuário 'hmlmb'.
+14:57:03:iniciando conexão com Banco! 
+14:57:03:: Error Falha de logon do usuário 'hmlmb'.
+14:58:03:iniciando conexão com Banco! 
+14:58:03:: Error Falha de logon do usuário 'hmlmb'.
+14:59:03:iniciando conexão com Banco! 
+14:59:03:: Error Falha de logon do usuário 'hmlmb'.
+15:00:03:iniciando conexão com Banco! 
+15:00:03:: Error Falha de logon do usuário 'hmlmb'.
+15:01:03:iniciando conexão com Banco! 
+15:01:03:: Error Falha de logon do usuário 'hmlmb'.
+15:02:03:iniciando conexão com Banco! 
+15:02:03:: Error Falha de logon do usuário 'hmlmb'.
+15:03:03:iniciando conexão com Banco! 
+15:03:03:: Error Falha de logon do usuário 'hmlmb'.
+15:04:03:iniciando conexão com Banco! 
+15:04:03:: Error Falha de logon do usuário 'hmlmb'.
+15:05:03:iniciando conexão com Banco! 
+15:05:03:: Error Falha de logon do usuário 'hmlmb'.
+15:06:03:iniciando conexão com Banco! 
+15:06:03:: Error Falha de logon do usuário 'hmlmb'.
+15:07:03:iniciando conexão com Banco! 
+15:07:03:: Error Falha de logon do usuário 'hmlmb'.
+15:08:03:iniciando conexão com Banco! 
+15:08:03:: Error Falha de logon do usuário 'hmlmb'.
+15:09:03:iniciando conexão com Banco! 
+15:09:03:: Error Falha de logon do usuário 'hmlmb'.
+15:10:03:iniciando conexão com Banco! 
+15:10:03:: Error Falha de logon do usuário 'hmlmb'.
+15:11:03:iniciando conexão com Banco! 
+15:11:03:: Error Falha de logon do usuário 'hmlmb'.
+15:12:03:iniciando conexão com Banco! 
+15:12:03:: Error Falha de logon do usuário 'hmlmb'.
+15:13:03:iniciando conexão com Banco! 
+15:13:03:: Error Falha de logon do usuário 'hmlmb'.
+15:14:03:iniciando conexão com Banco! 
+15:14:03:: Error Falha de logon do usuário 'hmlmb'.
+15:15:03:iniciando conexão com Banco! 
+15:15:03:: Error Falha de logon do usuário 'hmlmb'.
+15:16:03:iniciando conexão com Banco! 
+15:16:03:: Error Falha de logon do usuário 'hmlmb'.
+15:17:03:iniciando conexão com Banco! 
+15:17:03:: Error Falha de logon do usuário 'hmlmb'.
+15:18:03:iniciando conexão com Banco! 
+15:18:03:: Error Falha de logon do usuário 'hmlmb'.
+15:19:03:iniciando conexão com Banco! 
+15:19:03:: Error Falha de logon do usuário 'hmlmb'.
+15:20:03:iniciando conexão com Banco! 
+15:20:03:: Error Falha de logon do usuário 'hmlmb'.
+15:21:03:iniciando conexão com Banco! 
+15:21:03:: Error Falha de logon do usuário 'hmlmb'.
+15:22:03:iniciando conexão com Banco! 
+15:22:03:: Error Falha de logon do usuário 'hmlmb'.
+15:23:03:iniciando conexão com Banco! 
+15:23:03:: Error Falha de logon do usuário 'hmlmb'.
+15:24:03:iniciando conexão com Banco! 
+15:24:03:: Error Falha de logon do usuário 'hmlmb'.
+15:25:03:iniciando conexão com Banco! 
+15:25:03:: Error Falha de logon do usuário 'hmlmb'.
+15:26:03:iniciando conexão com Banco! 
+15:26:03:: Error Falha de logon do usuário 'hmlmb'.
+15:27:03:iniciando conexão com Banco! 
+15:27:03:: Error Falha de logon do usuário 'hmlmb'.
+15:28:03:iniciando conexão com Banco! 
+15:28:03:: Error Falha de logon do usuário 'hmlmb'.
+15:29:03:iniciando conexão com Banco! 
+15:29:03:: Error Falha de logon do usuário 'hmlmb'.
+15:30:03:iniciando conexão com Banco! 
+15:30:03:: Error Falha de logon do usuário 'hmlmb'.
+15:31:03:iniciando conexão com Banco! 
+15:31:03:: Error Falha de logon do usuário 'hmlmb'.
+15:32:03:iniciando conexão com Banco! 
+15:32:03:: Error Falha de logon do usuário 'hmlmb'.
+15:33:03:iniciando conexão com Banco! 
+15:33:03:: Error Falha de logon do usuário 'hmlmb'.
+15:34:03:iniciando conexão com Banco! 
+15:34:03:: Error Falha de logon do usuário 'hmlmb'.
+15:35:03:iniciando conexão com Banco! 
+15:35:03:: Error Falha de logon do usuário 'hmlmb'.
+15:36:03:iniciando conexão com Banco! 
+15:36:03:: Error Falha de logon do usuário 'hmlmb'.
+15:37:03:iniciando conexão com Banco! 
+15:37:03:: Error Falha de logon do usuário 'hmlmb'.
+15:38:03:iniciando conexão com Banco! 
+15:38:03:: Error Falha de logon do usuário 'hmlmb'.
+15:39:03:iniciando conexão com Banco! 
+15:39:03:: Error Falha de logon do usuário 'hmlmb'.
+15:40:03:iniciando conexão com Banco! 
+15:40:03:: Error Falha de logon do usuário 'hmlmb'.
+15:41:03:iniciando conexão com Banco! 
+15:41:03:: Error Falha de logon do usuário 'hmlmb'.
+15:42:03:iniciando conexão com Banco! 
+15:42:03:: Error Falha de logon do usuário 'hmlmb'.
+15:43:03:iniciando conexão com Banco! 
+15:43:03:: Error Falha de logon do usuário 'hmlmb'.
+15:44:03:iniciando conexão com Banco! 
+15:44:03:: Error Falha de logon do usuário 'hmlmb'.
+15:45:03:iniciando conexão com Banco! 
+15:45:03:: Error Falha de logon do usuário 'hmlmb'.
+15:46:03:iniciando conexão com Banco! 
+15:46:03:: Error Falha de logon do usuário 'hmlmb'.
+15:47:03:iniciando conexão com Banco! 
+15:47:03:: Error Falha de logon do usuário 'hmlmb'.
+15:48:03:iniciando conexão com Banco! 
+15:48:03:: Error Falha de logon do usuário 'hmlmb'.
+15:49:03:iniciando conexão com Banco! 
+15:49:03:: Error Falha de logon do usuário 'hmlmb'.
+15:50:03:iniciando conexão com Banco! 
+15:50:03:: Error Falha de logon do usuário 'hmlmb'.
+15:51:03:iniciando conexão com Banco! 
+15:51:03:: Error Falha de logon do usuário 'hmlmb'.
+15:52:03:iniciando conexão com Banco! 
+15:52:03:: Error Falha de logon do usuário 'hmlmb'.
+15:53:03:iniciando conexão com Banco! 
+15:53:03:: Error Falha de logon do usuário 'hmlmb'.
+15:54:03:iniciando conexão com Banco! 
+15:54:03:: Error Falha de logon do usuário 'hmlmb'.
+15:55:03:iniciando conexão com Banco! 
+15:55:03:: Error Falha de logon do usuário 'hmlmb'.
+15:56:03:iniciando conexão com Banco! 
+15:56:03:: Error Falha de logon do usuário 'hmlmb'.
+15:57:03:iniciando conexão com Banco! 
+15:57:03:: Error Falha de logon do usuário 'hmlmb'.
+15:58:03:iniciando conexão com Banco! 
+15:58:03:: Error Falha de logon do usuário 'hmlmb'.
+15:59:03:iniciando conexão com Banco! 
+15:59:03:: Error Falha de logon do usuário 'hmlmb'.
+16:00:03:iniciando conexão com Banco! 
+16:00:03:: Error Falha de logon do usuário 'hmlmb'.
+16:01:03:iniciando conexão com Banco! 
+16:01:03:: Error Falha de logon do usuário 'hmlmb'.
+16:02:03:iniciando conexão com Banco! 
+16:02:03:: Error Falha de logon do usuário 'hmlmb'.
+16:03:03:iniciando conexão com Banco! 
+16:03:03:: Error Falha de logon do usuário 'hmlmb'.
+16:04:03:iniciando conexão com Banco! 
+16:04:03:: Error Falha de logon do usuário 'hmlmb'.
+16:05:03:iniciando conexão com Banco! 
+16:05:03:: Error Falha de logon do usuário 'hmlmb'.
+16:06:03:iniciando conexão com Banco! 
+16:06:03:: Error Falha de logon do usuário 'hmlmb'.
+16:07:03:iniciando conexão com Banco! 
+16:07:03:: Error Falha de logon do usuário 'hmlmb'.
+16:08:03:iniciando conexão com Banco! 
+16:08:03:: Error Falha de logon do usuário 'hmlmb'.
+16:09:03:iniciando conexão com Banco! 
+16:09:03:: Error Falha de logon do usuário 'hmlmb'.
+16:10:03:iniciando conexão com Banco! 
+16:10:03:: Error Falha de logon do usuário 'hmlmb'.
+16:11:03:iniciando conexão com Banco! 
+16:11:03:: Error Falha de logon do usuário 'hmlmb'.
+16:12:03:iniciando conexão com Banco! 
+16:12:04:: Error Falha de logon do usuário 'hmlmb'.
+16:13:03:iniciando conexão com Banco! 
+16:13:03:: Error Falha de logon do usuário 'hmlmb'.
+16:14:03:iniciando conexão com Banco! 
+16:14:03:: Error Falha de logon do usuário 'hmlmb'.
+16:15:03:iniciando conexão com Banco! 
+16:15:03:: Error Falha de logon do usuário 'hmlmb'.
+16:16:03:iniciando conexão com Banco! 
+16:16:03:: Error Falha de logon do usuário 'hmlmb'.
+16:17:03:iniciando conexão com Banco! 
+16:17:03:: Error Falha de logon do usuário 'hmlmb'.
+16:18:03:iniciando conexão com Banco! 
+16:18:03:: Error Falha de logon do usuário 'hmlmb'.
+16:19:03:iniciando conexão com Banco! 
+16:19:03:: Error Falha de logon do usuário 'hmlmb'.
+16:20:03:iniciando conexão com Banco! 
+16:20:03:: Error Falha de logon do usuário 'hmlmb'.
+16:21:03:iniciando conexão com Banco! 
+16:21:04:: Error Falha de logon do usuário 'hmlmb'.
+16:22:03:iniciando conexão com Banco! 
+16:22:04:: Error Falha de logon do usuário 'hmlmb'.
+16:23:04:iniciando conexão com Banco! 
+16:23:04:: Error Falha de logon do usuário 'hmlmb'.
+16:24:04:iniciando conexão com Banco! 
+16:24:04:: Error Falha de logon do usuário 'hmlmb'.
+16:25:04:iniciando conexão com Banco! 
+16:25:04:: Error Falha de logon do usuário 'hmlmb'.
+16:26:04:iniciando conexão com Banco! 
+16:26:04:: Error Falha de logon do usuário 'hmlmb'.
+16:27:04:iniciando conexão com Banco! 
+16:27:04:: Error Falha de logon do usuário 'hmlmb'.
+16:28:04:iniciando conexão com Banco! 
+16:28:04:: Error Falha de logon do usuário 'hmlmb'.
+16:29:04:iniciando conexão com Banco! 
+16:29:04:: Error Falha de logon do usuário 'hmlmb'.
+16:30:04:iniciando conexão com Banco! 
+16:30:04:: Error Falha de logon do usuário 'hmlmb'.
+16:31:04:iniciando conexão com Banco! 
+16:31:04:: Error Falha de logon do usuário 'hmlmb'.
+16:32:04:iniciando conexão com Banco! 
+16:32:04:: Error Falha de logon do usuário 'hmlmb'.
+16:33:04:iniciando conexão com Banco! 
+16:33:04:: Error Falha de logon do usuário 'hmlmb'.
+16:34:04:iniciando conexão com Banco! 
+16:34:04:: Error Falha de logon do usuário 'hmlmb'.
+16:35:04:iniciando conexão com Banco! 
+16:35:04:: Error Falha de logon do usuário 'hmlmb'.
+16:36:04:iniciando conexão com Banco! 
+16:36:04:: Error Falha de logon do usuário 'hmlmb'.
+16:37:04:iniciando conexão com Banco! 
+16:37:04:: Error Falha de logon do usuário 'hmlmb'.
+16:38:04:iniciando conexão com Banco! 
+16:38:04:: Error Falha de logon do usuário 'hmlmb'.
+16:39:04:iniciando conexão com Banco! 
+16:39:04:: Error Falha de logon do usuário 'hmlmb'.
+16:40:04:iniciando conexão com Banco! 
+16:40:04:: Error Falha de logon do usuário 'hmlmb'.
+16:41:04:iniciando conexão com Banco! 
+16:41:04:: Error Falha de logon do usuário 'hmlmb'.
+16:42:04:iniciando conexão com Banco! 
+16:42:04:: Error Falha de logon do usuário 'hmlmb'.
+16:43:04:iniciando conexão com Banco! 
+16:43:04:: Error Falha de logon do usuário 'hmlmb'.
+16:44:04:iniciando conexão com Banco! 
+16:44:04:: Error Falha de logon do usuário 'hmlmb'.
+16:45:04:iniciando conexão com Banco! 
+16:45:04:: Error Falha de logon do usuário 'hmlmb'.
+16:46:04:iniciando conexão com Banco! 
+16:46:04:: Error Falha de logon do usuário 'hmlmb'.
+16:47:04:iniciando conexão com Banco! 
+16:47:04:: Error Falha de logon do usuário 'hmlmb'.
+16:48:04:iniciando conexão com Banco! 
+16:48:04:: Error Falha de logon do usuário 'hmlmb'.
+16:49:04:iniciando conexão com Banco! 
+16:49:04:: Error Falha de logon do usuário 'hmlmb'.
+16:50:04:iniciando conexão com Banco! 
+16:50:04:: Error Falha de logon do usuário 'hmlmb'.
+16:51:04:iniciando conexão com Banco! 
+16:51:04:: Error Falha de logon do usuário 'hmlmb'.
+16:52:04:iniciando conexão com Banco! 
+16:52:04:: Error Falha de logon do usuário 'hmlmb'.
+16:53:04:iniciando conexão com Banco! 
+16:53:04:: Error Falha de logon do usuário 'hmlmb'.
+16:54:04:iniciando conexão com Banco! 
+16:54:04:: Error Falha de logon do usuário 'hmlmb'.
+16:55:04:iniciando conexão com Banco! 
+16:55:04:: Error Falha de logon do usuário 'hmlmb'.
+16:56:04:iniciando conexão com Banco! 
+16:56:04:: Error Falha de logon do usuário 'hmlmb'.
+16:57:04:iniciando conexão com Banco! 
+16:57:04:: Error Falha de logon do usuário 'hmlmb'.
+16:58:04:iniciando conexão com Banco! 
+16:58:04:: Error Falha de logon do usuário 'hmlmb'.
+16:59:04:iniciando conexão com Banco! 
+16:59:04:: Error Falha de logon do usuário 'hmlmb'.
+17:00:04:iniciando conexão com Banco! 
+17:00:04:: Error Falha de logon do usuário 'hmlmb'.
+17:01:04:iniciando conexão com Banco! 
+17:01:04:: Error Falha de logon do usuário 'hmlmb'.
+17:02:04:iniciando conexão com Banco! 
+17:02:04:: Error Falha de logon do usuário 'hmlmb'.
+17:03:04:iniciando conexão com Banco! 
+17:03:04:: Error Falha de logon do usuário 'hmlmb'.
+17:04:04:iniciando conexão com Banco! 
+17:04:04:: Error Falha de logon do usuário 'hmlmb'.
+17:05:04:iniciando conexão com Banco! 
+17:05:04:: Error Falha de logon do usuário 'hmlmb'.
+17:06:04:iniciando conexão com Banco! 
+17:06:04:: Error Falha de logon do usuário 'hmlmb'.
+17:07:04:iniciando conexão com Banco! 
+17:07:04:: Error Falha de logon do usuário 'hmlmb'.
+17:08:04:iniciando conexão com Banco! 
+17:08:04:: Error Falha de logon do usuário 'hmlmb'.
+17:09:04:iniciando conexão com Banco! 
+17:09:04:: Error Falha de logon do usuário 'hmlmb'.
+17:10:04:iniciando conexão com Banco! 
+17:10:04:: Error Falha de logon do usuário 'hmlmb'.
+17:11:04:iniciando conexão com Banco! 
+17:11:04:: Error Falha de logon do usuário 'hmlmb'.
+17:12:04:iniciando conexão com Banco! 
+17:12:04:: Error Falha de logon do usuário 'hmlmb'.
+17:13:04:iniciando conexão com Banco! 
+17:13:04:: Error Falha de logon do usuário 'hmlmb'.
+17:14:04:iniciando conexão com Banco! 
+17:14:04:: Error Falha de logon do usuário 'hmlmb'.
+17:15:04:iniciando conexão com Banco! 
+17:15:04:: Error Falha de logon do usuário 'hmlmb'.
+17:16:04:iniciando conexão com Banco! 
+17:16:04:: Error Falha de logon do usuário 'hmlmb'.
+17:17:04:iniciando conexão com Banco! 
+17:17:04:: Error Falha de logon do usuário 'hmlmb'.
+17:18:04:iniciando conexão com Banco! 
+17:18:04:: Error Falha de logon do usuário 'hmlmb'.
+17:19:04:iniciando conexão com Banco! 
+17:19:04:: Error Falha de logon do usuário 'hmlmb'.
+17:20:04:iniciando conexão com Banco! 
+17:20:04:: Error Falha de logon do usuário 'hmlmb'.
+17:21:04:iniciando conexão com Banco! 
+17:21:04:: Error Falha de logon do usuário 'hmlmb'.
+17:22:04:iniciando conexão com Banco! 
+17:22:04:: Error Falha de logon do usuário 'hmlmb'.
+17:23:04:iniciando conexão com Banco! 
+17:23:04:: Error Falha de logon do usuário 'hmlmb'.
+17:24:04:iniciando conexão com Banco! 
+17:24:04:: Error Falha de logon do usuário 'hmlmb'.
+17:25:04:iniciando conexão com Banco! 
+17:25:04:: Error Falha de logon do usuário 'hmlmb'.
+17:26:04:iniciando conexão com Banco! 
+17:26:04:: Error Falha de logon do usuário 'hmlmb'.
+17:27:04:iniciando conexão com Banco! 
+17:27:04:: Error Falha de logon do usuário 'hmlmb'.
+17:28:04:iniciando conexão com Banco! 
+17:28:04:: Error Falha de logon do usuário 'hmlmb'.
+17:29:04:iniciando conexão com Banco! 
+17:29:04:: Error Falha de logon do usuário 'hmlmb'.
+17:30:04:iniciando conexão com Banco! 
+17:30:04:: Error Falha de logon do usuário 'hmlmb'.
+17:31:04:iniciando conexão com Banco! 
+17:31:04:: Error Falha de logon do usuário 'hmlmb'.
+17:32:04:iniciando conexão com Banco! 
+17:32:04:: Error Falha de logon do usuário 'hmlmb'.
+17:33:04:iniciando conexão com Banco! 
+17:33:04:: Error Falha de logon do usuário 'hmlmb'.
+17:34:04:iniciando conexão com Banco! 
+17:34:04:: Error Falha de logon do usuário 'hmlmb'.
+17:35:04:iniciando conexão com Banco! 
+17:35:04:: Error Falha de logon do usuário 'hmlmb'.
+17:36:04:iniciando conexão com Banco! 
+17:36:04:: Error Falha de logon do usuário 'hmlmb'.
+17:37:04:iniciando conexão com Banco! 
+17:37:04:: Error Falha de logon do usuário 'hmlmb'.
+17:38:04:iniciando conexão com Banco! 
+17:38:04:: Error Falha de logon do usuário 'hmlmb'.
+17:39:04:iniciando conexão com Banco! 
+17:39:04:: Error Falha de logon do usuário 'hmlmb'.
+17:40:04:iniciando conexão com Banco! 
+17:40:04:: Error Falha de logon do usuário 'hmlmb'.
+17:41:04:iniciando conexão com Banco! 
+17:41:04:: Error Falha de logon do usuário 'hmlmb'.
+17:42:04:iniciando conexão com Banco! 
+17:42:04:: Error Falha de logon do usuário 'hmlmb'.
+17:43:04:iniciando conexão com Banco! 
+17:43:04:: Error Falha de logon do usuário 'hmlmb'.
+17:44:04:iniciando conexão com Banco! 
+17:44:04:: Error Falha de logon do usuário 'hmlmb'.
+17:45:04:iniciando conexão com Banco! 
+17:45:04:: Error Falha de logon do usuário 'hmlmb'.
+17:46:04:iniciando conexão com Banco! 
+17:46:04:: Error Falha de logon do usuário 'hmlmb'.
+17:47:04:iniciando conexão com Banco! 
+17:47:04:: Error Falha de logon do usuário 'hmlmb'.
+17:48:04:iniciando conexão com Banco! 
+17:48:04:: Error Falha de logon do usuário 'hmlmb'.
+17:49:04:iniciando conexão com Banco! 
+17:49:04:: Error Falha de logon do usuário 'hmlmb'.
+17:50:04:iniciando conexão com Banco! 
+17:50:04:: Error Falha de logon do usuário 'hmlmb'.
+17:51:04:iniciando conexão com Banco! 
+17:51:04:: Error Falha de logon do usuário 'hmlmb'.
+17:52:04:iniciando conexão com Banco! 
+17:52:04:: Error Falha de logon do usuário 'hmlmb'.
+17:53:04:iniciando conexão com Banco! 
+17:53:04:: Error Falha de logon do usuário 'hmlmb'.
+17:54:04:iniciando conexão com Banco! 
+17:54:04:: Error Falha de logon do usuário 'hmlmb'.
+17:55:04:iniciando conexão com Banco! 
+17:55:04:: Error Falha de logon do usuário 'hmlmb'.
+17:56:04:iniciando conexão com Banco! 
+17:56:04:: Error Falha de logon do usuário 'hmlmb'.
+17:57:04:iniciando conexão com Banco! 
+17:57:04:: Error Falha de logon do usuário 'hmlmb'.
+17:58:04:iniciando conexão com Banco! 
+17:58:04:: Error Falha de logon do usuário 'hmlmb'.
+17:59:04:iniciando conexão com Banco! 
+17:59:04:: Error Falha de logon do usuário 'hmlmb'.
+18:00:04:iniciando conexão com Banco! 
+18:00:04:: Error Falha de logon do usuário 'hmlmb'.
+18:01:04:iniciando conexão com Banco! 
+18:01:04:: Error Falha de logon do usuário 'hmlmb'.
+18:02:04:iniciando conexão com Banco! 
+18:02:04:: Error Falha de logon do usuário 'hmlmb'.
+18:03:04:iniciando conexão com Banco! 
+18:03:04:: Error Falha de logon do usuário 'hmlmb'.
+18:04:04:iniciando conexão com Banco! 
+18:04:04:: Error Falha de logon do usuário 'hmlmb'.
+18:05:04:iniciando conexão com Banco! 
+18:05:04:: Error Falha de logon do usuário 'hmlmb'.
+18:06:04:iniciando conexão com Banco! 
+18:06:04:: Error Falha de logon do usuário 'hmlmb'.
+18:07:04:iniciando conexão com Banco! 
+18:07:04:: Error Falha de logon do usuário 'hmlmb'.
+18:08:04:iniciando conexão com Banco! 
+18:08:04:: Error Falha de logon do usuário 'hmlmb'.
+18:09:04:iniciando conexão com Banco! 
+18:09:04:: Error Falha de logon do usuário 'hmlmb'.
+18:10:04:iniciando conexão com Banco! 
+18:10:04:: Error Falha de logon do usuário 'hmlmb'.
+18:11:04:iniciando conexão com Banco! 
+18:11:04:: Error Falha de logon do usuário 'hmlmb'.
+18:12:04:iniciando conexão com Banco! 
+18:12:04:: Error Falha de logon do usuário 'hmlmb'.
+18:13:04:iniciando conexão com Banco! 
+18:13:04:: Error Falha de logon do usuário 'hmlmb'.
+18:14:04:iniciando conexão com Banco! 
+18:14:04:: Error Falha de logon do usuário 'hmlmb'.
+18:15:04:iniciando conexão com Banco! 
+18:15:04:: Error Falha de logon do usuário 'hmlmb'.
+18:16:04:iniciando conexão com Banco! 
+18:16:04:: Error Falha de logon do usuário 'hmlmb'.
+18:17:04:iniciando conexão com Banco! 
+18:17:04:: Error Falha de logon do usuário 'hmlmb'.
+18:18:04:iniciando conexão com Banco! 
+18:18:04:: Error Falha de logon do usuário 'hmlmb'.
+18:19:04:iniciando conexão com Banco! 
+18:19:04:: Error Falha de logon do usuário 'hmlmb'.
+18:20:04:iniciando conexão com Banco! 
+18:20:04:: Error Falha de logon do usuário 'hmlmb'.
+18:21:04:iniciando conexão com Banco! 
+18:21:04:: Error Falha de logon do usuário 'hmlmb'.
+18:22:04:iniciando conexão com Banco! 
+18:22:04:: Error Falha de logon do usuário 'hmlmb'.
+18:23:04:iniciando conexão com Banco! 
+18:23:04:: Error Falha de logon do usuário 'hmlmb'.
+18:24:04:iniciando conexão com Banco! 
+18:24:04:: Error Falha de logon do usuário 'hmlmb'.
+18:25:04:iniciando conexão com Banco! 
+18:25:04:: Error Falha de logon do usuário 'hmlmb'.
+18:26:04:iniciando conexão com Banco! 
+18:26:04:: Error Falha de logon do usuário 'hmlmb'.
+18:27:04:iniciando conexão com Banco! 
+18:27:04:: Error Falha de logon do usuário 'hmlmb'.
+18:28:04:iniciando conexão com Banco! 
+18:28:04:: Error Falha de logon do usuário 'hmlmb'.
+18:29:04:iniciando conexão com Banco! 
+18:29:04:: Error Falha de logon do usuário 'hmlmb'.
+18:30:04:iniciando conexão com Banco! 
+18:30:04:: Error Falha de logon do usuário 'hmlmb'.
+18:31:04:iniciando conexão com Banco! 
+18:31:04:: Error Falha de logon do usuário 'hmlmb'.
+18:32:04:iniciando conexão com Banco! 
+18:32:04:: Error Falha de logon do usuário 'hmlmb'.
+18:33:04:iniciando conexão com Banco! 
+18:33:04:: Error Falha de logon do usuário 'hmlmb'.
+18:34:04:iniciando conexão com Banco! 
+18:34:04:: Error Falha de logon do usuário 'hmlmb'.
+18:35:04:iniciando conexão com Banco! 
+18:35:04:: Error Falha de logon do usuário 'hmlmb'.
+18:36:04:iniciando conexão com Banco! 
+18:36:04:: Error Falha de logon do usuário 'hmlmb'.
+18:37:04:iniciando conexão com Banco! 
+18:37:04:: Error Falha de logon do usuário 'hmlmb'.
+18:38:04:iniciando conexão com Banco! 
+18:38:04:: Error Falha de logon do usuário 'hmlmb'.
+18:39:04:iniciando conexão com Banco! 
+18:39:04:: Error Falha de logon do usuário 'hmlmb'.
+18:40:04:iniciando conexão com Banco! 
+18:40:04:: Error Falha de logon do usuário 'hmlmb'.
+18:41:04:iniciando conexão com Banco! 
+18:41:04:: Error Falha de logon do usuário 'hmlmb'.
+18:42:04:iniciando conexão com Banco! 
+18:42:04:: Error Falha de logon do usuário 'hmlmb'.
+18:43:04:iniciando conexão com Banco! 
+18:43:04:: Error Falha de logon do usuário 'hmlmb'.
+18:44:04:iniciando conexão com Banco! 
+18:44:04:: Error Falha de logon do usuário 'hmlmb'.
+18:45:04:iniciando conexão com Banco! 
+18:45:04:: Error Falha de logon do usuário 'hmlmb'.
+18:46:04:iniciando conexão com Banco! 
+18:46:04:: Error Falha de logon do usuário 'hmlmb'.
+18:47:04:iniciando conexão com Banco! 
+18:47:04:: Error Falha de logon do usuário 'hmlmb'.
+18:48:04:iniciando conexão com Banco! 
+18:48:04:: Error Falha de logon do usuário 'hmlmb'.
+18:49:04:iniciando conexão com Banco! 
+18:49:04:: Error Falha de logon do usuário 'hmlmb'.
+18:50:04:iniciando conexão com Banco! 
+18:50:04:: Error Falha de logon do usuário 'hmlmb'.
+18:51:04:iniciando conexão com Banco! 
+18:51:04:: Error Falha de logon do usuário 'hmlmb'.
+18:52:04:iniciando conexão com Banco! 
+18:52:04:: Error Falha de logon do usuário 'hmlmb'.
+18:53:04:iniciando conexão com Banco! 
+18:53:04:: Error Falha de logon do usuário 'hmlmb'.
+18:54:04:iniciando conexão com Banco! 
+18:54:04:: Error Falha de logon do usuário 'hmlmb'.
+18:55:04:iniciando conexão com Banco! 
+18:55:04:: Error Falha de logon do usuário 'hmlmb'.
+18:56:04:iniciando conexão com Banco! 
+18:56:04:: Error Falha de logon do usuário 'hmlmb'.
+18:57:04:iniciando conexão com Banco! 
+18:57:04:: Error Falha de logon do usuário 'hmlmb'.
+18:58:04:iniciando conexão com Banco! 
+18:58:04:: Error Falha de logon do usuário 'hmlmb'.
+18:59:04:iniciando conexão com Banco! 
+18:59:04:: Error Falha de logon do usuário 'hmlmb'.
+19:00:04:iniciando conexão com Banco! 
+19:00:04:: Error Falha de logon do usuário 'hmlmb'.
+19:01:04:iniciando conexão com Banco! 
+19:01:04:: Error Falha de logon do usuário 'hmlmb'.
+19:02:04:iniciando conexão com Banco! 
+19:02:04:: Error Falha de logon do usuário 'hmlmb'.
+19:03:04:iniciando conexão com Banco! 
+19:03:04:: Error Falha de logon do usuário 'hmlmb'.
+19:04:04:iniciando conexão com Banco! 
+19:04:04:: Error Falha de logon do usuário 'hmlmb'.
+19:05:04:iniciando conexão com Banco! 
+19:05:04:: Error Falha de logon do usuário 'hmlmb'.
+19:06:04:iniciando conexão com Banco! 
+19:06:04:: Error Falha de logon do usuário 'hmlmb'.
+19:07:04:iniciando conexão com Banco! 
+19:07:04:: Error Falha de logon do usuário 'hmlmb'.
+19:08:04:iniciando conexão com Banco! 
+19:08:04:: Error Falha de logon do usuário 'hmlmb'.
+19:09:04:iniciando conexão com Banco! 
+19:09:04:: Error Falha de logon do usuário 'hmlmb'.
+19:10:04:iniciando conexão com Banco! 
+19:10:04:: Error Falha de logon do usuário 'hmlmb'.
+19:11:04:iniciando conexão com Banco! 
+19:11:04:: Error Falha de logon do usuário 'hmlmb'.
+19:12:04:iniciando conexão com Banco! 
+19:12:04:: Error Falha de logon do usuário 'hmlmb'.
+19:13:04:iniciando conexão com Banco! 
+19:13:04:: Error Falha de logon do usuário 'hmlmb'.
+19:14:04:iniciando conexão com Banco! 
+19:14:04:: Error Falha de logon do usuário 'hmlmb'.
+19:15:04:iniciando conexão com Banco! 
+19:15:04:: Error Falha de logon do usuário 'hmlmb'.
+19:16:04:iniciando conexão com Banco! 
+19:16:04:: Error Falha de logon do usuário 'hmlmb'.
+19:17:04:iniciando conexão com Banco! 
+19:17:04:: Error Falha de logon do usuário 'hmlmb'.
+19:18:04:iniciando conexão com Banco! 
+19:18:04:: Error Falha de logon do usuário 'hmlmb'.
+19:19:04:iniciando conexão com Banco! 
+19:19:04:: Error Falha de logon do usuário 'hmlmb'.
+19:20:04:iniciando conexão com Banco! 
+19:20:04:: Error Falha de logon do usuário 'hmlmb'.
+19:21:04:iniciando conexão com Banco! 
+19:21:04:: Error Falha de logon do usuário 'hmlmb'.
+19:22:04:iniciando conexão com Banco! 
+19:22:04:: Error Falha de logon do usuário 'hmlmb'.
+19:23:04:iniciando conexão com Banco! 
+19:23:04:: Error Falha de logon do usuário 'hmlmb'.
+19:24:04:iniciando conexão com Banco! 
+19:24:04:: Error Falha de logon do usuário 'hmlmb'.
+19:25:04:iniciando conexão com Banco! 
+19:25:04:: Error Falha de logon do usuário 'hmlmb'.
+19:26:04:iniciando conexão com Banco! 
+19:26:04:: Error Falha de logon do usuário 'hmlmb'.
+19:27:04:iniciando conexão com Banco! 
+19:27:04:: Error Falha de logon do usuário 'hmlmb'.
+19:28:04:iniciando conexão com Banco! 
+19:28:04:: Error Falha de logon do usuário 'hmlmb'.
+19:29:04:iniciando conexão com Banco! 
+19:29:04:: Error Falha de logon do usuário 'hmlmb'.
+19:30:04:iniciando conexão com Banco! 
+19:30:04:: Error Falha de logon do usuário 'hmlmb'.
+19:31:04:iniciando conexão com Banco! 
+19:31:04:: Error Falha de logon do usuário 'hmlmb'.
+19:32:04:iniciando conexão com Banco! 
+19:32:04:: Error Falha de logon do usuário 'hmlmb'.
+19:33:04:iniciando conexão com Banco! 
+19:33:04:: Error Falha de logon do usuário 'hmlmb'.
+19:34:04:iniciando conexão com Banco! 
+19:34:04:: Error Falha de logon do usuário 'hmlmb'.
+19:35:04:iniciando conexão com Banco! 
+19:35:04:: Error Falha de logon do usuário 'hmlmb'.
+19:36:04:iniciando conexão com Banco! 
+19:36:04:: Error Falha de logon do usuário 'hmlmb'.
+19:37:04:iniciando conexão com Banco! 
+19:37:04:: Error Falha de logon do usuário 'hmlmb'.
+19:38:04:iniciando conexão com Banco! 
+19:38:04:: Error Falha de logon do usuário 'hmlmb'.
+19:39:04:iniciando conexão com Banco! 
+19:39:04:: Error Falha de logon do usuário 'hmlmb'.
+19:40:04:iniciando conexão com Banco! 
+19:40:04:: Error Falha de logon do usuário 'hmlmb'.
+19:41:04:iniciando conexão com Banco! 
+19:41:04:: Error Falha de logon do usuário 'hmlmb'.
+19:42:04:iniciando conexão com Banco! 
+19:42:04:: Error Falha de logon do usuário 'hmlmb'.
+19:43:04:iniciando conexão com Banco! 
+19:43:04:: Error Falha de logon do usuário 'hmlmb'.
+19:44:04:iniciando conexão com Banco! 
+19:44:04:: Error Falha de logon do usuário 'hmlmb'.
+19:45:04:iniciando conexão com Banco! 
+19:45:04:: Error Falha de logon do usuário 'hmlmb'.
+19:46:04:iniciando conexão com Banco! 
+19:46:04:: Error Falha de logon do usuário 'hmlmb'.
+19:47:04:iniciando conexão com Banco! 
+19:47:04:: Error Falha de logon do usuário 'hmlmb'.
+19:48:04:iniciando conexão com Banco! 
+19:48:04:: Error Falha de logon do usuário 'hmlmb'.
+19:49:04:iniciando conexão com Banco! 
+19:49:04:: Error Falha de logon do usuário 'hmlmb'.
+19:50:04:iniciando conexão com Banco! 
+19:50:04:: Error Falha de logon do usuário 'hmlmb'.
+19:51:04:iniciando conexão com Banco! 
+19:51:04:: Error Falha de logon do usuário 'hmlmb'.
+19:52:04:iniciando conexão com Banco! 
+19:52:04:: Error Falha de logon do usuário 'hmlmb'.
+19:53:04:iniciando conexão com Banco! 
+19:53:04:: Error Falha de logon do usuário 'hmlmb'.
+19:54:04:iniciando conexão com Banco! 
+19:54:04:: Error Falha de logon do usuário 'hmlmb'.
+19:55:04:iniciando conexão com Banco! 
+19:55:04:: Error Falha de logon do usuário 'hmlmb'.
+19:56:04:iniciando conexão com Banco! 
+19:56:04:: Error Falha de logon do usuário 'hmlmb'.
+19:57:04:iniciando conexão com Banco! 
+19:57:04:: Error Falha de logon do usuário 'hmlmb'.
+19:58:04:iniciando conexão com Banco! 
+19:58:04:: Error Falha de logon do usuário 'hmlmb'.
+19:59:04:iniciando conexão com Banco! 
+19:59:04:: Error Falha de logon do usuário 'hmlmb'.
+20:00:04:iniciando conexão com Banco! 
+20:00:04:: Error Falha de logon do usuário 'hmlmb'.
+20:01:04:iniciando conexão com Banco! 
+20:01:04:: Error Falha de logon do usuário 'hmlmb'.
+20:02:04:iniciando conexão com Banco! 
+20:02:04:: Error Falha de logon do usuário 'hmlmb'.
+20:03:04:iniciando conexão com Banco! 
+20:03:04:: Error Falha de logon do usuário 'hmlmb'.
+20:04:04:iniciando conexão com Banco! 
+20:04:04:: Error Falha de logon do usuário 'hmlmb'.
+20:05:04:iniciando conexão com Banco! 
+20:05:04:: Error Falha de logon do usuário 'hmlmb'.
+20:06:04:iniciando conexão com Banco! 
+20:06:05:: Error Falha de logon do usuário 'hmlmb'.
+20:07:05:iniciando conexão com Banco! 
+20:07:05:: Error Falha de logon do usuário 'hmlmb'.
+20:08:05:iniciando conexão com Banco! 
+20:08:05:: Error Falha de logon do usuário 'hmlmb'.
+20:09:05:iniciando conexão com Banco! 
+20:09:05:: Error Falha de logon do usuário 'hmlmb'.
+20:10:05:iniciando conexão com Banco! 
+20:10:05:: Error Falha de logon do usuário 'hmlmb'.
+20:11:05:iniciando conexão com Banco! 
+20:11:05:: Error Falha de logon do usuário 'hmlmb'.
+20:12:05:iniciando conexão com Banco! 
+20:12:05:: Error Falha de logon do usuário 'hmlmb'.
+20:13:05:iniciando conexão com Banco! 
+20:13:05:: Error Falha de logon do usuário 'hmlmb'.
+20:14:05:iniciando conexão com Banco! 
+20:14:05:: Error Falha de logon do usuário 'hmlmb'.
+20:15:05:iniciando conexão com Banco! 
+20:15:05:: Error Falha de logon do usuário 'hmlmb'.
+20:16:05:iniciando conexão com Banco! 
+20:16:05:: Error Falha de logon do usuário 'hmlmb'.
+20:17:05:iniciando conexão com Banco! 
+20:17:05:: Error Falha de logon do usuário 'hmlmb'.
+20:18:05:iniciando conexão com Banco! 
+20:18:05:: Error Falha de logon do usuário 'hmlmb'.
+20:19:05:iniciando conexão com Banco! 
+20:19:05:: Error Falha de logon do usuário 'hmlmb'.
+20:20:05:iniciando conexão com Banco! 
+20:20:05:: Error Falha de logon do usuário 'hmlmb'.
+20:21:05:iniciando conexão com Banco! 
+20:21:05:: Error Falha de logon do usuário 'hmlmb'.
+20:22:05:iniciando conexão com Banco! 
+20:22:05:: Error Falha de logon do usuário 'hmlmb'.
+20:23:05:iniciando conexão com Banco! 
+20:23:05:: Error Falha de logon do usuário 'hmlmb'.
+20:24:05:iniciando conexão com Banco! 
+20:24:05:: Error Falha de logon do usuário 'hmlmb'.
+20:25:05:iniciando conexão com Banco! 
+20:25:05:: Error Falha de logon do usuário 'hmlmb'.
+20:26:05:iniciando conexão com Banco! 
+20:26:05:: Error Falha de logon do usuário 'hmlmb'.
+20:27:05:iniciando conexão com Banco! 
+20:27:05:: Error Falha de logon do usuário 'hmlmb'.
+20:28:05:iniciando conexão com Banco! 
+20:28:05:: Error Falha de logon do usuário 'hmlmb'.
+20:29:05:iniciando conexão com Banco! 
+20:29:05:: Error Falha de logon do usuário 'hmlmb'.
+20:30:05:iniciando conexão com Banco! 
+20:30:05:: Error Falha de logon do usuário 'hmlmb'.
+20:31:05:iniciando conexão com Banco! 
+20:31:05:: Error Falha de logon do usuário 'hmlmb'.
+20:32:05:iniciando conexão com Banco! 
+20:32:05:: Error Falha de logon do usuário 'hmlmb'.
+20:33:05:iniciando conexão com Banco! 
+20:33:05:: Error Falha de logon do usuário 'hmlmb'.
+20:34:05:iniciando conexão com Banco! 
+20:34:05:: Error Falha de logon do usuário 'hmlmb'.
+20:35:05:iniciando conexão com Banco! 
+20:35:05:: Error Falha de logon do usuário 'hmlmb'.
+20:36:05:iniciando conexão com Banco! 
+20:36:05:: Error Falha de logon do usuário 'hmlmb'.
+20:37:05:iniciando conexão com Banco! 
+20:37:05:: Error Falha de logon do usuário 'hmlmb'.
+20:38:05:iniciando conexão com Banco! 
+20:38:05:: Error Falha de logon do usuário 'hmlmb'.
+20:39:05:iniciando conexão com Banco! 
+20:39:05:: Error Falha de logon do usuário 'hmlmb'.
+20:40:05:iniciando conexão com Banco! 
+20:40:05:: Error Falha de logon do usuário 'hmlmb'.
+20:41:05:iniciando conexão com Banco! 
+20:41:05:: Error Falha de logon do usuário 'hmlmb'.
+20:42:05:iniciando conexão com Banco! 
+20:42:05:: Error Falha de logon do usuário 'hmlmb'.
+20:43:05:iniciando conexão com Banco! 
+20:43:05:: Error Falha de logon do usuário 'hmlmb'.
+20:44:05:iniciando conexão com Banco! 
+20:44:05:: Error Falha de logon do usuário 'hmlmb'.
+20:45:05:iniciando conexão com Banco! 
+20:45:05:: Error Falha de logon do usuário 'hmlmb'.
+20:46:05:iniciando conexão com Banco! 
+20:46:05:: Error Falha de logon do usuário 'hmlmb'.
+20:47:05:iniciando conexão com Banco! 
+20:47:05:: Error Falha de logon do usuário 'hmlmb'.
+20:48:05:iniciando conexão com Banco! 
+20:48:05:: Error Falha de logon do usuário 'hmlmb'.
+20:49:05:iniciando conexão com Banco! 
+20:49:05:: Error Falha de logon do usuário 'hmlmb'.
+20:50:05:iniciando conexão com Banco! 
+20:50:05:: Error Falha de logon do usuário 'hmlmb'.
+20:51:05:iniciando conexão com Banco! 
+20:51:05:: Error Falha de logon do usuário 'hmlmb'.
+20:52:05:iniciando conexão com Banco! 
+20:52:05:: Error Falha de logon do usuário 'hmlmb'.
+20:53:05:iniciando conexão com Banco! 
+20:53:05:: Error Falha de logon do usuário 'hmlmb'.
+20:54:05:iniciando conexão com Banco! 
+20:54:05:: Error Falha de logon do usuário 'hmlmb'.
+20:55:05:iniciando conexão com Banco! 
+20:55:05:: Error Falha de logon do usuário 'hmlmb'.
+20:56:05:iniciando conexão com Banco! 
+20:56:05:: Error Falha de logon do usuário 'hmlmb'.
+20:57:05:iniciando conexão com Banco! 
+20:57:05:: Error Falha de logon do usuário 'hmlmb'.
+20:58:05:iniciando conexão com Banco! 
+20:58:05:: Error Falha de logon do usuário 'hmlmb'.
+20:59:05:iniciando conexão com Banco! 
+20:59:05:: Error Falha de logon do usuário 'hmlmb'.
+21:00:05:iniciando conexão com Banco! 
+21:00:05:: Error Falha de logon do usuário 'hmlmb'.
+21:01:05:iniciando conexão com Banco! 
+21:01:05:: Error Falha de logon do usuário 'hmlmb'.
+21:02:05:iniciando conexão com Banco! 
+21:02:05:: Error Falha de logon do usuário 'hmlmb'.
+21:03:05:iniciando conexão com Banco! 
+21:03:05:: Error Falha de logon do usuário 'hmlmb'.
+21:04:05:iniciando conexão com Banco! 
+21:04:05:: Error Falha de logon do usuário 'hmlmb'.
+21:05:05:iniciando conexão com Banco! 
+21:05:05:: Error Falha de logon do usuário 'hmlmb'.
+21:06:05:iniciando conexão com Banco! 
+21:06:05:: Error Falha de logon do usuário 'hmlmb'.
+21:07:05:iniciando conexão com Banco! 
+21:07:05:: Error Falha de logon do usuário 'hmlmb'.
+21:08:05:iniciando conexão com Banco! 
+21:08:05:: Error Falha de logon do usuário 'hmlmb'.
+21:09:05:iniciando conexão com Banco! 
+21:09:05:: Error Falha de logon do usuário 'hmlmb'.
+21:10:05:iniciando conexão com Banco! 
+21:10:05:: Error Falha de logon do usuário 'hmlmb'.
+21:11:05:iniciando conexão com Banco! 
+21:11:05:: Error Falha de logon do usuário 'hmlmb'.
+21:12:05:iniciando conexão com Banco! 
+21:12:05:: Error Falha de logon do usuário 'hmlmb'.
+21:13:05:iniciando conexão com Banco! 
+21:13:05:: Error Falha de logon do usuário 'hmlmb'.
+21:14:05:iniciando conexão com Banco! 
+21:14:05:: Error Falha de logon do usuário 'hmlmb'.
+21:15:05:iniciando conexão com Banco! 
+21:15:05:: Error Falha de logon do usuário 'hmlmb'.
+21:16:05:iniciando conexão com Banco! 
+21:16:05:: Error Falha de logon do usuário 'hmlmb'.
+21:17:05:iniciando conexão com Banco! 
+21:17:05:: Error Falha de logon do usuário 'hmlmb'.
+21:18:05:iniciando conexão com Banco! 
+21:18:05:: Error Falha de logon do usuário 'hmlmb'.
+21:19:05:iniciando conexão com Banco! 
+21:19:05:: Error Falha de logon do usuário 'hmlmb'.
+21:20:05:iniciando conexão com Banco! 
+21:20:05:: Error Falha de logon do usuário 'hmlmb'.
+21:21:05:iniciando conexão com Banco! 
+21:21:05:: Error Falha de logon do usuário 'hmlmb'.
+21:22:05:iniciando conexão com Banco! 
+21:22:05:: Error Falha de logon do usuário 'hmlmb'.
+21:23:05:iniciando conexão com Banco! 
+21:23:05:: Error Falha de logon do usuário 'hmlmb'.
+21:24:05:iniciando conexão com Banco! 
+21:24:05:: Error Falha de logon do usuário 'hmlmb'.
+21:25:05:iniciando conexão com Banco! 
+21:25:05:: Error Falha de logon do usuário 'hmlmb'.
+21:26:05:iniciando conexão com Banco! 
+21:26:05:: Error Falha de logon do usuário 'hmlmb'.
+21:27:05:iniciando conexão com Banco! 
+21:27:05:: Error Falha de logon do usuário 'hmlmb'.
+21:28:05:iniciando conexão com Banco! 
+21:28:05:: Error Falha de logon do usuário 'hmlmb'.
+21:29:05:iniciando conexão com Banco! 
+21:29:05:: Error Falha de logon do usuário 'hmlmb'.
+21:30:05:iniciando conexão com Banco! 
+21:30:05:: Error Falha de logon do usuário 'hmlmb'.
+21:31:05:iniciando conexão com Banco! 
+21:31:05:: Error Falha de logon do usuário 'hmlmb'.
+21:32:05:iniciando conexão com Banco! 
+21:32:05:: Error Falha de logon do usuário 'hmlmb'.
+21:33:05:iniciando conexão com Banco! 
+21:33:05:: Error Falha de logon do usuário 'hmlmb'.
+21:34:05:iniciando conexão com Banco! 
+21:34:05:: Error Falha de logon do usuário 'hmlmb'.
+21:35:05:iniciando conexão com Banco! 
+21:35:05:: Error Falha de logon do usuário 'hmlmb'.
+21:36:05:iniciando conexão com Banco! 
+21:36:05:: Error Falha de logon do usuário 'hmlmb'.
+21:37:05:iniciando conexão com Banco! 
+21:37:05:: Error Falha de logon do usuário 'hmlmb'.
+21:38:05:iniciando conexão com Banco! 
+21:38:05:: Error Falha de logon do usuário 'hmlmb'.
+21:39:05:iniciando conexão com Banco! 
+21:39:05:: Error Falha de logon do usuário 'hmlmb'.
+21:40:05:iniciando conexão com Banco! 
+21:40:05:: Error Falha de logon do usuário 'hmlmb'.
+21:41:05:iniciando conexão com Banco! 
+21:41:05:: Error Falha de logon do usuário 'hmlmb'.
+21:42:05:iniciando conexão com Banco! 
+21:42:05:: Error Falha de logon do usuário 'hmlmb'.
+21:43:05:iniciando conexão com Banco! 
+21:43:05:: Error Falha de logon do usuário 'hmlmb'.
+21:44:05:iniciando conexão com Banco! 
+21:44:05:: Error Falha de logon do usuário 'hmlmb'.
+21:45:05:iniciando conexão com Banco! 
+21:45:05:: Error Falha de logon do usuário 'hmlmb'.
+21:46:05:iniciando conexão com Banco! 
+21:46:05:: Error Falha de logon do usuário 'hmlmb'.
+21:47:05:iniciando conexão com Banco! 
+21:47:05:: Error Falha de logon do usuário 'hmlmb'.
+21:48:05:iniciando conexão com Banco! 
+21:48:05:: Error Falha de logon do usuário 'hmlmb'.
+21:49:05:iniciando conexão com Banco! 
+21:49:05:: Error Falha de logon do usuário 'hmlmb'.
+21:50:05:iniciando conexão com Banco! 
+21:50:05:: Error Falha de logon do usuário 'hmlmb'.
+21:51:05:iniciando conexão com Banco! 
+21:51:05:: Error Falha de logon do usuário 'hmlmb'.
+21:52:05:iniciando conexão com Banco! 
+21:52:05:: Error Falha de logon do usuário 'hmlmb'.
+21:53:05:iniciando conexão com Banco! 
+21:53:05:: Error Falha de logon do usuário 'hmlmb'.
+21:54:05:iniciando conexão com Banco! 
+21:54:05:: Error Falha de logon do usuário 'hmlmb'.
+21:55:05:iniciando conexão com Banco! 
+21:55:05:: Error Falha de logon do usuário 'hmlmb'.
+21:56:05:iniciando conexão com Banco! 
+21:56:05:: Error Falha de logon do usuário 'hmlmb'.
+21:57:05:iniciando conexão com Banco! 
+21:57:05:: Error Falha de logon do usuário 'hmlmb'.
+21:58:05:iniciando conexão com Banco! 
+21:58:05:: Error Falha de logon do usuário 'hmlmb'.
+21:59:05:iniciando conexão com Banco! 
+21:59:05:: Error Falha de logon do usuário 'hmlmb'.
+22:00:05:iniciando conexão com Banco! 
+22:00:05:: Error Falha de logon do usuário 'hmlmb'.
+22:01:05:iniciando conexão com Banco! 
+22:01:05:: Error Falha de logon do usuário 'hmlmb'.
+22:02:05:iniciando conexão com Banco! 
+22:02:05:: Error Falha de logon do usuário 'hmlmb'.
+22:03:05:iniciando conexão com Banco! 
+22:03:05:: Error Falha de logon do usuário 'hmlmb'.
+22:04:05:iniciando conexão com Banco! 
+22:04:05:: Error Falha de logon do usuário 'hmlmb'.
+22:05:05:iniciando conexão com Banco! 
+22:05:05:: Error Falha de logon do usuário 'hmlmb'.
+22:06:05:iniciando conexão com Banco! 
+22:06:05:: Error Falha de logon do usuário 'hmlmb'.
+22:07:05:iniciando conexão com Banco! 
+22:07:05:: Error Falha de logon do usuário 'hmlmb'.
+22:08:05:iniciando conexão com Banco! 
+22:08:05:: Error Falha de logon do usuário 'hmlmb'.
+22:09:05:iniciando conexão com Banco! 
+22:09:05:: Error Falha de logon do usuário 'hmlmb'.
+22:10:05:iniciando conexão com Banco! 
+22:10:05:: Error Falha de logon do usuário 'hmlmb'.
+22:11:05:iniciando conexão com Banco! 
+22:11:05:: Error Falha de logon do usuário 'hmlmb'.
+22:12:05:iniciando conexão com Banco! 
+22:12:05:: Error Falha de logon do usuário 'hmlmb'.
+22:13:05:iniciando conexão com Banco! 
+22:13:05:: Error Falha de logon do usuário 'hmlmb'.
+22:14:05:iniciando conexão com Banco! 
+22:14:05:: Error Falha de logon do usuário 'hmlmb'.
+22:15:05:iniciando conexão com Banco! 
+22:15:05:: Error Falha de logon do usuário 'hmlmb'.
+22:16:05:iniciando conexão com Banco! 
+22:16:05:: Error Falha de logon do usuário 'hmlmb'.
+22:17:05:iniciando conexão com Banco! 
+22:17:05:: Error Falha de logon do usuário 'hmlmb'.
+22:18:05:iniciando conexão com Banco! 
+22:18:05:: Error Falha de logon do usuário 'hmlmb'.
+22:19:05:iniciando conexão com Banco! 
+22:19:05:: Error Falha de logon do usuário 'hmlmb'.
+22:20:05:iniciando conexão com Banco! 
+22:20:05:: Error Falha de logon do usuário 'hmlmb'.
+22:21:05:iniciando conexão com Banco! 
+22:21:05:: Error Falha de logon do usuário 'hmlmb'.
+22:22:05:iniciando conexão com Banco! 
+22:22:05:: Error Falha de logon do usuário 'hmlmb'.
+22:23:05:iniciando conexão com Banco! 
+22:23:05:: Error Falha de logon do usuário 'hmlmb'.
+22:24:05:iniciando conexão com Banco! 
+22:24:05:: Error Falha de logon do usuário 'hmlmb'.
+22:25:05:iniciando conexão com Banco! 
+22:25:05:: Error Falha de logon do usuário 'hmlmb'.
+22:26:05:iniciando conexão com Banco! 
+22:26:05:: Error Falha de logon do usuário 'hmlmb'.
+22:27:05:iniciando conexão com Banco! 
+22:27:05:: Error Falha de logon do usuário 'hmlmb'.
+22:28:05:iniciando conexão com Banco! 
+22:28:05:: Error Falha de logon do usuário 'hmlmb'.
+22:29:05:iniciando conexão com Banco! 
+22:29:05:: Error Falha de logon do usuário 'hmlmb'.
+22:30:05:iniciando conexão com Banco! 
+22:30:05:: Error Falha de logon do usuário 'hmlmb'.
+22:31:05:iniciando conexão com Banco! 
+22:31:05:: Error Falha de logon do usuário 'hmlmb'.
+22:32:05:iniciando conexão com Banco! 
+22:32:05:: Error Falha de logon do usuário 'hmlmb'.
+22:33:05:iniciando conexão com Banco! 
+22:33:05:: Error Falha de logon do usuário 'hmlmb'.
+22:34:05:iniciando conexão com Banco! 
+22:34:05:: Error Falha de logon do usuário 'hmlmb'.
+22:35:05:iniciando conexão com Banco! 
+22:35:05:: Error Falha de logon do usuário 'hmlmb'.
+22:36:05:iniciando conexão com Banco! 
+22:36:05:: Error Falha de logon do usuário 'hmlmb'.
+22:37:05:iniciando conexão com Banco! 
+22:37:05:: Error Falha de logon do usuário 'hmlmb'.
+22:38:05:iniciando conexão com Banco! 
+22:38:05:: Error Falha de logon do usuário 'hmlmb'.
+22:39:05:iniciando conexão com Banco! 
+22:39:05:: Error Falha de logon do usuário 'hmlmb'.
+22:40:05:iniciando conexão com Banco! 
+22:40:05:: Error Falha de logon do usuário 'hmlmb'.
+22:41:05:iniciando conexão com Banco! 
+22:41:05:: Error Falha de logon do usuário 'hmlmb'.
+22:42:05:iniciando conexão com Banco! 
+22:42:05:: Error Falha de logon do usuário 'hmlmb'.
+22:43:05:iniciando conexão com Banco! 
+22:43:05:: Error Falha de logon do usuário 'hmlmb'.
+22:44:05:iniciando conexão com Banco! 
+22:44:05:: Error Falha de logon do usuário 'hmlmb'.
+22:45:05:iniciando conexão com Banco! 
+22:45:05:: Error Falha de logon do usuário 'hmlmb'.
+22:46:05:iniciando conexão com Banco! 
+22:46:05:: Error Falha de logon do usuário 'hmlmb'.
+22:47:05:iniciando conexão com Banco! 
+22:47:05:: Error Falha de logon do usuário 'hmlmb'.
+22:48:05:iniciando conexão com Banco! 
+22:48:05:: Error Falha de logon do usuário 'hmlmb'.
+22:49:05:iniciando conexão com Banco! 
+22:49:05:: Error Falha de logon do usuário 'hmlmb'.
+22:50:05:iniciando conexão com Banco! 
+22:50:05:: Error Falha de logon do usuário 'hmlmb'.
+22:51:05:iniciando conexão com Banco! 
+22:51:05:: Error Falha de logon do usuário 'hmlmb'.
+22:52:05:iniciando conexão com Banco! 
+22:52:05:: Error Falha de logon do usuário 'hmlmb'.
+22:53:05:iniciando conexão com Banco! 
+22:53:05:: Error Falha de logon do usuário 'hmlmb'.
+22:54:05:iniciando conexão com Banco! 
+22:54:05:: Error Falha de logon do usuário 'hmlmb'.
+22:55:05:iniciando conexão com Banco! 
+22:55:05:: Error Falha de logon do usuário 'hmlmb'.
+22:56:05:iniciando conexão com Banco! 
+22:56:05:: Error Falha de logon do usuário 'hmlmb'.
+22:57:05:iniciando conexão com Banco! 
+22:57:05:: Error Falha de logon do usuário 'hmlmb'.
+22:58:05:iniciando conexão com Banco! 
+22:58:05:: Error Falha de logon do usuário 'hmlmb'.
+22:59:05:iniciando conexão com Banco! 
+22:59:05:: Error Falha de logon do usuário 'hmlmb'.
+23:00:05:iniciando conexão com Banco! 
+23:00:05:: Error Falha de logon do usuário 'hmlmb'.
+23:01:05:iniciando conexão com Banco! 
+23:01:05:: Error Falha de logon do usuário 'hmlmb'.
+23:02:05:iniciando conexão com Banco! 
+23:02:05:: Error Falha de logon do usuário 'hmlmb'.
+23:03:05:iniciando conexão com Banco! 
+23:03:05:: Error Falha de logon do usuário 'hmlmb'.
+23:04:05:iniciando conexão com Banco! 
+23:04:05:: Error Falha de logon do usuário 'hmlmb'.
+23:05:05:iniciando conexão com Banco! 
+23:05:06:: Error Falha de logon do usuário 'hmlmb'.
+23:06:05:iniciando conexão com Banco! 
+23:06:06:: Error Falha de logon do usuário 'hmlmb'.
+23:07:05:iniciando conexão com Banco! 
+23:07:05:: Error Falha de logon do usuário 'hmlmb'.
+23:08:05:iniciando conexão com Banco! 
+23:08:06:: Error Falha de logon do usuário 'hmlmb'.
+23:09:05:iniciando conexão com Banco! 
+23:09:05:: Error Falha de logon do usuário 'hmlmb'.
+23:10:06:iniciando conexão com Banco! 
+23:10:06:: Error Falha de logon do usuário 'hmlmb'.
+23:11:06:iniciando conexão com Banco! 
+23:11:06:: Error Falha de logon do usuário 'hmlmb'.
+23:12:06:iniciando conexão com Banco! 
+23:12:06:: Error Falha de logon do usuário 'hmlmb'.
+23:13:06:iniciando conexão com Banco! 
+23:13:06:: Error Falha de logon do usuário 'hmlmb'.
+23:14:06:iniciando conexão com Banco! 
+23:14:06:: Error Falha de logon do usuário 'hmlmb'.
+23:15:06:iniciando conexão com Banco! 
+23:15:06:: Error Falha de logon do usuário 'hmlmb'.
+23:16:06:iniciando conexão com Banco! 
+23:16:06:: Error Falha de logon do usuário 'hmlmb'.
+23:17:06:iniciando conexão com Banco! 
+23:17:06:: Error Falha de logon do usuário 'hmlmb'.
+23:18:06:iniciando conexão com Banco! 
+23:18:06:: Error Falha de logon do usuário 'hmlmb'.
+23:19:06:iniciando conexão com Banco! 
+23:19:06:: Error Falha de logon do usuário 'hmlmb'.
+23:20:06:iniciando conexão com Banco! 
+23:20:06:: Error Falha de logon do usuário 'hmlmb'.
+23:21:06:iniciando conexão com Banco! 
+23:21:06:: Error Falha de logon do usuário 'hmlmb'.
+23:22:06:iniciando conexão com Banco! 
+23:22:06:: Error Falha de logon do usuário 'hmlmb'.
+23:23:06:iniciando conexão com Banco! 
+23:23:06:: Error Falha de logon do usuário 'hmlmb'.
+23:24:06:iniciando conexão com Banco! 
+23:24:06:: Error Falha de logon do usuário 'hmlmb'.
+23:25:06:iniciando conexão com Banco! 
+23:25:06:: Error Falha de logon do usuário 'hmlmb'.
+23:26:06:iniciando conexão com Banco! 
+23:26:06:: Error Falha de logon do usuário 'hmlmb'.
+23:27:06:iniciando conexão com Banco! 
+23:27:06:: Error Falha de logon do usuário 'hmlmb'.
+23:28:06:iniciando conexão com Banco! 
+23:28:06:: Error Falha de logon do usuário 'hmlmb'.
+23:29:06:iniciando conexão com Banco! 
+23:29:06:: Error Falha de logon do usuário 'hmlmb'.
+23:30:06:iniciando conexão com Banco! 
+23:30:06:: Error Falha de logon do usuário 'hmlmb'.
+23:31:06:iniciando conexão com Banco! 
+23:31:06:: Error Falha de logon do usuário 'hmlmb'.
+23:32:06:iniciando conexão com Banco! 
+23:32:06:: Error Falha de logon do usuário 'hmlmb'.
+23:33:06:iniciando conexão com Banco! 
+23:33:06:: Error Falha de logon do usuário 'hmlmb'.
+23:34:06:iniciando conexão com Banco! 
+23:34:06:: Error Falha de logon do usuário 'hmlmb'.
+23:35:06:iniciando conexão com Banco! 
+23:35:06:: Error Falha de logon do usuário 'hmlmb'.
+23:36:06:iniciando conexão com Banco! 
+23:36:06:: Error Falha de logon do usuário 'hmlmb'.
+23:37:06:iniciando conexão com Banco! 
+23:37:06:: Error Falha de logon do usuário 'hmlmb'.
+23:38:06:iniciando conexão com Banco! 
+23:38:06:: Error Falha de logon do usuário 'hmlmb'.
+23:39:06:iniciando conexão com Banco! 
+23:39:06:: Error Falha de logon do usuário 'hmlmb'.
+23:40:06:iniciando conexão com Banco! 
+23:40:06:: Error Falha de logon do usuário 'hmlmb'.
+23:41:06:iniciando conexão com Banco! 
+23:41:06:: Error Falha de logon do usuário 'hmlmb'.
+23:42:06:iniciando conexão com Banco! 
+23:42:06:: Error Falha de logon do usuário 'hmlmb'.
+23:43:06:iniciando conexão com Banco! 
+23:43:06:: Error Falha de logon do usuário 'hmlmb'.
+23:44:06:iniciando conexão com Banco! 
+23:44:06:: Error Falha de logon do usuário 'hmlmb'.
+23:45:06:iniciando conexão com Banco! 
+23:45:06:: Error Falha de logon do usuário 'hmlmb'.
+23:46:06:iniciando conexão com Banco! 
+23:46:06:: Error Falha de logon do usuário 'hmlmb'.
+23:47:06:iniciando conexão com Banco! 
+23:47:06:: Error Falha de logon do usuário 'hmlmb'.
+23:48:06:iniciando conexão com Banco! 
+23:48:06:: Error Falha de logon do usuário 'hmlmb'.
+23:49:06:iniciando conexão com Banco! 
+23:49:06:: Error Falha de logon do usuário 'hmlmb'.
+23:50:06:iniciando conexão com Banco! 
+23:50:06:: Error Falha de logon do usuário 'hmlmb'.
+23:51:06:iniciando conexão com Banco! 
+23:51:06:: Error Falha de logon do usuário 'hmlmb'.
+23:52:06:iniciando conexão com Banco! 
+23:52:06:: Error Falha de logon do usuário 'hmlmb'.
+23:53:06:iniciando conexão com Banco! 
+23:53:06:: Error Falha de logon do usuário 'hmlmb'.
+23:54:06:iniciando conexão com Banco! 
+23:54:06:: Error Falha de logon do usuário 'hmlmb'.
+23:55:06:iniciando conexão com Banco! 
+23:55:06:: Error Falha de logon do usuário 'hmlmb'.
+23:56:06:iniciando conexão com Banco! 
+23:56:06:: Error Falha de logon do usuário 'hmlmb'.
+23:57:06:iniciando conexão com Banco! 
+23:57:06:: Error Falha de logon do usuário 'hmlmb'.
+23:58:06:iniciando conexão com Banco! 
+23:58:06:: Error Falha de logon do usuário 'hmlmb'.
+23:59:06:iniciando conexão com Banco! 
+23:59:06:: Error Falha de logon do usuário 'hmlmb'.

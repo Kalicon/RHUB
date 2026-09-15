@@ -5,8 +5,26 @@
  * ═══════════════════════════════════════════════════════════════════════
  */
 
-import { formatarMoeda, formatarData } from './formatters.js';
+import { formatCurrency } from './formatters.js';
 import { obterRubrica } from '../data/esocial_rubricas.js';
+
+const formatarMoeda = (val) => {
+    try {
+        return formatCurrency(val);
+    } catch (_) {
+        return `R$ ${(val || 0).toFixed(2)}`;
+    }
+};
+
+const formatarData = (dateStr) => {
+    if (!dateStr) return '';
+    if (typeof dateStr !== 'string') return String(dateStr);
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    return dateStr;
+};
 
 /**
  * Gera o HTML oficial do Recibo de Pagamento (Holerite / Contracheque)
