@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { calcularAdicionalNoturno } from '../assets/js/modules/noturno.js';
 import { calcularRescisao, compararCenariosRescisao } from '../assets/js/modules/rescisao.js';
 import { calcularFaltas, consultarImpactoFerias } from '../assets/js/modules/faltas.js';
-import { calcularFerias, calcular13o } from '../assets/js/modules/ferias.js';
+import { calcularFerias, calcular13o, validarFracionamentoFerias } from '../assets/js/modules/ferias.js';
 import { calcularSalarioLiquido } from '../assets/js/modules/liquido.js';
 import { calcularCustosCltPj } from '../assets/js/modules/clt_pj.js';
 import { calcularINSS, calcularIRRF } from '../assets/js/modules/tabelas.js';
@@ -10,6 +10,9 @@ import { calcularBancoHoras } from '../assets/js/modules/banco_horas.js';
 import { calcularPLR, calcularIRRF_PLR } from '../assets/js/modules/plr.js';
 import { calcularTeletrabalho } from '../assets/js/modules/teletrabalho.js';
 import { calcularEquiparacao } from '../assets/js/modules/equiparacao.js';
+import { processarFolhaLote, parsearCsvFolha } from '../assets/js/modules/folha_lote.js';
+import { calcularATS } from '../assets/js/data/cct_config.js';
+import { obterRubrica, listarTodasRubricas } from '../assets/js/data/esocial_rubricas.js';
 
 describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
@@ -366,6 +369,161 @@ describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
             expect(res.multaDiscriminacao).toBe(60000); // 10 * 6000
             expect(res.passivoTotal).toBeGreaterThan(60000);
+        });
+    });
+
+    describe('11. Módulo Fracionamento de Férias e Calendário CLT (Art. 134 e 143 CLT)', () => {
+        it('deve validar com sucesso um fracionamento legal em 2 períodos (ex: 15 + 15 dias)', () => {
+            const res = validarFracionamentoFerias({
+                diasTotaisDireito: 30,
+                venderAbono: false,
+                periodos: [15, 15],
+                dataInicio1: '2026-10-05' // Segunda-feira
+            });
+
+            expect(res.valido).toBe(true);
+            expect(res.erros.length).toBe(0);
+            expect(res.qtdPeriodos).toBe(2);
+            expect(res.cronograma.length).toBe(2);
+            expect(res.cronograma[0].dataLimitePagamento).toBe('2026-10-03'); // 2 dias antes (Art. 145 CLT)
+        });
+
+        it('deve validar fracionamento em 3 períodos com regra dos 14 dias respeitada (ex: 14 + 8 + 8 dias)', () => {
+            const res = validarFracionamentoFerias({
+                diasTotaisDireito: 30,
+                venderAbono: false,
+                periodos: [14, 8, 8]
+            });
+
+            expect(res.valido).toBe(true);
+            expect(res.somaDias).toBe(30);
+        });
+
+        it('deve rejeitar fracionamento onde nenhum período tenha pelo menos 14 dias (ex: 10 + 10 + 10 dias)', () => {
+            const res = validarFracionamentoFerias({
+                diasTotaisDireito: 30,
+                venderAbono: false,
+                periodos: [10, 10, 10]
+            });
+
+            expect(res.valido).toBe(false);
+            expect(res.erros.some(e => e.includes('14 dias'))).toBe(true);
+        });
+
+        it('deve rejeitar fracionamento onde algum período seja menor que 5 dias (ex: 20 + 6 + 4 dias)', () => {
+            const res = validarFracionamentoFerias({
+                diasTotaisDireito: 30,
+                venderAbono: false,
+                periodos: [20, 6, 4]
+            });
+
+            expect(res.valido).toBe(false);
+            expect(res.erros.some(e => e.includes('5 dias'))).toBe(true);
+        });
+
+        it('deve emitir aviso quando as férias começarem em quinta ou sexta-feira (Art. 134, § 3º CLT)', () => {
+            const res = validarFracionamentoFerias({
+                diasTotaisDireito: 30,
+                venderAbono: false,
+                periodos: [15, 15],
+                dataInicio1: '2026-10-09' // Sexta-feira
+            });
+
+            expect(res.avisos.length).toBeGreaterThan(0);
+            expect(res.avisos[0]).toContain('sexta-feira');
+        });
+    });
+
+    describe('12. Módulo Folha de Pagamento em Lote & Encargos Patronais', () => {
+        it('deve processar múltiplos colaboradores e calcular encargos patronais (Lucro Presumido)', () => {
+            const colaboradores = [
+                { matricula: '001', nome: 'Colaborador A', cargo: 'Dev', salarioBase: 5000, horasExtras50: 0, faltasDias: 0, dependentes: 0 },
+                { matricula: '002', nome: 'Colaborador B', cargo: 'Designer', salarioBase: 3000, horasExtras50: 10, faltasDias: 0, dependentes: 1 }
+            ];
+
+            const { resultados, resumo } = processarFolhaLote(colaboradores, {
+                optanteSimples: false,
+                aliquotaRat: 2.0,
+                fatorFap: 1.0,
+                aliquotaTerceiros: 5.8
+            });
+
+            expect(resumo.totalColaboradores).toBe(2);
+            expect(resumo.totalBruto).toBeGreaterThan(8000);
+            expect(resumo.totalLiquido).toBeGreaterThan(6000);
+            expect(resumo.totalFgts).toBeGreaterThan(0);
+            expect(resumo.totalInssPatronal).toBeGreaterThan(0); // 20%
+            expect(resumo.totalCustoEmpresa).toBeGreaterThan(resumo.totalBruto);
+            expect(resultados.length).toBe(2);
+        });
+
+        it('deve isentar INSS Patronal e Terceiros para empresas optantes do Simples Nacional', () => {
+            const colaboradores = [
+                { matricula: '001', nome: 'Colaborador Simples', salarioBase: 4000 }
+            ];
+
+            const { resumo } = processarFolhaLote(colaboradores, { optanteSimples: true });
+
+            expect(resumo.totalInssPatronal).toBe(0);
+            expect(resumo.totalRatFap).toBe(0);
+            expect(resumo.totalTerceiros).toBe(0);
+            expect(resumo.totalFgts).toBeCloseTo(4000 * 0.08, 2);
+        });
+
+        it('deve fazer o parse correto de CSV de colaboradores', () => {
+            const csv = 'Nome;Cargo;SalarioBase;HorasExtras50;HorasExtras100;FaltasDias;Dependentes;DescontoVT;AnosServico\n' +
+                        'Maria Silva;Gerente;7000;0;0;0;1;nao;3';
+            const colabs = parsearCsvFolha(csv);
+
+            expect(colabs.length).toBe(1);
+            expect(colabs[0].nome).toBe('Maria Silva');
+            expect(colabs[0].salarioBase).toBe(7000);
+            expect(colabs[0].dependentes).toBe(1);
+        });
+    });
+
+    describe('13. Gestor de Convenção Coletiva (CCT/ACT & ATS)', () => {
+        it('deve calcular corretamente o Adicional por Tempo de Serviço (Quinquênio = 5 anos)', () => {
+            const configQuinquenio = {
+                ativo: true,
+                tipoAts: 'QUINQUENIO',
+                percentualAtsPorPeriodo: 5.0
+            };
+
+            // 11 anos de casa = 2 quinquênios = 10%
+            const ats = calcularATS(4000, 11, configQuinquenio);
+            expect(ats).toBe(400); // 10% de 4000
+        });
+
+        it('deve retornar 0 quando a convenção coletiva estiver inativa', () => {
+            const configInativo = {
+                ativo: false,
+                tipoAts: 'ANUENIO',
+                percentualAtsPorPeriodo: 1.0
+            };
+
+            const ats = calcularATS(5000, 5, configInativo);
+            expect(ats).toBe(0);
+        });
+    });
+
+    describe('14. Mapeamento de Rubricas eSocial (Tabela S-1010)', () => {
+        it('deve localizar rubricas padrão e conter incidências de INSS, FGTS e IRRF', () => {
+            const rubricaSalario = obterRubrica('1000');
+            expect(rubricaSalario).not.toBeNull();
+            expect(rubricaSalario.nome).toContain('Salário');
+            expect(rubricaSalario.incidencias.inss.codigo).toBe('11');
+            expect(rubricaSalario.incidencias.fgts.codigo).toBe('11');
+            expect(rubricaSalario.incidencias.irrf.codigo).toBe('11');
+
+            const rubricaPlr = obterRubrica('1600');
+            expect(rubricaPlr).not.toBeNull();
+            expect(rubricaPlr.incidencias.inss.codigo).toBe('00'); // Isento de INSS
+            expect(rubricaPlr.incidencias.fgts.codigo).toBe('00'); // Isento de FGTS
+            expect(rubricaPlr.incidencias.irrf.codigo).toBe('31'); // Tributação exclusiva
+
+            const todas = listarTodasRubricas();
+            expect(todas.length).toBeGreaterThanOrEqual(10);
         });
     });
 });

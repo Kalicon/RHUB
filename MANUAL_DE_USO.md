@@ -9,18 +9,24 @@
 
 1. [Visão Geral & Filosofia da Ferramenta](#1-visão-geral--filosofia-da-ferramenta)
 2. [Configuração Inicial: Identidade Corporativa](#2-configuração-inicial-identidade-corporativa)
-3. [Como Usar os 10 Módulos de Cálculo](#3-como-usar-os-10-módulos-de-cálculo)
+3. [Como Usar os 11 Módulos de Cálculo](#3-como-usar-os-11-módulos-de-cálculo)
    - [Módulo 1: Adicional Noturno & DSR](#módulo-1-adicional-noturno--dsr)
    - [Módulo 2: Rescisão Contratual & Comparador](#módulo-2-rescisão-contratual--comparador)
    - [Módulo 3: Faltas, Atrasos & Impacto em Férias](#módulo-3-faltas-atrasos--impacto-em-férias)
-   - [Módulo 4: Férias & 13º Salário](#módulo-4-férias--13º-salário)
+   - [Módulo 4: Férias, Fracionamento & 13º Salário](#módulo-4-férias-fracionamento--13º-salário)
    - [Módulo 5: Salário Líquido (Holerite Mensal)](#módulo-5-salário-líquido-holerite-mensal)
    - [Módulo 6: Simulador CLT vs. PJ & Custos](#módulo-6-simulador-clt-vs-pj--custos)
    - [Módulo 7: Banco de Horas & Compensação](#módulo-7-banco-de-horas--compensação)
    - [Módulo 8: Participação nos Lucros e Resultados (PLR)](#módulo-8-participação-nos-lucros-e-resultados-plr)
    - [Módulo 9: Teletrabalho & Ajuda de Custo](#módulo-9-teletrabalho--ajuda-de-custo)
    - [Módulo 10: Equiparação Salarial & Passivo](#módulo-10-equiparação-salarial--passivo)
-4. [Recursos Globais & Produtividade](#4-recursos-globais--produtividade)
+   - [Módulo 11: Folha em Lote & Encargos Patronais](#módulo-11-folha-em-lote--encargos-patronais)
+4. [Recursos Avançados RHUB Enterprise](#4-recursos-avançados-rhub-enterprise)
+   - [Geração Direta de Holerite e TRCT em PDF (Portaria 1.057/2012)](#geração-direta-de-holerite-e-trct-em-pdf-portaria-10572012)
+   - [Planejador de Fracionamento de Férias (Art. 134 e 145 CLT)](#planejador-de-fracionamento-de-férias-art-134-e-145-clt)
+   - [Dicionário de Rubricas & Auditoria eSocial S-1010](#dicionário-de-rubricas--auditoria-esocial-s-1010)
+   - [Simulador de Acordo & Convenção Coletiva (CCT/ACT & ATS)](#simulador-de-acordo--convenção-coletiva-cctact--ats)
+5. [Recursos Globais & Produtividade](#5-recursos-globais--produtividade)
    - [Exportação em Planilhas Excel (.xlsx)](#exportação-em-planilhas-excel-xlsx)
    - [Impressão Executiva & Geração de PDF](#impressão-executiva--geração-de-pdf)
    - [Compartilhamento por Link (Deep Linking)](#compartilhamento-por-link-deep-linking)
@@ -28,6 +34,7 @@
    - [Instalação como Aplicativo (PWA Offline)](#instalação-como-aplicativo-pwa-offline)
    - [Guia & Glossário da CLT](#guia--glossário-da-clt)
    - [Central de Desafios & Sugestões](#central-de-desafios--sugestões)
+6. [Licença & Informações Legais](#6-licença--informações-legais)
 
 ---
 
@@ -105,16 +112,24 @@ Para que as suas planilhas Excel e relatórios de impressão saiam com aparênci
 
 ---
 
-### Módulo 4: Férias & 13º Salário
-*Base Legal: Art. 129 a 145 da CLT, Art. 7º, XVII da CF/88 e Lei 4.090/62.*
+### Módulo 4: Férias, Fracionamento & 13º Salário
+*Base Legal: Art. 129 a 145 da CLT, Art. 7º, XVII da CF/88, Lei 13.467/2017 e Lei 4.090/62.*
 
-- **Quando usar**: Para calcular o recibo de férias com antecedência legal (pagamento até 2 dias antes do início do gozo) e apurações da 1ª e 2ª parcelas do 13º salário.
+- **Quando usar**: Para calcular o recibo de férias individuais ou coletivas, programar o fracionamento em até 3 períodos conforme a Reforma Trabalhista e apurar as parcelas do 13º salário.
 - **Como preencher**:
-  - **Férias**:
+  - **Cálculo de Férias Padrão**:
     1. Informe o salário base e a quantidade de **Dias de Gozo** (30, 24, 18 ou 12 dias).
-    2. Ative **Abono Pecuniário (Art. 143 CLT)** se o colaborador solicitou a venda de 1/3 dos dias de férias (10 dias convertidos em dinheiro com adicional de 1/3 isento de INSS).
+    2. Ative **Abono Pecuniário (Art. 143 CLT)** se o colaborador solicitou a conversão de 1/3 dos dias em abono pecuniário (10 dias indenizados com adicional de 1/3 isento de INSS).
     3. Ative **Férias em Dobro (Art. 137 CLT)** caso as férias estejam sendo concedidas após o término do período concessivo.
     4. Informe a quantidade de **Dependentes** para apuração do IRRF.
+  - **Super Recurso Enterprise — Planejador de Fracionamento (Art. 134 CLT)**:
+    1. No card **Planejamento de Fracionamento de Férias**, divida os dias adquiridos em até 3 períodos (ex: 1º período: 15 dias; 2º período: 10 dias; 3º período: 5 dias).
+    2. Insira as **Datas de Início Previstas** para cada parcela.
+    3. O RHUB audita instantaneamente as 4 exigências legais da CLT:
+       - **Regra de 14 dias**: Pelo menos um dos períodos não pode ser inferior a 14 dias corridos (Art. 134, § 1º).
+       - **Regra de 5 dias**: Nenhum dos períodos pode ser inferior a 5 dias corridos (Art. 134, § 1º).
+       - **Vedação Pré-Feriado/DSR**: O início das férias não pode ocorrer nos 2 dias que antecedem feriado ou dia de descanso semanal remunerado (Art. 134, § 3º). O sistema verifica o dia da semana e exibe alerta em vermelho caso a data viole essa regra.
+       - **Prazo de Pagamento (Art. 145 CLT & Súmula 450 TST)**: O sistema calcula a data limite improrrogável em que a remuneração das férias deve ser creditada (até 2 dias antes do início do respectivo período de gozo).
   - **13º Salário**:
     1. Informe a quantidade de **Meses Trabalhados (Avos)** no ano (mínimo 15 dias trabalhados no mês civil para computar 1 avo).
     2. Veja a divisão da 1ª parcela (sem desconto de INSS/IRRF) e 2ª parcela (com descontos fiscais e previdenciários).
@@ -210,10 +225,96 @@ Para que as suas planilhas Excel e relatórios de impressão saiam com aparênci
 
 ---
 
-## 4. Recursos Globais & Produtividade
+### Módulo 11: Folha em Lote & Encargos Patronais
+*Base Legal: Lei 8.212/91 (Custeio da Seguridade Social), Lei 8.036/90 (FGTS) e Portaria Interministerial MPS/MF nº 2/2024.*
+
+- **Quando usar**: Para processar simultaneamente a folha de pagamento de múltiplos colaboradores (departamentos inteiros, equipes ou pequenas empresas), consolidar proventos e descontos, apurar encargos patronais (INSS Empresa, RAT x FAP, Terceiros/Sistema S, FGTS) e provisionamentos de 13º e Férias.
+- **Como operar**:
+  1. **Entrada de Dados Ágil**:
+     - *Carregar Demonstração*: Clique no botão **Carregar Demo (8 funcionários)** para testar imediatamente com um time simulado contendo salários e cargos variados.
+     - *Importar Planilha / CSV*: Clique em **Importar CSV / Planilha** e selecione um arquivo `.csv` ou `.xlsx`.
+     - *Baixar Modelo*: Use o botão **Baixar Modelo CSV** para obter a planilha padrão com as colunas esperadas (`Nome`, `Cargo`, `SalarioBase`, `HorasExtras50`, `HorasExtras100`, `AdicionalNoturno`, `Insalubridade`, `Dependentes`, `ValeTransporte`, `OutrosDescontos`).
+  2. **Configuração de Encargos Patronais**:
+     - Selecione o **Regime Tributário**:
+       - *Lucro Presumido / Real*: Aplica encargos patronais plenos.
+       - *Simples Nacional (Anexos I a III e V)*: Isento de cota patronal de 20% e contribuição de terceiros.
+     - Ajuste as alíquotas da sua empresa:
+       - **INSS Patronal**: 20,0% sobre a folha de proventos sujeitos a INSS.
+       - **RAT (Risco Ambiental do Trabalho)**: 1,0%, 2,0% ou 3,0%.
+       - **FAP (Fator Acidentário de Prevenção)**: multiplicador de 0,5000 a 2,0000 aplicado sobre o RAT.
+       - **Terceiros / Outras Entidades (Sistema S)**: alíquota convencional de 5,8%.
+  3. **Resultados e Relatórios Consolidados**:
+     - **Cards de Indicadores**: Bruto Total da Empresa, Líquido Total a Pagar aos Empregados, Custo Total da Empresa (incluindo encargos e provisões) e Total de Retenções Fiscais (INSS Empregados + IRRF Retido na Fonte).
+     - **Tabela Dinâmica de Colaboradores**: Lista com detalhamento individual de Salário Bruto, INSS, IRRF, Outros Descontos, Salário Líquido e Custo Empresa por colaborador.
+     - **Extrato dos Encargos da Empresa**: Discriminação em reais do INSS Patronal, RAT ajustado pelo FAP, Sistema S, FGTS Mensal (8%), Provisão Mensal de 13º Salário (1/12 + encargos) e Provisão de Férias + 1/3 (1/12 + 1/3 + encargos).
+     - **Exportação Consolidada**: Botão **Exportar Excel** para baixar o relatório completo da folha em formato `.xlsx` multi-colunas.
+
+---
+
+## 4. Recursos Avançados RHUB Enterprise
+
+### Geração Direta de Holerite e TRCT em PDF (Portaria 1.057/2012)
+O RHUB dispõe de um motor nativo de geração de PDFs vetoriais de alta fidelidade visual e conformidade fiscal:
+- **Onde encontrar**:
+  - No **Módulo 5 (Salário Líquido)**: botão **Gerar Holerite PDF**.
+  - No **Módulo 2 (Rescisão Contratual)**: botão **Gerar TRCT PDF**.
+- **Como funciona**:
+  1. Ao clicar no botão, um modal de pré-visualização oficial é aberto imediatamente.
+  2. O documento é diagramado no padrão clássico de departamento pessoal brasileiro:
+     - **Holerite (Recibo de Pagamento de Salário)**: Cabeçalho com razão social, CNPJ e competência; dados do colaborador (nome, cargo, CBO); tabela discriminando códigos de proventos/descontos e referências; totais de vencimentos e descontos; bases de cálculo de INSS, FGTS e IRRF; e campo assinado do empregado.
+     - **TRCT (Portaria MTE nº 1.057/2012)**: Termo de Rescisão com discriminação das verbas rescisórias, deduções legais e Termo de Homologação/Quitação.
+  3. Clique em **Baixar PDF Oficial**: o documento é compilado como arquivo PDF vetorial nítido de alta resolução diretamente no navegador (via `html2pdf.js`), sem marcas d'água e sem necessitar de diálogo de impressão do sistema operacional.
+
+### Planejador de Fracionamento de Férias (Art. 134 e 145 CLT)
+- **Onde encontrar**: Card integrado no **Módulo 4 (Férias & 13º)**.
+- **Como funciona**:
+  - Permite programar o gozo de férias em até 3 períodos conforme introduzido pela Reforma Trabalhista (Lei 13.467/2017).
+  - O sistema valida as regras fundamentais:
+    1. A soma dos períodos deve coincidir exatamente com os dias de gozo devidos (ex: 30 dias).
+    2. **Período Principal**: Pelo menos um período deve ter no mínimo 14 dias corridos.
+    3. **Períodos Secundários**: Nenhum período pode ter menos de 5 dias corridos.
+    4. **Vedação de Início Pré-DSR/Feriado (Art. 134, § 3º)**: O sistema analisa a data de início selecionada e emite aviso em vermelho caso as férias comecem nos dois dias que antecedem o repouso semanal remunerado (tipicamente quintas e sextas-feiras) ou feriados.
+    5. **Prazo Improrrogável de Pagamento (Art. 145 CLT)**: Aponta a data limite de quitação financeira de cada período (até 2 dias antes do início do respectivo gozo), prevenindo condenações de pagamento em dobro (Súmula 450 TST).
+
+### Dicionário de Rubricas & Auditoria eSocial S-1010
+- **Onde encontrar**: Botão **eSocial** no topo da aplicação.
+- **Finalidade**: Oferecer uma tabela de consulta rápida e auditoria tributária de eventos periódicos e tabela de rubricas do eSocial:
+  - Códigos canônicos da **Tabela 03 do eSocial**:
+    - *1000*: Salário / Vencimento Base
+    - *1003/1004*: Salário Família e Salário Maternidade
+    - *1020*: Horas Extras (50% e 100%)
+    - *1030*: Descanso Semanal Remunerado (DSR)
+    - *1080*: Adicional Noturno
+    - *1090*: Adicional de Insalubridade
+    - *1091*: Adicional de Periculosidade
+    - *1500*: 13º Salário
+    - *1600*: Férias Gozadas
+    - *1700*: Aviso Prévio Indenizado
+    - *9201*: Desconto de INSS
+    - *9214*: Desconto de IRRF
+  - **Tabela de Incidências Tributárias Oficiais**:
+    - **Incidência CP** (Contribuição Previdenciária): Código 11 (Mensal), 12 (13º), 00 (Não é base).
+    - **Incidência FGTS**: Código 11 (Mensal), 12 (13º), 00 (Não é base).
+    - **Incidência IRRF**: Código 11 (Mensal), 12 (13º), 31 (Férias), 00 (Isento/Não tributável).
+  - Serve como checklist para analistas de DP conferirem parametrizações de rubricas no software de folha antes do fechamento de eventos periódicos S-1200 / S-1210.
+
+### Simulador de Acordo & Convenção Coletiva (CCT/ACT & ATS)
+- **Onde encontrar**: Botão **CCT/Sindicato** no topo da aplicação.
+- **Finalidade**: Aplicar regras específicas da convenção ou acordo coletivo de trabalho da categoria profissional:
+  - **Adicional por Tempo de Serviço (ATS)**:
+    - Modalidades suportadas: *Anuênio* (ex: 1% ao ano), *Triênio* (ex: 3% a cada 3 anos) ou *Quinquênio* (ex: 5% a cada 5 anos).
+    - Informe o tempo de empresa em anos: o sistema calcula o percentual cumulativo e o valor financeiro do ATS.
+  - **Piso Salarial Convencional**: Permite registrar o piso da categoria para fins de conferência salarial.
+  - **Adicional Noturno Diferenciado**: Permite definir percentuais acima dos 20% legais da CLT (ex: 25%, 30%, 35%).
+  - **Sábado como Repouso Semanal Remunerado (DSR)**: Opção de considerar o sábado como dia de descanso e não útil para bancários e categorias com previsão expressa em CCT (Súmula 113 TST).
+  - As definições são armazenadas no navegador e influenciam automaticamente os cálculos dos módulos correspondentes.
+
+---
+
+## 5. Recursos Globais & Produtividade
 
 ### Exportação em Planilhas Excel (.xlsx)
-Em qualquer um dos 10 módulos, clique no botão **Excel** (no canto superior do painel ou na barra superior).
+Em qualquer um dos 11 módulos, clique no botão **Excel** (no canto superior do painel ou na barra superior).
 - O arquivo `.xlsx` é gerado instantaneamente no seu navegador via SheetJS.
 - A planilha já vem com formatação monetária padrão BRL, dados da sua empresa/colaborador, parâmetros de entrada e a memória de cálculo completa.
 
@@ -221,7 +322,7 @@ Em qualquer um dos 10 módulos, clique no botão **Excel** (no canto superior do
 Clique no botão **Imprimir** em qualquer módulo.
 - A folha de estilo `@media print` remove automaticamente menus, barras de rolagem, orbes e botões.
 - É gerado um documento executivo em folha A4 contendo o cabeçalho timbrado com os dados corporativos da empresa, o extrato detalhado do cálculo e um campo oficial de visto/assinatura para arquivamento no dossiê do colaborador.
-- Para salvar em PDF, basta selecionar **"Salvar como PDF"** na caixa de diálogo de impressão do seu navegador.
+- Para salvar em PDF via impressora do sistema, selecione **"Salvar como PDF"** na caixa de diálogo de impressão.
 
 ### Compartilhamento por Link (Deep Linking)
 Precisa enviar uma simulação para um gestor, cliente ou colega?
@@ -254,6 +355,7 @@ Precisa enviar uma simulação para um gestor, cliente ou colega?
 
 ---
 
-## 5. Licença & Informações Legais
+## 6. Licença & Informações Legais
 
 O **RHUB** é um software livre e de código aberto distribuído sob a licença **MIT**. Você é livre para utilizá-lo comercialmente, em consultorias, escritórios contábeis, departamentos jurídicos ou adaptá-lo às necessidades da sua organização.
+

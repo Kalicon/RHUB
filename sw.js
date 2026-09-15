@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════
  */
 
-const CACHE_NAME = 'rhub-pwa-v2.1';
+const CACHE_NAME = 'rhub-pwa-v3.0';
 
 const CORE_ASSETS = [
     './',
@@ -26,6 +26,10 @@ const CORE_ASSETS = [
     './assets/js/modules/plr.js',
     './assets/js/modules/teletrabalho.js',
     './assets/js/modules/equiparacao.js',
+    './assets/js/modules/folha_lote.js',
+    './assets/js/data/esocial_rubricas.js',
+    './assets/js/data/cct_config.js',
+    './assets/js/utils/pdf_generator.js',
     './assets/js/utils/formatters.js',
     './assets/js/utils/validators.js',
     './assets/js/utils/exporter.js',

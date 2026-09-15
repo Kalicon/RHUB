@@ -610,3 +610,70 @@ export async function copiarTextoClipboard(texto) {
     }
 }
 
+// ─────────────────────────────────────────────────────────────────────
+// 12. EXPORTAÇÃO — FOLHA DE PAGAMENTO EM LOTE (CONSOLIDADA)
+// ─────────────────────────────────────────────────────────────────────
+export function exportarFolhaLoteXLSX(dadosLote, resumo, configEmpresa = {}) {
+    const dataHora = getDataHoraAtual();
+    const linhas = [
+        ['RHUB — DEPARTAMENTO PESSOAL OPEN SOURCE', '', '', '', '', '', '', '', '', ''],
+        ['FOLHA DE PAGAMENTO MENSAL CONSOLIDADA — EM LOTE', '', '', '', '', '', '', '', '', ''],
+        ['Empresa:', configEmpresa.razaoSocial || 'EMPRESA DEMONSTRAÇÃO LTDA', 'CNPJ:', configEmpresa.cnpj || '12.345.678/0001-90', 'Emissão:', dataHora, '', '', '', ''],
+        ['Regime:', configEmpresa.optanteSimples ? 'Simples Nacional' : 'Lucro Presumido / Real', 'Mês Ref:', configEmpresa.mesReferencia || 'Setembro/2026', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', '', '', ''],
+        ['═══ RESUMO EXECUTIVO DA FOLHA ═══', '', '', '', '', '', '', '', '', ''],
+        ['Total de Colaboradores:', resumo.totalColaboradores, '', '', '', '', '', '', '', ''],
+        ['Total Folha Bruta (Proventos):', formatCurrency(resumo.totalBruto), '', '', '', '', '', '', '', ''],
+        ['Total Folha Líquida (A Pagar):', formatCurrency(resumo.totalLiquido), '', '', '', '', '', '', '', ''],
+        ['Total INSS Empregados Retido:', formatCurrency(resumo.totalInssEmpregados), '', '', '', '', '', '', '', ''],
+        ['Total IRRF Empregados Retido:', formatCurrency(resumo.totalIrrfEmpregados), '', '', '', '', '', '', '', ''],
+        ['Total FGTS Mensal (8%):', formatCurrency(resumo.totalFgts), '', '', '', '', '', '', '', ''],
+        ['Total INSS Patronal (20%):', formatCurrency(resumo.totalInssPatronal), '', '', '', '', '', '', '', ''],
+        ['Total RAT/FAP da Empresa:', formatCurrency(resumo.totalRatFap), '', '', '', '', '', '', '', ''],
+        ['Total Terceiros / Sistema S:', formatCurrency(resumo.totalTerceiros), '', '', '', '', '', '', '', ''],
+        ['Total Tributos Gerados (Gov):', formatCurrency(resumo.totalTributosGoverno), '', '', '', '', '', '', '', ''],
+        ['Custo Efetivo Total Empresa:', formatCurrency(resumo.totalCustoEmpresa), '', '', '', '', '', '', '', ''],
+        ['', '', '', '', '', '', '', '', '', ''],
+        ['═══ DISCRIMINAÇÃO INDIVIDUAL POR COLABORADOR ═══', '', '', '', '', '', '', '', '', ''],
+        [
+            'Matrícula', 'Nome Completo', 'Cargo', 'Salário Base', 'H. Extras (R$)', 'DSR Extras',
+            'Faltas (R$)', 'INSS (R$)', 'IRRF (R$)', 'Salário Líquido', 'FGTS (R$)', 'Custo Empresa (R$)'
+        ]
+    ];
+
+    dadosLote.forEach(colab => {
+        linhas.push([
+            colab.matricula,
+            colab.nome,
+            colab.cargo,
+            formatCurrency(colab.salarioBase),
+            formatCurrency(colab.totalHe50 + colab.totalHe100),
+            formatCurrency(colab.dsrHe),
+            formatCurrency(colab.valorFaltas),
+            formatCurrency(colab.valorInss),
+            formatCurrency(colab.valorIrrf),
+            formatCurrency(colab.salarioLiquido),
+            formatCurrency(colab.valorFgts),
+            formatCurrency(colab.custoEmpresa)
+        ]);
+    });
+
+    salvarPlanilha(linhas, `RHUB_Folha_Lote_${new Date().toISOString().split('T')[0]}`, 'Folha Consolidada');
+}
+
+/**
+ * Dispara o download do template CSV pré-formatado
+ */
+export function baixarTemplateCsvFolha(conteudoCsv) {
+    const blob = new Blob(['\ufeff' + conteudoCsv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'RHUB_Modelo_Colaboradores.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+

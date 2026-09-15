@@ -7,13 +7,17 @@
 import { calcularAdicionalNoturno, FATOR_HORA_FICTA } from './modules/noturno.js';
 import { calcularRescisao, MOTIVOS_RESCISAO, compararCenariosRescisao } from './modules/rescisao.js';
 import { calcularFaltas } from './modules/faltas.js';
-import { calcularFerias, calcular13o } from './modules/ferias.js';
+import { calcularFerias, calcular13o, validarFracionamentoFerias } from './modules/ferias.js';
 import { calcularSalarioLiquido } from './modules/liquido.js';
 import { calcularCustosCltPj } from './modules/clt_pj.js';
 import { calcularBancoHoras } from './modules/banco_horas.js';
 import { calcularPLR } from './modules/plr.js';
 import { calcularTeletrabalho } from './modules/teletrabalho.js';
 import { calcularEquiparacao } from './modules/equiparacao.js';
+import { processarFolhaLote, gerarDemonstracaoFolha, parsearCsvFolha, gerarCsvTemplate } from './modules/folha_lote.js';
+import { construirHtmlHolerite, construirHtmlTRCT, baixarDocumentoPDF } from './utils/pdf_generator.js';
+import { listarTodasRubricas, renderizarBadgeEsocial, obterRubrica } from './data/esocial_rubricas.js';
+import { obterConfigCCT, salvarConfigCCT, restaurarPadraoCLT } from './data/cct_config.js';
 import { formatCurrency, formatNumber, formatHoursMinutes, parseCurrency } from './utils/formatters.js';
 import {
     exportarNoturnoExcel,
@@ -26,6 +30,8 @@ import {
     exportarPlrExcel,
     exportarTeletrabalhoExcel,
     exportarEquiparacaoExcel,
+    exportarFolhaLoteXLSX,
+    baixarTemplateCsvFolha,
     copiarTextoClipboard
 } from './utils/exporter.js';
 import {
@@ -64,6 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initPlrModule();
     initTeletrabalhoModule();
     initEquiparacaoModule();
+    initFolhaLoteModule();
+    initCctModule();
+    initEsocialModule();
+    initPdfPreviewModule();
     initGlossarioModal();
     initDesafiosModule();
     aplicarParametrosUrl();
@@ -429,6 +439,7 @@ const MODULE_META = {
     plr:            { title: 'PLR (Lucros & Resultados)',  badge: 'Lei 10.101/00' },
     teletrabalho:   { title: 'Teletrabalho & Home Office', badge: 'Art. 75-A CLT' },
     equiparacao:    { title: 'Equiparação Salarial',       badge: 'Art. 461 CLT' },
+    'folha-lote':   { title: 'Folha em Lote & Analytics',  badge: 'Corporativo' }
 };
 
 function initSPARouter() {
@@ -973,6 +984,83 @@ function initFeriasModule() {
         renderMemoria($('ferMemoria13o'), dec13.memoriaCalculo);
 
         prev = { liqFerias: ferias.liquidoFerias, liq13: dec13.liquido13o, brutoF: ferias.totalBrutoFerias, terco: ferias.tercoConstitucional, bruto13: dec13.valor13oBruto, deducoes: totalDed };
+        atualizarFracionamento();
+    }
+
+    function atualizarFracionamento() {
+        const diasTotais = Number($('ferDias')?.value) || 30;
+        const venderAbono = $('ferAbono')?.checked ?? false;
+        const qtdPeriodos = Number($('fracQtdPeriodos')?.value) || 2;
+        const dataInicio1 = $('fracDataInicio')?.value || '';
+
+        const p1Input = $('fracP1');
+        const p2Input = $('fracP2');
+        const p3Input = $('fracP3');
+
+        if (qtdPeriodos === 1) {
+            if (p1Input) { p1Input.value = venderAbono ? 20 : diasTotais; p1Input.disabled = true; }
+            if (p2Input) { p2Input.value = 0; p2Input.disabled = true; }
+            if (p3Input) { p3Input.value = 0; p3Input.disabled = true; }
+        } else if (qtdPeriodos === 2) {
+            if (p1Input) p1Input.disabled = false;
+            if (p2Input) {
+                p2Input.disabled = false;
+                const diasRestantes = (venderAbono ? 20 : diasTotais) - (Number(p1Input?.value) || 15);
+                p2Input.value = Math.max(0, diasRestantes);
+            }
+            if (p3Input) { p3Input.value = 0; p3Input.disabled = true; }
+        } else if (qtdPeriodos === 3) {
+            if (p1Input) p1Input.disabled = false;
+            if (p2Input) p2Input.disabled = false;
+            if (p3Input) p3Input.disabled = false;
+        }
+
+        const periodos = [
+            Number(p1Input?.value) || 0,
+            Number(p2Input?.value) || 0,
+            Number(p3Input?.value) || 0
+        ].slice(0, qtdPeriodos);
+
+        const res = validarFracionamentoFerias({
+            diasTotaisDireito: diasTotais,
+            venderAbono,
+            periodos,
+            dataInicio1
+        });
+
+        const alertaBox = $('fracAlerta');
+        if (alertaBox) {
+            alertaBox.classList.remove('hidden');
+            if (!res.valido) {
+                alertaBox.className = 'p-3 rounded-xl text-xs bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/60';
+                alertaBox.innerHTML = `<strong>⚠️ Desconformidade CLT (Art. 134):</strong><ul class="list-disc ml-4 mt-1 space-y-0.5">${res.erros.map(e => `<li>${e}</li>`).join('')}</ul>`;
+            } else {
+                alertaBox.className = 'p-3 rounded-xl text-xs bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60';
+                let avisosHtml = res.avisos.length > 0 ? `<p class="mt-1 text-amber-600 dark:text-amber-400 font-semibold">${res.avisos.join('<br>')}</p>` : '';
+                alertaBox.innerHTML = `<strong>✓ Fracionamento em Conformidade com a CLT!</strong> (${res.qtdPeriodos} períodos &bull; ${res.somaDias} dias gozo${res.diasAbono ? ' + 10d abono pecuniário' : ''})${avisosHtml}`;
+            }
+        }
+
+        const cronogramaBox = $('fracCronograma');
+        if (cronogramaBox) {
+            if (res.cronograma.length > 0) {
+                cronogramaBox.innerHTML = res.cronograma.map(c => `
+                    <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 text-xs flex items-center justify-between">
+                        <div>
+                            <span class="font-bold text-slate-800 dark:text-slate-200">${c.periodo}º Período:</span>
+                            <span class="text-slate-600 dark:text-slate-400 font-mono">${c.dias} dias</span>
+                            <span class="text-[10px] text-slate-400 block">${c.dataInicio.split('-').reverse().join('/')} até ${c.dataFim.split('-').reverse().join('/')} &bull; Retorno: ${c.dataRetorno.split('-').reverse().join('/')}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-[9px] uppercase font-bold text-emerald-600 dark:text-emerald-400 block">Pgto. até</span>
+                            <span class="font-mono text-xs font-bold text-slate-900 dark:text-white">${c.dataLimitePagamento.split('-').reverse().join('/')}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                cronogramaBox.innerHTML = '';
+            }
+        }
     }
 
     function exportExcel() {
@@ -1028,6 +1116,9 @@ TOTAL LÍQUIDO A RECEBER: ${formatCurrency(currentFeriasResult.liquidoFerias + c
 
     ['ferSalario','ferDias','ferAbono','ferDobro','ferDependentes','fer13Meses']
         .forEach(id => { const el = $(id); if (el) { el.addEventListener('input', calc); el.addEventListener('change', calc); } });
+
+    ['fracDataInicio', 'fracQtdPeriodos', 'fracP1', 'fracP2', 'fracP3']
+        .forEach(id => { const el = $(id); if (el) { el.addEventListener('input', atualizarFracionamento); el.addEventListener('change', atualizarFracionamento); } });
 
     $('ferSalario')?.addEventListener('blur', e => { const v = parseCurrency(e.target.value); if (v > 0) e.target.value = formatNumber(v, 2); });
     calc();
@@ -2362,4 +2453,452 @@ ${descricao}
     btnClose?.addEventListener('click', () => modal?.classList.add('hidden'));
     modal?.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  PRÉVIA E GERAÇÃO DE DOCUMENTOS PDF (HOLERITE & TRCT)
+// ═══════════════════════════════════════════════════════════════════════
+let pdfDocumentoAtual = { html: '', filename: 'documento.pdf' };
+
+function abrirPreviaPdf(html, filename = 'documento.pdf', titulo = 'Prévia do Documento Oficial') {
+    pdfDocumentoAtual = { html, filename };
+    const modal = document.getElementById('modalPdfPreview');
+    const container = document.getElementById('pdfPreviewConteudo');
+    const titleEl = document.getElementById('pdfPreviewTitulo');
+
+    if (titleEl) titleEl.textContent = titulo;
+    if (container) container.innerHTML = html;
+    modal?.classList.remove('hidden');
+}
+
+function initPdfPreviewModule() {
+    const modal = document.getElementById('modalPdfPreview');
+    const btnFechar = document.getElementById('btnFecharPdfModal');
+    const btnCloseX = document.getElementById('closeModalPdfPreview');
+    const btnDownload = document.getElementById('btnConfirmarDownloadPdf');
+
+    const fechar = () => modal?.classList.add('hidden');
+    btnFechar?.addEventListener('click', fechar);
+    btnCloseX?.addEventListener('click', fechar);
+    modal?.addEventListener('click', e => { if (e.target === modal) fechar(); });
+
+    btnDownload?.addEventListener('click', async () => {
+        showToast('Gerando PDF vetorial...', 'download');
+        await baixarDocumentoPDF(pdfDocumentoAtual.html, pdfDocumentoAtual.filename);
+        showToast('Download do PDF concluído com sucesso!', 'success');
+        fechar();
+    });
+
+    // Botão PDF no painel Salário Líquido
+    document.getElementById('btnPdfHolerite')?.addEventListener('click', () => {
+        const salario = parseCurrency(document.getElementById('liqSalario')?.value);
+        const res = calcularSalarioLiquido({
+            salarioBase: salario,
+            divisorMensal: Number(document.getElementById('liqDivisor')?.value) || 220,
+            horasExtras50: Number(document.getElementById('liqHE50')?.value) || 0,
+            horasExtras100: Number(document.getElementById('liqHE100')?.value) || 0,
+            adicionalNoturnoValor: parseCurrency(document.getElementById('liqNoturno')?.value),
+            insalubridadeGrau: Number(document.getElementById('liqInsalubridade')?.value) || 0,
+            periculosidadeAtiva: document.getElementById('liqPericulosidade')?.checked ?? false,
+            dependentesIR: Number(document.getElementById('liqDependentes')?.value) || 0,
+            pensaoAlimenticia: parseCurrency(document.getElementById('liqPensao')?.value),
+            optanteVT: document.getElementById('liqOptanteVT')?.checked ?? true,
+            descontoVR: parseCurrency(document.getElementById('liqVR')?.value),
+            descontoSaude: parseCurrency(document.getElementById('liqSaude')?.value)
+        });
+
+        const proventos = res.rubricasProventos.map(p => ({ codigo: p.codigo, descricao: p.nome, referencia: p.referencia, valor: p.valor }));
+        const descontos = res.rubricasDescontos.map(d => ({ codigo: d.codigo, descricao: d.nome, referencia: d.referencia, valor: d.valor }));
+
+        const html = construirHtmlHolerite({
+            empresa: { razaoSocial: document.getElementById('printNomeEmpresa')?.textContent || 'EMPRESA DEMONSTRAÇÃO LTDA' },
+            colaborador: { nome: document.getElementById('printNomeColaborador')?.textContent || 'Colaborador RHUB' },
+            referencia: 'Folha Mensal',
+            proventos,
+            descontos,
+            bases: {
+                salarioBase: res.salarioBase,
+                baseInss: res.inss.baseCalculo,
+                baseFgts: res.salarioBrutoTotal,
+                fgtsMes: res.fgtsMes,
+                baseIrrf: res.irrf.baseCalculo,
+                faixaIrrf: `${res.irrf.aliquota}%`
+            }
+        });
+
+        abrirPreviaPdf(html, `Holerite_Mensal.pdf`, 'Recibo de Pagamento de Salário (Holerite)');
+    });
+
+    // Botão PDF no painel Rescisão Contratual
+    document.getElementById('btnPdfTRCT')?.addEventListener('click', () => {
+        const salario = parseCurrency(document.getElementById('rescSalario')?.value);
+        const res = calcularRescisao({
+            salarioBase: salario,
+            motivo: document.getElementById('rescMotivo')?.value || 'SEM_JUSTA_CAUSA',
+            dataAdmissao: document.getElementById('rescDataAdm')?.value || '2022-01-01',
+            dataDemissao: document.getElementById('rescDataDem')?.value || '2026-09-15',
+            diasTrabalhadosMes: Number(document.getElementById('rescDiasTrab')?.value) || 15,
+            tipoAvisoPrevio: document.getElementById('rescTipoAviso')?.value || 'indenizado',
+            feriasVencidas: document.getElementById('rescFeriasVencidas')?.checked ?? false,
+            saldoFGTS: parseCurrency(document.getElementById('rescSaldoFGTS')?.value) || 0,
+            dependentesIR: Number(document.getElementById('rescDependentes')?.value) || 0
+        });
+
+        const verbas = res.rubricasProventos.map((p, idx) => ({ campo: String(50 + idx), descricao: p.nome, valor: p.valor }));
+        const deducoes = res.rubricasDescontos.map((d, idx) => ({ campo: String(100 + idx), descricao: d.nome, valor: d.valor }));
+
+        const html = construirHtmlTRCT({
+            empresa: { razaoSocial: document.getElementById('printNomeEmpresa')?.textContent || 'EMPRESA DEMONSTRAÇÃO LTDA' },
+            trabalhador: { nome: document.getElementById('printNomeColaborador')?.textContent || 'Colaborador RHUB' },
+            contrato: {
+                motivo: document.getElementById('rescMotivo')?.options[document.getElementById('rescMotivo')?.selectedIndex]?.text,
+                dataAdmissao: document.getElementById('rescDataAdm')?.value,
+                dataDemissao: document.getElementById('rescDataDem')?.value,
+                salarioBase: salario
+            },
+            verbas,
+            deducoes
+        });
+
+        abrirPreviaPdf(html, `TRCT_Rescisao.pdf`, 'Termo de Rescisão do Contrato de Trabalho (TRCT)');
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  GESTÃO DE CONVENÇÕES E ACORDOS COLETIVOS (CCT / ACT)
+// ═══════════════════════════════════════════════════════════════════════
+function initCctModule() {
+    const $ = id => document.getElementById(id);
+    const modal = $('modalCCT');
+    const btnOpen = $('topBtnCCT');
+    const btnClose = $('closeModalCCT');
+    const form = $('formCCT');
+    const btnRestaurar = $('btnRestaurarCCT');
+    const badgeStatus = $('badgeCctStatus');
+
+    function sincronizarFormulario() {
+        const config = obterConfigCCT();
+        if ($('cctAtivo')) $('cctAtivo').checked = config.ativo;
+        if ($('cctNomeSindicato')) $('cctNomeSindicato').value = config.nomeSindicato || '';
+        if ($('cctAdicNoturno')) $('cctAdicNoturno').value = config.adicionalNoturnoPercentual || 20;
+        if ($('cctPisoSalarial')) $('cctPisoSalarial').value = config.pisoSalarial || 1412;
+        if ($('cctSabadoDsr')) $('cctSabadoDsr').checked = config.sabadoComoDsr;
+        if ($('cctTipoAts')) $('cctTipoAts').value = config.tipoAts || 'NENHUM';
+        if ($('cctPercentualAts')) $('cctPercentualAts').value = config.percentualAtsPorPeriodo || 0;
+
+        if (badgeStatus) {
+            if (config.ativo) badgeStatus.classList.remove('hidden');
+            else badgeStatus.classList.add('hidden');
+        }
+    }
+
+    sincronizarFormulario();
+
+    btnOpen?.addEventListener('click', () => {
+        sincronizarFormulario();
+        modal?.classList.remove('hidden');
+    });
+
+    const fechar = () => modal?.classList.add('hidden');
+    btnClose?.addEventListener('click', fechar);
+    modal?.addEventListener('click', e => { if (e.target === modal) fechar(); });
+
+    form?.addEventListener('submit', e => {
+        e.preventDefault();
+        const novaConfig = {
+            ativo: $('cctAtivo')?.checked ?? false,
+            nomeSindicato: $('cctNomeSindicato')?.value || 'Convenção Coletiva',
+            adicionalNoturnoPercentual: parseFloat($('cctAdicNoturno')?.value) || 20,
+            pisoSalarial: parseFloat($('cctPisoSalarial')?.value) || 1412,
+            sabadoComoDsr: $('cctSabadoDsr')?.checked ?? false,
+            tipoAts: $('cctTipoAts')?.value || 'NENHUM',
+            percentualAtsPorPeriodo: parseFloat($('cctPercentualAts')?.value) || 0
+        };
+
+        salvarConfigCCT(novaConfig);
+        sincronizarFormulario();
+        fechar();
+        showToast('Regras da Convenção Coletiva salvas com sucesso!', 'success');
+    });
+
+    btnRestaurar?.addEventListener('click', () => {
+        if (confirm('Deseja restaurar as regras padrão da CLT?')) {
+            restaurarPadraoCLT();
+            sincronizarFormulario();
+            fechar();
+            showToast('Regras restauradas para o padrão CLT.');
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MODO DE AUDITORIA E DICIONÁRIO ESOCIAL (S-1010)
+// ═══════════════════════════════════════════════════════════════════════
+function initEsocialModule() {
+    const $ = id => document.getElementById(id);
+    const btnTop = $('topBtnEsocial');
+    const modal = $('modalEsocial');
+    const btnClose = $('closeModalEsocial');
+    const filtroInput = $('filtroEsocialRubricas');
+    const listaContainer = $('esocialRubricasLista');
+
+    btnTop?.addEventListener('click', e => {
+        renderizarRubricas();
+        modal?.classList.remove('hidden');
+    });
+
+    const fechar = () => modal?.classList.add('hidden');
+    btnClose?.addEventListener('click', fechar);
+    modal?.addEventListener('click', e => { if (e.target === modal) fechar(); });
+
+    function renderizarRubricas() {
+        if (!listaContainer) return;
+        const termo = (filtroInput?.value || '').toLowerCase().trim();
+        const rubricas = listarTodasRubricas().filter(r => 
+            r.codigo.includes(termo) ||
+            r.nome.toLowerCase().includes(termo) ||
+            r.fundamento.toLowerCase().includes(termo)
+        );
+
+        listaContainer.innerHTML = rubricas.map(r => `
+            <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 text-xs">
+                <div class="flex items-center justify-between mb-1.5">
+                    <div class="flex items-center gap-2">
+                        <span class="font-mono font-bold text-xs px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">
+                            eSocial ${r.codigo}
+                        </span>
+                        <span class="font-bold text-slate-900 dark:text-white">${r.nome}</span>
+                    </div>
+                    <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded ${r.tipo === 'PROVENTO' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300'}">
+                        ${r.tipo}
+                    </span>
+                </div>
+                <div class="grid grid-cols-3 gap-2 my-2 py-2 border-y border-slate-200/60 dark:border-slate-700/60 font-mono text-[10px]">
+                    <div><span class="text-slate-400 block font-sans">INSS (CP):</span><strong>Cód. ${r.incidencias.inss.codigo}</strong> &bull; ${r.incidencias.inss.descricao}</div>
+                    <div><span class="text-slate-400 block font-sans">FGTS:</span><strong>Cód. ${r.incidencias.fgts.codigo}</strong> &bull; ${r.incidencias.fgts.descricao}</div>
+                    <div><span class="text-slate-400 block font-sans">IRRF:</span><strong>Cód. ${r.incidencias.irrf.codigo}</strong> &bull; ${r.incidencias.irrf.descricao}</div>
+                </div>
+                <span class="text-[10px] text-slate-400">Base Legal: ${r.fundamento}</span>
+            </div>
+        `).join('');
+    }
+
+    filtroInput?.addEventListener('input', renderizarRubricas);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MODULE 11: FOLHA DE PAGAMENTO EM LOTE (BATCH PAYROLL & ANALYTICS)
+// ═══════════════════════════════════════════════════════════════════════
+function initFolhaLoteModule() {
+    const $ = id => document.getElementById(id);
+    let loteColaboradores = [];
+    let loteResumo = null;
+    let loteConfig = {};
+
+    function obterConfigEmpresa() {
+        return {
+            razaoSocial: $('printNomeEmpresa')?.textContent || 'EMPRESA DEMONSTRAÇÃO LTDA',
+            cnpj: '12.345.678/0001-90',
+            optanteSimples: $('loteRegime')?.value === 'simples',
+            aliquotaRat: parseFloat($('loteRat')?.value) || 2.0,
+            fatorFap: parseFloat($('loteFap')?.value) || 1.0,
+            aliquotaTerceiros: parseFloat($('loteTerceiros')?.value) || 5.8,
+            mesReferencia: 'Setembro / 2026'
+        };
+    }
+
+    function processarERenderizar(colaboradores) {
+        loteColaboradores = colaboradores;
+        loteConfig = obterConfigEmpresa();
+        const { resultados, resumo } = processarFolhaLote(loteColaboradores, loteConfig);
+        loteResumo = resumo;
+
+        if ($('outLoteCustoTotal')) $('outLoteCustoTotal').textContent = formatCurrency(resumo.totalCustoEmpresa);
+        if ($('outLoteQtdColab')) $('outLoteQtdColab').textContent = String(resumo.totalColaboradores);
+        if ($('outLoteTotalLiquido')) $('outLoteTotalLiquido').textContent = formatCurrency(resumo.totalLiquido);
+        if ($('outLoteTotalEncargos')) $('outLoteTotalEncargos').textContent = formatCurrency(resumo.totalInssPatronal + resumo.totalRatFap + resumo.totalTerceiros + resumo.totalFgts);
+        if ($('outLoteTotalTributos')) $('outLoteTotalTributos').textContent = formatCurrency(resumo.totalTributosGoverno);
+
+        renderizarTabela(resultados);
+    }
+
+    function renderizarTabela(resultados) {
+        const tbody = $('tabelaCorpoLote');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        const filtro = ($('filtroColaboradorLote')?.value || '').toLowerCase().trim();
+        const filtrados = resultados.filter(r => 
+            r.nome.toLowerCase().includes(filtro) || 
+            r.cargo.toLowerCase().includes(filtro) || 
+            r.matricula.includes(filtro)
+        );
+
+        if (filtrados.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" class="py-8 text-center text-slate-400">
+                        Nenhum colaborador carregado. Clique em "Carregar Demonstração" ou importe uma planilha.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        filtrados.forEach(colab => {
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors text-xs';
+            tr.innerHTML = `
+                <td class="py-3 px-4 font-mono text-slate-500">${colab.matricula}</td>
+                <td class="py-3 px-4">
+                    <span class="font-bold text-slate-900 dark:text-white block">${colab.nome}</span>
+                    <span class="text-[10px] text-slate-400">${colab.cargo}</span>
+                </td>
+                <td class="py-3 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${formatCurrency(colab.salarioBase)}</td>
+                <td class="py-3 px-4 text-right font-mono text-emerald-600 dark:text-emerald-400">+ ${formatCurrency(colab.totalProventosBrutos - colab.salarioBase)}</td>
+                <td class="py-3 px-4 text-right font-mono text-red-500">− ${formatCurrency(colab.totalDescontos)}</td>
+                <td class="py-3 px-4 text-right font-mono font-bold text-slate-900 dark:text-white">${formatCurrency(colab.salarioLiquido)}</td>
+                <td class="py-3 px-4 text-right font-mono text-slate-500">${formatCurrency(colab.valorFgts)}</td>
+                <td class="py-3 px-4 text-right font-mono font-semibold text-cyan-600 dark:text-cyan-400">${formatCurrency(colab.custoEmpresa)}</td>
+                <td class="py-3 px-4 text-center">
+                    <button class="btn-holerite-pdf p-1.5 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors" title="Gerar Holerite Oficial (PDF)">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </button>
+                </td>
+            `;
+
+            tr.querySelector('.btn-holerite-pdf')?.addEventListener('click', () => {
+                abrirHoleriteColaborador(colab);
+            });
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    function abrirHoleriteColaborador(colab) {
+        const proventos = [
+            { codigo: '1000', descricao: 'Salário Base Mensal', referencia: '30d', valor: colab.salarioBase }
+        ];
+        if (colab.totalHe50 > 0) proventos.push({ codigo: '1003', descricao: 'Horas Extras (50%)', referencia: `${colab.horasExtras50}h`, valor: colab.totalHe50 });
+        if (colab.totalHe100 > 0) proventos.push({ codigo: '1004', descricao: 'Horas Extras (100%)', referencia: `${colab.horasExtras100}h`, valor: colab.totalHe100 });
+        if (colab.dsrHe > 0) proventos.push({ codigo: '1020', descricao: 'D.S.R. sobre Horas Extras', referencia: 'Súm. 172', valor: colab.dsrHe });
+        if (colab.valorAts > 0) proventos.push({ codigo: '1060', descricao: 'Adicional Tempo Serviço (CCT)', referencia: '', valor: colab.valorAts });
+
+        const descontos = [];
+        if (colab.valorFaltas > 0) descontos.push({ codigo: '9230', descricao: 'Faltas Injustificadas', referencia: `${colab.faltasDias}d`, valor: colab.valorFaltas });
+        if (colab.valorInss > 0) descontos.push({ codigo: '9201', descricao: 'INSS Empregado', referencia: `${colab.aliquotaEfetivaInss?.toFixed(2)}%`, valor: colab.valorInss });
+        if (colab.valorIrrf > 0) descontos.push({ codigo: '9214', descricao: 'IRRF Empregado', referencia: `${colab.aliquotaEfetivaIrrf?.toFixed(2)}%`, valor: colab.valorIrrf });
+        if (colab.valorVtDesconto > 0) descontos.push({ codigo: '9220', descricao: 'Vale Transporte (6%)', referencia: '6%', valor: colab.valorVtDesconto });
+
+        const html = construirHtmlHolerite({
+            empresa: { razaoSocial: loteConfig.razaoSocial, cnpj: loteConfig.cnpj },
+            colaborador: { nome: colab.nome, cargo: colab.cargo, matricula: colab.matricula, cbo: '4110-10' },
+            referencia: loteConfig.mesReferencia,
+            proventos,
+            descontos,
+            bases: {
+                salarioBase: colab.salarioBase,
+                baseInss: colab.totalProventosBrutos - colab.valorFaltas,
+                baseFgts: colab.totalProventosBrutos - colab.valorFaltas,
+                fgtsMes: colab.valorFgts,
+                baseIrrf: Math.max(0, colab.totalProventosBrutos - colab.valorFaltas - colab.valorInss),
+                faixaIrrf: colab.valorIrrf > 0 ? `${colab.aliquotaEfetivaIrrf?.toFixed(1)}%` : 'Isento'
+            }
+        });
+
+        abrirPreviaPdf(html, `Holerite_${colab.nome.replace(/\s+/g, '_')}.pdf`, `Holerite — ${colab.nome}`);
+    }
+
+    $('btnLoteDemo')?.addEventListener('click', () => {
+        const demo = gerarDemonstracaoFolha();
+        processarERenderizar(demo);
+        showToast('Demonstração carregada com 8 colaboradores!', 'success');
+    });
+
+    $('btnLoteBaixarModelo')?.addEventListener('click', () => {
+        const csv = gerarCsvTemplate();
+        baixarTemplateCsvFolha(csv);
+        showToast('Modelo de planilha CSV baixado!', 'download');
+    });
+
+    $('btnLoteExportarExcel')?.addEventListener('click', () => {
+        if (loteColaboradores.length === 0) {
+            showToast('Carregue os colaboradores antes de exportar.', 'error');
+            return;
+        }
+        exportarFolhaLoteXLSX(loteColaboradores, loteResumo, loteConfig);
+        showToast('Folha consolidada exportada com sucesso!', 'success');
+    });
+
+    $('filtroColaboradorLote')?.addEventListener('input', () => {
+        if (loteColaboradores.length > 0) {
+            const { resultados } = processarFolhaLote(loteColaboradores, loteConfig);
+            renderizarTabela(resultados);
+        }
+    });
+
+    ['loteRegime', 'loteRat', 'loteFap', 'loteTerceiros'].forEach(id => {
+        $(id)?.addEventListener('change', () => {
+            if (loteColaboradores.length > 0) processarERenderizar(loteColaboradores);
+        });
+    });
+
+    const inputUpload = $('inputFileLote');
+    const dropZone = $('dropZoneLote');
+
+    dropZone?.addEventListener('click', () => inputUpload?.click());
+    dropZone?.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-cyan-500'); });
+    dropZone?.addEventListener('dragleave', () => dropZone.classList.remove('border-cyan-500'));
+    dropZone?.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.classList.remove('border-cyan-500');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            processarArquivoUpload(e.dataTransfer.files[0]);
+        }
+    });
+
+    inputUpload?.addEventListener('change', e => {
+        if (e.target.files && e.target.files[0]) {
+            processarArquivoUpload(e.target.files[0]);
+        }
+    });
+
+    function processarArquivoUpload(file) {
+        const reader = new FileReader();
+        const nome = file.name.toLowerCase();
+
+        if (nome.endsWith('.csv') || nome.endsWith('.txt')) {
+            reader.onload = evt => {
+                const colabs = parsearCsvFolha(evt.target.result);
+                if (colabs.length === 0) showToast('Nenhum colaborador válido encontrado no CSV.', 'error');
+                else { processarERenderizar(colabs); showToast(`${colabs.length} colaboradores importados!`, 'success'); }
+            };
+            reader.readAsText(file, 'utf-8');
+        } else if (nome.endsWith('.xlsx') || nome.endsWith('.xls')) {
+            reader.onload = evt => {
+                try {
+                    const data = new Uint8Array(evt.target.result);
+                    const workbook = window.XLSX ? XLSX.read(data, { type: 'array' }) : null;
+                    if (workbook) {
+                        const csvText = XLSX.utils.sheet_to_csv(workbook.Sheets[workbook.SheetNames[0]]);
+                        const colabs = parsearCsvFolha(csvText);
+                        processarERenderizar(colabs);
+                        showToast(`${colabs.length} colaboradores importados do Excel!`, 'success');
+                    }
+                } catch (err) {
+                    showToast('Erro ao ler arquivo Excel.', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
+    moduleExportHandlers['folha-lote'] = () => {
+        if (loteColaboradores.length > 0) {
+            exportarFolhaLoteXLSX(loteColaboradores, loteResumo, loteConfig);
+            showToast('Folha consolidada exportada!');
+        } else {
+            showToast('Nenhuma folha carregada para exportação.', 'error');
+        }
+    };
+}
+
 

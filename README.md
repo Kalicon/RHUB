@@ -25,44 +25,28 @@
 - **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
 - **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
 - **Central de Desafios de Criação & Sugestões**: Espaço integrado para a comunidade e usuários proporem regras complexas de DP e abrirem Issues oficiais no GitHub diretamente do app.
-- **10 Módulos de Cálculo Especializados**:
+- **11 Módulos de Cálculo e People Analytics**:
   1. **Adicional Noturno & DSR**: Hora noturna ficta (52min30s / fator 1,142857), prorrogação e DSR (Súmula 172 TST).
-  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%), saque, seguro-desemprego e comparador de 4 cenários simultâneos.
+  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%), saque, seguro-desemprego e emissão direta de **TRCT Oficial em PDF**.
   3. **Faltas e Atrasos**: Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal e tabela progressiva de perda de férias (Art. 130 CLT).
-  4. **Férias & 13º Salário**: Período aquisitivo, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra (férias vencidas) e avos de 13º.
-  5. **Salário Líquido (Holerite Mensal)**: Vencimentos (Salário base, Horas Extras 50%/100%, adicional noturno, DSR, insalubridade 10%/20%/40%, periculosidade 30%) e descontos reais (INSS progressivo, IRRF progressivo c/ dependentes, Vale Transporte teto 6%, VR/VA, saúde, pensão).
-  6. **Simulador CLT vs. PJ & Custo Efetivo do Empregado**:
-     - Custo real para a empresa: Simples Nacional vs. Lucro Presumido/Real, encargos patronais (INSS 20%, RAT ajustado pelo FAP, Sistema S/Terceiros), provisões de 13º, férias e FGTS.
-     - Poder de compra real do colaborador (Salário líquido + Provisões mensais + Benefícios).
-     - Regime PJ: Simples Nacional (Anexo III 6% ou Anexo V 15,5%), Fator R c/ pró-labore, custos com contabilidade e benefícios próprios.
-     - **Break-Even automático**: cálculo exato do faturamento PJ necessário para empatar com o poder de compra CLT.
-  7. **Banco de Horas & Compensação de Jornada (Art. 59 CLT)**:
-     - Acordo individual escrito (6 meses) vs Acordo coletivo (1 ano).
-     - Quitação de saldo credor com adicional de hora extra (50% a 100%) e reflexo no DSR (Súmula 172 TST).
-     - Desconto de saldo devedor pelo valor da hora simples.
-  8. **Participação nos Lucros e Resultados — PLR (Lei 10.101/2000)**:
-     - Aplicação da tabela oficial exclusiva e progressiva de IRRF PLR da Receita Federal.
-     - Isenção total de encargos sociais (0% INSS empregado, 0% INSS patronal e 0% FGTS).
-     - Cálculo de antecipações (1ª parcela vs quitação final) e demonstrativo de economia empresarial.
-  9. **Teletrabalho / Home Office & Ajuda de Custo (Art. 75-A a 75-E CLT)**:
-     - Rateio de fatura de internet residencial e apuração de consumo elétrico (Watts x horas x kWh).
-     - Auxílio ergonomia/equipamentos e comparativo de saldo com Vale-Transporte presencial.
-     - Natureza jurídica indenizatória (sem incidência de INSS, FGTS ou IRRF).
-  10. **Equiparação Salarial & Passivo Trabalhista (Art. 461 CLT)**:
-      - Diferença salarial mensal e nominal entre colaborador e paradigma.
-      - Reflexos legais em 13º salário, férias + 1/3, depósitos de FGTS (8%) e multa rescisória (40%).
-      - Penalidade por discriminação de gênero (Lei 14.611/2023 — 10 vezes o novo salário).
-- **Gráficos Visuais Interativos com Chart.js**:
-  - Donut Chart no Holerite (Salário Líquido vs. INSS vs. IRRF vs. Benefícios).
-  - Gráfico de Barras no Comparador de Rescisão (Líquido do Empregado vs. Custo da Empresa em 4 modalidades).
-  - Gráfico Comparativo CLT vs. PJ (Custo Empresa CLT vs. Poder Compra CLT vs. Líquido PJ vs. Break-Even).
-- **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto a colaboradores, gestores ou clientes.
-- **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico de simulações em arquivo `.json`.
+  4. **Férias & 13º Salário + Planejador Art. 134**: Período aquisitivo, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra, avos de 13º e **validador de fracionamento em até 3 períodos com calendário e regra anti-DSR**.
+  5. **Salário Líquido (Holerite Mensal)**: Vencimentos e descontos reais com emissão instantânea de **Holerite / Contracheque Oficial em PDF**.
+  6. **Simulador CLT vs. PJ & Custo Efetivo do Empregado**: Custo real para a empresa, Simples Nacional vs. Lucro Presumido/Real, encargos patronais e Break-Even automático.
+  7. **Banco de Horas & Compensação de Jornada (Art. 59 CLT)**: Quitação de saldo credor (50% a 100%), reflexo em DSR e desconto de horas devedoras.
+  8. **Participação nos Lucros e Resultados — PLR (Lei 10.101/2000)**: Tabela exclusiva de IRRF PLR da Receita Federal e isenção de encargos trabalhistas.
+  9. **Teletrabalho / Home Office & Ajuda de Custo (Art. 75-A CLT)**: Rateio de internet, consumo elétrico (kWh), auxílio ergonomia e comparativo com VT.
+  10. **Equiparação Salarial & Passivo Trabalhista (Art. 461 CLT)**: Diferença salarial mensal, reflexos quinquenais e penalidade por discriminação (Lei 14.611/2023).
+  11. **Folha de Pagamento em Lote & Encargos Patronais (Batch Payroll)**: Upload CSV/XLSX ou demonstração, cálculo em massa de colaboradores, INSS Patronal (20%), RAT/FAP, Terceiros/Sistema S (5.8%), FGTS e dashboard consolidado com geração individual de holerites.
+- **Emissão Direta de Holerite e TRCT em PDF**: Layout vetorial padronizado no padrão do Ministério do Trabalho, gerado 100% no navegador (Client-Side) com botão de download imediato.
+- **Inteligência de Rubricas eSocial (Tabela S-1010)**: Dicionário oficial integrado, badges explicativos de incidência de INSS, FGTS e IRRF e modo auditoria contábil.
+- **Simulador de Convenções Coletivas (CCT / ACT)**: Configuração de regras sindicais que se sobrepõem à CLT (Art. 611-A), com adicional noturno customizado, sábado considerado como repouso no DSR e Adicional por Tempo de Serviço (Anuênio, Triênio, Quinquênio).
+- **Gráficos Visuais Interativos com Chart.js**: Visualização analítica no Holerite, Rescisão e Comparativo CLT vs PJ.
+- **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto.
+- **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico em `.json`.
 - **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
-- **Suíte de Testes Automatizados (Vitest)**: 21 testes unitários com 100% de aprovação cobrindo rigorosamente as leis trabalhistas.
-- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas com cabeçalho corporativo, dados da simulação e detalhamento dos cálculos para todos os 10 módulos.
-- **Impressão / PDF Executivo**: Folha de estilo `@media print` otimizada no `custom.css` com cabeçalho da empresa e assinatura.
-- **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`, restauráveis com 1 clique.
+- **Suíte de Testes Automatizados (Vitest)**: **32 testes unitários** com 100% de aprovação cobrindo rigorosamente todas as leis trabalhistas.
+- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas para todos os módulos e folha consolidada.
+- **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`.
 
 ---
 
@@ -73,10 +57,11 @@
 | **Estrutura**     | HTML5 Semântico                        | Acessibilidade WAI-ARIA e SEO estruturado         |
 | **Estilização**   | Tailwind CSS (via CDN Play)            | Design utility-first com Dark Mode por classe     |
 | **Lógica**        | JavaScript Vanilla (ES6 Modules)       | Módulos puros, testáveis, zero backend            |
+| **PDF Vetorial**  | html2pdf.js / jsPDF (via CDN)          | Geração de Holerites e TRCT no navegador          |
 | **Gráficos**      | Chart.js 4.4 (via CDN)                 | Visualização interativa de gráficos e dashboards  |
 | **Animações**     | GSAP 3.12 (via CDN)                    | Efeito CountUp nos valores monetários             |
-| **Planilhas**     | SheetJS / xlsx 0.20 (via CDN)          | Criação de arquivos `.xlsx` no navegador          |
-| **Testes**        | Vitest 2.1                             | Testes unitários com asserções legais trabalhistas|
+| **Planilhas**     | SheetJS / xlsx 0.20 (via CDN)          | Criação e leitura de arquivos `.xlsx`/`.csv`      |
+| **Testes**        | Vitest 2.1                             | 32 testes unitários com asserções legais          |
 | **Offline / PWA** | Service Worker & Web App Manifest      | Cache-first para navegação offline completa       |
 | **Deploy**        | GitHub Pages                           | Hospedagem estática contínua e gratuita           |
 
@@ -89,36 +74,41 @@ RHUB/
 ├── assets/
 │   ├── css/
 │   │   └── custom.css          <- Estilos do drawer, gráficos, orbes, temas e impressão
+│   ├── data/
+│   │   ├── cct_config.js       <- Gestor de regras sindicais CCT/ACT e ATS
+│   │   └── esocial_rubricas.js <- Tabela de rubricas S-1010 e incidências
 │   ├── js/
 │   │   ├── app.js              <- Controller SPA, roteador hash, Chart.js e GSAP
 │   │   ├── modules/
 │   │   │   ├── noturno.js      <- Adicional Noturno, hora ficta e DSR
 │   │   │   ├── rescisao.js     <- Rescisão CLT e Comparador de 4 Cenários
 │   │   │   ├── faltas.js       <- Faltas, atrasos, DSR e escala Art. 130
-│   │   │   ├── ferias.js       <- Férias, 1/3, abono, dobra e 13º salário
+│   │   │   ├── ferias.js       <- Férias, 13º e fracionamento Art. 134
 │   │   │   ├── liquido.js      <- Salário Líquido completo (holerite mensal)
 │   │   │   ├── clt_pj.js       <- Simulador CLT vs PJ e encargos patronais
-│   │   │   ├── tabelas.js      <- Tabelas progressivas de INSS e IRRF 2024
-│   │   │   ├── banco_horas.js  <- Banco de Horas, compensação e DSR
-│   │   │   ├── plr.js          <- PLR, tabela exclusiva IRRF e isenções
-│   │   │   ├── teletrabalho.js <- Teletrabalho, ajuda de custo e comparativo VT
-│   │   │   └── equiparacao.js  <- Equiparação salarial, passivo e Lei 14.611/23
+│   │   │   ├── banco_horas.js  <- Banco de horas e quitação semestral/anual
+│   │   │   ├── plr.js          <- Participação nos Lucros e Resultados
+│   │   │   ├── teletrabalho.js <- Ajuda de custo home office e amortização
+│   │   │   ├── equiparacao.js  <- Equiparação salarial e Lei 14.611
+│   │   │   └── folha_lote.js   <- Folha de pagamento em lote e encargos patronais
 │   │   └── utils/
-│   │       ├── exporter.js     <- Gerador de Excel (.xlsx) para todos os 10 módulos
-│   │       ├── storage.js      <- LocalStorage, Backup e Restauração JSON
-│   │       ├── formatters.js   <- Formatação BRL (R$), decimais e datas
-│   │       └── validators.js   <- Sanitização e validação de entradas
+│   │       ├── pdf_generator.js<- Gerador direto de Holerite e TRCT em PDF
+│   │       ├── exporter.js     <- Exportação de planilhas XLSX e CSV
+│   │       ├── formatters.js   <- Formatadores monetários, datas e horas
+│   │       ├── validators.js   <- Sanitização e validação de entradas
+│   │       └── storage.js      <- Gestão de dados corporativos e histórico
 │   └── img/
 │       ├── logo.svg            <- Logo vetorial do RHUB
 │       ├── icon-192.svg        <- Ícone PWA 192x192
 │       └── icon-512.svg        <- Ícone PWA 512x512
 ├── tests/
-│   └── clt_modules.test.js     <- Suíte de 21 testes unitários com Vitest
+│   └── clt_modules.test.js     <- Suíte de 32 testes unitários com Vitest
 ├── manifest.json               <- Manifesto PWA (instalável)
-├── sw.js                       <- Service Worker com cache-first e offline v2.1
-├── index.html                  <- Aplicação Single-Page completa (10 módulos)
+├── sw.js                       <- Service Worker com cache-first e offline v3.0
+├── index.html                  <- Aplicação Single-Page completa (11 módulos)
 ├── package.json                <- Configuração de testes Vitest
 ├── LICENSE                     <- Licença MIT
+├── MANUAL_DE_USO.md            <- Manual operacional para usuários e RH
 └── README.md                   <- Documentação técnica completa
 ```
 

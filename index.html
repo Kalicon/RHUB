@@ -29,6 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="assets/css/custom.css">
 </head>
 
@@ -139,6 +140,16 @@
                     <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-400">v2.1</span>
                 </div>
             </button>
+
+            <button data-panel="folha-lote" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-cyan-500/10 dark:bg-cyan-500/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-semibold">Folha em Lote</span>
+                    <span class="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-400">v3.0</span>
+                </div>
+            </button>
         </nav>
 
         <!-- Botão Instalar App (PWA) -->
@@ -195,6 +206,19 @@
                     <button id="topBtnEmpresa" title="Dados da Empresa e Colaborador para Relatórios" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all shadow-sm">
                         <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
                         <span class="hidden md:inline" id="topEmpresaLabel">Empresa</span>
+                    </button>
+
+                    <!-- Botão Convenção Coletiva CCT -->
+                    <button id="topBtnCCT" title="Configurar Regras da Convenção Coletiva (CCT/ACT)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-violet-50 text-violet-700 hover:bg-violet-100 dark:bg-violet-500/10 dark:text-violet-300 dark:hover:bg-violet-500/20 border border-violet-200 dark:border-violet-500/20 transition-all shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                        <span class="hidden md:inline">CCT/Sindicato</span>
+                        <span id="badgeCctStatus" class="hidden w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
+                    </button>
+
+                    <!-- Botão Modo eSocial -->
+                    <button id="topBtnEsocial" title="Modo de Auditoria e Tabela eSocial S-1010" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/20 transition-all shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                        <span class="hidden md:inline">eSocial</span>
                     </button>
 
                     <!-- Botão Histórico -->
@@ -371,6 +395,7 @@
                             <h3 class="text-sm font-bold text-slate-900 dark:text-white">Demonstrativo de Verbas</h3>
                             <div class="flex flex-wrap gap-1.5">
                                 <button id="btnCompararRescisao" title="Comparar 4 Cenários de Desligamento" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>Comparar Cenários</button>
+                                <button id="btnPdfTRCT" title="Gerar Termo de Rescisão Oficial em PDF" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 hover:bg-rose-100 dark:bg-rose-500/10 dark:text-rose-400 dark:hover:bg-rose-500/20 border border-rose-200 dark:border-rose-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>PDF TRCT</button>
                                 <button id="btnShareRescisao" title="Copiar link com parâmetros desta simulação" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
                                 <button id="btnExcelRescisao" title="Exportar para Excel (.xlsx)" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
                                 <button id="btnCopiarRescisao" title="Copiar resumo textual" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
@@ -482,6 +507,53 @@
                                 <div><label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Meses Trabalhados no Ano <span class="font-normal text-slate-400">(avos)</span></label><input type="number" id="fer13Meses" value="9" min="1" max="12" class="w-full px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/40 transition-all"></div>
                             </form>
                         </div>
+
+                        <!-- Planejador de Fracionamento de Férias (Art. 134 CLT) -->
+                        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                                <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    Fracionamento de Férias (Art. 134 CLT)
+                                </h3>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">Reforma Trab.</span>
+                            </div>
+                            <div class="px-6 py-5 space-y-4">
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Data Início (1º Período)</label>
+                                        <input type="date" id="fracDataInicio" value="2026-10-05" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Qtd. de Períodos</label>
+                                        <select id="fracQtdPeriodos" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                                            <option value="1">1 Período (Integral)</option>
+                                            <option value="2" selected>2 Períodos (Ex: 15 + 15)</option>
+                                            <option value="3">3 Períodos (Ex: 14 + 8 + 8)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">1º Período (dias)</label>
+                                        <input type="number" id="fracP1" value="15" min="5" max="30" class="w-full px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">2º Período (dias)</label>
+                                        <input type="number" id="fracP2" value="15" min="0" max="30" class="w-full px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">3º Período (dias)</label>
+                                        <input type="number" id="fracP3" value="0" min="0" max="30" disabled class="w-full px-2.5 py-1.5 rounded-xl text-xs font-medium bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-slate-400 cursor-not-allowed">
+                                    </div>
+                                </div>
+
+                                <!-- Alerta Legal de Validação -->
+                                <div id="fracAlerta" class="p-3 rounded-xl text-xs hidden"></div>
+
+                                <!-- Cronograma de Datas Calculadas -->
+                                <div id="fracCronograma" class="space-y-2 pt-1"></div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Memórias de cálculo -->
                     <div class="space-y-6">
@@ -567,7 +639,8 @@
                         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
                             <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
                                 <h3 class="text-sm font-bold text-slate-900 dark:text-white">Demonstrativo do Holerite</h3>
-                                <div class="flex gap-1.5">
+                                <div class="flex flex-wrap gap-1.5">
+                                    <button id="btnPdfHolerite" title="Gerar Holerite Oficial em PDF" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 text-teal-700 hover:bg-teal-100 dark:bg-teal-500/10 dark:text-teal-400 dark:hover:bg-teal-500/20 border border-teal-200 dark:border-teal-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>PDF Holerite</button>
                                     <button id="btnShareLiquido" title="Copiar link com parâmetros desta simulação" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>Link</button>
                                     <button id="btnExcelLiquido" title="Exportar para Excel (.xlsx)" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-400 dark:hover:bg-emerald-500/20 border border-emerald-200 dark:border-emerald-500/20 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>Excel</button>
                                     <button id="btnCopiarLiquido" title="Copiar resumo textual" class="px-2.5 py-1 rounded-lg text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>Copiar</button>
@@ -1136,6 +1209,136 @@
                 </div>
             </section>
 
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL 11: FOLHA DE PAGAMENTO EM LOTE (BATCH)  -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-folha-lote" class="module-panel hidden">
+                <!-- Hero / KPI Banner -->
+                <div class="relative rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow" style="background:linear-gradient(135deg,#083344 0%,#0f172a 50%,#0e7490 100%)">
+                    <div class="orb" style="background:#06b6d4;width:220px;height:220px;top:-40px;right:-30px;filter:blur(60px);opacity:0.25;position:absolute;border-radius:9999px;pointer-events:none"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                            <div>
+                                <p class="text-[11px] font-bold uppercase tracking-[0.15em] text-cyan-300/80 mb-1">Folha de Pagamento em Lote & People Analytics</p>
+                                <p id="outLoteCustoTotal" class="text-4xl sm:text-5xl font-black font-mono text-cyan-400 tracking-tight leading-none">R$ 0,00</p>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <button id="btnLoteDemo" class="px-3 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
+                                    <svg class="w-3.5 h-3.5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    Carregar Demonstração (8 Colab.)
+                                </button>
+                                <button id="btnLoteBaixarModelo" class="px-3 py-2 rounded-xl text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-all flex items-center gap-1.5 shadow-sm">
+                                    <svg class="w-3.5 h-3.5 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                    Baixar Modelo CSV
+                                </button>
+                                <button id="btnLoteExportarExcel" class="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-600/25 transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                    Exportar Folha (XLSX)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- KPIs -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-white/10">
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                                <p class="text-[10px] font-semibold uppercase text-slate-400 mb-1">Colaboradores</p>
+                                <p id="outLoteQtdColab" class="text-base font-bold font-mono text-white">0</p>
+                            </div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                                <p class="text-[10px] font-semibold uppercase text-slate-400 mb-1">Total Líquido</p>
+                                <p id="outLoteTotalLiquido" class="text-base font-bold font-mono text-teal-300">R$ 0,00</p>
+                            </div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                                <p class="text-[10px] font-semibold uppercase text-slate-400 mb-1">Encargos Patronais</p>
+                                <p id="outLoteTotalEncargos" class="text-base font-bold font-mono text-amber-300">R$ 0,00</p>
+                            </div>
+                            <div class="stat-card bg-white/[0.04] rounded-xl p-3 border border-white/[0.06]">
+                                <p class="text-[10px] font-semibold uppercase text-slate-400 mb-1">Tributos Federais</p>
+                                <p id="outLoteTotalTributos" class="text-base font-bold font-mono text-rose-300">R$ 0,00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles de Configuração e Upload -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <!-- Card de Upload / Importação -->
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-cyan-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            Importar Folha (CSV ou XLSX)
+                        </h3>
+                        <div id="dropZoneLote" class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl p-6 text-center hover:border-cyan-500 transition-colors cursor-pointer bg-slate-50/50 dark:bg-slate-800/30">
+                            <svg class="w-8 h-8 mx-auto text-slate-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Arraste a planilha ou clique para selecionar</p>
+                            <p class="text-[10px] text-slate-400 mt-1">Suporta arquivos .csv e .xlsx &bull; 100% Client-Side</p>
+                            <input type="file" id="inputFileLote" accept=".csv,.xlsx" class="hidden">
+                        </div>
+                    </div>
+
+                    <!-- Parâmetros Fiscais da Empresa -->
+                    <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-5">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            Enquadramento Tributário & Encargos Patronais
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">Regime Tributário</label>
+                                <select id="loteRegime" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                                    <option value="presumido" selected>Lucro Presumido / Real (20% INSS)</option>
+                                    <option value="simples">Simples Nacional (Isento INSS Pat.)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">Alíquota RAT (%)</label>
+                                <input type="number" id="loteRat" value="2.0" min="1" max="3" step="1" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">Fator FAP</label>
+                                <input type="number" id="loteFap" value="1.0000" min="0.5" max="2.0" step="0.01" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">Terceiros / Sistema S (%)</label>
+                                <input type="number" id="loteTerceiros" value="5.8" min="0" max="10" step="0.1" class="w-full px-3 py-2 rounded-xl text-xs font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Colaboradores Processados -->
+                <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h3 class="text-sm font-bold text-slate-900 dark:text-white">Demonstrativo Detalhado por Colaborador</h3>
+                            <p class="text-[11px] text-slate-400">Clique no ícone de documento para gerar o Holerite Oficial em PDF</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="text" id="filtroColaboradorLote" placeholder="Buscar colaborador ou cargo..." class="px-3 py-1.5 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white w-60">
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700/80 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                                    <th class="py-3 px-4">Matrícula</th>
+                                    <th class="py-3 px-4">Colaborador / Cargo</th>
+                                    <th class="py-3 px-4 text-right">Salário Base</th>
+                                    <th class="py-3 px-4 text-right">Proventos</th>
+                                    <th class="py-3 px-4 text-right">Descontos</th>
+                                    <th class="py-3 px-4 text-right">Líquido</th>
+                                    <th class="py-3 px-4 text-right">FGTS (8%)</th>
+                                    <th class="py-3 px-4 text-right">Custo Empresa</th>
+                                    <th class="py-3 px-4 text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaCorpoLote" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <!-- Linhas preenchidas dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
         </main>
 
@@ -1421,6 +1624,160 @@
                     <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Cálculo de passivo por desvio ou equiparação entre colaborador e paradigma com reflexos em 13º, férias, FGTS e multa da Lei 14.611/2023.</p>
                     <div class="mt-2 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">Ativo no menu lateral · Art. 461 da CLT e Lei 14.611/2023</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ MODAL: CONFIGURAÇÃO DE CONVENÇÃO COLETIVA (CCT / ACT) ═══ -->
+    <div id="modalCCT" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 rhub-modal-backdrop">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg w-full p-6 rhub-modal-content">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-violet-500/10 text-violet-600 dark:bg-violet-500/20 dark:text-violet-400 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Convenção Coletiva (CCT / ACT)</h3>
+                        <p class="text-[11px] text-slate-400">Art. 611-A da CLT &bull; O negociado sobre o legislado</p>
+                    </div>
+                </div>
+                <button id="closeModalCCT" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="formCCT" class="space-y-4">
+                <div class="flex items-center justify-between p-3 rounded-xl bg-violet-50 dark:bg-violet-950/40 border border-violet-200 dark:border-violet-900/60">
+                    <div>
+                        <p class="text-xs font-bold text-violet-900 dark:text-violet-200">Ativar Regras da Convenção</p>
+                        <p class="text-[10px] text-violet-700/80 dark:text-violet-400">Aplica os percentuais sindicais sobre os módulos de cálculo</p>
+                    </div>
+                    <label class="relative inline-flex cursor-pointer">
+                        <input type="checkbox" id="cctAtivo" class="sr-only peer">
+                        <div class="w-10 h-5 bg-slate-300 dark:bg-slate-600 rounded-full peer-checked:bg-violet-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:shadow-sm after:transition-all peer-checked:after:translate-x-5 transition-colors"></div>
+                    </label>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nome do Sindicato / Categoria</label>
+                    <input type="text" id="cctNomeSindicato" placeholder="Ex: SINDPD - Sindicato de TI" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Adic. Noturno Sindical (%)</label>
+                        <input type="number" id="cctAdicNoturno" value="20" min="20" max="100" step="1" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                        <span class="text-[9px] text-slate-400">Padrão CLT: 20%</span>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Piso Salarial Categoria (R$)</label>
+                        <input type="number" id="cctPisoSalarial" value="1412" min="0" step="10" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-700 dark:text-slate-300">Sábado é Repouso Remunerado (DSR)</p>
+                        <p class="text-[10px] text-slate-400">Comum em bancários e TI &bull; Aumenta o divisor/multiplicador</p>
+                    </div>
+                    <label class="relative inline-flex cursor-pointer">
+                        <input type="checkbox" id="cctSabadoDsr" class="sr-only peer">
+                        <div class="w-10 h-5 bg-slate-300 dark:bg-slate-600 rounded-full peer-checked:bg-violet-600 after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-4 after:w-4 after:shadow-sm after:transition-all peer-checked:after:translate-x-5 transition-colors"></div>
+                    </label>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Adicional Tempo Serviço (ATS)</label>
+                        <select id="cctTipoAts" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                            <option value="NENHUM" selected>Não se aplica</option>
+                            <option value="ANUENIO">Anuênio (a cada 1 ano)</option>
+                            <option value="TRIENIO">Triênio (a cada 3 anos)</option>
+                            <option value="QUINQUENIO">Quinquênio (a cada 5 anos)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">% ATS por Período</label>
+                        <input type="number" id="cctPercentualAts" value="0" min="0" max="20" step="0.5" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" id="btnRestaurarCCT" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        Restaurar Padrão CLT
+                    </button>
+                    <button type="submit" id="btnSalvarCCT" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-violet-600 hover:bg-violet-700 shadow-lg shadow-violet-600/25 transition-all">
+                        Salvar Regras CCT
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ═══ MODAL: DICIONÁRIO DE RUBRICAS ESOCIAL (S-1010) ═══ -->
+    <div id="modalEsocial" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 rhub-modal-backdrop">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-3xl w-full p-6 rhub-modal-content max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Dicionário de Rubricas do eSocial (Tabela S-1010)</h3>
+                        <p class="text-[11px] text-slate-400">Incidências tributárias oficiais para Previdência Social, FGTS e IRRF</p>
+                    </div>
+                </div>
+                <button id="closeModalEsocial" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="mb-3">
+                <input type="text" id="filtroEsocialRubricas" placeholder="Buscar rubrica por código ou nome (ex: 1000, férias, INSS)..." class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white outline-none">
+            </div>
+
+            <div class="flex-1 overflow-y-auto pr-1">
+                <div id="esocialRubricasLista" class="space-y-2.5">
+                    <!-- Preenchido dinamicamente via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ MODAL: PRÉVIA E DOWNLOAD DE DOCUMENTO PDF ═══ -->
+    <div id="modalPdfPreview" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 rhub-modal-backdrop">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-4xl w-full p-6 rhub-modal-content max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 flex items-center justify-center">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <h3 id="pdfPreviewTitulo" class="text-base font-bold text-slate-900 dark:text-white">Prévia do Documento Oficial</h3>
+                        <p class="text-[11px] text-slate-400">Layout vetorizado padrão para impressão e download imediato</p>
+                    </div>
+                </div>
+                <button id="closeModalPdfPreview" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Área de Visualização do Documento -->
+            <div class="flex-1 overflow-y-auto bg-slate-100 dark:bg-slate-950 p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex justify-center">
+                <div id="pdfPreviewConteudo" class="shadow-2xl bg-white text-slate-900">
+                    <!-- HTML gerado inserido aqui -->
+                </div>
+            </div>
+
+            <!-- Rodapé de Ações -->
+            <div class="pt-4 mt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+                <button id="btnFecharPdfModal" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    Fechar
+                </button>
+                <button id="btnConfirmarDownloadPdf" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition-all flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    Baixar Documento em PDF
+                </button>
             </div>
         </div>
     </div>

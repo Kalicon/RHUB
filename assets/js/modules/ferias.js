@@ -251,3 +251,109 @@ export function calcular13o({
         memoriaCalculo
     };
 }
+
+/**
+ * ┌─────────────────────────────────────────────────────────────┐
+ * │  Validador de Fracionamento de Férias (Art. 134 e 143 CLT) │
+ * └─────────────────────────────────────────────────────────────┘
+ *
+ * @param {Object} params
+ * @param {number} params.diasTotaisDireito — Geralmente 30 dias.
+ * @param {boolean} params.venderAbono     — Se vendeu 10 dias (Art. 143 CLT).
+ * @param {Array<number>} params.periodos  — Array com dias de cada período [p1, p2, p3] (máx 3).
+ * @param {string} params.dataInicio1      — Data 'YYYY-MM-DD' do 1º período.
+ *
+ * @returns {Object} { valido, erros, avisos, cronograma, diasRestantes }
+ */
+export function validarFracionamentoFerias({
+    diasTotaisDireito = 30,
+    venderAbono = false,
+    periodos = [30],
+    dataInicio1 = ''
+}) {
+    const erros = [];
+    const avisos = [];
+
+    const diasAbono = venderAbono ? Math.floor(diasTotaisDireito / 3) : 0; // 10 dias
+    const diasDisponiveisGozo = diasTotaisDireito - diasAbono;
+
+    // Filtrar períodos válidos (> 0)
+    const periodosValidos = periodos.map(p => parseInt(p, 10) || 0).filter(p => p > 0);
+    const qtdPeriodos = periodosValidos.length;
+    const somaDias = periodosValidos.reduce((acc, d) => acc + d, 0);
+
+    // 1. Validação de quantidade de períodos (Art. 134, § 1º: até 3 períodos)
+    if (qtdPeriodos > 3) {
+        erros.push('O Art. 134, § 1º da CLT permite o fracionamento em no máximo 3 períodos.');
+    }
+
+    // 2. Validação da soma dos dias
+    if (somaDias !== diasDisponiveisGozo) {
+        erros.push(`A soma dos períodos (${somaDias} dias) deve ser exatamente igual aos dias disponíveis para gozo (${diasDisponiveisGozo} dias).`);
+    }
+
+    // 3. Regras de duração mínima se fracionado (> 1 período)
+    if (qtdPeriodos > 1) {
+        const temMaiorQue14 = periodosValidos.some(d => d >= 14);
+        if (!temMaiorQue14) {
+            erros.push('Pelo menos um dos períodos de férias não pode ser inferior a 14 dias corridos (Art. 134, § 1º).');
+        }
+
+        const temMenorQue5 = periodosValidos.some(d => d < 5);
+        if (temMenorQue5) {
+            erros.push('Nenhum dos períodos de férias pode ser inferior a 5 dias corridos (Art. 134, § 1º).');
+        }
+    }
+
+    // 4. Validação da Data de Início (Art. 134, § 3º: Vedado início 2 dias antes de DSR ou feriado)
+    let cronograma = [];
+    if (dataInicio1) {
+        const data1 = new Date(dataInicio1 + 'T00:00:00');
+        if (!isNaN(data1.getTime())) {
+            const diaSemana = data1.getDay(); // 0 = Domingo, 4 = Quinta, 5 = Sexta, 6 = Sábado
+            if (diaSemana === 4 || diaSemana === 5) {
+                avisos.push('Atenção: Iniciar as férias em quinta-feira ou sexta-feira viola o Art. 134, § 3º da CLT (vedado o início nos dois dias antecedentes ao repouso semanal remunerado/fim de semana).');
+            }
+
+            // Calcular datas de cada período
+            let dataCursor = new Date(data1);
+            periodosValidos.forEach((dias, idx) => {
+                const dtInicio = new Date(dataCursor);
+                const dtFim = new Date(dtInicio);
+                dtFim.setDate(dtFim.getDate() + dias - 1);
+
+                const dtRetorno = new Date(dtFim);
+                dtRetorno.setDate(dtRetorno.getDate() + 1);
+
+                // Prazo de pagamento: 2 dias antes do início (Art. 145 CLT)
+                const dtPagamento = new Date(dtInicio);
+                dtPagamento.setDate(dtPagamento.getDate() - 2);
+
+                cronograma.push({
+                    periodo: idx + 1,
+                    dias,
+                    dataInicio: dtInicio.toISOString().split('T')[0],
+                    dataFim: dtFim.toISOString().split('T')[0],
+                    dataRetorno: dtRetorno.toISOString().split('T')[0],
+                    dataLimitePagamento: dtPagamento.toISOString().split('T')[0]
+                });
+
+                // Avança cursor para próximo período se houver intervalo de 30 dias padrão
+                dataCursor = new Date(dtRetorno);
+                dataCursor.setDate(dataCursor.getDate() + 30);
+            });
+        }
+    }
+
+    return {
+        valido: erros.length === 0,
+        diasDisponiveisGozo,
+        diasAbono,
+        qtdPeriodos,
+        somaDias,
+        erros,
+        avisos,
+        cronograma
+    };
+}
+
