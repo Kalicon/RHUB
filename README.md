@@ -1,5 +1,10 @@
 # RHUB — Suíte de Cálculos Trabalhistas e Simulação CLT vs. PJ
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Vitest CI](https://github.com/Kalicon/RHUB/actions/workflows/test.yml/badge.svg)](https://github.com/Kalicon/RHUB/actions)
+[![Tested with Vitest](https://img.shields.io/badge/Tested%20with-Vitest-FCC72B.svg?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![PWA Ready](https://img.shields.io/badge/PWA-Ready-blue.svg)](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps)
+
 Aplicação web desenvolvida no contexto de um desafio acadêmico de engenharia de software para automatizar cálculos de Departamento Pessoal e regras da legislação trabalhista brasileira (CLT). A solução opera integralmente no navegador do usuário (client-side), com suporte offline via Progressive Web App (PWA), validação matemática por testes unitários automatizados e exportação estruturada para planilhas Excel.
 
 ---
