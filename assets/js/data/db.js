@@ -6,7 +6,7 @@
  */
 
 const DB_NAME = 'rhub_hrms_db';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let dbInstance = null;
 
@@ -48,6 +48,17 @@ export function abrirBanco() {
             if (!db.objectStoreNames.contains('afastamentos')) {
                 const storeAfast = db.createObjectStore('afastamentos', { keyPath: 'id', autoIncrement: true });
                 storeAfast.createIndex('colaboradorId', 'colaboradorId', { unique: false });
+            }
+
+            // 4. Store de Agendamento e Histórico de Férias (Fase 02)
+            if (!db.objectStoreNames.contains('ferias')) {
+                const storeFerias = db.createObjectStore('ferias', {
+                    keyPath: 'id',
+                    autoIncrement: true
+                });
+                storeFerias.createIndex('colaboradorId', 'colaboradorId', { unique: false });
+                storeFerias.createIndex('status', 'status', { unique: false });
+                storeFerias.createIndex('periodoAquisitivoInicio', 'periodoAquisitivoInicio', { unique: false });
             }
         };
 
@@ -440,4 +451,113 @@ export async function restaurarBancoJSON(jsonStr) {
         cont++;
     }
     return cont;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  CRUD DE FÉRIAS (Fase 02)
+// ═══════════════════════════════════════════════════════════════════════
+
+/**
+ * Salva ou atualiza um agendamento de férias no IndexedDB.
+ * @param {object} ferias
+ * @returns {Promise<number>} ID do registro salvo
+ */
+export async function salvarFerias(ferias) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('ferias', 'readwrite');
+        const store = tx.objectStore('ferias');
+
+        const dados = {
+            ...ferias,
+            atualizadoEm: new Date().toISOString()
+        };
+        if (!dados.criadoEm) dados.criadoEm = new Date().toISOString();
+
+        const request = dados.id ? store.put(dados) : store.add(dados);
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Obtém um agendamento de férias pelo ID.
+ * @param {number} id
+ * @returns {Promise<object|null>}
+ */
+export async function obterFerias(id) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('ferias', 'readonly');
+        const store = tx.objectStore('ferias');
+        const request = store.get(Number(id));
+        request.onsuccess = (e) => resolve(e.target.result || null);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Lista férias de um colaborador específico.
+ * @param {number} colaboradorId
+ * @returns {Promise<Array>}
+ */
+export async function listarFeriasPorColaborador(colaboradorId) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('ferias', 'readonly');
+        const store = tx.objectStore('ferias');
+        const idx = store.index('colaboradorId');
+        const request = idx.getAll(Number(colaboradorId));
+        request.onsuccess = (e) => resolve(e.target.result || []);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Lista todos os agendamentos de férias com filtros opcionais.
+ * @param {object} [filtros={}]
+ * @returns {Promise<Array>}
+ */
+export async function listarTodasFerias(filtros = {}) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('ferias', 'readonly');
+        const store = tx.objectStore('ferias');
+        const request = store.getAll();
+
+        request.onsuccess = (e) => {
+            let lista = e.target.result || [];
+
+            if (filtros.status && filtros.status !== 'todos') {
+                lista = lista.filter(f => f.status === filtros.status);
+            }
+
+            if (filtros.colaboradorId) {
+                lista = lista.filter(f => f.colaboradorId === Number(filtros.colaboradorId));
+            }
+
+            // Ordenar por data de criação mais recente
+            lista.sort((a, b) => (b.criadoEm || '').localeCompare(a.criadoEm || ''));
+
+            resolve(lista);
+        };
+
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Remove um agendamento de férias pelo ID.
+ * @param {number} id
+ * @returns {Promise<boolean>}
+ */
+export async function removerFerias(id) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('ferias', 'readwrite');
+        const store = tx.objectStore('ferias');
+        const request = store.delete(Number(id));
+        request.onsuccess = () => resolve(true);
+        request.onerror = (e) => reject(e.target.error);
+    });
 }

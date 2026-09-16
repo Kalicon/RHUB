@@ -22,6 +22,15 @@ import {
     converterParaItemFolha,
     converterParaItemHolerite
 } from '../assets/js/modules/colaboradores.js';
+import {
+    calcularDiasDisponiveis,
+    calcularPeriodosAquisitivos,
+    verificarAlertaFeriasVencidas,
+    validarAgendamentoFerias,
+    calcularValorFerias,
+    calcularProvisaoFerias,
+    gerarMapaAnualFerias
+} from '../assets/js/modules/gestao_ferias.js';
 
 describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
@@ -627,6 +636,191 @@ describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
             expect(proventos.some(p => p.codigo === '1000' && p.valor === 3000)).toBe(true);
             expect(proventos.some(p => p.codigo === '1091' && p.valor === 900)).toBe(true);
             expect(proventos.some(p => p.codigo === '1090' && p.valor === 282.40)).toBe(true);
+        });
+    });
+
+    describe('16. Gestão e Escala de Férias (Períodos Aquisitivos, Agendamento & Provisão)', () => {
+        it('deve aplicar com exatidão a tabela do Art. 130 da CLT para faltas injustificadas', () => {
+            expect(calcularDiasDisponiveis(0)).toBe(30);
+            expect(calcularDiasDisponiveis(3)).toBe(30);
+            expect(calcularDiasDisponiveis(5)).toBe(30);
+            expect(calcularDiasDisponiveis(6)).toBe(24);
+            expect(calcularDiasDisponiveis(14)).toBe(24);
+            expect(calcularDiasDisponiveis(15)).toBe(18);
+            expect(calcularDiasDisponiveis(23)).toBe(18);
+            expect(calcularDiasDisponiveis(24)).toBe(12);
+            expect(calcularDiasDisponiveis(32)).toBe(12);
+            expect(calcularDiasDisponiveis(33)).toBe(0); // Perde o direito
+            expect(calcularDiasDisponiveis(50)).toBe(0);
+        });
+
+        it('deve calcular corretamente os períodos aquisitivos (PA) e concessivos (PC)', () => {
+            // Admissão: 10/01/2023, data-base: 15/03/2026
+            const pas = calcularPeriodosAquisitivos('2023-01-10', '2026-03-15');
+            expect(pas.length).toBe(4);
+
+            // PA 1: 10/01/2023 a 09/01/2024
+            expect(pas[0].paInicio).toBe('2023-01-10');
+            expect(pas[0].paFim).toBe('2024-01-09');
+            expect(pas[0].pcInicio).toBe('2024-01-10');
+            expect(pas[0].pcFim).toBe('2025-01-09');
+            expect(pas[0].paCompleto).toBe(true);
+            // Sem gozo e base (2026-03-15) > pcFim (2025-01-09) -> Vencido com alerta de dobra
+            expect(pas[0].status).toBe('vencido');
+            expect(pas[0].alertaDobro).toBe(true);
+
+            // PA 4: em aberto (acumulando)
+            expect(pas[3].status).toBe('aberto');
+            expect(pas[3].paCompleto).toBe(false);
+        });
+
+        it('deve marcar PA como gozado ou agendado quando houver agendamentos correspondentes', () => {
+            const feriasConcedidas = [
+                { periodoAquisitivoInicio: '2023-01-10', status: 'concluida' },
+                { periodoAquisitivoInicio: '2024-01-10', status: 'agendada' }
+            ];
+
+            const pas = calcularPeriodosAquisitivos('2023-01-10', '2026-03-15', feriasConcedidas);
+            expect(pas[0].status).toBe('gozado');
+            expect(pas[0].alertaDobro).toBe(false);
+            expect(pas[1].status).toBe('agendado');
+        });
+
+        it('deve identificar colaboradores com férias vencidas (Art. 137 CLT)', () => {
+            const colaboradores = [
+                { id: 1, nome: 'João Antigo', admissao: '2022-01-01', status: 'Ativo', matricula: '001' },
+                { id: 2, nome: 'Maria Nova', admissao: '2025-11-01', status: 'Ativo', matricula: '002' }
+            ];
+
+            const alertas = verificarAlertaFeriasVencidas(colaboradores, [], '2026-03-15');
+            expect(alertas.length).toBeGreaterThanOrEqual(1);
+            expect(alertas[0].colaboradorId).toBe(1);
+            expect(alertas[0].diasVencidos).toBeGreaterThan(0);
+        });
+
+        it('deve validar o fracionamento legal conforme Art. 134, § 1º e § 3º da CLT', () => {
+            // Fracionamento legal: 14 + 8 + 8 = 30 dias (início numa segunda-feira: 2026-06-01)
+            const resValido = validarAgendamentoFerias({
+                diasDireito: 30,
+                abonoPecuniario: false,
+                periodos: [
+                    { dias: 14, dataInicio: '2026-06-01' },
+                    { dias: 8, dataInicio: '2026-09-01' },
+                    { dias: 8, dataInicio: '2026-12-01' }
+                ]
+            });
+            expect(resValido.valido).toBe(true);
+            expect(resValido.erros.length).toBe(0);
+
+            // Fracionamento ilegal: nenhum período >= 14 dias (10 + 10 + 10)
+            const resIlegal1 = validarAgendamentoFerias({
+                diasDireito: 30,
+                abonoPecuniario: false,
+                periodos: [
+                    { dias: 10, dataInicio: '2026-06-01' },
+                    { dias: 10, dataInicio: '2026-09-01' },
+                    { dias: 10, dataInicio: '2026-12-01' }
+                ]
+            });
+            expect(resIlegal1.valido).toBe(false);
+            expect(resIlegal1.erros.some(e => e.includes('14 dias corridos'))).toBe(true);
+
+            // Fracionamento ilegal: período menor que 5 dias (15 + 11 + 4)
+            const resIlegal2 = validarAgendamentoFerias({
+                diasDireito: 30,
+                abonoPecuniario: false,
+                periodos: [
+                    { dias: 15, dataInicio: '2026-06-01' },
+                    { dias: 11, dataInicio: '2026-09-01' },
+                    { dias: 4, dataInicio: '2026-12-01' }
+                ]
+            });
+            expect(resIlegal2.valido).toBe(false);
+            expect(resIlegal2.erros.some(e => e.includes('inferior a 5 dias'))).toBe(true);
+
+            // Aviso de início em sexta-feira (Art. 134 § 3º: 2026-06-05 é sexta)
+            const resSexta = validarAgendamentoFerias({
+                diasDireito: 30,
+                abonoPecuniario: false,
+                periodos: [
+                    { dias: 30, dataInicio: '2026-06-05' }
+                ]
+            });
+            expect(resSexta.avisos.some(a => a.includes('sexta-feira'))).toBe(true);
+        });
+
+        it('deve calcular os valores monetários de férias com 1/3, abono pecuniário e dobra legal', () => {
+            // Férias integrais padrão: 3.000 salário base
+            const calc1 = calcularValorFerias({
+                salarioBase: 3000,
+                diasFerias: 30,
+                abonoPecuniario: false,
+                feriasEmDobro: false
+            });
+            expect(calc1.valorBase).toBe(3000);
+            expect(calc1.tercoConstitucional).toBe(1000);
+            expect(calc1.totalBruto).toBe(4000);
+            expect(calc1.liquido).toBeLessThan(4000);
+            expect(calc1.inss.valor).toBeGreaterThan(0);
+
+            // Férias em dobro (Art. 137 CLT)
+            const calcDobro = calcularValorFerias({
+                salarioBase: 3000,
+                diasFerias: 30,
+                abonoPecuniario: false,
+                feriasEmDobro: true
+            });
+            expect(calcDobro.valorBase).toBe(6000);
+            expect(calcDobro.tercoConstitucional).toBe(2000);
+            expect(calcDobro.totalBruto).toBe(8000);
+
+            // Férias com Abono Pecuniário (10 dias de venda - Art. 143 CLT)
+            const calcAbono = calcularValorFerias({
+                salarioBase: 3000,
+                diasFerias: 30,
+                abonoPecuniario: true,
+                feriasEmDobro: false
+            });
+            expect(calcAbono.diasAbono).toBe(10);
+            expect(calcAbono.valorAbono).toBe(1000); // 10 dias de salário
+            expect(calcAbono.tercoAbono).toBeCloseTo(333.33, 2);
+        });
+
+        it('deve calcular a provisão contábil de férias proporcional por colaborador e departamento', () => {
+            const colaboradores = [
+                { id: 1, nome: 'Carlos', salarioBase: 6000, admissao: '2025-01-01', departamento: 'Engenharia', status: 'Ativo' },
+                { id: 2, nome: 'Ana', salarioBase: 3000, admissao: '2025-01-01', departamento: 'RH', status: 'Ativo' }
+            ];
+
+            // 1 ano decorrido (12 meses):
+            // Carlos: (6000 + 2000) = 8000
+            // Ana: (3000 + 1000) = 4000
+            const res = calcularProvisaoFerias(colaboradores, [], '2026-01-01');
+            expect(res.porDepartamento['Engenharia']).toBe(8000);
+            expect(res.porDepartamento['RH']).toBe(4000);
+            expect(res.totalProvisao).toBe(12000);
+        });
+
+        it('deve gerar os dados da timeline anual de férias com cálculo percentual correto', () => {
+            const colaboradores = [
+                { id: 1, nome: 'Roberto Alves', status: 'Ativo', matricula: '001', iniciais: 'RA' }
+            ];
+            const todasFerias = [
+                {
+                    colaboradorId: 1,
+                    status: 'agendada',
+                    periodos: [
+                        { dias: 30, dataInicio: '2026-01-01', dataFim: '2026-01-30' }
+                    ]
+                }
+            ];
+
+            const mapa = gerarMapaAnualFerias(colaboradores, todasFerias, 2026);
+            expect(mapa.length).toBe(1);
+            expect(mapa[0].barras.length).toBe(1);
+            expect(mapa[0].barras[0].leftPct).toBeCloseTo(0, 0);
+            expect(mapa[0].barras[0].widthPct).toBeGreaterThan(5);
+            expect(mapa[0].barras[0].cor).toBe('bg-blue-500');
         });
     });
 });

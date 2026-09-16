@@ -27,8 +27,22 @@ import {
     carregarSementeSeVazio,
     exportarBancoJSON,
     restaurarBancoJSON,
-    COLABORADORES_SEMENTE
-} from './data/db.js?v=3.3';
+    COLABORADORES_SEMENTE,
+    salvarFerias,
+    obterFerias,
+    listarFeriasPorColaborador,
+    listarTodasFerias,
+    removerFerias
+} from './data/db.js?v=3.4';
+import {
+    calcularDiasDisponiveis,
+    calcularPeriodosAquisitivos,
+    verificarAlertaFeriasVencidas,
+    validarAgendamentoFerias,
+    calcularValorFerias,
+    calcularProvisaoFerias,
+    gerarMapaAnualFerias
+} from './modules/gestao_ferias.js?v=3.4';
 import {
     validarCPF,
     mascararCPF,
@@ -81,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSPARouter();
     initTopBarActions();
     initColaboradoresModule();
+    initGestaoFeriasModule();
     initNoturnoModule();
     initRescisaoModule();
     initFaltasModule();
@@ -450,8 +465,9 @@ function initTopBarActions() {
 //  SPA ROUTER (Sidebar Navigation)
 // ═══════════════════════════════════════════════════════════════════════
 const MODULE_META = {
-    colaboradores:  { title: 'Gestão de Colaboradores',    badge: 'Dossiê Digital' },
-    noturno:        { title: 'Adicional Noturno',          badge: 'Art. 73 CLT' },
+    colaboradores:    { title: 'Gestão de Colaboradores',    badge: 'Dossiê Digital' },
+    'gestao-ferias':  { title: 'Escala e Gestão de Férias',  badge: 'Art. 129 a 145 CLT' },
+    noturno:          { title: 'Adicional Noturno',          badge: 'Art. 73 CLT' },
     rescisao:       { title: 'Rescisão Contratual',        badge: 'Art. 477 CLT' },
     faltas:         { title: 'Faltas e Atrasos',           badge: 'Art. 462 CLT' },
     ferias:         { title: 'Férias & 13º Salário',       badge: 'Art. 129 CLT' },
@@ -3494,5 +3510,896 @@ function initFolhaLoteModule() {
         }
     };
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO: GESTÃO E ESCALA DE FÉRIAS (HRMS FASE 02)
+// ═══════════════════════════════════════════════════════════════════════
+
+function initGestaoFeriasModule() {
+    const $ = id => document.getElementById(id);
+
+    let anoEscalaAtual = new Date().getFullYear();
+    let colaboradoresCache = [];
+    let feriasCache = [];
+    let colaboradorSelecionado = null;
+    let periodosAquisitivosColaborador = [];
+
+    // ─── Atualização Global de Dados ──────────────────────────
+    async function carregarDados() {
+        try {
+            await carregarSementeSeVazio();
+            colaboradoresCache = await listarColaboradores();
+            feriasCache = await listarTodasFerias();
+
+            atualizarKPIs();
+            renderizarMapaAnual();
+            renderizarTabelaPeriodos();
+            popularSelectColaboradores();
+        } catch (e) {
+            console.error('Erro ao carregar dados de férias:', e);
+        }
+    }
+
+    // ─── KPIs & Alertas Trabalhistas ───────────────────────────
+    function atualizarKPIs() {
+        // 1. Agendamentos no ano corrente
+        const agendamentosAno = feriasCache.filter(f => {
+            if (!f.periodos || !Array.isArray(f.periodos)) return false;
+            return f.periodos.some(p => p.dataInicio && p.dataInicio.startsWith(String(anoEscalaAtual)));
+        });
+        if ($('statTotalAgendamentosFerias')) {
+            $('statTotalAgendamentosFerias').textContent = String(agendamentosAno.length);
+        }
+
+        // 2. Férias vencidas (Art. 137 CLT)
+        const alertasVencidas = verificarAlertaFeriasVencidas(colaboradoresCache, feriasCache);
+        const totalVencidas = alertasVencidas.length;
+
+        if ($('statFeriasVencidas')) {
+            $('statFeriasVencidas').textContent = String(totalVencidas);
+        }
+
+        const badgeSidebar = $('badgeAlertaFerias');
+        if (badgeSidebar) {
+            if (totalVencidas > 0) {
+                badgeSidebar.textContent = `${totalVencidas} Vencida${totalVencidas > 1 ? 's' : ''}`;
+                badgeSidebar.classList.remove('hidden');
+            } else {
+                badgeSidebar.classList.add('hidden');
+            }
+        }
+
+        const bannerVencidas = $('bannerAlertaFeriasVencidas');
+        const bannerTexto = $('bannerAlertaFeriasVencidasTexto');
+        if (bannerVencidas && bannerTexto) {
+            if (totalVencidas > 0) {
+                bannerTexto.textContent = `${totalVencidas} colaborador(es) com período concessivo expirado (Art. 137 CLT). Férias sujeitas a pagamento em dobro.`;
+                bannerVencidas.classList.remove('hidden');
+            } else {
+                bannerVencidas.classList.add('hidden');
+            }
+        }
+
+        // 3. Provisão Financeira Acumulada
+        const provisao = calcularProvisaoFerias(colaboradoresCache, feriasCache);
+        if ($('statProvisaoFerias')) {
+            $('statProvisaoFerias').textContent = formatCurrency(provisao.totalProvisao);
+        }
+
+        // 4. Próximo início de férias
+        const hojeIso = new Date().toISOString().split('T')[0];
+        const proximosPeriodos = [];
+
+        feriasCache.forEach(f => {
+            if (f.status === 'cancelada' || !Array.isArray(f.periodos)) return;
+            const c = colaboradoresCache.find(x => x.id === f.colaboradorId);
+            f.periodos.forEach(p => {
+                if (p.dataInicio && p.dataInicio >= hojeIso) {
+                    proximosPeriodos.push({
+                        colaboradorNome: c ? c.nome : 'Colaborador',
+                        dataInicio: p.dataInicio,
+                        dias: p.dias
+                    });
+                }
+            });
+        });
+
+        proximosPeriodos.sort((a, b) => a.dataInicio.localeCompare(b.dataInicio));
+
+        if ($('statProximoInicioFerias') && $('statProximoInicioDias')) {
+            if (proximosPeriodos.length > 0) {
+                const prox = proximosPeriodos[0];
+                const partes = prox.dataInicio.split('-');
+                const formatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                $('statProximoInicioFerias').textContent = `${prox.colaboradorNome.split(' ')[0]} (${formatada})`;
+
+                const dtProx = new Date(prox.dataInicio + 'T00:00:00');
+                const dtHoje = new Date(hojeIso + 'T00:00:00');
+                const diffDias = Math.ceil((dtProx.getTime() - dtHoje.getTime()) / (1000 * 60 * 60 * 24));
+                $('statProximoInicioDias').textContent = diffDias === 0 ? 'Inicia hoje!' : `Em ${diffDias} dia(s) (${prox.dias}d de gozo)`;
+            } else {
+                $('statProximoInicioFerias').textContent = '—';
+                $('statProximoInicioDias').textContent = 'Nenhuma programação futura';
+            }
+        }
+    }
+
+    // ─── Mapa Anual / Timeline Horizontal ──────────────────────
+    function renderizarMapaAnual() {
+        const container = $('timelineFeriasLinhas');
+        if (!container) return;
+
+        if ($('labelAnoEscala')) $('labelAnoEscala').textContent = String(anoEscalaAtual);
+
+        const mapa = gerarMapaAnualFerias(colaboradoresCache, feriasCache, anoEscalaAtual);
+
+        if (mapa.length === 0) {
+            container.innerHTML = `
+                <div class="py-8 text-center text-slate-400 text-xs">
+                    Nenhum colaborador ativo cadastrado para exibição na escala anual.
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = mapa.map(item => {
+            const barrasHtml = item.barras.length > 0
+                ? item.barras.map(b => {
+                    const statusDesc = b.status === 'em_gozo' ? 'Em Gozo' : (b.status === 'concluida' ? 'Concluída' : 'Agendada');
+                    const tooltip = `${item.nome}: ${b.dias} dias (${b.dataInicio} a ${b.dataFim}) - ${statusDesc}`;
+                    return `
+                        <div class="absolute h-6 top-1.5 rounded-md ${b.cor} shadow-sm flex items-center px-1.5 text-[10px] font-bold text-white overflow-hidden whitespace-nowrap cursor-pointer transition-transform hover:scale-105 hover:z-20"
+                             style="left: ${b.leftPct}%; width: ${Math.max(2, b.widthPct)}%;"
+                             title="${tooltip}">
+                            <span class="truncate">${b.dias}d</span>
+                        </div>
+                    `;
+                }).join('')
+                : `<div class="h-6 flex items-center text-[10px] text-slate-400 dark:text-slate-600 italic">Sem afastamento programado</div>`;
+
+            return `
+                <div class="flex items-center gap-3 py-1.5 border-b border-slate-100 dark:border-slate-800/60 hover:bg-slate-50/60 dark:hover:bg-slate-800/30 rounded-xl px-2 transition-colors">
+                    <!-- Info do Colaborador (largura fixa alinhada) -->
+                    <div class="w-44 shrink-0 flex items-center gap-2.5">
+                        <div class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-[10px] font-bold shrink-0"
+                             style="background-color: ${item.avatarBg || '#0d9488'}">
+                            ${item.iniciais}
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-xs font-semibold text-slate-900 dark:text-slate-100 truncate">${item.nome}</p>
+                            <p class="text-[10px] text-slate-400 font-mono truncate">Matr. ${item.matricula || '—'}</p>
+                        </div>
+                    </div>
+
+                    <!-- Trilho dos 12 Meses -->
+                    <div class="flex-1 relative h-9 bg-slate-100/70 dark:bg-slate-800/50 rounded-xl overflow-hidden">
+                        <!-- Linhas verticais dos 12 meses -->
+                        <div class="absolute inset-0 grid grid-cols-12 pointer-events-none divide-x divide-slate-200/50 dark:divide-slate-700/30">
+                            <div></div><div></div><div></div><div></div><div></div><div></div>
+                            <div></div><div></div><div></div><div></div><div></div><div></div>
+                        </div>
+                        ${barrasHtml}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ─── Tabela de Períodos Aquisitivos ─────────────────────────
+    function renderizarTabelaPeriodos() {
+        const corpo = $('tabelaPeriodosFeriasCorpo');
+        if (!corpo) return;
+
+        const termoBusca = ($('buscaFeriasColaborador')?.value || '').toLowerCase().trim();
+        const filtroStatus = $('filtroStatusFerias')?.value || 'todos';
+
+        const linhas = [];
+
+        colaboradoresCache.forEach(c => {
+            const adm = c.admissao || c.dataAdmissao;
+            if (c.status === 'Desligado' || !adm) return;
+            if (termoBusca && !c.nome.toLowerCase().includes(termoBusca) && !(c.matricula || '').toLowerCase().includes(termoBusca)) {
+                return;
+            }
+
+            const feriasDoColab = feriasCache.filter(f => f.colaboradorId === c.id);
+            const pas = calcularPeriodosAquisitivos(adm, null, feriasDoColab);
+            const faltasNoPa = Number(c.faltasInjustificadas) || 0;
+            const diasDireito = calcularDiasDisponiveis(faltasNoPa);
+
+            pas.forEach(pa => {
+                if (filtroStatus !== 'todos' && pa.status !== filtroStatus) {
+                    return;
+                }
+
+                linhas.push({
+                    colaborador: c,
+                    pa,
+                    diasDireito,
+                    faltasNoPa
+                });
+            });
+        });
+
+        if (linhas.length === 0) {
+            corpo.innerHTML = `
+                <tr>
+                    <td colspan="6" class="px-4 py-8 text-center text-slate-400 text-xs">
+                        Nenhum período aquisitivo encontrado com os filtros selecionados.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        const formatarData = iso => {
+            if (!iso) return '—';
+            const [ano, mes, dia] = iso.split('-');
+            return `${dia}/${mes}/${ano}`;
+        };
+
+        corpo.innerHTML = linhas.map(item => {
+            const { colaborador: c, pa, diasDireito } = item;
+
+            // Badges de Status
+            let badgeClass = 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+            let statusLabel = 'Em Aquisição';
+
+            if (pa.status === 'vencido') {
+                badgeClass = 'bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300 font-bold';
+                statusLabel = 'Vencido (Art. 137 CLT)';
+            } else if (pa.status === 'disponivel') {
+                badgeClass = 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/60 dark:text-emerald-300 font-bold';
+                statusLabel = 'Disponível para Gozo';
+            } else if (pa.status === 'agendado') {
+                badgeClass = 'bg-blue-100 text-blue-700 dark:bg-blue-900/60 dark:text-blue-300 font-bold';
+                statusLabel = 'Agendado';
+            } else if (pa.status === 'gozado') {
+                badgeClass = 'bg-purple-100 text-purple-700 dark:bg-purple-900/60 dark:text-purple-300';
+                statusLabel = 'Gozado';
+            } else if (pa.status === 'parcialmente_gozado') {
+                badgeClass = 'bg-amber-100 text-amber-700 dark:bg-amber-900/60 dark:text-amber-300';
+                statusLabel = 'Parcialmente Gozado';
+            }
+
+            const feriasAgendada = pa.feriasConcedidas && pa.feriasConcedidas.length > 0 ? pa.feriasConcedidas[0] : null;
+
+            return `
+                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg flex items-center justify-center text-white text-[10px] font-bold shrink-0"
+                                 style="background-color: ${c.avatarBg || '#0d9488'}">
+                                ${c.iniciais || 'CL'}
+                            </div>
+                            <div>
+                                <p class="font-semibold text-slate-900 dark:text-white">${c.nome}</p>
+                                <p class="text-[10px] text-slate-400">${c.cargo || 'Cargo'} • Matr. ${c.matricula || '—'}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 font-mono">
+                        ${formatarData(pa.paInicio)} a ${formatarData(pa.paFim)}
+                    </td>
+                    <td class="px-4 py-3 font-mono ${pa.alertaDobro ? 'text-rose-600 dark:text-rose-400 font-bold' : ''}">
+                        ${formatarData(pa.pcFim)}
+                        ${pa.alertaDobro ? '<span class="ml-1 text-[9px] px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 dark:bg-rose-900/80 dark:text-rose-300">Expirado!</span>' : ''}
+                    </td>
+                    <td class="px-4 py-3 text-center font-bold">
+                        <span class="${diasDireito === 0 ? 'text-rose-500' : 'text-emerald-600 dark:text-emerald-400'}">${diasDireito} dias</span>
+                    </td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] ${badgeClass}">
+                            ${statusLabel}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <div class="inline-flex items-center gap-1.5">
+                            ${(pa.status === 'disponivel' || pa.status === 'vencido') ? `
+                                <button type="button" class="btn-agendar-pa px-2.5 py-1 rounded-lg text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors"
+                                        data-colaborador-id="${c.id}" data-pa-inicio="${pa.paInicio}" data-alerta-dobro="${pa.alertaDobro}">
+                                    Agendar
+                                </button>
+                            ` : ''}
+
+                            ${feriasAgendada ? `
+                                <button type="button" class="btn-ver-documento px-2 py-1 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                                        data-ferias-id="${feriasAgendada.id}" title="Emitir Aviso e Recibo de Férias">
+                                    Aviso & Recibo
+                                </button>
+                                <button type="button" class="btn-cancelar-ferias px-2 py-1 rounded-lg text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+                                        data-ferias-id="${feriasAgendada.id}" title="Cancelar Agendamento">
+                                    Cancelar
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Listeners nos botões dinâmicos da tabela
+        corpo.querySelectorAll('.btn-agendar-pa').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const colabId = Number(btn.getAttribute('data-colaborador-id'));
+                const paInicio = btn.getAttribute('data-pa-inicio');
+                const alertaDobro = btn.getAttribute('data-alerta-dobro') === 'true';
+                abrirModalAgendamento(colabId, paInicio, alertaDobro);
+            });
+        });
+
+        corpo.querySelectorAll('.btn-ver-documento').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const fId = Number(btn.getAttribute('data-ferias-id'));
+                emitirAvisoEReciboFerias(fId);
+            });
+        });
+
+        corpo.querySelectorAll('.btn-cancelar-ferias').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const fId = Number(btn.getAttribute('data-ferias-id'));
+                if (confirm('Deseja realmente cancelar este agendamento de férias?')) {
+                    await removerFerias(fId);
+                    showToast('Agendamento de férias cancelado com sucesso!');
+                    await carregarDados();
+                }
+            });
+        });
+    }
+
+    // ─── Modal de Agendamento de Férias ─────────────────────────
+    function popularSelectColaboradores() {
+        const select = $('feriasColaboradorSelect');
+        if (!select) return;
+
+        const ativos = colaboradoresCache.filter(c => c.status !== 'Desligado');
+        select.innerHTML = '<option value="">Selecione um colaborador...</option>' +
+            ativos.map(c => `<option value="${c.id}">${c.nome} (Matr. ${c.matricula || '—'})</option>`).join('');
+    }
+
+    function abrirModalAgendamento(colabId = null, paInicioPreSelecionado = null, dobroPredefinido = false) {
+        const modal = $('modalAgendarFerias');
+        if (!modal) return;
+
+        $('formAgendarFerias')?.reset();
+
+        if (colabId) {
+            $('feriasColaboradorSelect').value = String(colabId);
+            selecionarColaborador(colabId, paInicioPreSelecionado, dobroPredefinido);
+        } else {
+            $('feriasColaboradorInfo')?.classList.add('hidden');
+            $('feriasPeriodoAquisitivoSelect').innerHTML = '<option value="">Aguardando seleção do colaborador...</option>';
+        }
+
+        // Configuração padrão
+        $('feriasQtdPeriodos').value = '1';
+        atualizarCamposPeriodos();
+        recalcularValidacaoEValores();
+
+        modal.classList.remove('hidden');
+    }
+
+    function fecharModalAgendamento() {
+        $('modalAgendarFerias')?.classList.add('hidden');
+    }
+
+    function selecionarColaborador(id, paInicioPre = null, dobroPre = false) {
+        colaboradorSelecionado = colaboradoresCache.find(c => c.id === Number(id));
+        if (!colaboradorSelecionado) return;
+
+        const c = colaboradorSelecionado;
+        const adm = c.admissao || c.dataAdmissao;
+        const faltas = Number(c.faltasInjustificadas) || 0;
+        const diasDireito = calcularDiasDisponiveis(faltas);
+
+        if ($('feriasInfoAdmissao')) $('feriasInfoAdmissao').textContent = adm ? adm.split('-').reverse().join('/') : '—';
+        if ($('feriasInfoSalario')) $('feriasInfoSalario').textContent = formatCurrency(c.salarioBase || 0);
+        if ($('feriasInfoFaltas')) $('feriasInfoFaltas').textContent = `${faltas} falta(s)`;
+        if ($('feriasInfoDiasDireito')) $('feriasInfoDiasDireito').textContent = `${diasDireito} dias`;
+        $('feriasColaboradorInfo')?.classList.remove('hidden');
+
+        // Carregar períodos aquisitivos disponíveis
+        const feriasDoColab = feriasCache.filter(f => f.colaboradorId === c.id);
+        periodosAquisitivosColaborador = calcularPeriodosAquisitivos(adm, null, feriasDoColab);
+
+        const paSelect = $('feriasPeriodoAquisitivoSelect');
+        const disponiveis = periodosAquisitivosColaborador.filter(p => p.status === 'disponivel' || p.status === 'vencido' || p.status === 'aberto');
+
+        paSelect.innerHTML = disponiveis.map(p => {
+            const rotulo = `${p.paInicio.split('-').reverse().join('/')} a ${p.paFim.split('-').reverse().join('/')} (${p.status === 'vencido' ? 'VENCIDO - DOBRO' : p.status.toUpperCase()})`;
+            return `<option value="${p.paInicio}" ${p.alertaDobro ? 'data-dobro="true"' : ''}>${rotulo}</option>`;
+        }).join('');
+
+        if (paInicioPre) {
+            paSelect.value = paInicioPre;
+        }
+
+        if (dobroPre || (paSelect.selectedOptions[0] && paSelect.selectedOptions[0].getAttribute('data-dobro') === 'true')) {
+            $('feriasEmDobroCheck').checked = true;
+        } else {
+            $('feriasEmDobroCheck').checked = false;
+        }
+
+        // Atualizar dias do primeiro período com os dias de direito
+        $('feriasP1Dias').value = String(diasDireito);
+        $('feriasP1Dias').max = String(diasDireito);
+
+        recalcularValidacaoEValores();
+    }
+
+    function atualizarCamposPeriodos() {
+        const qtd = Number($('feriasQtdPeriodos')?.value) || 1;
+        const faltas = Number(colaboradorSelecionado?.faltasInjustificadas) || 0;
+        const diasDireito = calcularDiasDisponiveis(faltas);
+        const abono = $('feriasAbonoPecuniario')?.checked || false;
+        const diasAbono = abono ? Math.floor(diasDireito / 3) : 0;
+        const diasGozo = diasDireito - diasAbono;
+
+        const b2 = $('blocoPeriodo2');
+        const b3 = $('blocoPeriodo3');
+
+        if (qtd === 1) {
+            b2?.classList.add('hidden');
+            b3?.classList.add('hidden');
+            $('feriasP1Dias').value = String(diasGozo);
+            $('feriasP2Dias').value = '0';
+            $('feriasP3Dias').value = '0';
+        } else if (qtd === 2) {
+            b2?.classList.remove('hidden');
+            b3?.classList.add('hidden');
+            $('feriasP1Dias').value = '14'; // Pelo menos 14 dias (Art. 134 § 1º)
+            $('feriasP2Dias').value = String(Math.max(5, diasGozo - 14));
+            $('feriasP3Dias').value = '0';
+        } else if (qtd === 3) {
+            b2?.classList.remove('hidden');
+            b3?.classList.remove('hidden');
+            $('feriasP1Dias').value = '14';
+            $('feriasP2Dias').value = '8';
+            $('feriasP3Dias').value = String(Math.max(5, diasGozo - 14 - 8));
+        }
+
+        recalcularDatasPeriodos();
+    }
+
+    function calcularDatas(inicioStr, dias) {
+        if (!inicioStr || !dias || dias <= 0) return { fim: '—', retorno: '—', fimIso: '', retornoIso: '', limitePagto: '—' };
+        const dtInicio = new Date(inicioStr + 'T00:00:00');
+        if (isNaN(dtInicio.getTime())) return { fim: '—', retorno: '—', fimIso: '', retornoIso: '', limitePagto: '—' };
+
+        const dtFim = new Date(dtInicio);
+        dtFim.setDate(dtFim.getDate() + dias - 1);
+
+        const dtRetorno = new Date(dtFim);
+        dtRetorno.setDate(dtRetorno.getDate() + 1);
+
+        const dtPagto = new Date(dtInicio);
+        dtPagto.setDate(dtPagto.getDate() - 2);
+
+        const formatar = d => `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+
+        return {
+            fim: formatar(dtFim),
+            retorno: formatar(dtRetorno),
+            fimIso: dtFim.toISOString().split('T')[0],
+            retornoIso: dtRetorno.toISOString().split('T')[0],
+            limitePagto: formatar(dtPagto)
+        };
+    }
+
+    function recalcularDatasPeriodos() {
+        const p1Dias = Number($('feriasP1Dias')?.value) || 0;
+        const p1Inicio = $('feriasP1Inicio')?.value;
+        const d1 = calcularDatas(p1Inicio, p1Dias);
+        if ($('feriasP1Fim')) $('feriasP1Fim').value = d1.fim;
+        if ($('feriasP1Retorno')) $('feriasP1Retorno').value = d1.retorno;
+
+        const p2Dias = Number($('feriasP2Dias')?.value) || 0;
+        const p2Inicio = $('feriasP2Inicio')?.value;
+        const d2 = calcularDatas(p2Inicio, p2Dias);
+        if ($('feriasP2Fim')) $('feriasP2Fim').value = d2.fim;
+        if ($('feriasP2Retorno')) $('feriasP2Retorno').value = d2.retorno;
+
+        const p3Dias = Number($('feriasP3Dias')?.value) || 0;
+        const p3Inicio = $('feriasP3Inicio')?.value;
+        const d3 = calcularDatas(p3Inicio, p3Dias);
+        if ($('feriasP3Fim')) $('feriasP3Fim').value = d3.fim;
+        if ($('feriasP3Retorno')) $('feriasP3Retorno').value = d3.retorno;
+
+        if ($('feriasResumoDataPagamento')) {
+            $('feriasResumoDataPagamento').textContent = d1.limitePagto;
+        }
+
+        recalcularValidacaoEValores();
+    }
+
+    function recalcularValidacaoEValores() {
+        const c = colaboradorSelecionado;
+        const faltas = Number(c?.faltasInjustificadas) || 0;
+        const diasDireito = calcularDiasDisponiveis(faltas);
+        const abono = $('feriasAbonoPecuniario')?.checked || false;
+        const emDobro = $('feriasEmDobroCheck')?.checked || false;
+        const qtdPeriodos = Number($('feriasQtdPeriodos')?.value) || 1;
+
+        const periodos = [
+            { dias: Number($('feriasP1Dias')?.value) || 0, dataInicio: $('feriasP1Inicio')?.value || '' }
+        ];
+        if (qtdPeriodos >= 2) {
+            periodos.push({ dias: Number($('feriasP2Dias')?.value) || 0, dataInicio: $('feriasP2Inicio')?.value || '' });
+        }
+        if (qtdPeriodos >= 3) {
+            periodos.push({ dias: Number($('feriasP3Dias')?.value) || 0, dataInicio: $('feriasP3Inicio')?.value || '' });
+        }
+
+        // Validação CLT
+        const validacao = validarAgendamentoFerias({
+            diasDireito,
+            abonoPecuniario: abono,
+            periodos
+        });
+
+        const statusBox = $('feriasValidacaoStatus');
+        if (statusBox) {
+            if (validacao.valido && validacao.avisos.length === 0) {
+                statusBox.className = 'p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-700 dark:text-emerald-300';
+                statusBox.innerHTML = `
+                    <div class="flex items-center gap-2 font-bold">
+                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        <span>Conformidade Legal CLT — Art. 134 e 143 atendidos perfeitamente</span>
+                    </div>`;
+            } else if (!validacao.valido) {
+                statusBox.className = 'p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-700 dark:text-rose-300';
+                statusBox.innerHTML = `
+                    <div class="font-bold mb-1 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-rose-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <span>Inconsistência Legal:</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-0.5">${validacao.erros.map(e => `<li>${e}</li>`).join('')}</ul>`;
+            } else {
+                statusBox.className = 'p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300';
+                statusBox.innerHTML = `
+                    <div class="font-bold mb-1 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        <span>Aviso Trabalhista:</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-0.5">${validacao.avisos.map(a => `<li>${a}</li>`).join('')}</ul>`;
+            }
+        }
+
+        // Cálculo Financeiro
+        const salarioBase = Number(c?.salarioBase) || 0;
+        const fin = calcularValorFerias({
+            salarioBase,
+            diasFerias: validacao.diasGozo,
+            abonoPecuniario: abono,
+            feriasEmDobro: emDobro,
+            dependentesIR: Number(c?.dependentes) || 0
+        });
+
+        if ($('feriasResumoBruto')) $('feriasResumoBruto').textContent = formatCurrency(fin.totalBruto);
+        if ($('feriasResumoINSS')) $('feriasResumoINSS').textContent = `- ${formatCurrency(fin.inss.valor)}`;
+        if ($('feriasResumoIRRF')) $('feriasResumoIRRF').textContent = `- ${formatCurrency(fin.irrf.valor)}`;
+        if ($('feriasResumoLiquido')) $('feriasResumoLiquido').textContent = formatCurrency(fin.liquido);
+    }
+
+    // ─── Submissão do Agendamento ──────────────────────────────
+    async function salvarAgendamento(e) {
+        e.preventDefault();
+
+        const colabId = Number($('feriasColaboradorSelect')?.value);
+        if (!colabId) {
+            showToast('Selecione um colaborador.', 'error');
+            return;
+        }
+
+        const paInicio = $('feriasPeriodoAquisitivoSelect')?.value;
+        if (!paInicio) {
+            showToast('Selecione o período aquisitivo de referência.', 'error');
+            return;
+        }
+
+        const c = colaboradorSelecionado;
+        const faltas = Number(c?.faltasInjustificadas) || 0;
+        const diasDireito = calcularDiasDisponiveis(faltas);
+        const abono = $('feriasAbonoPecuniario')?.checked || false;
+        const emDobro = $('feriasEmDobroCheck')?.checked || false;
+        const qtdPeriodos = Number($('feriasQtdPeriodos')?.value) || 1;
+
+        const periodos = [];
+        const p1Dias = Number($('feriasP1Dias')?.value) || 0;
+        const p1Inicio = $('feriasP1Inicio')?.value;
+        if (!p1Inicio) {
+            showToast('Preencha a data de início do 1º período.', 'error');
+            return;
+        }
+        const d1 = calcularDatas(p1Inicio, p1Dias);
+        periodos.push({ dias: p1Dias, dataInicio: p1Inicio, dataFim: d1.fimIso, dataRetorno: d1.retornoIso });
+
+        if (qtdPeriodos >= 2) {
+            const p2Dias = Number($('feriasP2Dias')?.value) || 0;
+            const p2Inicio = $('feriasP2Inicio')?.value;
+            if (!p2Inicio) {
+                showToast('Preencha a data de início do 2º período.', 'error');
+                return;
+            }
+            const d2 = calcularDatas(p2Inicio, p2Dias);
+            periodos.push({ dias: p2Dias, dataInicio: p2Inicio, dataFim: d2.fimIso, dataRetorno: d2.retornoIso });
+        }
+
+        if (qtdPeriodos >= 3) {
+            const p3Dias = Number($('feriasP3Dias')?.value) || 0;
+            const p3Inicio = $('feriasP3Inicio')?.value;
+            if (!p3Inicio) {
+                showToast('Preencha a data de início do 3º período.', 'error');
+                return;
+            }
+            const d3 = calcularDatas(p3Inicio, p3Dias);
+            periodos.push({ dias: p3Dias, dataInicio: p3Inicio, dataFim: d3.fimIso, dataRetorno: d3.retornoIso });
+        }
+
+        const validacao = validarAgendamentoFerias({ diasDireito, abonoPecuniario: abono, periodos });
+        if (!validacao.valido) {
+            showToast(validacao.erros[0] || 'Agendamento inválido perante a CLT.', 'error');
+            return;
+        }
+
+        const salarioBase = Number(c?.salarioBase) || 0;
+        const fin = calcularValorFerias({
+            salarioBase,
+            diasFerias: validacao.diasGozo,
+            abonoPecuniario: abono,
+            feriasEmDobro: emDobro,
+            dependentesIR: Number(c?.dependentes) || 0
+        });
+
+        // Encontrar período aquisitivo selecionado
+        const paObj = periodosAquisitivosColaborador.find(p => p.paInicio === paInicio);
+
+        const registro = {
+            colaboradorId: colabId,
+            periodoAquisitivoInicio: paInicio,
+            periodoAquisitivoFim: paObj ? paObj.paFim : '',
+            periodoConcessivoFim: paObj ? paObj.pcFim : '',
+            tipo: qtdPeriodos === 1 ? 'integral' : 'fracionada',
+            status: 'agendada',
+            periodos,
+            abonoPecuniario: abono,
+            diasAbono: validacao.diasAbono,
+            feriasEmDobro: emDobro,
+            dataPagamento: d1.limitePagto,
+            financeiro: fin,
+            valorBruto: fin.totalBruto,
+            valorLiquido: fin.liquido
+        };
+
+        try {
+            await salvarFerias(registro);
+            showToast('Agendamento de férias registrado com sucesso!', 'success');
+            fecharModalAgendamento();
+            await carregarDados();
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao gravar férias no banco IndexedDB.', 'error');
+        }
+    }
+
+    // ─── Emissão de Aviso & Recibo em PDF Oficial ──────────────
+    async function emitirAvisoEReciboFerias(feriasId) {
+        const f = feriasCache.find(x => x.id === feriasId);
+        if (!f) return;
+        const c = colaboradoresCache.find(x => x.id === f.colaboradorId);
+        if (!c) return;
+
+        const corp = getDadosCorporativos();
+        const p1 = f.periodos && f.periodos[0] ? f.periodos[0] : {};
+        const p1InicioFormat = p1.dataInicio ? p1.dataInicio.split('-').reverse().join('/') : '—';
+        const p1FimFormat = p1.dataFim ? p1.dataFim.split('-').reverse().join('/') : '—';
+        const p1RetornoFormat = p1.dataRetorno ? p1.dataRetorno.split('-').reverse().join('/') : '—';
+
+        const htmlDocumento = `
+            <div style="font-family: Arial, sans-serif; font-size: 12px; color: #1e293b; line-height: 1.5; padding: 24px;">
+                <!-- Cabeçalho Corporativo -->
+                <div style="text-align: center; border-bottom: 2px solid #0f766e; padding-bottom: 12px; margin-bottom: 20px;">
+                    <h2 style="font-size: 16px; font-weight: bold; margin: 0; color: #0f766e; text-transform: uppercase;">
+                        ${corp.razaoSocial || 'EMPRESA DEMONSTRATIVA LTDA'}
+                    </h2>
+                    <p style="font-size: 11px; margin: 2px 0; color: #64748b;">
+                        CNPJ: ${corp.cnpj || '00.000.000/0001-00'} • Depto. Recursos Humanos & Pessoal
+                    </p>
+                </div>
+
+                <!-- 1. AVISO DE FÉRIAS (Art. 135 CLT) -->
+                <div style="margin-bottom: 30px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background-color: #f8fafc;">
+                    <h3 style="font-size: 13px; font-weight: bold; margin: 0 0 10px 0; text-align: center; text-transform: uppercase; color: #0f766e; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px;">
+                        Comunicação de Aviso de Férias — Artigo 135 da CLT
+                    </h3>
+                    <p style="margin-bottom: 10px;">
+                        A(o) Sr(a).: <strong>${c.nome}</strong> — Cargo: <strong>${c.cargo || 'Não informado'}</strong> — Matrícula: <strong>${c.matricula || '—'}</strong>
+                    </p>
+                    <p style="text-align: justify; margin-bottom: 12px;">
+                        Em cumprimento aos preceitos do <strong>Artigo 135 da Consolidação das Leis do Trabalho (CLT)</strong>, participamos-lhe que lhe serão concedidas férias regulamentares relativas ao período aquisitivo de <strong>${f.periodoAquisitivoInicio.split('-').reverse().join('/')} a ${f.periodoAquisitivoFim.split('-').reverse().join('/')}</strong>, a serem usufruídas conforme programação abaixo:
+                    </p>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px;">
+                        <tr style="background-color: #e2e8f0;">
+                            <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: left;">Período</th>
+                            <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Dias</th>
+                            <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Início do Gozo</th>
+                            <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Término</th>
+                            <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Retorno ao Trabalho</th>
+                        </tr>
+                        ${f.periodos.map((p, idx) => `
+                            <tr>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">${idx + 1}º Período</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center; font-weight: bold;">${p.dias}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">${p.dataInicio.split('-').reverse().join('/')}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">${p.dataFim.split('-').reverse().join('/')}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center; font-weight: bold;">${p.dataRetorno.split('-').reverse().join('/')}</td>
+                            </tr>
+                        `).join('')}
+                    </table>
+                    <p style="font-size: 11px; color: #475569; margin-bottom: 25px;">
+                        O pagamento da remuneração das férias e do abono pecuniário será efetuado até 2 (dois) dias antes do início do respectivo período, conforme preconiza o <strong>Art. 145 da CLT</strong>.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; margin-top: 30px; font-size: 11px; text-align: center;">
+                        <div style="width: 45%;">
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">${corp.razaoSocial || 'Empregador'}</div>
+                        </div>
+                        <div style="width: 45%;">
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">Ciente do Empregado em ___/___/______</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. RECIBO DE QUITAÇÃO DE FÉRIAS (Art. 145 CLT) -->
+                <div style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 16px; background-color: #ffffff;">
+                    <h3 style="font-size: 13px; font-weight: bold; margin: 0 0 10px 0; text-align: center; text-transform: uppercase; color: #0f766e; border-bottom: 1px solid #cbd5e1; padding-bottom: 6px;">
+                        Recibo de Quitação de Férias — Artigo 145 da CLT
+                    </h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11px;">
+                        <tr style="background-color: #f1f5f9; font-weight: bold;">
+                            <td style="padding: 6px; border: 1px solid #cbd5e1;">Descrição das Verbas</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">Proventos (R$)</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">Descontos (R$)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1;">Remuneração de Férias (${f.financeiro ? f.financeiro.diasFerias : 30} dias) ${f.feriasEmDobro ? '<strong>(EM DOBRO - Art. 137)</strong>' : ''}</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">${formatCurrency(f.financeiro ? f.financeiro.valorBase : 0)}</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1;">1/3 Constitucional de Férias (Art. 7º, XVII CF/88)</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">${formatCurrency(f.financeiro ? f.financeiro.tercoConstitucional : 0)}</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                        </tr>
+                        ${f.abonoPecuniario ? `
+                            <tr>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">Abono Pecuniário (${f.diasAbono} dias - Art. 143 CLT)</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">${formatCurrency(f.financeiro.valorAbono)}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1;">1/3 sobre Abono Pecuniário</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">${formatCurrency(f.financeiro.tercoAbono)}</td>
+                                <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                            </tr>
+                        ` : ''}
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1;">INSS sobre Férias (Tabela Progressiva)</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right; color: #b91c1c;">${formatCurrency(f.financeiro ? f.financeiro.inss.valor : 0)}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1;">IRRF sobre Férias</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right;">—</td>
+                            <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: right; color: #b91c1c;">${formatCurrency(f.financeiro ? f.financeiro.irrf.valor : 0)}</td>
+                        </tr>
+                        <tr style="background-color: #f8fafc; font-weight: bold;">
+                            <td style="padding: 8px; border: 1px solid #cbd5e1;">TOTAIS</td>
+                            <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: right; color: #047857;">${formatCurrency(f.valorBruto)}</td>
+                            <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: right; color: #b91c1c;">${formatCurrency(f.financeiro ? f.financeiro.totalDeducoes : 0)}</td>
+                        </tr>
+                        <tr style="background-color: #ecfdf5; font-weight: bold; font-size: 12px;">
+                            <td colspan="2" style="padding: 8px; border: 1px solid #cbd5e1; color: #047857;">LÍQUIDO A RECEBER:</td>
+                            <td style="padding: 8px; border: 1px solid #cbd5e1; text-align: right; color: #047857;">${formatCurrency(f.valorLiquido)}</td>
+                        </tr>
+                    </table>
+                    <p style="text-align: justify; font-size: 11px; margin-top: 15px; margin-bottom: 25px;">
+                        Recebi da firma <strong>${corp.razaoSocial || 'EMPRESA DEMONSTRATIVA LTDA'}</strong> a importância líquida de <strong>${formatCurrency(f.valorLiquido)}</strong>, referente ao pagamento das minhas férias regulamentares aqui discriminadas, das quais dou plena e geral quitação.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; margin-top: 25px; font-size: 11px; text-align: center;">
+                        <div style="width: 45%;">
+                            <p style="margin-bottom: 25px;">Data de Pagamento: ${f.dataPagamento || '___/___/______'}</p>
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">Assinatura do Empregador</div>
+                        </div>
+                        <div style="width: 45%;">
+                            <p style="margin-bottom: 25px;">Data: ___/___/______</p>
+                            <div style="border-top: 1px solid #000; padding-top: 5px;">Assinatura do Empregado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        abrirPreviaPdf(htmlDocumento, `aviso_recibo_ferias_${c.matricula || 'colab'}.pdf`, `Aviso & Recibo de Férias — ${c.nome}`);
+    }
+
+    // ─── Event Listeners do Módulo ─────────────────────────────
+    $('btnNovoAgendamentoFerias')?.addEventListener('click', () => abrirModalAgendamento());
+    $('btnFecharModalFerias')?.addEventListener('click', fecharModalAgendamento);
+    $('btnCancelarAgendamentoFerias')?.addEventListener('click', fecharModalAgendamento);
+
+    $('feriasColaboradorSelect')?.addEventListener('change', e => {
+        if (e.target.value) selecionarColaborador(e.target.value);
+    });
+
+    $('feriasPeriodoAquisitivoSelect')?.addEventListener('change', () => {
+        const opt = $('feriasPeriodoAquisitivoSelect')?.selectedOptions[0];
+        if (opt && opt.getAttribute('data-dobro') === 'true') {
+            $('feriasEmDobroCheck').checked = true;
+        } else {
+            $('feriasEmDobroCheck').checked = false;
+        }
+        recalcularValidacaoEValores();
+    });
+
+    $('feriasAbonoPecuniario')?.addEventListener('change', atualizarCamposPeriodos);
+    $('feriasEmDobroCheck')?.addEventListener('change', recalcularValidacaoEValores);
+    $('feriasQtdPeriodos')?.addEventListener('change', atualizarCamposPeriodos);
+
+    ['feriasP1Dias', 'feriasP1Inicio', 'feriasP2Dias', 'feriasP2Inicio', 'feriasP3Dias', 'feriasP3Inicio'].forEach(id => {
+        $(id)?.addEventListener('input', recalcularDatasPeriodos);
+        $(id)?.addEventListener('change', recalcularDatasPeriodos);
+    });
+
+    $('formAgendarFerias')?.addEventListener('submit', salvarAgendamento);
+
+    $('btnAnoEscalaAnterior')?.addEventListener('click', () => {
+        anoEscalaAtual--;
+        renderizarMapaAnual();
+        atualizarKPIs();
+    });
+
+    $('btnAnoEscalaProximo')?.addEventListener('click', () => {
+        anoEscalaAtual++;
+        renderizarMapaAnual();
+        atualizarKPIs();
+    });
+
+    $('buscaFeriasColaborador')?.addEventListener('input', renderizarTabelaPeriodos);
+    $('filtroStatusFerias')?.addEventListener('change', renderizarTabelaPeriodos);
+
+    $('btnFiltrarFeriasVencidas')?.addEventListener('click', () => {
+        if ($('filtroStatusFerias')) {
+            $('filtroStatusFerias').value = 'vencido';
+            renderizarTabelaPeriodos();
+        }
+    });
+
+    $('btnExportarEscalaFerias')?.addEventListener('click', () => {
+        if (feriasCache.length === 0) {
+            showToast('Nenhuma programação de férias para exportação.', 'error');
+            return;
+        }
+        exportarFeriasExcel({
+            salarioBase: 0,
+            diasFerias: 30,
+            abonoPecuniario: false,
+            adiantamento13o: false,
+            totalBruto: 0,
+            liquido: 0
+        });
+        showToast('Relatório de férias exportado com sucesso!');
+    });
+
+    moduleExportHandlers['gestao-ferias'] = () => {
+        $('btnExportarEscalaFerias')?.click();
+    };
+
+    $('sidebarBtnGestaoFerias')?.addEventListener('click', () => carregarDados());
+    window.addEventListener('hashchange', () => {
+        if (location.hash === '#gestao-ferias') carregarDados();
+    });
+
+    // Inicialização
+    carregarDados();
+}
+
 
 
