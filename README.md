@@ -1,177 +1,137 @@
-# RHUB — Suíte de Cálculos de Departamento Pessoal & CLT Open Source
+# RHUB — Sistema Integrado de Departamento Pessoal, Compliance CLT & Automação de RH
 
-[![Acessar Aplicação](https://img.shields.io/badge/Acessar_Online-kalicon.github.io%2FRHUB-2563eb?style=for-the-badge&logo=googlechrome&logoColor=white)](https://kalicon.github.io/RHUB/)
+[![Vitest CI](https://github.com/Kalicon/RHUB/actions/workflows/test.yml/badge.svg)](https://github.com/Kalicon/RHUB/actions/workflows/test.yml)
+[![Licença MIT](https://img.shields.io/badge/Licen%C3%A7a-MIT-blue.svg)](LICENSE)
+[![Python 3.13](https://img.shields.io/badge/Python-3.13-3776AB.svg?logo=python&logoColor=white)](backend/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688.svg?logo=fastapi&logoColor=white)](backend/)
+[![IndexedDB v3](https://img.shields.io/badge/IndexedDB-v3_Offline--First-orange.svg)](assets/js/data/db.js)
 
-![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
-![Vitest Tests](https://img.shields.io/badge/tests-21%20passed%20(100%25)-brightgreen.svg?logo=vitest)
-![PWA Ready](https://img.shields.io/badge/PWA-Installable_|_Offline-6366f1.svg)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-CDN-06B6D4.svg)
-![Chart.js](https://img.shields.io/badge/Chart.js-4.4_Interactive-FF6384.svg)
-![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02.svg)
-![SheetJS](https://img.shields.io/badge/SheetJS-0.20_Excel-107C41.svg)
-![Vanilla JS](https://img.shields.io/badge/JavaScript-ES6_Modules-F7DF1E.svg)
-![CLT](https://img.shields.io/badge/CLT-Atualizada_2024-green.svg)
-![GitHub Pages](https://img.shields.io/badge/deploy-GitHub_Pages-brightgreen.svg)
-
-> **Calculadora e Suíte de Gestão Trabalhista Moderna para a CLT Brasileira & Simulador CLT vs. PJ.**  
-> **App Online:** [https://kalicon.github.io/RHUB/](https://kalicon.github.io/RHUB/)  
-> 100% client-side, instalável como PWA (offline), suporte a Dark Mode, gráficos visuais dinâmicos com Chart.js, animações GSAP CountUp, exportação em Excel (.xlsx), impressão em formato de documento executivo, compartilhamento por Deep Link, backup/restauração em JSON, central de desafios comunitários e suíte de testes unitários com Vitest.  
-> Projetada para profissionais de Recursos Humanos, Departamento Pessoal, contadores, diretores financeiros, peritos e advogados trabalhistas.
+O **RHUB** é uma solução corporativa de alta fidelidade para cálculo, auditoria e automação de Departamento Pessoal e Recursos Humanos, desenvolvida estritamente em conformidade com o **Decreto-Lei nº 5.452/1943 (CLT)**, a **Portaria MTE 671/2021 (Ponto Eletrônico)**, as normas da **Receita Federal do Brasil (RFB)** e o **Manual de Orientação do eSocial (MOS)**.
 
 ---
 
-## Recursos e Destaques
+## 🌐 Acesso à Aplicação
 
-- **Progressive Web App (PWA)**: Funciona 100% offline via Service Worker, instalável no celular e computador.
-- **Identidade Corporativa Personalizada**: Modal de configuração de Empresa, CNPJ, Colaborador e Cargo, inseridos automaticamente nas impressões e planilhas Excel.
-- **Central de Desafios de Criação & Sugestões**: Espaço integrado para a comunidade e usuários proporem regras complexas de DP e abrirem Issues oficiais no GitHub diretamente do app.
-- **11 Módulos de Cálculo e People Analytics**:
-  1. **Adicional Noturno & DSR**: Hora noturna ficta (52min30s / fator 1,142857), prorrogação e DSR (Súmula 172 TST).
-  2. **Rescisão de Contrato CLT**: 4 modalidades de rescisão, aviso prévio proporcional (Lei 12.506), 13º, férias, FGTS (8% + 40%/20%), saque, seguro-desemprego e emissão direta de **TRCT Oficial em PDF**.
-  3. **Faltas e Atrasos**: Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal e tabela progressiva de perda de férias (Art. 130 CLT).
-  4. **Férias & 13º Salário + Planejador Art. 134**: Período aquisitivo, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra, avos de 13º e **validador de fracionamento em até 3 períodos com calendário e regra anti-DSR**.
-  5. **Salário Líquido (Holerite Mensal)**: Vencimentos e descontos reais com emissão instantânea de **Holerite / Contracheque Oficial em PDF**.
-  6. **Simulador CLT vs. PJ & Custo Efetivo do Empregado**: Custo real para a empresa, Simples Nacional vs. Lucro Presumido/Real, encargos patronais e Break-Even automático.
-  7. **Banco de Horas & Compensação de Jornada (Art. 59 CLT)**: Quitação de saldo credor (50% a 100%), reflexo em DSR e desconto de horas devedoras.
-  8. **Participação nos Lucros e Resultados — PLR (Lei 10.101/2000)**: Tabela exclusiva de IRRF PLR da Receita Federal e isenção de encargos trabalhistas.
-  9. **Teletrabalho / Home Office & Ajuda de Custo (Art. 75-A CLT)**: Rateio de internet, consumo elétrico (kWh), auxílio ergonomia e comparativo com VT.
-  10. **Equiparação Salarial & Passivo Trabalhista (Art. 461 CLT)**: Diferença salarial mensal, reflexos quinquenais e penalidade por discriminação (Lei 14.611/2023).
-  11. **Folha de Pagamento em Lote & Encargos Patronais (Batch Payroll)**: Upload CSV/XLSX ou demonstração, cálculo em massa de colaboradores, INSS Patronal (20%), RAT/FAP, Terceiros/Sistema S (5.8%), FGTS e dashboard consolidado com geração individual de holerites.
-- **Emissão Direta de Holerite e TRCT em PDF**: Layout vetorial padronizado no padrão do Ministério do Trabalho, gerado 100% no navegador (Client-Side) com botão de download imediato.
-- **Inteligência de Rubricas eSocial (Tabela S-1010)**: Dicionário oficial integrado, badges explicativos de incidência de INSS, FGTS e IRRF e modo auditoria contábil.
-- **Simulador de Convenções Coletivas (CCT / ACT)**: Configuração de regras sindicais que se sobrepõem à CLT (Art. 611-A), com adicional noturno customizado, sábado considerado como repouso no DSR e Adicional por Tempo de Serviço (Anuênio, Triênio, Quinquênio).
-- **Gráficos Visuais Interativos com Chart.js**: Visualização analítica no Holerite, Rescisão e Comparativo CLT vs PJ.
-- **Compartilhamento por Link (Deep Linking)**: Gera links com parâmetros codificados na URL hash para envio direto.
-- **Backup & Restauração JSON**: Exportação e importação completa de dados corporativos e histórico em `.json`.
-- **Guia & Glossário da CLT**: Modal com consulta rápida e busca instantânea dos principais artigos da CLT e súmulas do TST.
-- **Suíte de Testes Automatizados (Vitest)**: **32 testes unitários** com 100% de aprovação cobrindo rigorosamente todas as leis trabalhistas.
-- **Exportação Completa para Excel (.xlsx)**: Gera planilhas profissionais estruturadas para todos os módulos e folha consolidada.
-- **Histórico de Simulações**: Drawer lateral com as últimas 15 simulações salvas no `localStorage`.
+- **Aplicação Web (GitHub Pages):** [kalicon.github.io/RHUB](https://kalicon.github.io/RHUB/)
+- **Microserviço Local (FastAPI):** `http://127.0.0.1:8000/docs` (Swagger UI)
 
 ---
 
-## Stack Tecnológica
-
-| Camada            | Tecnologia                             | Descrição                                         |
-| ----------------- | -------------------------------------- | ------------------------------------------------- |
-| **Estrutura**     | HTML5 Semântico                        | Acessibilidade WAI-ARIA e SEO estruturado         |
-| **Estilização**   | Tailwind CSS (via CDN Play)            | Design utility-first com Dark Mode por classe     |
-| **Lógica**        | JavaScript Vanilla (ES6 Modules)       | Módulos puros, testáveis, zero backend            |
-| **PDF Vetorial**  | html2pdf.js / jsPDF (via CDN)          | Geração de Holerites e TRCT no navegador          |
-| **Gráficos**      | Chart.js 4.4 (via CDN)                 | Visualização interativa de gráficos e dashboards  |
-| **Animações**     | GSAP 3.12 (via CDN)                    | Efeito CountUp nos valores monetários             |
-| **Planilhas**     | SheetJS / xlsx 0.20 (via CDN)          | Criação e leitura de arquivos `.xlsx`/`.csv`      |
-| **Testes**        | Vitest 2.1                             | 32 testes unitários com asserções legais          |
-| **Offline / PWA** | Service Worker & Web App Manifest      | Cache-first para navegação offline completa       |
-| **Deploy**        | GitHub Pages                           | Hospedagem estática contínua e gratuita           |
-
----
-
-## Estrutura do Repositório
+## 🏛️ Arquitetura do Sistema
 
 ```text
 RHUB/
-├── assets/
+├── assets/                     <- Frontend SPA e Motor de Domínio Web
 │   ├── css/
-│   │   └── custom.css          <- Estilos do drawer, gráficos, orbes, temas e impressão
+│   │   └── custom.css          <- Design System, Glassmorphism, Dark Mode e Impressão
 │   ├── data/
-│   │   ├── cct_config.js       <- Gestor de regras sindicais CCT/ACT e ATS
-│   │   └── esocial_rubricas.js <- Tabela de rubricas S-1010 e incidências
+│   │   ├── db.js               <- IndexedDB v3 (Colaboradores, Férias e Pontos)
+│   │   ├── cct_config.js       <- Gestor de Convenções Coletivas CCT/ACT e ATS
+│   │   └── esocial_rubricas.js <- Catálogo oficial de rubricas e incidências S-1010
 │   ├── js/
-│   │   ├── app.js              <- Controller SPA, roteador hash, Chart.js e GSAP
+│   │   ├── app.js              <- Controller SPA, Router Hash e Integração Python
 │   │   ├── modules/
-│   │   │   ├── noturno.js      <- Adicional Noturno, hora ficta e DSR
-│   │   │   ├── rescisao.js     <- Rescisão CLT e Comparador de 4 Cenários
-│   │   │   ├── faltas.js       <- Faltas, atrasos, DSR e escala Art. 130
-│   │   │   ├── ferias.js       <- Férias, 13º e fracionamento Art. 134
-│   │   │   ├── liquido.js      <- Salário Líquido completo (holerite mensal)
-│   │   │   ├── clt_pj.js       <- Simulador CLT vs PJ e encargos patronais
-│   │   │   ├── banco_horas.js  <- Banco de horas e quitação semestral/anual
-│   │   │   ├── plr.js          <- Participação nos Lucros e Resultados
-│   │   │   ├── teletrabalho.js <- Ajuda de custo home office e amortização
-│   │   │   ├── equiparacao.js  <- Equiparação salarial e Lei 14.611
-│   │   │   └── folha_lote.js   <- Folha de pagamento em lote e encargos patronais
+│   │   │   ├── colaboradores.js<- Dossiê Digital, LGPD e Contratos
+│   │   │   ├── gestao_ferias.js<- Escala Anual de Férias e Provisões Contábeis
+│   │   │   ├── gestao_ponto.js <- Ponto Eletrônico (Portaria MTE 671/2021)
+│   │   │   ├── folha_lote.js   <- Folha de Pagamento em Lote & People Analytics
+│   │   │   ├── liquido.js      <- Salário Líquido (faixas progressivas RFB/MPS)
+│   │   │   ├── rescisao.js     <- Comparador simultâneo de 4 cenários rescisórios
+│   │   │   ├── ferias.js       <- Férias, 13º e fracionamento do Art. 134 CLT
+│   │   │   ├── noturno.js      <- Adicional Noturno e hora ficta reduzida (Art. 73)
+│   │   │   ├── faltas.js       <- Faltas, DSR e tabela progressiva do Art. 130
+│   │   │   ├── clt_pj.js       <- Simulador CLT vs. PJ e custo efetivo da empresa
+│   │   │   ├── banco_horas.js  <- Compensação semestral/anual do Art. 59 CLT
+│   │   │   ├── plr.js          <- Participação nos Lucros (Lei 10.101/00)
+│   │   │   ├── teletrabalho.js <- Teletrabalho e ajuda de custo (Art. 75-A CLT)
+│   │   │   └── equiparacao.js  <- Equiparação Salarial (Lei 14.611/2023)
 │   │   └── utils/
-│   │       ├── pdf_generator.js<- Gerador direto de Holerite e TRCT em PDF
-│   │       ├── exporter.js     <- Exportação de planilhas XLSX e CSV
-│   │       ├── formatters.js   <- Formatadores monetários, datas e horas
-│   │       ├── validators.js   <- Sanitização e validação de entradas
-│   │       └── storage.js      <- Gestão de dados corporativos e histórico
-│   └── img/
-│       ├── logo.svg            <- Logo vetorial do RHUB
-│       ├── icon-192.svg        <- Ícone PWA 192x192
-│       └── icon-512.svg        <- Ícone PWA 512x512
+│   │       ├── pdf_generator.js<- Emissor vetorial de Holerites e TRCT
+│   │       ├── formatters.js   <- Formatadores monetários BRL (R$) e horas
+│   │       └── exporter.js     <- Exportador em planilhas XLSX e CSV
+├── backend/                    <- RHUB Python Automation Engine (FastAPI 3.13)
+│   ├── main.py                 <- Servidor REST API e Endpoints de Automação
+│   ├── cli.py                  <- CLI Corporativa interativa via Click e Rich
+│   ├── models/schemas.py       <- Modelos Pydantic v2
+│   └── services/
+│       ├── compliance_auditor.py <- Robô de Auditoria e Passivo Trabalhista CLT
+│       ├── esocial_generator.py  <- Gerador de XMLs eSocial (S-1000 a S-1210)
+│       ├── excel_generator.py    <- Planilhas Executivas Avançadas (OpenPyXL)
+│       └── backup_service.py     <- Snapshots e retenção de backups locais
 ├── tests/
-│   └── clt_modules.test.js     <- Suíte de 32 testes unitários com Vitest
-├── manifest.json               <- Manifesto PWA (instalável)
-├── sw.js                       <- Service Worker com cache-first e offline v3.0
-├── index.html                  <- Aplicação Single-Page completa (11 módulos)
-├── package.json                <- Configuração de testes Vitest
-├── LICENSE                     <- Licença MIT
-├── MANUAL_DE_USO.md            <- Manual operacional para usuários e RH
-└── README.md                   <- Documentação técnica completa
+│   ├── clt_modules.test.js     <- 54 Testes unitários com Vitest
+│   └── python/                 <- 9 Testes unitários com Pytest
+├── index.html                  <- Aplicação Single-Page completa
+└── cli.py                      <- Ponto de entrada da CLI para o terminal
 ```
 
 ---
 
-## Fundamentação Legal dos Módulos
+## ⚖️ Módulos e Fundamentação Legal
 
-| Módulo | Regras Principais | Base Legal |
-|--------|-------------------|------------|
-| **Adicional Noturno** | Horário 22h às 05h, hora ficta reduzida (52min30s / fator 1,142857), adicional mín. 20%, DSR s/ noturno | Art. 73 da CLT, Lei 605/49, Súmulas 60 e 172 do TST |
-| **Rescisão Contratual** | Sem justa causa, pedido de demissão, justa causa, acordo mútuo (Art. 484-A), aviso prévio proporcional (Lei 12.506/11), saque e multa FGTS | Art. 477, 482 e 484-A da CLT, Lei 12.506/2011, Lei 8.036/90 |
-| **Faltas e Atrasos** | Desconto em dias (`Salário ÷ 30`), horas de atraso, perda do DSR semanal, escala progressiva de perda de férias | Art. 130 e 462 da CLT, Lei 605/49, Súmula 366 do TST |
-| **Férias & 13º Salário** | Férias proporcionais e vencidas, 1/3 constitucional, abono pecuniário (venda de 10 dias), dobra por atraso e avos de 13º | Art. 129 a 145 da CLT, Art. 7º, XVII da CF/88, Lei 4.090/62 |
-| **Salário Líquido (Holerite)** | Composição de proventos (HE 50%/100%, insalubridade, periculosidade, DSR), desconto de VT teto 6%, previdência e IRRF | Portaria Interministerial MPS/MF nº 2/2024, MP 1.206/2024, Lei 7.418/85 |
-| **CLT vs. PJ & Custos** | Encargos patronais (INSS 20%, RAT x FAP, Terceiros 5.8%), provisões e FGTS; Simples Nacional PJ (Anexos III e V, Fator R 28%) e Break-Even | Lei 8.212/91, LC 123/2006, Art. 7º da CF/88 |
-| **Banco de Horas** | Compensação semestral (acordo individual) ou anual (CCT), quitação de saldo com adicional mínimo de 50% e DSR | Art. 59, §§ 2º e 5º da CLT, Súmula 172 do TST |
-| **Participação nos Lucros (PLR)** | Tributação exclusiva na fonte por tabela progressiva anual, isenção total de INSS e FGTS | Lei 10.101/2000, Lei 12.832/2013, Art. 7º, XI da CF/88 |
-| **Teletrabalho & Home Office** | Ajuda de custo para energia/internet, ergonomia, isenção de reflexos salariais e comparativo com Vale-Transporte | Art. 75-A a 75-E da CLT, Lei 14.442/2022 |
-| **Equiparação Salarial** | Diferença salarial para mesma função/empregador/localidade, reflexos em 13º, férias, FGTS e multa da Lei 14.611/2023 | Art. 461 da CLT, Súmula 6 do TST, Lei 14.611/2023 |
-| **Tabelas Previdenciárias e Fiscais** | INSS por faixas progressivas (7,5%, 9%, 12%, 14%), dedução por dependente (R$ 189,59) e faixas do IRRF 2024 | Tabela Oficial da Receita Federal e Ministério da Previdência Social |
+| Módulo | Regras e Entregas Principais | Base Legal |
+|---|---|---|
+| **Dossiê de Colaboradores** | Gestão de contratos, admissão, jornada contratual, dependentes e LGPD | CLT e Lei 13.709/18 |
+| **Gestão e Escala de Férias** | Acompanhamento de períodos aquisitivos/concessivos, mapa anual e provisões | Art. 129 a 145 da CLT |
+| **Ponto Eletrônico & Espelho** | Apuração diária, tolerância legal (Art. 58 § 1º), HE 50%/100%, hora noturna ficta e PDF oficial | Portaria MTE 671/2021 & Art. 74 CLT |
+| **Robô de Compliance CLT** | Inspeção algorítmica de horas extras (>2h), intervalos (<1h), interjornada (<11h) e cálculo de passivo | Art. 59, 66, 71 da CLT e Súmulas TST |
+| **Gerador de Eventos eSocial** | Emissão de arquivos XML S-1000, S-1010, S-1200 e S-1210 validados estruturalmente | Layout eSocial v. S-1.2 / S-1.3 |
+| **Folha em Lote & Analytics** | Fechamento mensal consolidado, rateio de encargos patronais (INSS, RAT, FAP, Terceiros) e Holerites PDF | Lei 8.212/91 e Decreto 3.048/99 |
+| **Salário Líquido** | Composição de proventos e descontos, faixas progressivas de INSS e IRRF | Portaria Interministerial MPS/MF |
+| **Rescisão Contratual** | Simulador comparativo de 4 modalidades rescisórias simultâneas e emissão do TRCT | Art. 477 da CLT & Lei 12.506/11 |
+| **Adicional Noturno** | Redução ficta de 52m30s (fator 1,142857) e reflexos no DSR | Art. 73 CLT & Súmula 60/172 TST |
+| **Faltas e Atrasos** | Desconto em dias/horas, reflexo no DSR e escala progressiva de perda de férias | Art. 130 e 462 da CLT |
+| **CLT vs. PJ & Custos** | Encargos patronais, Simples Nacional (Anexos III e V, Fator R) e Break-Even | LC 123/2006 |
+| **Banco de Horas** | Compensação individual semestral ou coletiva anual e quitação rescisória | Art. 59 §§ 2º e 5º da CLT |
+| **PLR** | Tributação exclusiva na fonte por tabela progressiva anual e isenção previdenciária | Lei 10.101/2000 |
+| **Teletrabalho** | Ajuda de custo, infraestrutura e ergonomia | Art. 75-A a 75-E da CLT |
+| **Equiparação Salarial** | Cálculo de diferenças e penalidades por discriminação salarial | Art. 461 CLT & Lei 14.611/2023 |
 
 ---
 
-## Executando os Testes Automatizados
+## 💻 Como Executar Localmente
 
-A suíte de testes com Vitest valida todas as fórmulas matemáticas e regras da legislação CLT:
-
+### 1. Aplicação Web
+Basta iniciar um servidor estático:
 ```bash
-# Executar todos os testes unitários uma vez:
+python -m http.server 8095
+```
+Acesse no navegador: `http://localhost:8095`
+
+### 2. Motor de Automação Python (FastAPI & CLI)
+Instale as dependências:
+```bash
+pip install fastapi uvicorn pydantic openpyxl lxml rich click pytest
+```
+
+Execute o servidor de automação:
+```bash
+python cli.py serve
+```
+
+Ou execute a auditoria diretamente pelo terminal:
+```bash
+python cli.py audit
+```
+
+---
+
+## 🧪 Testes Automatizados
+
+### Testes da Legislação Trabalhista no Frontend (Vitest)
+```bash
 npm test
-
-# Executar em modo watch (desenvolvimento contínuo):
-npm run test:watch
 ```
+*54 testes unitários cobrindo 100% dos cálculos trabalhistas da CLT.*
 
----
-
-## Como Executar Localmente
-
-Como o projeto utiliza **ES6 Modules nativos**, basta servi-lo via HTTP local:
-
+### Testes da Camada de Automação Python (Pytest)
 ```bash
-# Opção 1: Python 3
-python -m http.server 8086
-
-# Opção 2: Node.js
-npx serve .
+pytest tests/python/ -v
 ```
-
-Acesse no seu navegador: **http://localhost:8086**
-
----
-
-## Instalação como App (PWA)
-
-- **No Google Chrome / Edge (Desktop)**: Clique no ícone de instalação na barra de endereços ou no botão **Instalar App** no menu lateral.
-- **No Android (Chrome)**: Toque nos três pontos do navegador e selecione **"Adicionar à tela inicial"** ou **"Instalar aplicativo"**.
-- **No iOS (Safari)**: Toque no botão de compartilhamento e selecione **"Adicionar à Tela de Início"**.
-
-O app funcionará normalmente mesmo sem conexão com a internet.
+*9 testes unitários validando compliance CLT, geração de XMLs eSocial e relatórios OpenPyXL.*
 
 ---
 
-## Licença
+## 📄 Licença
 
-Distribuído sob a licença **MIT**. Livre para uso pessoal, corporativo e modificações.
+Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para obter mais informações.
