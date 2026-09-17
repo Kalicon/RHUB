@@ -3523,6 +3523,255 @@ function initFolhaLoteModule() {
             showToast('Nenhuma folha carregada para exportação.', 'error');
         }
     };
+
+    // ─── Integração RHUB Python Engine & Automação Corporativa ───
+    const PYTHON_API_BASE = 'http://127.0.0.1:8000/api';
+
+    async function checarPythonEngine() {
+        const badge = $('badgePythonStatus');
+        if (!badge) return false;
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1500);
+            const res = await fetch(`${PYTHON_API_BASE}/health`, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (res.ok) {
+                badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Ativo (FastAPI)';
+                return true;
+            }
+        } catch {
+            badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-500/10 text-slate-500 border border-slate-500/20';
+            badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Inativo (porta 8000)';
+        }
+        return false;
+    }
+
+    async function obterPayloadFolhaAtual() {
+        let colabs = loteColaboradores;
+        if (!colabs || colabs.length === 0) {
+            const cadastrados = await listarColaboradores();
+            const ativos = cadastrados.filter(c => c.status !== 'Desligado');
+            if (ativos.length > 0) {
+                colabs = ativos.map(c => converterParaItemFolha(c));
+            } else {
+                colabs = gerarDemonstracaoFolha();
+            }
+        }
+
+        const config = obterConfigEmpresa();
+        const { resultados } = processarFolhaLote(colabs, config);
+
+        return {
+            ano: 2026,
+            mes: 8,
+            competencia: '2026-08',
+            empresa: {
+                razaoSocial: config.razaoSocial,
+                cnpj: config.cnpj
+            },
+            colaboradores: resultados.map(r => ({
+                id: r.id || 1,
+                nome: r.nome,
+                cargo: r.cargo,
+                salarioBruto: r.salarioBase || 0,
+                he50Horas: 0,
+                he50Valor: 0,
+                he100Horas: 0,
+                he100Valor: 0,
+                adicionalNoturnoValor: 0,
+                dsrSobreVariaveis: 0,
+                inss: r.inss || 0,
+                irrf: r.irrf || 0,
+                valeTransporteDesconto: r.descontoVT || 0,
+                outrosDescontos: 0,
+                totalProventos: r.proventos || r.salarioBase,
+                totalDescontos: r.totalDescontos || 0,
+                salarioLiquido: r.salarioLiquido || 0,
+                fgts: r.fgts || 0,
+                inssPatronal: r.inssPatronal || 0
+            }))
+        };
+    }
+
+    async function auditarCompliancePython() {
+        const online = await checarPythonEngine();
+        if (!online) {
+            showToast('Inicie o servidor Python no terminal com: python cli.py serve', 'warning');
+            return;
+        }
+
+        try {
+            showToast('Executando robô de auditoria trabalhista CLT...', 'info');
+            const payload = await obterPayloadFolhaAtual();
+            const res = await fetch(`${PYTHON_API_BASE}/compliance/audit`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Falha ao comunicar com o robô de compliance.');
+            const data = await res.json();
+
+            // Atualizar elementos do modal
+            if ($('complianceScoreValor')) $('complianceScoreValor').textContent = String(data.scoreConformidade);
+            if ($('complianceRiscoBadge')) {
+                const badge = $('complianceRiscoBadge');
+                badge.textContent = data.nivelRiscoGeral;
+                badge.className = data.scoreConformidade >= 90
+                    ? 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                    : (data.scoreConformidade >= 70
+                        ? 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                        : 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-500/10 text-rose-600 dark:text-rose-400');
+            }
+            if ($('compliancePassivoTotal')) {
+                $('compliancePassivoTotal').innerHTML = `Passivo Trabalhista Estimado: <span class="text-rose-600 font-mono font-bold">${formatCurrency(data.estimativaPassivoRisco)}</span>`;
+            }
+
+            if ($('complianceQtdCriticas')) $('complianceQtdCriticas').textContent = String(data.infracoesCriticas);
+            if ($('complianceQtdMedias')) $('complianceQtdMedias').textContent = String(data.infracoesMedias);
+            if ($('complianceQtdLeves')) $('complianceQtdLeves').textContent = String(data.infracoesLeves);
+
+            const tbody = $('complianceTabelaCorpo');
+            if (tbody) {
+                if (data.infracoes.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="py-6 text-center font-bold text-emerald-600 dark:text-emerald-400">
+                                ✔ Nenhuma infração detectada! A folha e os pontos estão em 100% de conformidade com a CLT.
+                            </td>
+                        </tr>`;
+                } else {
+                    tbody.innerHTML = data.infracoes.map(inf => `
+                        <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                            <td class="py-2.5 px-3">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${inf.gravidade === 'CRITICA' ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400' : (inf.gravidade === 'MEDIA' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400')}">
+                                    ${inf.gravidade}
+                                </span>
+                            </td>
+                            <td class="py-2.5 px-3 font-semibold text-slate-700 dark:text-slate-300">${inf.categoria}</td>
+                            <td class="py-2.5 px-3 font-medium text-slate-900 dark:text-white">${inf.colaborador}</td>
+                            <td class="py-2.5 px-3">
+                                <p class="text-slate-800 dark:text-slate-200">${inf.descricao}</p>
+                                <span class="text-[10px] font-mono text-indigo-500">${inf.baseLegal}</span>
+                            </td>
+                            <td class="py-2.5 px-3 text-slate-600 dark:text-slate-400">${inf.recomendacao}</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            $('modalAuditoriaCompliance')?.classList.remove('hidden');
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao processar auditoria de compliance.', 'error');
+        }
+    }
+
+    async function gerarEsocialZipPython() {
+        const online = await checarPythonEngine();
+        if (!online) {
+            showToast('Inicie o servidor Python no terminal com: python cli.py serve', 'warning');
+            return;
+        }
+
+        try {
+            showToast('Gerando arquivos oficiais XML do eSocial...', 'info');
+            const payload = await obterPayloadFolhaAtual();
+            const res = await fetch(`${PYTHON_API_BASE}/esocial/generate-zip`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Falha ao gerar pacote eSocial.');
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `rhub_esocial_pacote_${payload.competencia}.zip`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            showToast('Pacote eSocial (.zip com XMLs oficiais) baixado!', 'success');
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao baixar pacote eSocial.', 'error');
+        }
+    }
+
+    async function gerarExcelOpenPyXLPython() {
+        const online = await checarPythonEngine();
+        if (!online) {
+            showToast('Inicie o servidor Python no terminal com: python cli.py serve', 'warning');
+            return;
+        }
+
+        try {
+            showToast('Gerando pasta de trabalho executiva com OpenPyXL...', 'info');
+            const payload = await obterPayloadFolhaAtual();
+            const res = await fetch(`${PYTHON_API_BASE}/relatorios/excel`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Falha ao gerar Excel executivo.');
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `rhub_folha_executiva_${payload.competencia}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            showToast('Planilha executiva (.xlsx OpenPyXL) baixada com sucesso!', 'success');
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao gerar planilha Excel.', 'error');
+        }
+    }
+
+    async function executarBackupSnapshotPython() {
+        const online = await checarPythonEngine();
+        if (!online) {
+            showToast('Inicie o servidor Python no terminal com: python cli.py serve', 'warning');
+            return;
+        }
+
+        try {
+            showToast('Criando snapshot compactado de backup...', 'info');
+            const payload = await obterPayloadFolhaAtual();
+            const res = await fetch(`${PYTHON_API_BASE}/backup/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) throw new Error('Falha ao salvar backup.');
+            const data = await res.json();
+            showToast(`Snapshot salvo em disco: ${data.arquivo} (${data.tamanhoBytes} bytes)`, 'success');
+        } catch (err) {
+            console.error(err);
+            showToast('Erro ao executar snapshot de backup.', 'error');
+        }
+    }
+
+    // Event Listeners do Motor Python
+    $('btnPythonAuditarCompliance')?.addEventListener('click', auditarCompliancePython);
+    $('btnPythonGerarEsocialZip')?.addEventListener('click', gerarEsocialZipPython);
+    $('btnPythonGerarExcel')?.addEventListener('click', gerarExcelOpenPyXLPython);
+    $('btnPythonBackupSnapshot')?.addEventListener('click', executarBackupSnapshotPython);
+
+    const fecharModalAuditoria = () => $('modalAuditoriaCompliance')?.classList.add('hidden');
+    $('btnFecharModalAuditoria')?.addEventListener('click', fecharModalAuditoria);
+    $('btnFecharModalAuditoriaBottom')?.addEventListener('click', fecharModalAuditoria);
+
+    // Verificação de status do Python
+    checarPythonEngine();
+    setInterval(checarPythonEngine, 10000);
 }
 
 // ═══════════════════════════════════════════════════════════════════════
