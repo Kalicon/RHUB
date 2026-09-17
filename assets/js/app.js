@@ -32,8 +32,12 @@ import {
     obterFerias,
     listarFeriasPorColaborador,
     listarTodasFerias,
-    removerFerias
-} from './data/db.js?v=3.4';
+    removerFerias,
+    salvarFolhaPonto,
+    obterFolhaPonto,
+    listarFolhasPontoPorCompetencia,
+    removerFolhaPonto
+} from './data/db.js?v=3.5';
 import {
     calcularDiasDisponiveis,
     calcularPeriodosAquisitivos,
@@ -43,6 +47,14 @@ import {
     calcularProvisaoFerias,
     gerarMapaAnualFerias
 } from './modules/gestao_ferias.js?v=3.4';
+import {
+    converterHoraParaMinutos,
+    converterMinutosParaHora,
+    gerarGradeMensalPonto,
+    calcularDiaPonto,
+    calcularResumoMensalPonto,
+    gerarMarcacoesDemonstrativas
+} from './modules/gestao_ponto.js?v=3.5';
 import {
     validarCPF,
     mascararCPF,
@@ -96,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTopBarActions();
     initColaboradoresModule();
     initGestaoFeriasModule();
+    initPontoModule();
     initNoturnoModule();
     initRescisaoModule();
     initFaltasModule();
@@ -467,6 +480,7 @@ function initTopBarActions() {
 const MODULE_META = {
     colaboradores:    { title: 'Gestão de Colaboradores',    badge: 'Dossiê Digital' },
     'gestao-ferias':  { title: 'Escala e Gestão de Férias',  badge: 'Art. 129 a 145 CLT' },
+    ponto:            { title: 'Controle de Ponto Eletrônico', badge: 'Portaria MTE 671' },
     noturno:          { title: 'Adicional Noturno',          badge: 'Art. 73 CLT' },
     rescisao:       { title: 'Rescisão Contratual',        badge: 'Art. 477 CLT' },
     faltas:         { title: 'Faltas e Atrasos',           badge: 'Art. 462 CLT' },
@@ -4400,6 +4414,640 @@ function initGestaoFeriasModule() {
     // Inicialização
     carregarDados();
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MÓDULO: GESTÃO DE PONTO ELETRÔNICO (HRMS FASE 03 — MTE 671/2021)
+// ═══════════════════════════════════════════════════════════════════════
+
+function initPontoModule() {
+    const $ = id => document.getElementById(id);
+
+    let colaboradoresPontoCache = [];
+    let colaboradorSelecionadoPonto = null;
+    let anoPontoAtual = 2026;
+    let mesPontoAtual = 8; // Agosto por padrão
+    let gradePontoAtual = [];
+    let diaEditandoJustificativa = null;
+
+    // ─── Carregamento de Colaboradores e Competência ───────────
+    async function inicializarDados() {
+        try {
+            await carregarSementeSeVazio();
+            colaboradoresPontoCache = await listarColaboradores();
+            popularSelectColaboradores();
+
+            if (colaboradoresPontoCache.length > 0 && !colaboradorSelecionadoPonto) {
+                const primeiroAtivo = colaboradoresPontoCache.find(c => c.status !== 'Desligado') || colaboradoresPontoCache[0];
+                if (primeiroAtivo) {
+                    $('pontoColaboradorSelect').value = String(primeiroAtivo.id);
+                    colaboradorSelecionadoPonto = primeiroAtivo;
+                }
+            }
+
+            lerCompetenciaSelecionada();
+            await carregarPontoColaborador();
+        } catch (e) {
+            console.error('Erro ao inicializar módulo de ponto:', e);
+        }
+    }
+
+    function popularSelectColaboradores() {
+        const select = $('pontoColaboradorSelect');
+        if (!select) return;
+
+        const ativos = colaboradoresPontoCache.filter(c => c.status !== 'Desligado');
+        select.innerHTML = '<option value="">Selecione um colaborador...</option>' +
+            ativos.map(c => `<option value="${c.id}">${c.nome} (${c.cargo || 'Cargo'} • Matr. ${c.matricula || '—'})</option>`).join('');
+    }
+
+    function lerCompetenciaSelecionada() {
+        const compVal = $('pontoCompetenciaSelect')?.value || '2026-08';
+        const [anoStr, mesStr] = compVal.split('-');
+        anoPontoAtual = parseInt(anoStr, 10) || 2026;
+        mesPontoAtual = parseInt(mesStr, 10) || 8;
+    }
+
+    // ─── Carregamento ou Geração da Folha de Ponto ─────────────
+    async function carregarPontoColaborador() {
+        if (!colaboradorSelecionadoPonto) {
+            gradePontoAtual = [];
+            renderizarGradeTabela();
+            atualizarKPIs();
+            return;
+        }
+
+        try {
+            const folhaSalva = await obterFolhaPonto(colaboradorSelecionadoPonto.id, anoPontoAtual, mesPontoAtual);
+
+            if (folhaSalva && Array.isArray(folhaSalva.dias) && folhaSalva.dias.length > 0) {
+                gradePontoAtual = folhaSalva.dias;
+            } else {
+                // Gerar grade em branco estruturada conforme a escala do colaborador
+                gradePontoAtual = gerarGradeMensalPonto(colaboradorSelecionadoPonto, anoPontoAtual, mesPontoAtual);
+            }
+
+            renderizarGradeTabela();
+            atualizarKPIs();
+        } catch (e) {
+            console.error('Erro ao carregar folha de ponto:', e);
+        }
+    }
+
+    // ─── Atualização dos KPIs Analíticos ────────────────────────
+    function atualizarKPIs() {
+        const salarioBase = Number(colaboradorSelecionadoPonto?.salarioBase) || 0;
+        const resumo = calcularResumoMensalPonto(gradePontoAtual, salarioBase);
+
+        if ($('statPontoHorasTrabalhadas')) {
+            $('statPontoHorasTrabalhadas').textContent = resumo.totaisFormatados.trabalhado;
+        }
+        if ($('statPontoHorasTrabalhadasSub')) {
+            $('statPontoHorasTrabalhadasSub').textContent = `Previsto: ${resumo.totaisFormatados.previsto} (${resumo.diasTrabalhados} dias úteis)`;
+        }
+
+        if ($('statPontoHorasExtras')) {
+            $('statPontoHorasExtras').textContent = converterMinutosParaHora(resumo.totaisMinutos.he50 + resumo.totaisMinutos.he100);
+        }
+        if ($('statPontoHorasExtrasSub')) {
+            $('statPontoHorasExtrasSub').textContent = `50%: ${resumo.totaisFormatados.he50} • 100%: ${resumo.totaisFormatados.he100}`;
+        }
+
+        if ($('statPontoHorasNoturnas')) {
+            $('statPontoHorasNoturnas').textContent = resumo.totaisFormatados.noturno;
+        }
+
+        const statSaldo = $('statPontoSaldoBanco');
+        const statSaldoSub = $('statPontoSaldoBancoSub');
+        if (statSaldo) {
+            statSaldo.textContent = resumo.totaisFormatados.saldo;
+            if (resumo.totaisMinutos.saldo > 0) {
+                statSaldo.className = 'text-2xl font-extrabold text-emerald-400 mt-1';
+                if (statSaldoSub) statSaldoSub.textContent = 'Crédito no Banco de Horas';
+            } else if (resumo.totaisMinutos.saldo < 0) {
+                statSaldo.className = 'text-2xl font-extrabold text-rose-400 mt-1';
+                if (statSaldoSub) statSaldoSub.textContent = 'Débito / Horas a compensar';
+            } else {
+                statSaldo.className = 'text-2xl font-extrabold text-white mt-1';
+                if (statSaldoSub) statSaldoSub.textContent = 'Jornada zerada / equilibrada';
+            }
+        }
+    }
+
+    // ─── Renderização da Grade Diária de Ponto ──────────────────
+    function renderizarGradeTabela() {
+        const corpo = $('pontoGradeTabelaCorpo');
+        if (!corpo) return;
+
+        if (gradePontoAtual.length === 0) {
+            corpo.innerHTML = `
+                <tr>
+                    <td colspan="12" class="px-4 py-8 text-center text-slate-400 text-xs">
+                        Selecione um colaborador para exibir e tratar as marcações de ponto do mês.
+                    </td>
+                </tr>`;
+            return;
+        }
+
+        corpo.innerHTML = gradePontoAtual.map((dia, idx) => {
+            const isDsr = dia.tipoDia === 'dsr' || dia.tipoDia === 'folga_12x36';
+            const isFeriado = dia.tipoDia === 'feriado';
+            const linhaBg = isFeriado
+                ? 'bg-rose-50/40 dark:bg-rose-950/20'
+                : isDsr
+                ? 'bg-slate-50/70 dark:bg-slate-800/30'
+                : 'hover:bg-slate-50/80 dark:hover:bg-slate-800/50';
+
+            // Badges de Status do Dia
+            let statusBadge = '';
+            if (dia.justificativa) {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-300 truncate max-w-[130px] block" title="${dia.justificativa}">${dia.justificativa}</span>`;
+            } else if (dia.status === 'he100') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300">HE 100% (+${dia.he100Formatado})</span>`;
+            } else if (dia.status === 'he50') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300">HE 50% (+${dia.he50Formatado})</span>`;
+            } else if (dia.status === 'atraso') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300">Atraso (${dia.saldoFormatado})</span>`;
+            } else if (dia.status === 'falta') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-300">Falta Injustificada</span>`;
+            } else if (dia.status === 'normal' && dia.trabalhadosMinutos > 0) {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">Normal (${dia.trabalhadosFormatado})</span>`;
+            } else if (isFeriado) {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">Feriado Nacional</span>`;
+            } else if (isDsr) {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[9px] font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">DSR / Folga</span>`;
+            } else {
+                statusBadge = `<span class="text-[10px] text-slate-400 italic">Pendente</span>`;
+            }
+
+            const inputClass = "w-16 px-1.5 py-1 text-xs text-center font-mono rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all";
+
+            return `
+                <tr class="${linhaBg} transition-colors border-b border-slate-100 dark:border-slate-800/60" data-dia-index="${idx}">
+                    <!-- 1. Dia e Semana -->
+                    <td class="px-3 py-2 whitespace-nowrap">
+                        <span class="font-bold text-slate-900 dark:text-white font-mono">${String(dia.dia).padStart(2, '0')}/${String(mesPontoAtual).padStart(2, '0')}</span>
+                        <span class="text-[10px] text-slate-400 block">${dia.diaSemana.split('-')[0]}</span>
+                    </td>
+
+                    <!-- 2. Tipo de Dia -->
+                    <td class="px-3 py-2 text-center whitespace-nowrap">
+                        ${isFeriado
+                            ? '<span class="text-[10px] font-bold text-rose-600 dark:text-rose-400">Feriado</span>'
+                            : isDsr
+                            ? '<span class="text-[10px] font-medium text-slate-500 dark:text-slate-400">DSR</span>'
+                            : '<span class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400">Útil</span>'}
+                    </td>
+
+                    <!-- 3. Batidas (Entrada 1, Saída 1, Entrada 2, Saída 2) -->
+                    <td class="px-1 py-1.5 text-center">
+                        <input type="time" class="ponto-input-e1 ${inputClass}" value="${dia.e1 || ''}" data-idx="${idx}" />
+                    </td>
+                    <td class="px-1 py-1.5 text-center">
+                        <input type="time" class="ponto-input-s1 ${inputClass}" value="${dia.s1 || ''}" data-idx="${idx}" />
+                    </td>
+                    <td class="px-1 py-1.5 text-center">
+                        <input type="time" class="ponto-input-e2 ${inputClass}" value="${dia.e2 || ''}" data-idx="${idx}" />
+                    </td>
+                    <td class="px-1 py-1.5 text-center">
+                        <input type="time" class="ponto-input-s2 ${inputClass}" value="${dia.s2 || ''}" data-idx="${idx}" />
+                    </td>
+
+                    <!-- 4. Horas Trabalhadas -->
+                    <td class="px-3 py-2 text-center font-mono font-bold text-slate-800 dark:text-slate-100 col-trabalhado">
+                        ${dia.trabalhadosFormatado}
+                    </td>
+
+                    <!-- 5. HE 50% -->
+                    <td class="px-3 py-2 text-center font-mono text-blue-600 dark:text-blue-400 font-bold col-he50">
+                        ${dia.he50Minutos > 0 ? dia.he50Formatado : '—'}
+                    </td>
+
+                    <!-- 6. HE 100% -->
+                    <td class="px-3 py-2 text-center font-mono text-purple-600 dark:text-purple-400 font-bold col-he100">
+                        ${dia.he100Minutos > 0 ? dia.he100Formatado : '—'}
+                    </td>
+
+                    <!-- 7. Noturno -->
+                    <td class="px-3 py-2 text-center font-mono text-amber-600 dark:text-amber-400 font-bold col-noturno">
+                        ${dia.noturnoMinutos > 0 ? dia.noturnoFormatado : '—'}
+                    </td>
+
+                    <!-- 8. Saldo Diário -->
+                    <td class="px-3 py-2 text-center font-mono font-bold col-saldo ${dia.saldoMinutos > 0 ? 'text-emerald-600 dark:text-emerald-400' : (dia.saldoMinutos < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400')}">
+                        ${dia.saldoMinutos !== 0 ? dia.saldoFormatado : '00:00'}
+                    </td>
+
+                    <!-- 9. Ocorrência & Justificativa -->
+                    <td class="px-3 py-2 whitespace-nowrap">
+                        <div class="flex items-center gap-1.5">
+                            <div class="col-status-badge flex-1">${statusBadge}</div>
+                            <button type="button" class="btn-abrir-justificativa p-1 rounded-md text-slate-400 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-idx="${idx}" title="Inserir ou editar justificativa legal">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        conectarListenersInputs();
+    }
+
+    // ─── Atualização Reativa por Input sem Perder Foco ─────────
+    function conectarListenersInputs() {
+        const corpo = $('pontoGradeTabelaCorpo');
+        if (!corpo) return;
+
+        ['e1', 's1', 'e2', 's2'].forEach(campo => {
+            corpo.querySelectorAll(`.ponto-input-${campo}`).forEach(input => {
+                input.addEventListener('change', e => {
+                    const idx = Number(e.target.getAttribute('data-idx'));
+                    const valor = e.target.value;
+                    atualizarBatidaDia(idx, campo, valor);
+                });
+            });
+        });
+
+        corpo.querySelectorAll('.btn-abrir-justificativa').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const idx = Number(btn.getAttribute('data-idx'));
+                abrirModalJustificativa(idx);
+            });
+        });
+    }
+
+    function atualizarBatidaDia(idx, campo, valor) {
+        if (!gradePontoAtual[idx]) return;
+
+        gradePontoAtual[idx][campo] = valor;
+
+        // Recalcular o dia imediatamente
+        const dia = gradePontoAtual[idx];
+        const resultado = calcularDiaPonto({
+            e1: dia.e1,
+            s1: dia.s1,
+            e2: dia.e2,
+            s2: dia.s2,
+            previstoMinutos: dia.previstoMinutos,
+            tipoDia: dia.tipoDia,
+            justificativa: dia.justificativa
+        });
+
+        Object.assign(gradePontoAtual[idx], resultado);
+
+        // Atualizar os elementos de texto da linha específica no DOM
+        const tr = document.querySelector(`tr[data-dia-index="${idx}"]`);
+        if (tr) {
+            const elTrab = tr.querySelector('.col-trabalhado');
+            const elHE50 = tr.querySelector('.col-he50');
+            const elHE100 = tr.querySelector('.col-he100');
+            const elNot = tr.querySelector('.col-noturno');
+            const elSaldo = tr.querySelector('.col-saldo');
+
+            if (elTrab) elTrab.textContent = resultado.trabalhadosFormatado;
+            if (elHE50) elHE50.textContent = resultado.he50Minutos > 0 ? resultado.he50Formatado : '—';
+            if (elHE100) elHE100.textContent = resultado.he100Minutos > 0 ? resultado.he100Formatado : '—';
+            if (elNot) elNot.textContent = resultado.noturnoMinutos > 0 ? resultado.noturnoFormatado : '—';
+            if (elSaldo) {
+                elSaldo.textContent = resultado.saldoMinutos !== 0 ? resultado.saldoFormatado : '00:00';
+                elSaldo.className = `px-3 py-2 text-center font-mono font-bold col-saldo ${resultado.saldoMinutos > 0 ? 'text-emerald-600 dark:text-emerald-400' : (resultado.saldoMinutos < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-slate-400')}`;
+            }
+        }
+
+        atualizarKPIs();
+    }
+
+    // ─── Ações em Massa na Folha de Ponto ───────────────────────
+    function preencherPontoContratual() {
+        if (!colaboradorSelecionadoPonto) return;
+
+        const c = colaboradorSelecionadoPonto;
+        const e1 = c.horarioEntrada || '08:00';
+        const s2 = c.horarioSaida || '17:48';
+        const intervalo = c.intervalo || '01:00';
+
+        const minE1 = converterHoraParaMinutos(e1) || 480;
+        const minInterv = converterHoraParaMinutos(intervalo) || 60;
+        const minS1 = minE1 + 240;
+        const minE2 = minS1 + minInterv;
+
+        const s1 = converterMinutosParaHora(minS1);
+        const e2 = converterMinutosParaHora(minE2);
+
+        gradePontoAtual = gradePontoAtual.map(dia => {
+            if (dia.tipoDia !== 'util') return dia;
+
+            const res = calcularDiaPonto({
+                e1,
+                s1,
+                e2,
+                s2,
+                previstoMinutos: dia.previstoMinutos,
+                tipoDia: dia.tipoDia,
+                justificativa: ''
+            });
+
+            return {
+                ...dia,
+                e1,
+                s1,
+                e2,
+                s2,
+                justificativa: '',
+                ...res
+            };
+        });
+
+        renderizarGradeTabela();
+        atualizarKPIs();
+        showToast('Grade preenchida com o horário contratual oficial!');
+    }
+
+    function simularMarcacoesReais() {
+        if (!colaboradorSelecionadoPonto) return;
+
+        gradePontoAtual = gerarMarcacoesDemonstrativas(gradePontoAtual, colaboradorSelecionadoPonto);
+        renderizarGradeTabela();
+        atualizarKPIs();
+        showToast('Marcações demonstrativas geradas com sucesso!');
+    }
+
+    async function salvarFolhaAtual() {
+        if (!colaboradorSelecionadoPonto) return;
+
+        const resumo = calcularResumoMensalPonto(gradePontoAtual, colaboradorSelecionadoPonto.salarioBase);
+
+        const folha = {
+            colaboradorId: colaboradorSelecionadoPonto.id,
+            ano: anoPontoAtual,
+            mes: mesPontoAtual,
+            dias: gradePontoAtual,
+            resumo
+        };
+
+        try {
+            await salvarFolhaPonto(folha);
+            showToast(`Folha de ponto de ${$('pontoCompetenciaSelect')?.selectedOptions[0]?.text || 'mês'} salva no IndexedDB!`, 'success');
+        } catch (e) {
+            console.error(e);
+            showToast('Erro ao salvar folha de ponto.', 'error');
+        }
+    }
+
+    // ─── Modal de Justificativa de Ponto ────────────────────────
+    function abrirModalJustificativa(idx) {
+        diaEditandoJustificativa = idx;
+        const dia = gradePontoAtual[idx];
+        if (!dia) return;
+
+        if ($('justificativaPontoDataLabel')) {
+            $('justificativaPontoDataLabel').textContent = `${dia.diaSemana}, ${String(dia.dia).padStart(2, '0')}/${String(mesPontoAtual).padStart(2, '0')}/${anoPontoAtual}`;
+        }
+        if ($('justificativaPontoDiaIndex')) $('justificativaPontoDiaIndex').value = String(idx);
+        if ($('justificativaPontoMotivo')) $('justificativaPontoMotivo').value = dia.justificativa || 'Atestado Médico (Art. 473 CLT)';
+        if ($('justificativaPontoObs')) $('justificativaPontoObs').value = dia.observacao || '';
+
+        $('modalJustificativaPonto')?.classList.remove('hidden');
+    }
+
+    function fecharModalJustificativa() {
+        $('modalJustificativaPonto')?.classList.add('hidden');
+        diaEditandoJustificativa = null;
+    }
+
+    function aplicarJustificativa(e) {
+        e.preventDefault();
+        if (diaEditandoJustificativa === null) return;
+
+        const idx = diaEditandoJustificativa;
+        const motivo = $('justificativaPontoMotivo')?.value || '';
+        const obs = $('justificativaPontoObs')?.value || '';
+
+        gradePontoAtual[idx].justificativa = motivo;
+        gradePontoAtual[idx].observacao = obs;
+
+        // Se for atestado médico, limpa as batidas e abona a jornada
+        if (motivo.toLowerCase().includes('atestado')) {
+            gradePontoAtual[idx].e1 = '';
+            gradePontoAtual[idx].s1 = '';
+            gradePontoAtual[idx].e2 = '';
+            gradePontoAtual[idx].s2 = '';
+        }
+
+        const res = calcularDiaPonto({
+            e1: gradePontoAtual[idx].e1,
+            s1: gradePontoAtual[idx].s1,
+            e2: gradePontoAtual[idx].e2,
+            s2: gradePontoAtual[idx].s2,
+            previstoMinutos: gradePontoAtual[idx].previstoMinutos,
+            tipoDia: gradePontoAtual[idx].tipoDia,
+            justificativa: motivo
+        });
+
+        Object.assign(gradePontoAtual[idx], res);
+
+        fecharModalJustificativa();
+        renderizarGradeTabela();
+        atualizarKPIs();
+        showToast('Justificativa aplicada com sucesso!');
+    }
+
+    function removerJustificativa() {
+        if (diaEditandoJustificativa === null) return;
+        const idx = diaEditandoJustificativa;
+
+        gradePontoAtual[idx].justificativa = '';
+        gradePontoAtual[idx].observacao = '';
+
+        const res = calcularDiaPonto({
+            e1: gradePontoAtual[idx].e1,
+            s1: gradePontoAtual[idx].s1,
+            e2: gradePontoAtual[idx].e2,
+            s2: gradePontoAtual[idx].s2,
+            previstoMinutos: gradePontoAtual[idx].previstoMinutos,
+            tipoDia: gradePontoAtual[idx].tipoDia,
+            justificativa: ''
+        });
+
+        Object.assign(gradePontoAtual[idx], res);
+
+        fecharModalJustificativa();
+        renderizarGradeTabela();
+        atualizarKPIs();
+        showToast('Justificativa removida.');
+    }
+
+    // ─── Emissão do Espelho de Ponto Oficial em PDF (Portaria MTE 671)
+    function emitirEspelhoPdf() {
+        if (!colaboradorSelecionadoPonto) {
+            showToast('Selecione um colaborador primeiro.', 'error');
+            return;
+        }
+
+        const c = colaboradorSelecionadoPonto;
+        const corp = getDadosCorporativos();
+        const compDesc = $('pontoCompetenciaSelect')?.selectedOptions[0]?.text || 'Agosto / 2026';
+        const resumo = calcularResumoMensalPonto(gradePontoAtual, c.salarioBase);
+
+        const htmlEspelho = `
+            <div style="font-family: Arial, sans-serif; font-size: 10px; color: #1e293b; line-height: 1.4; padding: 20px;">
+                <!-- Cabeçalho do Espelho de Ponto (Portaria MTE 671/2021) -->
+                <div style="border-bottom: 2px solid #312e81; padding-bottom: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h2 style="font-size: 15px; font-weight: bold; margin: 0; color: #312e81; text-transform: uppercase;">
+                            ${corp.razaoSocial || 'EMPRESA DEMONSTRATIVA LTDA'}
+                        </h2>
+                        <p style="font-size: 10px; margin: 2px 0; color: #64748b;">
+                            CNPJ: ${corp.cnpj || '00.000.000/0001-00'} • Endereço: ${corp.endereco || 'Avenida Paulista, 1000 — São Paulo/SP'}
+                        </p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 11px; font-weight: bold; color: #312e81; text-transform: uppercase; display: block;">
+                            Relatório Espelho de Ponto Eletrônico
+                        </span>
+                        <span style="font-size: 9px; color: #64748b;">Em conformidade com a Portaria MTE 671/2021</span>
+                    </div>
+                </div>
+
+                <!-- Dados Cadastrais e Funcionais do Empregado -->
+                <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; margin-bottom: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 10px;">
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Empregado</span><strong>${c.nome}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Matrícula</span><strong>${c.matricula || '—'}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Cargo / CBO</span><strong>${c.cargo || '—'}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Departamento</span><strong>${c.departamento || 'Geral'}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Data de Admissão</span><strong>${c.admissao ? c.admissao.split('-').reverse().join('/') : '—'}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Escala de Trabalho</span><strong>${c.escala || '5x2'}</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Horário Contratual</span><strong>${c.horarioEntrada || '08:00'} às ${c.horarioSaida || '17:48'} (Int. ${c.intervalo || '01:00'})</strong></div>
+                    <div><span style="color: #64748b; display: block; font-size: 9px;">Competência de Apuração</span><strong style="color: #312e81;">${compDesc}</strong></div>
+                </div>
+
+                <!-- Tabela Analítica Diária de Marcações -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9px;">
+                    <thead>
+                        <tr style="background-color: #e2e8f0; text-align: center;">
+                            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: left;">Dia / Data</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Entrada 1</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Saída 1</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Entrada 2</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Saída 2</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Normais</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">HE 50%</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">HE 100%</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Noturno</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1;">Saldo</th>
+                            <th style="padding: 4px; border: 1px solid #cbd5e1; text-align: left;">Ocorrência / Justificativa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${gradePontoAtual.map(dia => `
+                            <tr style="text-align: center; background-color: ${dia.tipoDia === 'feriado' ? '#fef2f2' : (dia.tipoDia === 'dsr' ? '#f8fafc' : '#ffffff')};">
+                                <td style="padding: 3px 5px; border: 1px solid #cbd5e1; text-align: left; font-family: monospace;">
+                                    <strong>${String(dia.dia).padStart(2, '0')}</strong> (${dia.diaSemana.substring(0, 3)})
+                                </td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace;">${dia.e1 || '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace;">${dia.s1 || '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace;">${dia.e2 || '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace;">${dia.s2 || '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace; font-weight: bold;">${dia.trabalhadosFormatado}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace; color: #1d4ed8;">${dia.he50Minutos > 0 ? dia.he50Formatado : '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace; color: #7e22ce;">${dia.he100Minutos > 0 ? dia.he100Formatado : '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace; color: #b45309;">${dia.noturnoMinutos > 0 ? dia.noturnoFormatado : '—'}</td>
+                                <td style="padding: 3px; border: 1px solid #cbd5e1; font-family: monospace; font-weight: bold; color: ${dia.saldoMinutos > 0 ? '#047857' : (dia.saldoMinutos < 0 ? '#b91c1c' : '#64748b')};">
+                                    ${dia.saldoMinutos !== 0 ? dia.saldoFormatado : '00:00'}
+                                </td>
+                                <td style="padding: 3px 5px; border: 1px solid #cbd5e1; text-align: left; font-size: 8.5px;">
+                                    ${dia.justificativa || (dia.tipoDia === 'feriado' ? 'Feriado' : (dia.tipoDia === 'dsr' ? 'DSR' : ''))}
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+
+                <!-- Quadro de Totais Consolidados e Proventos -->
+                <div style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 25px;">
+                    <div style="flex: 1; background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px;">
+                        <h4 style="margin: 0 0 6px 0; font-size: 10px; color: #312e81; text-transform: uppercase;">Quadro de Horas Apuradas</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 9.5px;">
+                            <div>Horas Previstas: <strong>${resumo.totaisFormatados.previsto}</strong></div>
+                            <div>Horas Trabalhadas: <strong>${resumo.totaisFormatados.trabalhado}</strong></div>
+                            <div>Saldo do Mês: <strong style="color: ${resumo.totaisMinutos.saldo >= 0 ? '#047857' : '#b91c1c'};">${resumo.totaisFormatados.saldo}</strong></div>
+                            <div>HE 50% (Úteis): <strong>${resumo.totaisFormatados.he50}</strong></div>
+                            <div>HE 100% (DSR): <strong>${resumo.totaisFormatados.he100}</strong></div>
+                            <div>Adic. Noturno: <strong>${resumo.totaisFormatados.noturno}</strong></div>
+                        </div>
+                    </div>
+                    <div style="width: 200px; background-color: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; padding: 8px; font-size: 9.5px;">
+                        <h4 style="margin: 0 0 6px 0; font-size: 10px; color: #312e81; text-transform: uppercase;">Estimativa de Proventos</h4>
+                        <div>HE 50%: <strong>${formatCurrency(resumo.valoresEstimados.valorHE50)}</strong></div>
+                        <div>HE 100%: <strong>${formatCurrency(resumo.valoresEstimados.valorHE100)}</strong></div>
+                        <div>Noturno: <strong>${formatCurrency(resumo.valoresEstimados.valorNoturno)}</strong></div>
+                        <div style="border-top: 1px solid #cbd5e1; padding-top: 4px; margin-top: 4px; font-weight: bold; color: #047857;">
+                            Total Ponto: ${formatCurrency(resumo.valoresEstimados.totalProventosPonto)}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Termo Legal de Reconhecimento e Assinaturas -->
+                <p style="text-align: justify; font-size: 9px; color: #475569; margin-bottom: 25px;">
+                    Reconheço a exatidão das marcações de ponto acima descritas, as quais representam fielmente a totalidade das horas de trabalho por mim desempenhadas nesta competência mensal, em conformidade com o <strong>Artigo 74, § 2º da CLT</strong> e as disposições da <strong>Portaria MTE 671/2021</strong>.
+                </p>
+
+                <div style="display: flex; justify-content: space-between; text-align: center; font-size: 9.5px; margin-top: 30px;">
+                    <div style="width: 45%;">
+                        <div style="border-top: 1px solid #000; padding-top: 5px;">${corp.razaoSocial || 'Empregador'}</div>
+                    </div>
+                    <div style="width: 45%;">
+                        <div style="border-top: 1px solid #000; padding-top: 5px;">Assinatura do Empregado: ${c.nome}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        abrirPreviaPdf(htmlEspelho, `espelho_ponto_${c.matricula || 'colab'}_${anoPontoAtual}_${mesPontoAtual}.pdf`, `Espelho de Ponto Oficial — ${c.nome}`);
+    }
+
+    // ─── Exportação de Eventos para Folha de Pagamento em Lote ───
+    function exportarParaFolhaLote() {
+        if (!colaboradorSelecionadoPonto) return;
+
+        const c = colaboradorSelecionadoPonto;
+        const resumo = calcularResumoMensalPonto(gradePontoAtual, c.salarioBase);
+
+        showToast(`Eventos de ponto (${resumo.totaisFormatados.he50} HE 50%, ${resumo.totaisFormatados.he100} HE 100%, ${resumo.totaisFormatados.noturno} Noturno) vinculados ao cálculo da folha!`);
+    }
+
+    // ─── Event Listeners do Módulo ─────────────────────────────
+    $('pontoColaboradorSelect')?.addEventListener('change', e => {
+        const colabId = Number(e.target.value);
+        colaboradorSelecionadoPonto = colaboradoresPontoCache.find(x => x.id === colabId) || null;
+        carregarPontoColaborador();
+    });
+
+    $('pontoCompetenciaSelect')?.addEventListener('change', () => {
+        lerCompetenciaSelecionada();
+        carregarPontoColaborador();
+    });
+
+    $('btnPreencherPontoPadrao')?.addEventListener('click', preencherPontoContratual);
+    $('btnSimularPontoReal')?.addEventListener('click', simularMarcacoesReais);
+    $('btnSalvarFolhaPonto')?.addEventListener('click', salvarFolhaAtual);
+    $('btnEmitirEspelhoPdf')?.addEventListener('click', emitirEspelhoPdf);
+    $('btnExportarFolhaLotePonto')?.addEventListener('click', exportarParaFolhaLote);
+
+    $('btnFecharModalJustificativa')?.addEventListener('click', fecharModalJustificativa);
+    $('formJustificativaPonto')?.addEventListener('submit', aplicarJustificativa);
+    $('btnRemoverJustificativa')?.addEventListener('click', removerJustificativa);
+
+    $('sidebarBtnPonto')?.addEventListener('click', () => inicializarDados());
+    window.addEventListener('hashchange', () => {
+        if (location.hash === '#ponto') inicializarDados();
+    });
+
+    // Inicialização
+    inicializarDados();
+}
+
+
 
 
 

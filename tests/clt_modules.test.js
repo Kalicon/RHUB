@@ -31,6 +31,16 @@ import {
     calcularProvisaoFerias,
     gerarMapaAnualFerias
 } from '../assets/js/modules/gestao_ferias.js';
+import {
+    converterHoraParaMinutos,
+    converterMinutosParaHora,
+    verificarFeriado,
+    calcularMinutosNoturnosFictos,
+    gerarGradeMensalPonto,
+    calcularDiaPonto,
+    calcularResumoMensalPonto,
+    gerarMarcacoesDemonstrativas
+} from '../assets/js/modules/gestao_ponto.js';
 
 describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
 
@@ -821,6 +831,154 @@ describe('RHUB — Suíte de Testes da Legislação Trabalhista (CLT)', () => {
             expect(mapa[0].barras[0].leftPct).toBeCloseTo(0, 0);
             expect(mapa[0].barras[0].widthPct).toBeGreaterThan(5);
             expect(mapa[0].barras[0].cor).toBe('bg-blue-500');
+        });
+    });
+
+    describe('17. Módulo Gestão de Ponto Eletrônico & Espelho de Ponto (Portaria MTE 671/2021 & CLT)', () => {
+        it('deve converter horários HH:MM para minutos e vice-versa com precisão e sinal', () => {
+            expect(converterHoraParaMinutos('08:00')).toBe(480);
+            expect(converterHoraParaMinutos('17:48')).toBe(1068);
+            expect(converterHoraParaMinutos(null)).toBeNull();
+
+            expect(converterMinutosParaHora(480)).toBe('08:00');
+            expect(converterMinutosParaHora(1068)).toBe('17:48');
+            expect(converterMinutosParaHora(45, true)).toBe('+00:45');
+            expect(converterMinutosParaHora(-60, true)).toBe('-01:00');
+        });
+
+        it('deve aplicar a tolerância legal do Art. 58 § 1º da CLT (até 10 min/dia)', () => {
+            // Jornada prevista de 8h48 (528 minutos)
+            // Caso 1: Trabalho de 8h45 (525 minutos) -> Diferença de -3 min (<= 10 min) -> Ajustado para 528 min, saldo 0
+            const diaTolerado = calcularDiaPonto({
+                e1: '08:03',
+                s1: '12:00',
+                e2: '13:00',
+                s2: '17:48',
+                previstoMinutos: 528,
+                tipoDia: 'util'
+            });
+            expect(diaTolerado.trabalhadosMinutos).toBe(528);
+            expect(diaTolerado.saldoMinutos).toBe(0);
+            expect(diaTolerado.status).toBe('normal');
+
+            // Caso 2: Trabalho com excesso de 25 min (excede os 10 min de tolerância) -> Computa integralmente
+            const diaComExtra = calcularDiaPonto({
+                e1: '08:00',
+                s1: '12:00',
+                e2: '13:00',
+                s2: '18:13', // 25 min além das 17:48
+                previstoMinutos: 528,
+                tipoDia: 'util'
+            });
+            expect(diaComExtra.saldoMinutos).toBe(25);
+            expect(diaComExtra.he50Minutos).toBe(25);
+            expect(diaComExtra.status).toBe('he50');
+        });
+
+        it('deve apurar Hora Extra a 100% em domingos e feriados (Art. 59 CLT & Lei 605/49)', () => {
+            const diaDomingo = calcularDiaPonto({
+                e1: '08:00',
+                s1: '12:00',
+                e2: '',
+                s2: '',
+                previstoMinutos: 0,
+                tipoDia: 'dsr'
+            });
+            expect(diaDomingo.trabalhadosMinutos).toBe(240); // 4 horas
+            expect(diaDomingo.he100Minutos).toBe(240);
+            expect(diaDomingo.he50Minutos).toBe(0);
+            expect(diaDomingo.status).toBe('he100');
+        });
+
+        it('deve calcular corretamente a hora noturna ficta reduzida (Art. 73 CLT)', () => {
+            // Trabalho das 22:00 às 24:00 (120 minutos relógio)
+            // Com fator 60 / 52.5 = 1.142857 -> 120 * 1.142857 = 137 minutos fictos
+            const minFictos = calcularMinutosNoturnosFictos(1320, 1440);
+            expect(minFictos).toBe(137);
+        });
+
+        it('deve registrar falta injustificada se não houver marcações em dia útil', () => {
+            const diaFalta = calcularDiaPonto({
+                e1: '',
+                s1: '',
+                e2: '',
+                s2: '',
+                previstoMinutos: 528,
+                tipoDia: 'util'
+            });
+            expect(diaFalta.status).toBe('falta');
+            expect(diaFalta.saldoMinutos).toBe(-528);
+            expect(diaFalta.trabalhadosMinutos).toBe(0);
+        });
+
+        it('deve abonar o dia sem débito quando houver justificativa legal (Atestado Art. 473 CLT)', () => {
+            const diaAtestado = calcularDiaPonto({
+                e1: '',
+                s1: '',
+                e2: '',
+                s2: '',
+                previstoMinutos: 528,
+                tipoDia: 'util',
+                justificativa: 'Atestado Médico CID 10'
+            });
+            expect(diaAtestado.status).toBe('justificado');
+            expect(diaAtestado.saldoMinutos).toBe(0);
+            expect(diaAtestado.trabalhadosMinutos).toBe(528);
+        });
+
+        it('deve gerar a grade mensal respeitando a escala de trabalho (5x2, 6x1)', () => {
+            const colab5x2 = { escala: '5x2', horarioEntrada: '08:00', horarioSaida: '17:48' };
+            const grade5x2 = gerarGradeMensalPonto(colab5x2, 2026, 3); // Março/2026 (31 dias)
+            expect(grade5x2.length).toBe(31);
+
+            // Dias úteis devem ter 528 minutos previstos
+            const segundas = grade5x2.filter(d => d.diaSemana === 'Segunda-feira');
+            expect(segundas[0].previstoMinutos).toBe(528);
+            expect(segundas[0].tipoDia).toBe('util');
+
+            // Domingos devem ser DSR
+            const domingos = grade5x2.filter(d => d.diaSemana === 'Domingo');
+            expect(domingos[0].previstoMinutos).toBe(0);
+            expect(domingos[0].tipoDia).toBe('dsr');
+        });
+
+        it('deve consolidar o resumo mensal e calcular estimativa de reflexos financeiros', () => {
+            const diasExemplo = [
+                {
+                    previstoMinutos: 528,
+                    trabalhadosMinutos: 528,
+                    he50Minutos: 60, // 1h extra 50%
+                    he100Minutos: 0,
+                    noturnoMinutos: 0,
+                    saldoMinutos: 60,
+                    status: 'he50'
+                },
+                {
+                    previstoMinutos: 0,
+                    trabalhadosMinutos: 120,
+                    he50Minutos: 0,
+                    he100Minutos: 120, // 2h extra 100%
+                    noturnoMinutos: 0,
+                    saldoMinutos: 120,
+                    status: 'he100'
+                }
+            ];
+
+            const salario = 2200; // Valor hora normal = 2200 / 220 = R$ 10,00
+            const resumo = calcularResumoMensalPonto(diasExemplo, salario, 220);
+
+            expect(resumo.totaisMinutos.he50).toBe(60);
+            expect(resumo.totaisMinutos.he100).toBe(120);
+            expect(resumo.horasDecimais.he50).toBe(1.0);
+            expect(resumo.horasDecimais.he100).toBe(2.0);
+
+            // HE 50%: 1h * R$ 10 * 1.5 = R$ 15,00
+            // HE 100%: 2h * R$ 10 * 2.0 = R$ 40,00
+            // Total: R$ 55,00
+            expect(resumo.valoresEstimados.valorHoraNormal).toBe(10);
+            expect(resumo.valoresEstimados.valorHE50).toBe(15);
+            expect(resumo.valoresEstimados.valorHE100).toBe(40);
+            expect(resumo.valoresEstimados.totalProventosPonto).toBe(55);
         });
     });
 });

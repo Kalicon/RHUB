@@ -67,13 +67,23 @@
                 </div>
             </button>
 
-            <button data-panel="gestao-ferias" id="sidebarBtnGestaoFerias" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-3 text-left transition-all duration-200">
+            <button data-panel="gestao-ferias" id="sidebarBtnGestaoFerias" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-1 text-left transition-all duration-200">
                 <div class="w-8 h-8 rounded-lg bg-emerald-600/10 dark:bg-emerald-600/20 flex items-center justify-center shrink-0">
                     <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 </div>
                 <div class="flex-1 flex items-center justify-between">
                     <span class="text-sm font-bold text-slate-800 dark:text-slate-100">Escala de Férias</span>
                     <span id="badgeAlertaFerias" class="hidden text-[10px] font-black px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 dark:bg-rose-900/60 dark:text-rose-300">!</span>
+                </div>
+            </button>
+
+            <button data-panel="ponto" id="sidebarBtnPonto" class="sidebar-link w-full flex items-center gap-3 px-3 py-2.5 rounded-xl mb-3 text-left transition-all duration-200">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600/10 dark:bg-indigo-600/20 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div class="flex-1 flex items-center justify-between">
+                    <span class="text-sm font-bold text-slate-800 dark:text-slate-100">Ponto Eletrônico</span>
+                    <span id="badgeStatusPonto" class="text-[10px] font-black px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300">Port. 671</span>
                 </div>
             </button>
 
@@ -606,6 +616,151 @@
                             </thead>
                             <tbody id="tabelaPeriodosFeriasCorpo" class="divide-y divide-slate-100 dark:divide-slate-800">
                                 <!-- Linhas inseridas dinamicamente via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════════════════════════════════════════ -->
+            <!--  PAINEL: PONTO ELETRÔNICO (FASE 03 — MTE 671)  -->
+            <!-- ══════════════════════════════════════════════ -->
+            <section id="panel-ponto" class="module-panel hidden">
+                <!-- Hero Card -->
+                <div class="relative hero-gradient rounded-2xl p-6 sm:p-8 mb-6 overflow-hidden result-glow">
+                    <div class="orb orb-indigo"></div><div class="orb orb-violet"></div>
+                    <div class="relative z-10">
+                        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
+                            <div>
+                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 mb-3">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Portaria MTE 671/2021 & Artigos 58, 59 e 73 da CLT
+                                </div>
+                                <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Gestão de Ponto & Espelho Oficial</h2>
+                                <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+                                    Tratamento diário de marcações, tolerâncias do Art. 58 § 1º, HE 50%/100%, redução ficta noturna e emissão do Espelho de Ponto Eletrônico.
+                                </p>
+                            </div>
+
+                            <!-- Seletores de Colaborador e Mês -->
+                            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-2xl backdrop-blur-sm">
+                                <div>
+                                    <label class="block text-[10px] font-bold uppercase text-slate-300 mb-1">Colaborador</label>
+                                    <select id="pontoColaboradorSelect" class="w-48 sm:w-56 px-3 py-1.5 rounded-xl text-xs bg-slate-900/90 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <option value="">Selecione um colaborador...</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold uppercase text-slate-300 mb-1">Competência</label>
+                                    <select id="pontoCompetenciaSelect" class="px-3 py-1.5 rounded-xl text-xs bg-slate-900/90 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                        <option value="2026-08" selected>Agosto / 2026</option>
+                                        <option value="2026-09">Setembro / 2026</option>
+                                        <option value="2026-10">Outubro / 2026</option>
+                                        <option value="2026-07">Julho / 2026</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Barra de Ações Rápidas do Ponto -->
+                        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10 mb-6">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button type="button" id="btnPreencherPontoPadrao" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 bg-white/10 hover:bg-white/15 border border-white/10 transition-colors flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5 text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                    Preencher Contratual
+                                </button>
+                                <button type="button" id="btnSimularPontoReal" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 bg-white/10 hover:bg-white/15 border border-white/10 transition-colors flex items-center gap-1.5" title="Gera marcações fictícias demonstrativas com pequenas variações para testes públicos">
+                                    <svg class="w-3.5 h-3.5 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    Simular Marcações Reais
+                                </button>
+                                <button type="button" id="btnSalvarFolhaPonto" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md transition-colors flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    Salvar Ponto
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <button type="button" id="btnExportarFolhaLotePonto" class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-750 border border-slate-700 transition-colors flex items-center gap-1.5" title="Transfere automaticamente HE e Adicional Noturno para a Folha de Pagamento em Lote">
+                                    <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Enviar para Folha em Lote
+                                </button>
+                                <button type="button" id="btnEmitirEspelhoPdf" class="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 shadow-lg shadow-teal-500/25 transition-all flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                    Espelho de Ponto PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 4 KPIs Analíticos da Folha de Ponto -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                <p class="text-[11px] font-medium text-slate-300">Horas Trabalhadas</p>
+                                <p id="statPontoHorasTrabalhadas" class="text-2xl font-extrabold text-white mt-1">00:00</p>
+                                <span id="statPontoHorasTrabalhadasSub" class="text-[10px] text-indigo-300 flex items-center gap-1 mt-1 font-medium">Previsto: 00:00</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                <p class="text-[11px] font-medium text-slate-300">Horas Extras Apuradas</p>
+                                <p id="statPontoHorasExtras" class="text-2xl font-extrabold text-teal-300 mt-1">00:00</p>
+                                <span id="statPontoHorasExtrasSub" class="text-[10px] text-slate-400 flex items-center gap-1 mt-1 font-medium">50%: 00:00 • 100%: 00:00</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                <p class="text-[11px] font-medium text-slate-300">Adicional Noturno (Art. 73)</p>
+                                <p id="statPontoHorasNoturnas" class="text-2xl font-extrabold text-amber-300 mt-1">00:00</p>
+                                <span class="text-[10px] text-slate-400 flex items-center gap-1 mt-1 font-medium">Com hora ficta de 52m30s</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                <p class="text-[11px] font-medium text-slate-300">Saldo de Banco de Horas</p>
+                                <p id="statPontoSaldoBanco" class="text-2xl font-extrabold text-white mt-1">00:00</p>
+                                <span id="statPontoSaldoBancoSub" class="text-[10px] text-slate-400 flex items-center gap-1 mt-1 font-medium">Compensação mensal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Tratamento Diário de Ponto -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 shadow-sm mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Grade Mensal de Marcações de Ponto</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Apuração diária com tolerâncias legais, intervalos intrajornada e justificativas de ausência</p>
+                            </div>
+                        </div>
+
+                        <!-- Legenda Visual -->
+                        <div class="hidden md:flex items-center gap-3 text-xs">
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Jornada OK</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Hora Extra</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Atraso</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Noturno</span>
+                            <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Falta</span>
+                        </div>
+                    </div>
+
+                    <!-- Tabela com Scroll Horizontal -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-600 dark:text-slate-300">
+                            <thead class="bg-slate-50 dark:bg-slate-800/50 text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-3 py-2.5 w-24">Data / Dia</th>
+                                    <th class="px-3 py-2.5 w-24 text-center">Tipo</th>
+                                    <th class="px-2 py-2.5 text-center w-20">Entrada 1</th>
+                                    <th class="px-2 py-2.5 text-center w-20">Saída 1</th>
+                                    <th class="px-2 py-2.5 text-center w-20">Entrada 2</th>
+                                    <th class="px-2 py-2.5 text-center w-20">Saída 2</th>
+                                    <th class="px-3 py-2.5 text-center w-20">Trabalhado</th>
+                                    <th class="px-3 py-2.5 text-center w-16">HE 50%</th>
+                                    <th class="px-3 py-2.5 text-center w-16">HE 100%</th>
+                                    <th class="px-3 py-2.5 text-center w-16">Noturno</th>
+                                    <th class="px-3 py-2.5 text-center w-20">Saldo Diário</th>
+                                    <th class="px-3 py-2.5">Ocorrência / Justificativa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pontoGradeTabelaCorpo" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                <!-- Linhas inseridas dinamicamente via JavaScript -->
                             </tbody>
                         </table>
                     </div>
@@ -2652,6 +2807,62 @@
         </div>
     </div>
 
-    <script type="module" src="assets/js/app.js?v=3.4"></script>
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  MODAL: JUSTIFICATIVA DE PONTO (FASE 03)               -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div id="modalJustificativaPonto" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 rhub-modal-backdrop">
+        <div class="relative w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl p-6 flex flex-col overflow-hidden">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">Abono ou Justificativa de Ausência</h3>
+                        <p id="justificativaPontoDataLabel" class="text-xs text-slate-500 dark:text-slate-400">Dia —/—/——</p>
+                    </div>
+                </div>
+                <button type="button" id="btnFecharModalJustificativa" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <form id="formJustificativaPonto" class="py-4 space-y-4">
+                <input type="hidden" id="justificativaPontoDiaIndex" value="" />
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Motivo Legal da Ausência (Art. 473 CLT)</label>
+                    <select id="justificativaPontoMotivo" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Atestado Médico (Art. 473 CLT)">Atestado Médico (Consulta / Incapacidade Temporária)</option>
+                        <option value="Folga Compensatória (Banco de Horas)">Folga Compensatória (Compensação Banco de Horas)</option>
+                        <option value="Casamento (Art. 473, II CLT)">Casamento / Gala (3 dias consecutivos)</option>
+                        <option value="Luto / Falecimento (Art. 473, I CLT)">Luto / Nojo (2 dias consecutivos)</option>
+                        <option value="Licença Paternidade (Art. 473, III CLT)">Licença Paternidade (5 a 20 dias)</option>
+                        <option value="Doação de Sangue (Art. 473, IV CLT)">Doação Voluntária de Sangue (1 dia / 12 meses)</option>
+                        <option value="Alistamento Eleitoral (Art. 473, V CLT)">Alistamento Eleitoral (até 2 dias)</option>
+                        <option value="Convocação Judicial / Júri">Convocação Judicial / Audiência / Júri</option>
+                        <option value="Falta Justificada pelo Empregador">Falta Justificada / Dispensa pelo Empregador</option>
+                        <option value="Falta Injustificada">Falta Injustificada (Desconto integral + DSR)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Detalhes / Observações (Opcional)</label>
+                    <input type="text" id="justificativaPontoObs" placeholder="Ex: CRM 12345/SP - Dra. Juliana" class="w-full px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                    <button type="button" id="btnRemoverJustificativa" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors">
+                        Limpar Justificativa
+                    </button>
+                    <button type="submit" class="px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-colors">
+                        Aplicar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="assets/js/app.js?v=3.5"></script>
 </body>
 </html>

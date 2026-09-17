@@ -6,7 +6,7 @@
  */
 
 const DB_NAME = 'rhub_hrms_db';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 let dbInstance = null;
 
@@ -59,6 +59,16 @@ export function abrirBanco() {
                 storeFerias.createIndex('colaboradorId', 'colaboradorId', { unique: false });
                 storeFerias.createIndex('status', 'status', { unique: false });
                 storeFerias.createIndex('periodoAquisitivoInicio', 'periodoAquisitivoInicio', { unique: false });
+            }
+
+            // 5. Store de Tratamento e Folhas de Ponto Mensal (Fase 03)
+            if (!db.objectStoreNames.contains('pontos')) {
+                const storePontos = db.createObjectStore('pontos', {
+                    keyPath: 'id'
+                });
+                storePontos.createIndex('colaboradorId', 'colaboradorId', { unique: false });
+                storePontos.createIndex('competencia', 'competencia', { unique: false });
+                storePontos.createIndex('atualizadoEm', 'atualizadoEm', { unique: false });
             }
         };
 
@@ -561,3 +571,102 @@ export async function removerFerias(id) {
         request.onerror = (e) => reject(e.target.error);
     });
 }
+
+// ═══════════════════════════════════════════════════════════════════════
+//  CRUD DE PONTO ELETRÔNICO (Fase 03 — Portaria MTE 671/2021)
+// ═══════════════════════════════════════════════════════════════════════
+
+/**
+ * Salva ou atualiza a folha de ponto mensal de um colaborador.
+ * Chave primária: `${colaboradorId}_${ano}_${String(mes).padStart(2, '0')}`
+ * @param {object} folhaPonto
+ * @returns {Promise<string>} ID da folha de ponto
+ */
+export async function salvarFolhaPonto(folhaPonto) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('pontos', 'readwrite');
+        const store = tx.objectStore('pontos');
+
+        const colabId = Number(folhaPonto.colaboradorId);
+        const ano = Number(folhaPonto.ano);
+        const mes = Number(folhaPonto.mes);
+        const competencia = `${ano}-${String(mes).padStart(2, '0')}`;
+        const id = folhaPonto.id || `${colabId}_${ano}_${String(mes).padStart(2, '0')}`;
+
+        const registro = {
+            ...folhaPonto,
+            id,
+            colaboradorId: colabId,
+            ano,
+            mes,
+            competencia,
+            atualizadoEm: new Date().toISOString()
+        };
+
+        const request = store.put(registro);
+        request.onsuccess = () => resolve(id);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Obtém a folha de ponto mensal de um colaborador.
+ * @param {number} colaboradorId
+ * @param {number} ano
+ * @param {number} mes 1 a 12
+ * @returns {Promise<object|null>}
+ */
+export async function obterFolhaPonto(colaboradorId, ano, mes) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('pontos', 'readonly');
+        const store = tx.objectStore('pontos');
+        const id = `${Number(colaboradorId)}_${Number(ano)}_${String(mes).padStart(2, '0')}`;
+        const request = store.get(id);
+
+        request.onsuccess = (e) => resolve(e.target.result || null);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Lista todas as folhas de ponto de uma determinada competência (para folha de pagamento em lote).
+ * @param {number} ano
+ * @param {number} mes 1 a 12
+ * @returns {Promise<Array>}
+ */
+export async function listarFolhasPontoPorCompetencia(ano, mes) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('pontos', 'readonly');
+        const store = tx.objectStore('pontos');
+        const idx = store.index('competencia');
+        const competencia = `${Number(ano)}-${String(mes).padStart(2, '0')}`;
+        const request = idx.getAll(competencia);
+
+        request.onsuccess = (e) => resolve(e.target.result || []);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+/**
+ * Remove uma folha de ponto do banco.
+ * @param {number} colaboradorId
+ * @param {number} ano
+ * @param {number} mes 1 a 12
+ * @returns {Promise<boolean>}
+ */
+export async function removerFolhaPonto(colaboradorId, ano, mes) {
+    const db = await abrirBanco();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction('pontos', 'readwrite');
+        const store = tx.objectStore('pontos');
+        const id = `${Number(colaboradorId)}_${Number(ano)}_${String(mes).padStart(2, '0')}`;
+        const request = store.delete(id);
+
+        request.onsuccess = () => resolve(true);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
