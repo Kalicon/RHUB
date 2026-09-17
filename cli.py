@@ -226,5 +226,104 @@ def backups():
         table.add_row(b["nome"], f"{b['tamanho']:,} bytes", b["criadoEm"])
     console.print(table)
 
+@cli.command()
+@click.option("--dissidio", default=5.5, help="Percentual de Dissídio Sindicato CCT (%)")
+@click.option("--data-base", default=5, help="Mês da Data-Base CCT (1 a 12)")
+def analytics(dissidio, data_base):
+    """Executa os modelos de People Analytics Preditivo (Orçamento 12M, Bradford e Turnover)."""
+    console.print(Panel.fit(
+        "[bold cyan]RHUB HRMS — PEOPLE ANALYTICS PREDITIVO & INTELIGÊNCIA DE RH[/bold cyan]\n"
+        "[italic white]Modelagem Orçamentária 12 Meses, Fator de Bradford e Turnover Risk Index (TRI).[/italic white]",
+        border_style="blue"
+    ))
+
+    dados = _obter_dados_demonstracao()
+    from backend.services.people_analytics import (
+        calcular_previsao_orcamentaria_12m,
+        calcular_absenteismo_bradford,
+        calcular_matriz_risco_turnover
+    )
+    from backend.models.schemas import PrevisaoOrcamentariaRequest
+
+    # 1. Projeção Orçamentária
+    req_orc = PrevisaoOrcamentariaRequest(
+        colaboradores=dados.colaboradores,
+        percentualDissidio=float(dissidio),
+        mesDataBase=int(data_base),
+        regimeTributario="presumido"
+    )
+    orc = calcular_previsao_orcamentaria_12m(req_orc)
+
+    console.print(f"\n[bold green]1. PROJEÇÃO ORÇAMENTÁRIA DA FOLHA (12 MESES) — DISSÍDIO {dissidio:.1f}% EM MÊS {data_base}[/bold green]")
+    console.print(f"[bold]Custo Total Anual Projetado:[/] [bold cyan]R$ {orc.custoTotalAnual:,.2f}[/] | [bold]Média Mensal:[/] R$ {orc.mediaMensal:,.2f}")
+    console.print(f"[bold]Pico de Desembolso:[/] [bold magenta]{orc.picoDesembolsoMes}[/] (R$ {orc.picoDesembolsoValor:,.2f}) | [bold]Impacto Dissídio:[/] R$ {orc.impactoDissidioAnual:,.2f}\n")
+
+    t_orc = Table(title="Fluxo Orçamentário Mensal Projetado", show_header=True, header_style="bold magenta")
+    t_orc.add_column("Mês", width=12)
+    t_orc.add_column("Salário Base", justify="right")
+    t_orc.add_column("Dissídio", justify="right")
+    t_orc.add_column("Encargos Patronais", justify="right")
+    t_orc.add_column("Desembolso Total", justify="right", style="bold")
+    t_orc.add_column("Evento Especial", style="italic yellow")
+
+    for mes in orc.meses:
+        t_orc.add_row(
+            mes.mesNome,
+            f"R$ {mes.salarioBaseTotal:,.2f}",
+            f"+R$ {mes.dissidioAplicado:,.2f}" if mes.dissidioAplicado > 0 else "—",
+            f"R$ {mes.encargosPatronais:,.2f}",
+            f"R$ {mes.desembolsoTotal:,.2f}",
+            mes.eventoEspecial or ""
+        )
+    console.print(t_orc)
+
+    # 2. Fator de Bradford
+    abs_res = calcular_absenteismo_bradford(dados.colaboradores, dados.pontos)
+    console.print(f"\n[bold green]2. AUDITORIA DE ABSENTEÍSMO & FATOR DE BRADFORD (B = S² × D)[/bold green]")
+    console.print(f"[bold]Taxa Global de Absenteísmo:[/] [bold]{abs_res.taxaGlobalAbsenteismo}%[/] | [bold]Horas Perdidas:[/] {abs_res.totalHorasPerdidas}h\n")
+
+    t_brad = Table(title="Ranking de Fator de Bradford por Colaborador", show_header=True, header_style="bold cyan")
+    t_brad.add_column("Colaborador", width=20)
+    t_brad.add_column("Spells (S)", justify="center")
+    t_brad.add_column("Dias (D)", justify="center")
+    t_brad.add_column("Fator Bradford (B)", justify="center", style="bold")
+    t_brad.add_column("Impacto", justify="center")
+    t_brad.add_column("Ação Recomendada", width=38)
+
+    for b in abs_res.colaboradores:
+        cor_imp = "red" if b.nivelImpacto in ("CRITICO", "ALTO") else ("yellow" if b.nivelImpacto == "MEDIO" else "green")
+        t_brad.add_row(
+            b.nome,
+            str(b.spellsAusencia),
+            str(b.diasAusencia),
+            f"[{cor_imp}]{b.fatorBradford}[/]",
+            f"[{cor_imp}]{b.nivelImpacto}[/]",
+            b.recomendacao
+        )
+    console.print(t_brad)
+
+    # 3. Turnover Risk Index
+    tri_res = calcular_matriz_risco_turnover(dados.colaboradores)
+    console.print(f"\n[bold green]3. MATRIZ PREDITIVA DE TURNOVER & RETENÇÃO (TRI: 0 a 100)[/bold green]")
+    console.print(f"[bold]Score Médio da Organização:[/] {tri_res.scoreMedioOrganizacao}/100 ({tri_res.nivelRiscoGeral}) | [bold]Em Risco Alto/Crítico:[/] [bold red]{tri_res.colaboradoresEmRiscoAlto}[/]\n")
+
+    t_tri = Table(title="Matriz de Risco de Desligamento e Ações de Retenção", show_header=True, header_style="bold blue")
+    t_tri.add_column("Colaborador / Cargo", width=26)
+    t_tri.add_column("Score TRI", justify="center", style="bold")
+    t_tri.add_column("Nível de Risco", justify="center")
+    t_tri.add_column("Fatores Principais de Atrito", width=34)
+    t_tri.add_column("Plano Preventivo de Retenção", width=34)
+
+    for tri in tri_res.rankingColaboradores:
+        cor_tri = "red" if tri.nivelRisco in ("CRITICO", "ALTO") else ("yellow" if tri.nivelRisco == "MODERADO" else "green")
+        t_tri.add_row(
+            f"{tri.nome}\n[italic]{tri.cargo}[/italic]",
+            f"[{cor_tri}]{tri.scoreRisco}[/]",
+            f"[{cor_tri}]{tri.nivelRisco}[/]",
+            " • " + "\n • ".join(tri.fatoresPrincipais),
+            tri.acaoRecomendada
+        )
+    console.print(t_tri)
+
 if __name__ == "__main__":
     cli()

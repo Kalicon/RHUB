@@ -9,12 +9,21 @@ from typing import Dict, Any
 
 from .models.schemas import (
     FolhaCompetenciaRequest,
-    AuditoriaComplianceResponse
+    AuditoriaComplianceResponse,
+    PrevisaoOrcamentariaRequest,
+    PrevisaoOrcamentariaResponse,
+    AbsenteismoResponse,
+    TurnoverResponse
 )
 from .services.compliance_auditor import auditar_folha_e_ponto
 from .services.esocial_generator import gerar_pacote_esocial_zip
 from .services.excel_generator import gerar_planilha_executiva_excel
 from .services.backup_service import salvar_backup_dados, listar_backups_locais
+from .services.people_analytics import (
+    calcular_previsao_orcamentaria_12m,
+    calcular_absenteismo_bradford,
+    calcular_matriz_risco_turnover
+)
 
 app = FastAPI(
     title="RHUB HRMS Automation API",
@@ -100,6 +109,34 @@ def endpoint_listar_backups():
         return {"backups": listar_backups_locais()}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao listar backups: {str(e)}")
+
+# ═════════════════════════════════════════════════════════
+#  ENDPOINTS: PEOPLE ANALYTICS PREDITIVO (ITEM 04)
+# ═════════════════════════════════════════════════════════
+
+@app.post("/api/analytics/forecast", response_model=PrevisaoOrcamentariaResponse)
+def endpoint_previsao_orcamentaria(req: PrevisaoOrcamentariaRequest):
+    """Projeta mês a mês os custos de folha de pagamento para os próximos 12 meses com dissídio."""
+    try:
+        return calcular_previsao_orcamentaria_12m(req)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro na projeção orçamentária: {str(e)}")
+
+@app.post("/api/analytics/absenteeism", response_model=AbsenteismoResponse)
+def endpoint_absenteismo_bradford(req: FolhaCompetenciaRequest):
+    """Calcula a taxa de absenteísmo global e o Fator de Bradford individual (B = S^2 * D)."""
+    try:
+        return calcular_absenteismo_bradford(req.colaboradores, req.pontos)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro no cálculo de absenteísmo: {str(e)}")
+
+@app.post("/api/analytics/turnover", response_model=TurnoverResponse)
+def endpoint_turnover_risk(req: FolhaCompetenciaRequest):
+    """Calcula o Turnover Risk Index (TRI - 0 a 100) e sugere planos preventivos de retenção."""
+    try:
+        return calcular_matriz_risco_turnover(req.colaboradores)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro no cálculo de turnover: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

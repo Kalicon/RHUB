@@ -102,3 +102,74 @@ class AuditoriaComplianceResponse(BaseModel):
     estimativaPassivoRisco: float
     infracoes: List[InfracaoCompliance]
     resumoCategorias: Dict[str, int]
+
+# ═════════════════════════════════════════════════════════
+#  SCHEMAS: PEOPLE ANALYTICS PREDITIVO (ITEM 04)
+# ═════════════════════════════════════════════════════════
+
+class PrevisaoOrcamentariaRequest(BaseModel):
+    colaboradores: List[ItemFolhaColaboradorSchema] = []
+    percentualDissidio: float = Field(default=5.0, ge=0, le=50) # Ex: 5.5%
+    mesDataBase: int = Field(default=5, ge=1, le=12) # Mês da CCT (Ex: Maio = 5)
+    regimeTributario: str = "presumido" # 'presumido', 'real', 'simples'
+    aliquotaRat: float = 2.0
+    fatorFap: float = 1.0
+    aliquotaTerceiros: float = 5.8
+
+class MesPrevisaoSchema(BaseModel):
+    mesNumero: int
+    mesNome: str
+    salarioBaseTotal: float
+    dissidioAplicado: float
+    encargosPatronais: float
+    provisao13o: float
+    provisaoFerias: float
+    desembolsoTotal: float
+    eventoEspecial: Optional[str] = None # 'Dissídio CCT', '1ª Parcela 13º', '2ª Parcela 13º'
+
+class PrevisaoOrcamentariaResponse(BaseModel):
+    meses: List[MesPrevisaoSchema]
+    custoTotalAnual: float
+    mediaMensal: float
+    picoDesembolsoMes: str
+    picoDesembolsoValor: float
+    impactoDissidioAnual: float
+    resumoProvisoes13eFerias: float
+
+class ItemBradfordSchema(BaseModel):
+    colaboradorId: int
+    nome: str
+    departamento: str
+    spellsAusencia: int # S = Quantidade de períodos de ausência
+    diasAusencia: int # D = Total de dias ausentes
+    fatorBradford: int # B = S^2 * D
+    nivelImpacto: str # 'BAIXO', 'MEDIO', 'ALTO', 'CRITICO'
+    recomendacao: str
+
+class AbsenteismoResponse(BaseModel):
+    taxaGlobalAbsenteismo: float # %
+    totalHorasPerdidas: float
+    totalHorasPrevistas: float
+    totalColaboradoresAuditados: int
+    colaboradoresAlertaCritico: int
+    colaboradores: List[ItemBradfordSchema]
+
+class ItemTurnoverRiskSchema(BaseModel):
+    colaboradorId: int
+    nome: str
+    cargo: str
+    departamento: str
+    salario: float
+    scoreRisco: int # 0 a 100
+    nivelRisco: str # 'BAIXO', 'MODERADO', 'ALTO', 'CRITICO'
+    fatoresPrincipais: List[str]
+    acaoRecomendada: str
+
+class TurnoverResponse(BaseModel):
+    scoreMedioOrganizacao: int
+    nivelRiscoGeral: str
+    colaboradoresEmRiscoAlto: int
+    totalColaboradores: int
+    distribuicaoRisco: Dict[str, int]
+    rankingColaboradores: List[ItemTurnoverRiskSchema]
+
